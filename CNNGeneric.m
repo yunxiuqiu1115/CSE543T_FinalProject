@@ -1,12 +1,13 @@
 % CNN Forecasting generic model
 addpath("/Users/yahoo/Documents/WashU/CSE515T/Code/gpml-matlab-v3.6-2015-07-07");
 addpath("/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process");
+addpath("/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/data");
 addpath("/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/utilities");
 startup;
 
 % reading race data from all years and states
-CNNdata = readData("CNNdata1992to2018.csv");
-CNNdata = indexPollster(CNNdata, 50, "Gaussian Process/CNNdata1992to2018idx.csv");
+CNNdata = readData("data/CNNdata1992to2018.csv");
+CNNdata = indexPollster(CNNdata, 50, "Gaussian Process/data/CNNdata1992to2018idx.csv");
 plot_path = "/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/plots/genericwith2018";
 
 parms.mode = true;
