@@ -6,7 +6,8 @@ startup;
 
 % reading race data from all years and states
 CNNdata = readData("Gaussian Process/data/CNNdata1992to2018.csv");
-CNNdata = indexPollster(CNNdata, 50, "Gaussian Process/data/CNNdata1992to2018idx.csv");
+pollthres = 50;
+CNNdata = indexPollster(CNNdata, pollthres, "Gaussian Process/data/CNNdata1992to2018idx.csv");
 plot_path = "/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/plots/genericwith2018";
 
 parms.mode = true;
@@ -67,8 +68,10 @@ bestnlZ = 0;
 % end
 
 iter = 10;
+seed = randi(;
+rng(seed);
 hyp = sample_separate_prior(priors, parms);
-hyp = fixLearn(hyp, im, par{:}, iter);
+besthyp = fixLearn(hyp, im, par{:}, iter);
 
 % for i=1:1
 %     % hyp = sample_prior(prior);

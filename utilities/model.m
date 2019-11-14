@@ -1,10 +1,10 @@
-function [meanfunc, covfunc, likfunc, inffunc, priors] = model(parms)
+function [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms)
 
     % define mean function and kernel
-    meanmask = [true, false, false, false, false, false];
-    covmask = [false, true, true, false, false, false];
-    firmbiasmask = [false, false, false, true, true, false];
-    firmmask = [false, false, false, true, false, false];
+    meanmask = [true, false, false, false, false];
+    covmask = [false, true, true, false, false];
+    firmbiasmask = [false, false, false, true, true];
+    firmmask = [false, false, false, true, false];
     mc = {@meanConst};
     ml = {@meanLinear};
     md = {@meanDiscrete, parms.nfirm};
@@ -28,12 +28,13 @@ function [meanfunc, covfunc, likfunc, inffunc, priors] = model(parms)
     % setting hyperpriors
     % using linear model as hyperpriors for mean prior
     
-    priors = cell(parms.ncandidates, 1);
-    
-    for k=1:parms.ncandidates
+    % priors = cell(parms.ncandidates, 1);
+    % prior.mean = cell(parms.ncandidates, 1);
+    % for k=1:parms.ncandidates
     % prior.mean = cell(2*parms.ncandidates + parms.nfirm,1);
-        mu_ml = 0; sigma_ml = parms.sl(k);
-        mu_mc = parms.mc(k); sigma_mc = 0.05;
+        mu_ml = 0; sigma_ml = 0.01;
+        % mu_mc = parms.mc(k); sigma_mc = 0.05;
+        mu_mc = 0.5; sigma_mc = 0.1;
         pg_ml = {@priorGauss, mu_ml, sigma_ml^2};
         pg_mc = {@priorGauss, mu_mc, sigma_mc^2};
         prior.mean = {pg_ml, pg_mc};
@@ -42,7 +43,8 @@ function [meanfunc, covfunc, likfunc, inffunc, priors] = model(parms)
             mu_md = 0; sigma_md = 0.05;
             pg_md = {@priorGauss, mu_md, sigma_md^2};
             prior.mean{2+i} = pg_md;
-        end
+        end 
+    % end
 
         % length scale: 30 days in average,
         % no less than 10 days, no more than 90 days
@@ -65,6 +67,6 @@ function [meanfunc, covfunc, likfunc, inffunc, priors] = model(parms)
         pg_lik = {@priorGauss, mu_lik, sigma_lik^2};
         prior.lik = {pg_lik};
         
-        priors{k} = prior;
-    end
+%         priors{k} = prior;
+%     end
 end

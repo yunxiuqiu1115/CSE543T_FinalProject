@@ -1,9 +1,8 @@
-function hyp = sample_separate_prior(priors, parms)
-    n = size(priors, 1);
+function hyp = sample_separate_prior(prior, parms, n)
     hyps = cell(n, 1);
     
     for i=1:n
-        hyps{i} = sample_prior(priors{i});
+        hyps{i} = sample_prior(prior);
     end
     
     hyp = hyps{1};

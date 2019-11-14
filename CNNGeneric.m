@@ -6,7 +6,8 @@ startup;
 
 % reading race data from all years and states
 CNNdata = readData("Gaussian Process/data/CNNdata1992to2018.csv");
-CNNdata = indexPollster(CNNdata, 50, "Gaussian Process/data/CNNdata1992to2018idx.csv");
+pollthres = 50;
+CNNdata = indexPollster(CNNdata, pollthres, "Gaussian Process/data/CNNdata1992to2018idx.csv");
 plot_path = "/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/plots/genericwith2018";
 
 parms.mode = true;
@@ -21,10 +22,9 @@ xs = cell(1000,1);
 ys = cell(1000,1);
 raceinfos = cell(1000,1);
 counter = 1;
-candidateid = 1;
 for i = 1:numel(years)
    for j = 1:numel(states)
-      [x, y, candidateNames, v, candidateid] = getRaceCandidateData(CNNdata, years(i), states(j), candidateid);
+      [x, y, candidateNames, v] = getRaceCandidateData(CNNdata, years(i), states(j));
       if isempty(x), continue; end
       for k = 1:numel(x)
          xs{counter} = x{k};
@@ -36,22 +36,21 @@ for i = 1:numel(years)
 end
 
 counter = counter - 1;
-candidateid = candidateid - 1;
 xs = xs(1:counter);
 ys = ys(1:counter);
 raceinfos = raceinfos(1:counter);
 parms.ncandidates = counter;
-parms.mc = zeros(counter,1);
-parms.sl = zeros(counter,1);
-parms.mp = zeros(counter,1);
+% parms.mc = zeros(counter,1);
+% parms.sl = zeros(counter,1);
+% parms.mp = zeros(counter,1);
+% 
+% for i=1:counter
+%    parms.mc(i) = mean(xs{i}(:,2));
+%    parms.sl(i) = 0.05 / abs(min(xs{i}(:,1)));
+% end
 
-for i=1:counter
-   parms.mc(i) = mean(xs{i}(:,2));
-   parms.sl(i) = 0.05 / abs(min(xs{i}(:,1)));
-end
-
-[meanfunc, covfunc, likfunc, inffunc, priors] = model(parms);
-im = {@infPrior, inffunc, priors};
+[meanfunc, covfunc, likfunc, inffunc, prior] = model(parms);
+im = {@infPrior, inffunc, prior};
 par = {meanfunc,covfunc,likfunc, xs, ys};
 
 % training
@@ -67,8 +66,11 @@ bestnlZ = 0;
 % end
 
 iter = 10;
-hyp = sample_separate_prior(priors, parms);
-hyp = fixLearn(hyp, im, par{:}, iter);
+seed = 1;
+disp(seed);
+rng(seed);
+hyp = sample_separate_prior(prior, parms, counter);
+besthyp = fixLearn(hyp, im, par{:}, iter);
 
 % for i=1:1
 %     % hyp = sample_prior(prior);

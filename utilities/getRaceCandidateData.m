@@ -1,4 +1,4 @@
-function [xs, ys, candidateNames, vs, candidateid]= getRaceCandidateData(data, year, state, candidateid)
+function [xs, ys, candidateNames, vs]= getRaceCandidateData(data, year, state)
     oneRaceData = data(data.cycle==year & strcmp(data.state, state), :);
     if ~size(oneRaceData,1), xs = []; ys = []; candidateNames = []; vs = []; return ; end
     oneRaceData(:, ["cycle", "state", "pollster", "Democrat"]) = [];
@@ -28,8 +28,8 @@ function [xs, ys, candidateNames, vs, candidateid]= getRaceCandidateData(data, y
         ps = ns./ss;                                                     % polling proportions
         is = allCandidatesData.(candidateNames{i}).pollsteridx;          % pollster indexes
         vs(i) = allCandidatesData.(candidateNames{i}).Percentage_of_Vote_won_x(1); % votes won
-        xs{i} = [ts, ps, ss, is, ds, ones(size(ts))*candidateid];
-        candidateid = candidateid + 1;
+        xs{i} = [ts, ps, ss, is, ds];
+        % candidateid = candidateid + 1;
         ys{i} = ps;
     end
 end
