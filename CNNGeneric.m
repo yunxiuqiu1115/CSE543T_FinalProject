@@ -36,6 +36,7 @@ for i = 1:numel(years)
 end
 
 counter = counter - 1;
+counter = 10;
 xs = xs(1:counter);
 ys = ys(1:counter);
 raceinfos = raceinfos(1:counter);
@@ -65,12 +66,18 @@ bestnlZ = 0;
 %     if nlZ < bestnlZ, bestnlZ = nlZ; besthyp = hyp; end
 % end
 
-iter = 10;
+iter = 5;
 seed = 1;
 disp(seed);
 rng(seed);
 hyp = sample_separate_prior(prior, parms, counter);
 besthyp = fixLearn(hyp, im, par{:}, iter);
+
+tic
+hyp = fixLearn(hyp, im, par{:}, iter);
+toc
+t = toc;
+disp(t);
 
 % for i=1:1
 %     % hyp = sample_prior(prior);

@@ -40,7 +40,7 @@ function [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms)
         prior.mean = {pg_ml, pg_mc};
 
         for i=1:parms.nfirm
-            mu_md = 0; sigma_md = 0.05;
+            mu_md = 0; sigma_md = 0.01;
             pg_md = {@priorGauss, mu_md, sigma_md^2};
             prior.mean{2+i} = pg_md;
         end 
@@ -57,13 +57,13 @@ function [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms)
         prior.cov = {pg_ls, pg_os};
 
         for i=1:parms.nfirm
-            mu_vf = log(0.1); sigma_vf = log(2);
+            mu_vf = log(0.02); sigma_vf = log(2)/2;
             pg_vf = {@priorGauss, mu_vf, sigma_vf^2};
             prior.cov{2+i} = pg_vf;
         end
 
         % total variance: CI for unknown sigma (chi-squared)
-        mu_lik = log(0.05); sigma_lik = log(2)/2;
+        mu_lik = log(0.05); sigma_lik = log(2);
         pg_lik = {@priorGauss, mu_lik, sigma_lik^2};
         prior.lik = {pg_lik};
         
