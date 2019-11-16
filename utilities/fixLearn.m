@@ -10,6 +10,7 @@ function hyperparameters = fixLearn(hyperparameters, ...
 %   priors = inference_method{3};
   p.method = 'LBFGS';
   p.mem = 100;
+  p.length = -100;
   mfun = @minimize_v2;
   liksize = size(hyperparameters.lik, 1);
   covsize = size(hyperparameters.cov,1);
@@ -21,7 +22,6 @@ function hyperparameters = fixLearn(hyperparameters, ...
       % learn unshared parameters independently
       disp("fix shared parameters...")
       p.verbosity = 0;
-      p.length = -100;
       trained_hyp = zeros(num_samples, 2);
       disp("training iter" + it);
       parfor i = 1:num_samples
@@ -46,7 +46,7 @@ function hyperparameters = fixLearn(hyperparameters, ...
       % fix unshared parameters
       % learn shared parameters independently
       p.verbosity = 1;
-      p.length = -20;
+%       p.length = -20;
       hyp = hyperparameters;
       hyp.mean = hyperparameters.mean(2*num_samples+1:end);
       mask = false(size(unwrap(hyperparameters)));

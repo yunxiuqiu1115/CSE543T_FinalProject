@@ -45,8 +45,10 @@ function [nlZ, dnlZ] = gp_independent_mask(hyp, hyperparameters, ...
   end
   
   if (gradient)
+      tmp = unwrap(dnlZ);
       for i=1:num_samples
-        dnlZ = rewrap(dnlZ, unwrap(dnlZ) + unwrap(dnlZs{i}));
+          tmp = tmp + unwrap(dnlZs{i})/num_samples;
       end
+      dnlZ = rewrap(dnlZ, tmp);
   end
 end
