@@ -209,4 +209,5 @@
     % histogram(exp(firmsigmas));
 
     disp(corr(a',b'));
+    save("CNNGenericThres50Iter5Seed2.mat");
 % end
