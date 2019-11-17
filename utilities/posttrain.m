@@ -52,6 +52,6 @@ for i=1:bottom
     disp(unique(CNNdata(CNNdata.pollsteridx == bottom_ind(i),:).pollster))
 end
 
-histogram(exp(firmsigmas));
+% histogram(exp(firmsigmas));
 
 disp(corr(a',b'));

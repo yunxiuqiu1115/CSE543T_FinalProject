@@ -40,7 +40,7 @@ function [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms)
         prior.mean = {pg_ml, pg_mc};
 
         for i=1:parms.nfirm
-            mu_md = 0; sigma_md = 0.01;
+            mu_md = 0; sigma_md = 0.025;
             pg_md = {@priorGauss, mu_md, sigma_md^2};
             prior.mean{2+i} = pg_md;
         end 
