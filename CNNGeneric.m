@@ -1,10 +1,10 @@
 % CNN Forecasting generic model
 function CNNGeneric(pollthres,iter,seed)
     if nargin < 1
-        pollthres = 50; iter=1;seed = 1;
+        pollthres = 50; iter=5;seed = 1;
     end
     if nargin < 2
-        iter=1;seed = 1;
+        iter=5;seed = 1;
     end
     if nargin < 3
         seed = 1;
