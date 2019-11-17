@@ -1,15 +1,15 @@
 % CNN Forecasting generic model
-% function CNNGeneric(pollthres,iter,seed)
-%     if nargin < 1
-%         pollthres = 50; iter=5;seed = 1;
-%     end
-%     if nargin < 2
-%         iter=5;seed = 1;
-%     end
-%     if nargin < 3
-%         seed = 1;
-%     end
-    pollthres = 50; iter=3; seed=2;
+function CNNGeneric(pollthres,iter,seed)
+    if nargin < 1
+        pollthres = 50; iter=5;seed = 1;
+    end
+    if nargin < 2
+        iter=5;seed = 1;
+    end
+    if nargin < 3
+        seed = 1;
+    end
+%     pollthres = 50; iter=3; seed=2;
     addpath("gpml-matlab-v3.6-2015-07-07");
     addpath("utilities");
     addpath("data");
@@ -18,7 +18,8 @@
     % reading race data from all years and states
     CNNdata = readData("data/CNNdata1992to2018.csv");
     CNNdata = indexPollster(CNNdata, pollthres, "data/CNNdata1992to2018idx.csv");
-    plot_path = "plots/genericwith2018";
+    jobname = "CNNGenericThres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    plot_path = "plots/" + jobname;
 
     parms.mode = true;
     % pollsters having less than threshold of polls will be indexed by nfirm
@@ -209,5 +210,5 @@
     % histogram(exp(firmsigmas));
 
     disp(corr(a',b'));
-    save("CNNGenericThres50Iter5Seed2.mat");
-% end
+    save(jobname + ".mat");
+end
