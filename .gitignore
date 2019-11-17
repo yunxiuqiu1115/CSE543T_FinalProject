@@ -4,3 +4,5 @@ playgrounds/
 *.mat
 *.txt
 *.m~
+run
+*log*
