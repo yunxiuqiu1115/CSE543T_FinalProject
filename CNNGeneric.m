@@ -45,7 +45,6 @@ function CNNGeneric(pollthres,iter,seed)
     end
 
     counter = counter - 1;
-    counter = 100;
     xs = xs(1:counter);
     ys = ys(1:counter);
     raceinfos = raceinfos(1:counter);
