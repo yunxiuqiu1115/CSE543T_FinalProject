@@ -3,9 +3,6 @@ function [nlZ, dnlZ] = gp_independent_mask(hyp, hyperparameters, ...
           likelihood, xs, ys, mask)
 
   num_samples = numel(xs);
-%   infP = inference_method{1}; 
-%   inffunc = inference_method{2}; 
-%   priors = inference_method{3};
   nfirm = size(hyperparameters.mean, 1) - 2*num_samples;
   
   u = unwrap(hyperparameters);
@@ -38,7 +35,7 @@ function [nlZ, dnlZ] = gp_independent_mask(hyp, hyperparameters, ...
     end
 
     % accumulate likelihoods and derivatives
-    nlZ = nlZ + this_nlZ;
+    nlZ = nlZ + this_nlZ/num_samples;
     if (gradient)
       dnlZs{i} = this_dnlZ;
     end

@@ -23,9 +23,8 @@ function hyperparameters = fixLearn(hyperparameters, ...
       disp("fix shared parameters...")
       p.verbosity = 0;
       trained_hyp = zeros(num_samples, 2);
-      disp("training iter" + it);
       parfor i = 1:num_samples
-        % if mod(i, 10) == 0, disp("trainning sample: " + i); end
+        if mod(i, 50) == 0, disp("training iter" + it + " trainning sample: " + i); end
         % disp("trainning sample: " + i);
         % im = {infP, inffunc, priors{i}};
         hyp = struct;
