@@ -1,4 +1,6 @@
-function hyp = sample_separate_prior(prior, parms, n)
+function hyp = sample_separate_prior(prior, parms, n, seed)
+    rng("default");
+    rng(seed);
     hyps = cell(n, 1);
     
     for i=1:n

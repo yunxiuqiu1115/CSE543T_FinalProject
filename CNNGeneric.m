@@ -75,8 +75,7 @@ function CNNGeneric(pollthres,iter,seed)
     % end
 
     disp("seed is " + seed);
-    rng(seed);
-    hyp = sample_separate_prior(prior, parms, counter);
+    hyp = sample_separate_prior(prior, parms, counter, seed);
     besthyp = fixLearn(hyp, im, par{:}, iter);
 
     % for i=1:1
