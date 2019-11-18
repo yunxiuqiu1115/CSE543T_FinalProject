@@ -5,4 +5,4 @@ playgrounds/
 *.txt
 *.m~
 run
-*log*
+CNN.*
