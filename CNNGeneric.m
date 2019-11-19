@@ -1,21 +1,14 @@
 % CNN Forecasting generic model
 function CNNGeneric(pollthres,iter,seed)
-    if nargin < 1
-        pollthres = 50; iter=5;seed = 1;
-    end
-    if nargin < 2
-        iter=5;seed = 1;
-    end
-    if nargin < 3
-        seed = 1;
-    end
-%     pollthres = 50; iter=3; seed=2;
+    if nargin < 1, pollthres = 50; iter=5;seed = 1; end
+    if nargin < 2, iter=5;seed = 1; end
+    if nargin < 3, seed = 1; end
     addpath("gpml-matlab-v3.6-2015-07-07");
     addpath("utilities");
     addpath("data");
     startup;
 
-    % reading race data from all years and states
+    % read race data
     CNNdata = readData("data/CNNdata.csv");
     CNNdata = indexPollster(CNNdata, pollthres, "data/CNNdataidx.csv");
     jobname = "CNN2018Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
@@ -52,7 +45,6 @@ function CNNGeneric(pollthres,iter,seed)
             parms.nfirm*ones(1,nz)',republican*ones(1,nz)', i*republican*ones(1,nz)'];
 
         hyp = full2one(besthyp, i, counter, parms.nfirm);
-        im = {@infPrior, inffunc, prior};
         [~, ~, fmu, fs2] = gp(hyp, im, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
         
 %         ndays = size(xs{1},1);

@@ -12,7 +12,7 @@ function [success, predPolls, trueVotes] = buildOneRaceModel(data, year, state, 
         [predPolls(i), fig] = oneCandidatePredict(xs{i}, ys{i}, parms);
         plot_title = year + " " + state + " " + candidateNames{i};
         title(plot_title);
-        yearFolder = fullfile("/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/plots", num2str(year));
+        yearFolder = fullfile("plots", num2str(year));
         stateFolder = fullfile(yearFolder, state);
         if ~exist(yearFolder, 'dir')
             mkdir(yearFolder)

@@ -20,5 +20,4 @@ function [xs, ys, raceinfos] = buildTrainCellArrays(data, years, states)
     xs = xs(1:counter);
     ys = ys(1:counter);
     raceinfos = raceinfos(1:counter);
-
 end

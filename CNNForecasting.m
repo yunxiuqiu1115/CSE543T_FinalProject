@@ -1,7 +1,7 @@
 % CNN Forecasting Toy Example
 % addpath("/Users/yahoo/Documents/WashU/CSE515T/Code/gpml-matlab-v4.2-2018-06-11");
-addpath("/Users/yahoo/Documents/WashU/CSE515T/Code/gpml-matlab-v3.6-2015-07-07");
-addpath("/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/utilities");
+addpath("gpml-matlab-v3.6-2015-07-07");
+addpath("utilities");
 startup;
 
 % reading race data from all years and states
