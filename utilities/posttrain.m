@@ -1,57 +1,79 @@
-errors = [];
-a = [];
-b = [];
-for i=1:numel(fn)
-    pvs = allRaces.(fn{i});
-    ps = pvs(1:2:end);
-    vs = pvs(2:2:end);
-    [~, p_idx] = max(ps);
-    [~, t_idx] = max(vs);
-    a = [a, ps];
-    b = [b, vs/100];
-    errors = [errors, (ps - vs/100)];
+function posttrain(CNNdata, allRaces, besthyp)
+    N = 0; nsuc = 0;
+    fn = fieldnames(allRaces);
+    for i=1:numel(fn)
+        pvs = allRaces.(fn{i});
+        ps = pvs(1:2:end);
+        vs = pvs(2:2:end);
+        [~, p_idx] = max(ps);
+        [~, t_idx] = max(vs);
+        if p_idx == t_idx
+           nsuc = nsuc + 1;
+        end
+        N = N + 1;
+    end
+
+    disp(N + " races run.");
+    disp(nsuc + " successful predictions.");
+    disp("Prediction rate: " + nsuc/N);
+
+    errors = zeros(N,1);
+    a = zeros(N,1);
+    b = zeros(N,1);
+    N = 1;
+    for i=1:numel(fn)
+        pvs = allRaces.(fn{i});
+        ps = pvs(1:2:end);
+        vs = pvs(2:2:end)/100;
+%         [~, p_idx] = max(ps);
+%         [~, t_idx] = max(vs);
+        l = size(ps,2);
+        a(N:N+l-1) = ps.';
+        b(N:N+l-1) = vs.';
+        errors(N:N+l-1) = (ps - vs).';
+        N = N + l;
+    end
+    histogram(abs(errors));
+
+    top = 10;
+    firmsigmas = besthyp.cov(3:end);
+    [~, indt] = sort(firmsigmas,'descend');
+    top_ind = indt(1:top);
+    top_ind(3) = [];
+    
+    for i=1:numel(top_ind)
+        disp(unique(CNNdata(CNNdata.pollsteridx == top_ind(i),:).pollster))
+    end
+
+    bottom = 10;
+    [~, indb] = sort(firmsigmas,'ascend');
+    bottom_ind = indb(1:bottom);
+    bottom_ind(1) = 0;
+    
+    for i=1:top
+        disp(unique(CNNdata(CNNdata.pollsteridx == bottom_ind(i),:).pollster))
+    end
+
+    top = 10;
+    nfirm = size(besthyp.cov,1) - 2;
+    firmbiases = besthyp.mean(end-nfirm+1:end);
+    [~, indt] = sort(firmbiases,'descend');
+    top_ind = indt(1:top);
+
+    for i=1:top
+        disp(unique(CNNdata(CNNdata.pollsteridx == top_ind(i),:).pollster))
+    end
+
+    bottom = 10;
+    [~, indb] = sort(firmbiases,'ascend');
+    bottom_ind = indb(1:bottom);
+    bottom_ind(1) = [];
+
+    for i=1:numel(bottom_ind)
+        disp(unique(CNNdata(CNNdata.pollsteridx == bottom_ind(i),:).pollster))
+    end
+
+    % histogram(exp(firmsigmas));
+
+    disp("Forecasting and actual voting correlation is: " + corr(a,b));
 end
-histogram(abs(errors));
-
-top = 10;
-firmsigmas = besthyp.cov(3:end);
-[valt, indt] = sort(firmsigmas,'descend');
-top_val = valt(1:top);
-top_ind = indt(1:top);
-worst_firms = unique(CNNdata(ismember(CNNdata.pollsteridx, top_ind),:).pollster);
-disp(worst_firms);
-
-bottom = 10;
-[valb, indb] = sort(firmsigmas,'ascend');
-bottom_val = valb(1:bottom);
-bottom_ind = indb(1:bottom);
-bottom_ind(1) = 0;
-best_firms = unique(CNNdata(ismember(CNNdata.pollsteridx, bottom_ind),:).pollster);
-disp(best_firms);
-
-top = 10;
-firmbiases = besthyp.mean(end-parms.nfirm:end);
-[valt, indt] = sort(firmbiases,'descend');
-top_val = valt(1:top);
-top_ind = indt(1:top);
-R_firms = unique(CNNdata(ismember(CNNdata.pollsteridx, top_ind),:).pollster);
-disp(R_firms);
-
-for i=1:top
-    disp(unique(CNNdata(CNNdata.pollsteridx == top_ind(i),:).pollster))
-end
-
-bottom = 10;
-[valb, indb] = sort(firmbiases,'ascend');
-bottom_val = valb(1:bottom);
-bottom_ind = indb(1:bottom);
-D_firms = unique(CNNdata(ismember(CNNdata.pollsteridx, bottom_ind),:).pollster);
-disp(D_firms);
-
-for i=1:bottom
-    disp(unique(CNNdata(CNNdata.pollsteridx == bottom_ind(i),:).pollster))
-end
-
-% histogram(exp(firmsigmas));
-
-disp(corr(a',b'));

@@ -16,9 +16,9 @@ function CNNGeneric(pollthres,iter,seed)
     startup;
 
     % reading race data from all years and states
-    CNNdata = readData("data/CNNdata1992to2018.csv");
-    CNNdata = indexPollster(CNNdata, pollthres, "data/CNNdata1992to2018idx.csv");
-    jobname = "CNNGenericThres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    CNNdata = readData("data/CNNdata.csv");
+    CNNdata = indexPollster(CNNdata, pollthres, "data/CNNdataidx.csv");
+    jobname = "CNN2018Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
     plot_path = "plots/" + jobname;
 
     parms.mode = true;
@@ -29,64 +29,19 @@ function CNNGeneric(pollthres,iter,seed)
     states = unique(CNNdata.state);
 
     % build training cell arrays
-    xs = cell(1000,1);
-    ys = cell(1000,1);
-    raceinfos = cell(1000,1);
-    counter = 1;
-    for i = 1:numel(years)
-       for j = 1:numel(states)
-          [x, y, candidateNames, v] = getRaceCandidateData(CNNdata, years(i), states(j));
-          if isempty(x), continue; end
-          for k = 1:numel(x)
-             xs{counter} = x{k};
-             ys{counter} = y{k};
-             raceinfos{counter} = {years(i), states(j), candidateNames(k), v(k)};
-             counter = counter + 1;
-          end
-       end
-    end
-
-    counter = counter - 1;
-    xs = xs(1:counter);
-    ys = ys(1:counter);
-    raceinfos = raceinfos(1:counter);
+    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
+    counter = size(xs,1);
     parms.ncandidates = counter;
-    % parms.mc = zeros(counter,1);
-    % parms.sl = zeros(counter,1);
-    % parms.mp = zeros(counter,1);
-    % 
-    % for i=1:counter
-    %    parms.mc(i) = mean(xs{i}(:,2));
-    %    parms.sl(i) = 0.05 / abs(min(xs{i}(:,1)));
-    % end
 
+    % define model
     [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms);
     im = {@infPrior, inffunc, prior};
     par = {meanfunc,covfunc,likfunc, xs, ys};
 
     % training
     disp("start training...");
-    % for i=1:1
-    %     % hyp = sample_prior(prior);
-    %     hyp = sample_separate_prior(priors, parms);
-    %     hyp = feval(mfun, hyp,  @gp_likelihood_independent, p, im, par{:});
-    %     [nlZ, ~] = gp_likelihood_independent(hyp, im, par{:});
-    %     if nlZ < bestnlZ, bestnlZ = nlZ; besthyp = hyp; end
-    % end
-
-    disp("seed is " + seed);
     hyp = sample_separate_prior(prior, parms, counter, seed);
     besthyp = fixLearn(hyp, im, par{:}, iter);
-
-    % for i=1:1
-    %     % hyp = sample_prior(prior);
-    %     for it=1:iter
-    %         hyp = feval(mfun, hyp,  @fixLearn, p, im, par{:}, sharedflag);
-    %         hyp = feval(mfun, hyp,  @fixLearn, p, im, par{:}, unsharedflag);
-    %     end
-    %     [nlZ, ~] = gp_likelihood_independent(hyp, im, par{:});
-    %     if nlZ < bestnlZ, bestnlZ = nlZ; besthyp = hyp; end
-    % end
 
     % iterate cycle/state race
     allRaces = struct;
@@ -99,6 +54,21 @@ function CNNGeneric(pollthres,iter,seed)
         hyp = full2one(besthyp, i, counter, parms.nfirm);
         im = {@infPrior, inffunc, prior};
         [~, ~, fmu, fs2] = gp(hyp, im, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
+        
+%         ndays = size(xs{1},1);
+%         ft = zeros(1,ndays);
+%         s2t = zeros(1,ndays);
+%         nlZt = zeros(1,ndays);
+%         for j = 1:ndays
+%             xt = x(1:j,:);
+%             yt = y(1:j);
+%             par = {meanfunc,covfunc,likfunc, xt, yt};
+%             hyp = feval(mfun, hyp,  @gp, -100, im, par{:}); 
+%             [~, ~, mu, s2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xt, yt, [0,0,1]);
+%             [nlZ, ~] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, x, y);
+%             ft(i) = mu; s2t(i) = s2; nlZt(i) = nlZ;
+%         end
+        
         fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), i);
         predPoll = fmu(end);
         year = raceinfos{i}{1};
@@ -132,82 +102,7 @@ function CNNGeneric(pollthres,iter,seed)
             allRaces.(fn) = [allRaces.(fn), predPoll, trueVote];
         end
     end
-
-    N = 0; nsuc = 0;
-
-    fn = fieldnames(allRaces);
-    for i=1:numel(fn)
-        pvs = allRaces.(fn{i});
-        ps = pvs(1:2:end);
-        vs = pvs(2:2:end);
-        [~, p_idx] = max(ps);
-        [~, t_idx] = max(vs);
-        if p_idx == t_idx
-           nsuc = nsuc + 1;
-        end
-        N = N + 1;
-    end
-
-    disp(N + " races run.");
-    disp(nsuc + " successful predictions.");
-    disp("Prediction rate: " + nsuc/N);
     
-    errors = [];
-    a = [];
-    b = [];
-    for i=1:numel(fn)
-        pvs = allRaces.(fn{i});
-        ps = pvs(1:2:end);
-        vs = pvs(2:2:end);
-        [~, p_idx] = max(ps);
-        [~, t_idx] = max(vs);
-        a = [a, ps];
-        b = [b, vs/100];
-        errors = [errors, (ps - vs/100)];
-    end
-    histogram(abs(errors));
-
-    top = 10;
-    firmsigmas = besthyp.cov(3:end);
-    [valt, indt] = sort(firmsigmas,'descend');
-    top_val = valt(1:top);
-    top_ind = indt(1:top);
-    worst_firms = unique(CNNdata(ismember(CNNdata.pollsteridx, top_ind),:).pollster);
-    disp(worst_firms);
-
-    bottom = 10;
-    [valb, indb] = sort(firmsigmas,'ascend');
-    bottom_val = valb(1:bottom);
-    bottom_ind = indb(1:bottom);
-    bottom_ind(1) = 0;
-    best_firms = unique(CNNdata(ismember(CNNdata.pollsteridx, bottom_ind),:).pollster);
-    disp(best_firms);
-
-    top = 10;
-    firmbiases = besthyp.mean(end-parms.nfirm:end);
-    [valt, indt] = sort(firmbiases,'descend');
-    top_val = valt(1:top);
-    top_ind = indt(1:top);
-    R_firms = unique(CNNdata(ismember(CNNdata.pollsteridx, top_ind),:).pollster);
-    disp(R_firms);
-
-    for i=1:top
-        disp(unique(CNNdata(CNNdata.pollsteridx == top_ind(i),:).pollster))
-    end
-
-    bottom = 10;
-    [valb, indb] = sort(firmbiases,'ascend');
-    bottom_val = valb(1:bottom);
-    bottom_ind = indb(1:bottom);
-    D_firms = unique(CNNdata(ismember(CNNdata.pollsteridx, bottom_ind),:).pollster);
-    disp(D_firms);
-
-    for i=1:bottom
-        disp(unique(CNNdata(CNNdata.pollsteridx == bottom_ind(i),:).pollster))
-    end
-
-    % histogram(exp(firmsigmas));
-
-    disp(corr(a',b'));
+    posttrain(CNNdata, allRaces, besthyp);
     save(jobname + ".mat");
 end
