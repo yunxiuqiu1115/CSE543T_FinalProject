@@ -6,3 +6,4 @@ playgrounds/
 *.m~
 run
 CNN.*
+*.R
