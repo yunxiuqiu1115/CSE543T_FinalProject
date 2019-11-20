@@ -9,8 +9,8 @@ function CNNGeneric(pollthres,iter,seed)
     startup;
 
     % read race data
-    CNNdata = readData("data/CNNdata.csv");
-    CNNdata = indexPollster(CNNdata, pollthres, "data/CNNdataidx.csv");
+    CNNdata = readData("data/CNNData.csv");
+    CNNdata = indexPollster(CNNdata, pollthres, "data/CNNDataidx.csv");
     jobname = "CNNCutoff2018Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
     plot_path = "plots/" + jobname;
 
@@ -81,8 +81,8 @@ function CNNGeneric(pollthres,iter,seed)
 %         end
 %     end
     
-    data2018 = readData("data/CNNdata2018.csv");
-    data2018 = indexPollster(data2018, pollthres, "data/CNNdata2018idx.csv");
+    data2018 = readData("data/CNNData2018.csv");
+    data2018 = indexPollster(data2018, pollthres, "data/CNNData2018idx.csv");
     [xs2018, ys2018, raceinfos2018] = buildTrainCellArrays(data2018, [2018], states);
     p.method = 'LBFGS';
     p.mem = 100;
