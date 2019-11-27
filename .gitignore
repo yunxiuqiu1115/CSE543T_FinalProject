@@ -7,3 +7,4 @@ playgrounds/
 run
 CNN.*
 *.R
+data/*idx.csv
