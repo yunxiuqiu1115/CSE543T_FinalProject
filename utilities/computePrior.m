@@ -1,3 +1,5 @@
-function a = computePrior(pvi, experienced)
-    a = (42.5 + 0.05*pvi + 7.05*experienced)/100;
+function a = computePrior(pvi, experienced, republican)
+    democratic = 1 - republican;
+    a = 18.98808 + pvi*0.66579 + experienced*5.63548 + republican*23.98806 + democratic*25.74237 - pvi*republican*1.2485;
+    a = a/100;
 end

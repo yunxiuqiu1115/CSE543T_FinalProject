@@ -29,7 +29,10 @@ function CNNGeneric(pollthres,iter,seed)
     
     for i=1:counter
         if raceinfos{i}{1}>=2016
-            parms.a(i) = computePrior(raceinfos{i}{5}, raceinfos{i}{6});
+            pvi =raceinfos{i}{5};
+            experienced =raceinfos{i}{6};
+            republican = xs{i}(1,5);
+            parms.a(i) = computePrior(pvi, experienced, republican);
             idx = xs{i}(:,1) <= -90;
             xs{i} = xs{i}(idx,:);
             ys{i} = ys{i}(idx);
@@ -50,11 +53,6 @@ function CNNGeneric(pollthres,iter,seed)
 %     data2018 = readData("data/CNNData2018.csv");
 %     data2018 = indexPollster(data2018, pollthres, "data/CNNData2018idx.csv");
     [validxs, validys, validraceinfos] = buildTrainCellArrays(CNNdata, (2016), states);
-    for i=1:numel(validxs)
-        idx = validxs{i}(:,1) >= -90;
-        validxs{i} = validxs{i}(idx,:);
-        validys{i} = validys{i}(idx);
-    end
     parms.valididx = size(xs,1) - size(validxs,1);
     [fts, s2s] = performForcasting(hyp, validxs, validys, validraceinfos, plot_path, parms);
     
