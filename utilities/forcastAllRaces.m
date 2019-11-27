@@ -5,7 +5,7 @@ function allRaces = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_path, parms
     allRaces = struct;
     nz = 200;
     for i = 1:size(xs,1)
-        if isempty(xs), continue; end
+        if isempty(xs{i}), continue; end
         republican = xs{i}(1,5);
         xstar = [linspace(xs{i}(1,1)-10,0,nz).',zeros(1,nz)',ones(1,nz)',...
             parms.nfirm*ones(1,nz)',republican*ones(1,nz)'];
