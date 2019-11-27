@@ -1,4 +1,4 @@
-function performForcasting(besthyp, xs, ys, raceinfos, plot_path, parms)
+function [fts,s2s] = performForcasting(besthyp, xs, ys, raceinfos, plot_path, parms)
     [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms);
     im = {@infPrior, inffunc, prior};
     p.method = 'LBFGS';
@@ -10,12 +10,14 @@ function performForcasting(besthyp, xs, ys, raceinfos, plot_path, parms)
     
     DAYS = [-90,-60,-30,-14,-7,-1];
     
+    fts = cell(numel(xs),1);
+    s2s = cell(numel(xs),1);
     for i=1:numel(xs)
         xs{i}(:,4) = parms.nfirm;
         republican = xs{i}(1,5);
 %         ndays = size(xs{i},1);
-%         ft = zeros(1,ndays);
-%         s2t = zeros(1,ndays);
+        fts{i} = zeros(1,numel(DAYS));
+        s2s{i} = zeros(1,numel(DAYS));
         for j = 1:numel(DAYS)
             idx = xs{i}(:,1) < DAYS(j);
             xt = xs{i}(idx,:);
@@ -40,7 +42,7 @@ function performForcasting(besthyp, xs, ys, raceinfos, plot_path, parms)
             else
                [~, ~, fmu, fs2] = gp(hyp_race, im, par{:}, xstar); 
             end
-            % ft(j) = mu; s2t(j) = s2;
+            fts{i}(j) = fmu(end); s2s{i}(j) = fs2(end);
             
             fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), i);
             year = raceinfos{i}{1};
