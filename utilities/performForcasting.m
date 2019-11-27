@@ -21,7 +21,7 @@ function [fts,s2s] = performForcasting(besthyp, xs, ys, raceinfos, plot_path, pa
         for j = 1:numel(DAYS)
             idx = xs{i}(:,1) < DAYS(j);
             xt = xs{i}(idx,:);
-            yt = ys{i}(idx);
+            yt = ys{i}(idx,:);
             
             im{3}.mean{2}{2} = parms.a(i);
             par = {meanfunc,covfunc,likfunc, xt, yt};

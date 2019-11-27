@@ -11,7 +11,7 @@ function CNNGeneric(pollthres,iter,seed)
     % read race data
     CNNdata = readData("data/CNNData.csv"); 
     CNNdata = indexPollster(CNNdata, pollthres, "data/CNNDataidx.csv");
-    jobname = "CNNCutoff2018Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    jobname = "CNNValid2016Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
     plot_path = "plots/" + jobname;
 
     parms.mode = true;
@@ -44,20 +44,20 @@ function CNNGeneric(pollthres,iter,seed)
     % training
     disp("start training...");
     hyp = sample_separate_prior(prior, parms, counter, seed);
-    besthyp = fixLearn(hyp, im, par{:}, iter, parms);
-    allRaces = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_path, parms);
+    hyp = fixLearn(hyp, im, par{:}, iter, parms);
+    allRaces = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
     
 %     data2018 = readData("data/CNNData2018.csv");
 %     data2018 = indexPollster(data2018, pollthres, "data/CNNData2018idx.csv");
     [validxs, validys, validraceinfos] = buildTrainCellArrays(CNNdata, (2016), states);
     for i=1:numel(validxs)
-        idx = validxs{i}(:,1) > -90;
+        idx = validxs{i}(:,1) >= -90;
         validxs{i} = validxs{i}(idx,:);
         validys{i} = validys{i}(idx);
     end
     parms.valididx = size(xs,1) - size(validxs,1);
-    [fts, s2s] = performForcasting(besthyp, validxs, validys, validraceinfos, plot_path, parms);
+    [fts, s2s] = performForcasting(hyp, validxs, validys, validraceinfos, plot_path, parms);
     
-    posttrain(CNNdata, allRaces, besthyp);
+    posttrain(CNNdata, allRaces, hyp);
     save(jobname + ".mat");
 end
