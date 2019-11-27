@@ -13,11 +13,6 @@ function CNNGeneric(pollthres,iter,seed)
     CNNdata = indexPollster(CNNdata, pollthres, "data/CNNDataidx.csv");
     jobname = "CNNCutoff2018Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
     plot_path = "plots/" + jobname;
-    
-    % splitting data into training/validation
-%     mask = CNNdata.cycle==2016 & CNNdata.daysLeft>=-90;
-%     valid_data = CNNdata(mask,:);
-%     train_data = CNNdata(~mask,:);
 
     parms.mode = true;
     % pollsters having less than threshold of polls will be indexed by nfirm
@@ -27,7 +22,7 @@ function CNNGeneric(pollthres,iter,seed)
     states = unique(CNNdata.state);
 
     % build training cell arrays
-    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, [2014,2016], states);
+    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
     counter = size(xs,1);
     parms.ncandidates = counter;
     parms.a = ones(counter,1)*0.5;
