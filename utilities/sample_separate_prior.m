@@ -5,6 +5,7 @@ function hyp = sample_separate_prior(prior, parms, n, seed)
     hyps = cell(n, 1);
     
     for i=1:n
+        prior.mean{2}{2} = parms.a(i);
         hyps{i} = sample_prior(prior);
     end
     

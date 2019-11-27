@@ -1,6 +1,6 @@
-function [xs, ys, candidateNames, vs]= getRaceCandidateData(data, year, state)
+function [xs, ys, candidateNames, vs, pvis, experienceds]= getRaceCandidateData(data, year, state)
     oneRaceData = data(data.cycle==year & strcmp(data.state, state), :);
-    if ~size(oneRaceData,1), xs = []; ys = []; candidateNames = []; vs = []; return ; end
+    if ~size(oneRaceData,1), xs = []; ys = []; candidateNames = []; vs = []; pvis = []; experienceds = []; return ; end
     oneRaceData(:, ["cycle", "state", "pollster", "Democrat"]) = [];
     
     % divide data into candidate group
@@ -19,6 +19,8 @@ function [xs, ys, candidateNames, vs]= getRaceCandidateData(data, year, state)
     xs = cell(nc,1);
     ys = cell(nc,1);
     vs = zeros(nc, 1);
+    pvis = zeros(nc, 1);
+    experienceds = zeros(nc, 1);
     for i=1:nc
         % define training data
         ts = allCandidatesData.(candidateNames{i}).daysLeft;             % daysLeft
@@ -31,5 +33,7 @@ function [xs, ys, candidateNames, vs]= getRaceCandidateData(data, year, state)
         xs{i} = [ts, ps, ss, is, ds];
         % candidateid = candidateid + 1;
         ys{i} = ps;
+        pvis(i) = allCandidatesData.(candidateNames{i}).pvi(1);
+        experienceds(i) = allCandidatesData.(candidateNames{i}).experienced(1);
     end
 end

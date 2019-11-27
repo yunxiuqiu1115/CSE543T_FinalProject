@@ -1,13 +1,14 @@
 function hyperparameters = fixLearn(hyperparameters, ...
           inference_method, mean_function, covariance_function, ...
-          likelihood, xs, ys, iter)
+          likelihood, xs, ys, iter, parms)
 
 % flag = True if this hyp is fixed      
-  num_samples = numel(xs);
+  num_samples = size(xs,1);
+  as = parms.a;
   
-%   infP = inference_method{1}; 
-%   inffunc = inference_method{2}; 
-%   priors = inference_method{3};
+  infP = inference_method{1}; 
+  inffunc = inference_method{2}; 
+  prior = inference_method{3};
   p.method = 'LBFGS';
   p.mem = 100;
   mfun = @minimize_v2;
@@ -25,6 +26,7 @@ function hyperparameters = fixLearn(hyperparameters, ...
       trained_hyp = zeros(num_samples, 2);
       parfor i = 1:num_samples
         if mod(i, 50) == 0, disp("training iter" + it + " trainning sample: " + i); end
+        if isempty(xs{i}), continue; end
         % disp("trainning sample: " + i);
         % im = {infP, inffunc, priors{i}};
         hyp = struct;
@@ -34,7 +36,9 @@ function hyperparameters = fixLearn(hyperparameters, ...
         mask = false(size(unwrap(hyp_race)));
         mask(liksize+covsize+1) = 1;
         mask(liksize+covsize+2) = 1;
-        hyp = feval(mfun, hyp, @gp_mask, p, hyp_race, inference_method,...
+        im = {infP, inffunc, prior};
+        im{3}.mean{2}{2} = as(i);
+        hyp = feval(mfun, hyp, @gp_mask, p, hyp_race, im,...
             mean_function, covariance_function,...
             likelihood, xs{i}, ys{i}, mask);
         trained_hyp(i,:) = hyp.mean;
@@ -53,7 +57,7 @@ function hyperparameters = fixLearn(hyperparameters, ...
       mask(end-nfirm+1:end) = 1;
       hyp = feval(mfun, hyp, @gp_independent_mask, p, hyperparameters,...
           inference_method, mean_function, covariance_function,...
-          likelihood, xs, ys, mask);
+          likelihood, xs, ys, mask, parms);
       u = unwrap(hyperparameters);
       u(mask) = unwrap(hyp);
       hyperparameters = rewrap(hyperparameters, u);
