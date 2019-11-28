@@ -26,13 +26,11 @@ function hyperparameters = fixLearn(hyperparameters, ...
       trained_hyp = zeros(num_samples, 2);
       parfor i = 1:num_samples
         if mod(i, 50) == 0, disp("training iter" + it + " trainning sample: " + i); end
-        if isempty(xs{i}), continue; end
-        % disp("trainning sample: " + i);
-        % im = {infP, inffunc, priors{i}};
         hyp = struct;
         hyp_race = full2one(hyperparameters, i, num_samples, nfirm);
         hyp.mean(1) = hyperparameters.mean(i);
         hyp.mean(2) = hyperparameters.mean(i+num_samples);
+        if isempty(xs{i}), trained_hyp(i,:) = hyp.mean; continue; end
         mask = false(size(unwrap(hyp_race)));
         mask(liksize+covsize+1) = 1;
         mask(liksize+covsize+2) = 1;
