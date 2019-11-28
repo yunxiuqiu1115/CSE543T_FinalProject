@@ -28,11 +28,11 @@ function CNNGeneric(pollthres,iter,seed)
     parms.a = ones(counter,1)*0.5;
     
     for i=1:counter
+        pvi =raceinfos{i}{5};
+        experienced =raceinfos{i}{6};
+        republican = xs{i}(1,5);
+        parms.a(i) = computePrior(pvi, experienced, republican);
         if raceinfos{i}{1}>=2016
-            pvi =raceinfos{i}{5};
-            experienced =raceinfos{i}{6};
-            republican = xs{i}(1,5);
-            parms.a(i) = computePrior(pvi, experienced, republican);
             idx = xs{i}(:,1) <= -90;
             xs{i} = xs{i}(idx,:);
             ys{i} = ys{i}(idx);

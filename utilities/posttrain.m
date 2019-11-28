@@ -33,7 +33,13 @@ function posttrain(CNNdata, allRaces, besthyp)
         errors(N:N+l-1) = (ps - vs).';
         N = N + l;
     end
-    histogram(abs(errors));
+    
+    fig = histogram(abs(errors));
+    xlabel("absolute forecasting error");
+    ylabel("count");
+    title("Frequency count of absolute forecasting error");
+    saveas(fig, "errors.jpg");
+    close;
 
     top = 10;
     firmsigmas = besthyp.cov(3:end);
@@ -76,4 +82,10 @@ function posttrain(CNNdata, allRaces, besthyp)
     % histogram(exp(firmsigmas));
 
     disp("Forecasting and actual voting correlation is: " + corr(a,b));
+    fig = scatter(a,b, 'k.');
+    xlabel("forecasted votes");
+    ylabel("actual votes");
+    title("Forecast and actual votes correlation");
+    saveas(fig, "corr.jpg");
+    close;
 end
