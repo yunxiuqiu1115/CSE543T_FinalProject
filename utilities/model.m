@@ -32,7 +32,7 @@ function [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms)
     % prior.mean = cell(parms.ncandidates, 1);
     % for k=1:parms.ncandidates
     % prior.mean = cell(2*parms.ncandidates + parms.nfirm,1);
-        mu_ml = 0; sigma_ml = 0.001;
+        mu_ml = 0; sigma_ml = 0.01;
         % mu_mc = parms.mc(k); sigma_mc = 0.05;
         mu_mc = 0.5; sigma_mc = 0.05;
         pg_ml = {@priorGauss, mu_ml, sigma_ml^2};
