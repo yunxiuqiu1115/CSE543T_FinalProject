@@ -8,3 +8,4 @@ run
 CNN.*
 *.R
 data/*idx.csv
+*.jpg
