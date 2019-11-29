@@ -1,8 +1,10 @@
-function allRaces = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_path, parms)
+function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_path, parms)
     % iterate cycle/state race
     [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms);
     im = {@infPrior, inffunc, prior};
     allRaces = struct;
+    fts = zeros(numel(xs),1);
+    s2s = zeros(numel(xs),1);
     nz = 200;
     for i = 1:size(xs,1)
         if isempty(xs{i}), continue; end
@@ -15,6 +17,8 @@ function allRaces = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_path, parms
         
         fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), i);
         predPoll = fmu(end);
+        fts(i) = predPoll;
+        s2s(i) = fs2(end);
         year = raceinfos{i}{1};
         state = raceinfos{i}{2}{1};
         candidateName = raceinfos{i}{3};

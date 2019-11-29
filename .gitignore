@@ -3,6 +3,7 @@ plots/
 playgrounds/
 *.mat
 *.txt
+*.csv
 *.m~
 run
 CNN.*

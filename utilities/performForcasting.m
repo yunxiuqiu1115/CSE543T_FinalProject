@@ -35,6 +35,7 @@ function [fts,s2s] = performForcasting(besthyp, xs, ys, raceinfos, plot_path, pa
             candidateName = raceinfos{i}{3};
             trueVote = raceinfos{i}{4}/100;
             plot([0], [trueVote], 'rx');
+            plot([xs{i}(1,1)], [parms.a(i + parms.valididx)], 'bx');
             plot_title = year + " " + state + " " + candidateName + " before days " + -DAYS(j);
             title(plot_title);
             yearFolder = fullfile(plot_path, num2str(year));
