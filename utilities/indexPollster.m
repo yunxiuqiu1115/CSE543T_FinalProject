@@ -1,4 +1,4 @@
-function data = indexPollster(data, threshold, file_path)
+function data = indexPollster(data, threshold)
 % Index pollster above threshold
 %
 % Note: pollster below threshold will be indexed into one category
@@ -25,6 +25,6 @@ function data = indexPollster(data, threshold, file_path)
     end
 
     data.pollsteridx = idxs;
-    writetable(data, file_path);
+%     writetable(data, file_path);
 
 end

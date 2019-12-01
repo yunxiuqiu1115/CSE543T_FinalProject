@@ -6,5 +6,6 @@ function fig = plot_posterior(fmu, fs2, x, y, xs, i)
      'facealpha', 0.7, ...
      'edgecolor', 'none');
     hold on; plot(xs, fmu, "color", [31, 120, 180] / 255); plot(x, y, 'k.');
+    legend('95% CI','mean p*','data')
     xlabel("days before voting"); ylabel("polling proportions");
 end

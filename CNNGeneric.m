@@ -10,7 +10,7 @@ function CNNGeneric(pollthres,iter,seed)
 
     % read race data
     CNNdata = readData("data/CNNData.csv"); 
-    CNNdata = indexPollster(CNNdata, pollthres, "data/CNNDataidx.csv");
+    CNNdata = indexPollster(CNNdata, pollthres);
     jobname = "CNNValid2016Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
     plot_path = "plots/" + jobname;
 
