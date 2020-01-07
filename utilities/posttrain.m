@@ -45,10 +45,11 @@ function posttrain(CNNdata, allRaces, besthyp)
     firmsigmas = besthyp.cov(3:end);
     [~, indt] = sort(firmsigmas,'descend');
     top_ind = indt(1:top);
-    top_ind(3) = [];
+    top_ind(1) = [];
     
     for i=1:numel(top_ind)
         disp(unique(CNNdata(CNNdata.pollsteridx == top_ind(i),:).pollster))
+        disp((firmsigmas(top_ind(i))))
     end
 
     bottom = 10;
@@ -56,8 +57,9 @@ function posttrain(CNNdata, allRaces, besthyp)
     bottom_ind = indb(1:bottom);
     bottom_ind(1) = 0;
     
-    for i=1:top
+    for i=2:bottom
         disp(unique(CNNdata(CNNdata.pollsteridx == bottom_ind(i),:).pollster))
+        disp((firmsigmas(bottom_ind(i))))
     end
 
     top = 10;
@@ -104,4 +106,22 @@ function posttrain(CNNdata, allRaces, besthyp)
 %     end
 %     forecast = table(cycle, state, candidate, posteriormean, posteriorstd);
 %     writetable(forecast,'forecast1992-2014.csv');
+
+%     validforecast = cell(70, 3+6*2);
+%     
+%     for i=1:70
+%         validforecast{i,1} = validraceinfos{i}{1};
+%         validforecast{i,2} = validraceinfos{i}{2};
+%         validforecast{i,3} = validraceinfos{i}{3};
+%         for j=1:6
+%             validforecast{i,3+2*j-1} = validfts{i}(j);
+%             validforecast{i,3+2*j} = sqrt(valids2s{i}(j));
+%         end
+%     end
+%     validforecast = array2table(validforecast,'VariableNames',...
+%                         {'cycle','state','candidate', 'day90mean', 'day90std',...
+%                          'day60mean', 'day60std', 'day30mean', 'day30std',...
+%                          'day14mean', 'day14std', 'day7mean', 'day7std',...
+%                          'day1mean', 'day1std'});
+%     writetable(validforecast,'forecast2016.csv');
 end
