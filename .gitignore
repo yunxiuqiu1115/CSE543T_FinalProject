@@ -7,6 +7,8 @@ playgrounds/
 *.m~
 run
 CNN.*
-*.R
 data/*idx.csv
 *.jpg
+.Rproj.user
+*.Rproj*
+results/
