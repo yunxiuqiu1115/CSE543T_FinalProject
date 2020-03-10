@@ -7,30 +7,41 @@ data {
 }
 
 parameters {
-  real alpha;
-  real beta;
-  real<lower=0> ols_sigma;
-  matrix[N, 4] gamma; // vector of underlying true support rate on election days
-  vector<lower=0>[4] p[N];
+  real<lower=0> alpha;
+  real<lower=0> beta;
+  vector<lower=0, upper=1>[4] gamma[N]; // vector of underlying true support rates
+}
+
+transformed parameters{
+  vector<lower=0>[4] p[N]; // vector of underlying dirichlet parameters
+  for(i in 1:N){
+    for(j in 1:4){
+      if(j<=nc[i]){
+        // assume a simple linear relation
+        p[i,j] = alpha + beta*gamma[i,j];
+      }
+      else{
+        // hardcode unocurring candidates
+        p[i,j]=0.0001;
+      }
+    }
+  }
 }
 
 model {
-  alpha ~ normal(0, 0.1);
-  beta ~ normal(1, 0.1);
+  // very flat priors on linear model parameters
+  alpha ~ normal(0, 1);
+  beta ~ normal(1, 1);
+  // generate underlying true support rates
   for(i in 1:N){
-    for(j in 1:nc[i]){
+    for(j in 1:4){
       gamma[i,j] ~ normal(mu[i,j], sigma[i,j]);
     }
   }
-  
+
+  // generate voting rates from support rates
   for(i in 1:N){
-    for(j in 1:nc[i]){
-      p[i,j] ~ normal(alpha + beta*gamma[i,j], ols_sigma); 
-    }
-  }
-  
-  for(i in 1:N){
-    y[i,1:nc[i]] ~ dirichlet(p[i,1:nc[i]]);
+    y[i] ~ dirichlet(p[i]);
   }
 }
 

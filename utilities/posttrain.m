@@ -91,21 +91,24 @@ function posttrain(CNNdata, allRaces, besthyp)
     saveas(fig, "corr.jpg");
     close;
     
-    
-%     cycle = cell(760,1);
-%     state = cell(760,1);
-%     candidate = cell(760,1);
-%     posteriormean = cell(760,1);
-%     posteriorstd = cell(760,1);
-%     for i=1:760
-%         cycle{i} = raceinfos{i}{1};
-%         state{i} = raceinfos{i}{2};
-%         candidate{i} = raceinfos{i}{3};
-%         posteriormean{i} = fts(i);
-%         posteriorstd{i} = sqrt(s2s(i));
-%     end
-%     forecast = table(cycle, state, candidate, posteriormean, posteriorstd);
-%     writetable(forecast,'forecast1992-2014.csv');
+    % get only 1992 - 2014
+    %  N = 760;
+    cycle = cell(N,1);
+    state = cell(N,1);
+    candidate = cell(N,1);
+    posteriormean = cell(N,1);
+    posteriorstd = cell(N,1);
+    polls = cell(N, 1);
+    for i=1:N
+        cycle{i} = raceinfos{i}{1};
+        state{i} = raceinfos{i}{2};
+        candidate{i} = raceinfos{i}{3};
+        posteriormean{i} = fts(i);
+        posteriorstd{i} = sqrt(s2s(i));
+        polls{i} = raceinfos{i}{4};
+    end
+    forecast = table(cycle, state, candidate, posteriormean, posteriorstd, polls);
+    writetable(forecast,'forecast1992-2016-votes.csv');
 
 %     validforecast = cell(70, 3+6*2);
 %     
