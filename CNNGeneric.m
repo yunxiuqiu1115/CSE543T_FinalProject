@@ -9,8 +9,10 @@ function CNNGeneric(pollthres,iter,seed)
     startup;
 
     % read race data
-    CNNdata = readData("data/CNNData.csv"); 
+    CNNdata = readData("data/CNNData.csv");
     CNNdata = indexPollster(CNNdata, pollthres);
+    % data2016 = CNNdata(CNNdata.cycle==2016,:);
+    % CNNdata = CNNdata(CNNdata.cycle<2016,:);
     jobname = "CNNValid2016Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
     plot_path = "plots/" + jobname;
 
@@ -48,6 +50,8 @@ function CNNGeneric(pollthres,iter,seed)
     disp("start training...");
     hyp = sample_separate_prior(prior, parms, counter, seed);
     hyp = fixLearn(hyp, im, par{:}, iter, parms);
+    
+    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
     [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
     
 %     data2018 = readData("data/CNNData2018.csv");

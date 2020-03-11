@@ -7,7 +7,6 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
     s2s = zeros(numel(xs),1);
     nz = 200;
     for i = 1:size(xs,1)
-        if isempty(xs{i}), continue; end
         republican = xs{i}(1,5);
         xstar = [linspace(xs{i}(1,1)-10,0,nz).',zeros(1,nz)',ones(1,nz)',...
             parms.nfirm*ones(1,nz)',republican*ones(1,nz)'];
