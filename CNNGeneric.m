@@ -60,6 +60,6 @@ function CNNGeneric(pollthres,iter,seed)
     parms.valididx = size(xs,1) - size(validxs,1);
     [validfts, valids2s] = performForcasting(hyp, validxs, validys, validraceinfos, plot_path, parms);
     
-    posttrain(CNNdata, allRaces, hyp);
+    % posttrain(CNNdata, allRaces, hyp);
     save(jobname + ".mat");
 end
