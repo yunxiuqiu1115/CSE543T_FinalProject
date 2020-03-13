@@ -12,6 +12,5 @@ data/*idx.csv
 .Rproj.user
 *.Rproj*
 results/
-*.stan
 *.Rhistory
 *.RData
