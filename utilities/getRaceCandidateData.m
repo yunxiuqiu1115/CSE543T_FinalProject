@@ -1,6 +1,6 @@
-function [xs, ys, candidateNames, vs, pvis, experienceds]= getRaceCandidateData(data, year, state)
+function [xs, ys, candidateNames, vs, pvis, experienceds, parties]= getRaceCandidateData(data, year, state)
     oneRaceData = data(data.cycle==year & strcmp(data.state, state), :);
-    if ~size(oneRaceData,1), xs = []; ys = []; candidateNames = []; vs = []; pvis = []; experienceds = []; return ; end
+    if ~size(oneRaceData,1), xs = []; ys = []; candidateNames = []; vs = []; pvis = []; experienceds = []; parties = []; return ; end
     oneRaceData(:, ["cycle", "state", "pollster", "Democrat"]) = [];
     
     % divide data into candidate group
@@ -19,6 +19,7 @@ function [xs, ys, candidateNames, vs, pvis, experienceds]= getRaceCandidateData(
     xs = cell(nc,1);
     ys = cell(nc,1);
     vs = zeros(nc, 1);
+    parties = zeros(nc, 1);
     pvis = zeros(nc, 1);
     experienceds = zeros(nc, 1);
     for i=1:nc
@@ -31,6 +32,7 @@ function [xs, ys, candidateNames, vs, pvis, experienceds]= getRaceCandidateData(
         is = allCandidatesData.(candidateNames{i}).pollsteridx;          % pollster indexes
         vs(i) = allCandidatesData.(candidateNames{i}).Percentage_of_Vote_won_x(1); % votes won
         xs{i} = [ts, ps, ss, is, ds];
+        parties(i) = 2*ds(1) - 1;
         % candidateid = candidateid + 1;
         ys{i} = ps;
         pvis(i) = allCandidatesData.(candidateNames{i}).pvi(1);

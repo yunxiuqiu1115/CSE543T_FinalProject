@@ -109,8 +109,6 @@ fit <- stan(file = "model.stan",
 # summary(fit)
 fit_params = as.data.frame(fit)
 
-
-
 # prediction
 
 # define prediction function
@@ -153,6 +151,9 @@ POSTERIORSTD = c()
 VOTE = c()
 LOWER95 = c()
 UPPER95 = c()
+WIN = c()
+
+correct_predictions = 0
 
 for(i in 1:test_counter) {
   state = test_metadata[[i]]
@@ -161,16 +162,16 @@ for(i in 1:test_counter) {
   vote = data2016[data2016$state==state,c("vote")]
   candidates = data2016[data2016$state==state,c("candidate")]
   # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
+  preds= c()
   for(j in 1:test_nc[i]){
-    tmp = paste('test_y[',i,',',j,']',sep='') 
-    preds = fit_params[[tmp]]
-    u=quantile(preds,probs=c(0.975),names = FALSE)
-    l=quantile(preds,probs=c(0.025),names = FALSE)
+    tmp = paste('test_y[',i,',',j,']',sep='')
+    pred = fit_params[[tmp]]
+    preds = c(preds, pred)
+    u=quantile(pred,probs=c(0.975),names = FALSE)
+    l=quantile(pred,probs=c(0.025),names = FALSE)
     if (test_stan_y[i,j]<=u & test_stan_y[i,j]>=l){
       flags[i,j] = 1
     }
-    print(state)
-    print(as.character(candidates[j]))
     CYCLE = c(CYCLE, 2016)
     STATE = c(STATE,state)
     CANDIDATE = c(CANDIDATE,as.character(candidates[j]))
@@ -179,6 +180,20 @@ for(i in 1:test_counter) {
     VOTE = c(VOTE, vote[j])
     LOWER95 = c(LOWER95, l)
     UPPER95 = c(UPPER95, u)
+  }
+  preds = matrix(preds, nrow = test_nc[i], byrow = TRUE)
+  win_rates = rep(0, test_nc[i])
+  for(k in 1:ncol(preds)){
+    idx = which.max(preds[,k])
+    win_rates[idx] = win_rates[idx] + 1
+  }
+  win_rates = win_rates / sum(win_rates)
+  WIN = c(WIN, win_rates)
+  if (which.max(win_rates)==which.max(vote)){
+    correct_predictions = correct_predictions + 1
+  }
+  else{
+    print(test_metadata[[i]])
   }
 }
 
@@ -190,7 +205,8 @@ result = data.frame(CYCLE,
                     POSTERIORSTD,
                     VOTE,
                     LOWER95,
-                    UPPER95)
+                    UPPER95,
+                    WIN)
 
 names(result) <- tolower(names(result))
 

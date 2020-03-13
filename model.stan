@@ -34,8 +34,8 @@ transformed parameters{
 
 model {
   // very flat priors on linear model parameters
-  alpha ~ normal(0, 1);
-  beta ~ normal(1, 1);
+  alpha ~ normal(3.5, 0.5);
+  beta ~ normal(11, 1);
   // generate underlying true support rates
   for(i in 1:N){
     for(j in 1:4){

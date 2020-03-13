@@ -97,6 +97,9 @@ function posttrain(CNNdata, allRaces, besthyp)
     cycle = cell(N,1);
     state = cell(N,1);
     candidate = cell(N,1);
+    pvi = cell(N,1);
+    party = cell(N,1);
+    experienced = cell(N,1);
     posteriormean = cell(N,1);
     posteriorstd = cell(N,1);
     vote = cell(N, 1);
@@ -107,8 +110,11 @@ function posttrain(CNNdata, allRaces, besthyp)
         posteriormean{i} = fts(i);
         posteriorstd{i} = sqrt(s2s(i));
         vote{i} = raceinfos{i}{4};
+        pvi{i} = raceinfos{i}{5};
+        experienced{i} = raceinfos{i}{6};
+        party{i} = raceinfos{i}{7};
     end
-    forecast = table(cycle, state, candidate, posteriormean, posteriorstd, vote);
+    forecast = table(cycle, state, candidate, posteriormean, posteriorstd, vote, pvi, party, experienced);
     writetable(forecast,'forecast1992-2016.csv');
 
 %     validforecast = cell(70, 3+6*2);
