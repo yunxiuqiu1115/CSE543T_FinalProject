@@ -13,6 +13,5 @@ data/*idx.csv
 *.Rproj*
 results/
 *.stan
-*.R
 *.Rhistory
 *.RData
