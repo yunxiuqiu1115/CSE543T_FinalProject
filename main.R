@@ -10,10 +10,14 @@ states = unique(data$state)
 
 # define variables
 metadata = list()
+year_idx = c()
 mu = list()
 sigma = list()
 y = list()
 nc = c()
+pvi = list()
+party = list()
+experienced = list()
 counter = 0
 
 # iterate over races
@@ -22,13 +26,21 @@ for (cycle in cycles) {
     pmu = data[data$cycle==cycle & data$state==state,c("posteriormean")]
     pstd = data[data$cycle==cycle & data$state==state,c("posteriorstd")]
     vote = data[data$cycle==cycle & data$state==state,c("vote")]
+    pvi_ = data[data$cycle==cycle & data$state==state,c("pvi")]
+    party_ = data[data$cycle==cycle & data$state==state,c("party")]
+    experienced_ = data[data$cycle==cycle & data$state==state,c("experienced")]
+    
     if(length(pmu)){
       counter = counter + 1
       metadata[[counter]] = c(cycle, state)
       mu[[counter]] = pmu
       sigma[[counter]] = pstd
       y[[counter]] = vote / 100
+      pvi[[counter]] = pvi_
+      party[[counter]] = party_
+      experienced[[counter]] = experienced_
       nc = c(nc, length(vote))
+      year_idx = c(year_idx, (cycle-1990)/2)
     }
   }
 }
@@ -37,20 +49,30 @@ for (cycle in cycles) {
 stan_mu = matrix(0,counter,4)
 stan_sigma = matrix(0.0001,counter,4)
 stan_y = matrix(0.0001,counter,4)
+stan_pvi = matrix(0,counter,4)
+stan_party = matrix(0,counter,4)
+stan_experienced = matrix(0,counter,4)
 
 for (i in 1:counter) {
   stan_mu[i,1:nc[i]] = mu[[i]]
   stan_sigma[i,1:nc[i]] = sigma[[i]]
   stan_y[i,1:nc[i]] = y[[i]]
   stan_y[i,] = stan_y[i,]/sum(stan_y[i,])
+  stan_pvi[i,1:nc[i]] = pvi[[i]]
+  stan_party[i,1:nc[i]] = party[[i]]
+  stan_experienced[i, 1:nc[i]] = experienced[[i]]
 }
 
 # test data
 test_metadata = list()
+test_year_idx = c()
 test_mu = list()
 test_sigma = list()
 test_y = list()
 test_nc = c()
+test_pvi = list()
+test_party = list()
+test_experienced = list()
 test_counter = 0
 
 # iterate over races
@@ -58,13 +80,20 @@ for (state in states) {
   pmu = data2016[data2016$state==state,c("posteriormean")]
   pstd = data2016[data2016$state==state,c("posteriorstd")]
   vote = data2016[data2016$state==state,c("vote")]
+  pvi_ = data2016[data2016$state==state,c("pvi")]
+  party_ = data2016[data2016$state==state,c("party")]
+  experienced_ = data2016[data2016$state==state,c("experienced")]
   if(length(pmu)){
     test_counter = test_counter + 1
     test_metadata[[test_counter]] = c(state)
     test_mu[[test_counter]] = pmu
     test_sigma[[test_counter]] = pstd
     test_y[[test_counter]] = vote / 100
+    test_pvi[[test_counter]] = pvi_
+    test_party[[test_counter]] = party_
+    test_experienced[[test_counter]] = experienced_
     test_nc = c(test_nc, length(vote))
+    test_year_idx = c(test_year_idx, (2016-1990)/2)
   }
 }
 
@@ -72,12 +101,18 @@ for (state in states) {
 test_stan_mu = matrix(0,test_counter,4)
 test_stan_sigma = matrix(0.0001,test_counter,4)
 test_stan_y = matrix(0.0001,test_counter,4)
+test_stan_pvi = matrix(0,test_counter,4)
+test_stan_party = matrix(0,test_counter,4)
+test_stan_experienced = matrix(0,test_counter,4)
 
 for (i in 1:test_counter) {
   test_stan_mu[i,1:test_nc[i]] = test_mu[[i]]
   test_stan_sigma[i,1:test_nc[i]] = test_sigma[[i]]
   test_stan_y[i,1:test_nc[i]] = test_y[[i]]
   test_stan_y[i,] = test_stan_y[i,]/sum(test_stan_y[i,])
+  test_stan_pvi[i,1:test_nc[i]] = test_pvi[[i]]
+  test_stan_party[i,1:test_nc[i]] = test_party[[i]]
+  test_stan_experienced[i, 1:test_nc[i]] = test_experienced[[i]]
 }
 
 
@@ -87,10 +122,19 @@ stan_data = list(N = counter,
                  sigma = stan_sigma,
                  nc = nc,
                  y = stan_y,
+                 pvi = stan_pvi,
+                 party = stan_party,
+                 experienced = stan_experienced,
+                 year_idx = year_idx,
                  test_N = test_counter, 
                  test_mu = test_stan_mu, 
                  test_sigma = test_stan_sigma,
-                 test_nc = test_nc)
+                 test_nc = test_nc,
+                 test_pvi = test_stan_pvi,
+                 test_party = test_stan_party,
+                 test_experienced = test_stan_experienced,
+                 test_year_idx = test_year_idx,
+                 max_year_idx = max(c(year_idx, test_year_idx)))
 
 # define stan model
 model <- stan_model("model.stan")
@@ -103,7 +147,7 @@ fit <- stan(file = "model.stan",
             chains = 3, 
             cores = 3, 
             thin = 4,
-            control=list(adapt_delta=.95)
+            control=list(adapt_delta=.99, max_treedepth = 15),
             )
 
 # summary(fit)
@@ -152,6 +196,7 @@ VOTE = c()
 LOWER95 = c()
 UPPER95 = c()
 WIN = c()
+MEDIAN = c()
 
 correct_predictions = 0
 
@@ -169,6 +214,7 @@ for(i in 1:test_counter) {
     preds = c(preds, pred)
     u=quantile(pred,probs=c(0.975),names = FALSE)
     l=quantile(pred,probs=c(0.025),names = FALSE)
+    m = median(pred)
     if (test_stan_y[i,j]<=u & test_stan_y[i,j]>=l){
       flags[i,j] = 1
     }
@@ -178,6 +224,7 @@ for(i in 1:test_counter) {
     POSTERIORMEAN = c(POSTERIORMEAN,pmu[j])
     POSTERIORSTD = c(POSTERIORSTD,pstd[j])
     VOTE = c(VOTE, vote[j])
+    MEDIAN = c(MEDIAN, m)
     LOWER95 = c(LOWER95, l)
     UPPER95 = c(UPPER95, u)
   }
@@ -206,6 +253,7 @@ result = data.frame(CYCLE,
                     VOTE,
                     LOWER95,
                     UPPER95,
+                    MEDIAN,
                     WIN)
 
 names(result) <- tolower(names(result))
