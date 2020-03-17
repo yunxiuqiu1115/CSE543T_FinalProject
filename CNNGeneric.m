@@ -56,9 +56,9 @@ function CNNGeneric(pollthres,iter,seed)
     
 %     data2018 = readData("data/CNNData2018.csv");
 %     data2018 = indexPollster(data2018, pollthres, "data/CNNData2018idx.csv");
-    [validxs, validys, validraceinfos] = buildTrainCellArrays(CNNdata, (2016), states);
-    parms.valididx = size(xs,1) - size(validxs,1);
-    [validfts, valids2s] = performForcasting(hyp, validxs, validys, validraceinfos, plot_path, parms);
+%     [validxs, validys, validraceinfos] = buildTrainCellArrays(CNNdata, (2016), states);
+%     parms.valididx = size(xs,1) - size(validxs,1);
+%     [validfts, valids2s] = performForcasting(hyp, validxs, validys, validraceinfos, plot_path, parms);
     
     % posttrain(CNNdata, allRaces, hyp);
     save(jobname + ".mat");
