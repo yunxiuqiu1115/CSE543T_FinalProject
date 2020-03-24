@@ -3,10 +3,20 @@ library(MCMCpack)
 
 # loading data
 data = read.csv("results/forecast1992-2016.csv")
+data = data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
+
+library(dplyr)
+data %>%
+  group_by(cycle, state) %>%
+  summarise(count=n()) %>%
+  filter(count >=4)
+
 data2016 = data[data$cycle==2016,]
 data = data[data$cycle!=2016,]
 cycles = unique(data$cycle)
 states = unique(data$state)
+
+C = 4
 
 # define variables
 metadata = list()
@@ -46,12 +56,12 @@ for (cycle in cycles) {
 }
 
 # build stan data
-stan_mu = matrix(0,counter,4)
-stan_sigma = matrix(0.0001,counter,4)
-stan_y = matrix(0.0001,counter,4)
-stan_pvi = matrix(0,counter,4)
-stan_party = matrix(0,counter,4)
-stan_experienced = matrix(0,counter,4)
+stan_mu = matrix(0,counter,C)
+stan_sigma = matrix(0.0001,counter,C)
+stan_y = matrix(0,counter,C)
+stan_pvi = matrix(0,counter,C)
+stan_party = matrix(0,counter,C)
+stan_experienced = matrix(0,counter,C)
 
 for (i in 1:counter) {
   stan_mu[i,1:nc[i]] = mu[[i]]
@@ -61,6 +71,17 @@ for (i in 1:counter) {
   stan_pvi[i,1:nc[i]] = pvi[[i]]
   stan_party[i,1:nc[i]] = party[[i]]
   stan_experienced[i, 1:nc[i]] = experienced[[i]]
+}
+
+idx2 = c()
+idx3 = c()
+idx4 = c()
+
+for (i in 1:counter) {
+  tmp = sum(stan_mu[i,]!=0)
+  if(tmp==2) idx2 = c(idx2, i)
+  if(tmp==3) idx3 = c(idx3, i)
+  if(tmp==4) idx4 = c(idx4, i)
 }
 
 # test data
@@ -98,12 +119,12 @@ for (state in states) {
 }
 
 # build stan data
-test_stan_mu = matrix(0,test_counter,4)
-test_stan_sigma = matrix(0.0001,test_counter,4)
-test_stan_y = matrix(0.0001,test_counter,4)
-test_stan_pvi = matrix(0,test_counter,4)
-test_stan_party = matrix(0,test_counter,4)
-test_stan_experienced = matrix(0,test_counter,4)
+test_stan_mu = matrix(0,test_counter,C)
+test_stan_sigma = matrix(0.0001,test_counter,C)
+test_stan_y = matrix(0.0001,test_counter,C)
+test_stan_pvi = matrix(0,test_counter,C)
+test_stan_party = matrix(0,test_counter,C)
+test_stan_experienced = matrix(0,test_counter,C)
 
 for (i in 1:test_counter) {
   test_stan_mu[i,1:test_nc[i]] = test_mu[[i]]
@@ -115,25 +136,64 @@ for (i in 1:test_counter) {
   test_stan_experienced[i, 1:test_nc[i]] = test_experienced[[i]]
 }
 
+test_idx2 = c()
+test_idx3 = c()
+test_idx4 = c()
+
+for (i in 1:test_counter) {
+  tmp = sum(test_stan_mu[i,]!=0)
+  if(tmp==2) test_idx2 = c(test_idx2, i)
+  if(tmp==3) test_idx3 = c(test_idx3, i)
+  if(tmp==4) test_idx4 = c(test_idx4, i)
+}
+
 
 # define stan data structure
-stan_data = list(N = counter, 
-                 mu = stan_mu, 
-                 sigma = stan_sigma,
-                 nc = nc,
-                 y = stan_y,
-                 pvi = stan_pvi,
-                 party = stan_party,
-                 experienced = stan_experienced,
-                 year_idx = year_idx,
-                 test_N = test_counter, 
-                 test_mu = test_stan_mu, 
-                 test_sigma = test_stan_sigma,
-                 test_nc = test_nc,
-                 test_pvi = test_stan_pvi,
-                 test_party = test_stan_party,
-                 test_experienced = test_stan_experienced,
-                 test_year_idx = test_year_idx,
+stan_data = list(N2 = length(idx2), 
+                 mu2 = stan_mu[idx2,1:2], 
+                 sigma2 = stan_sigma[idx2,1:2],
+                 y2 = stan_y[idx2,1:2],
+                 pvi2 = stan_pvi[idx2,1:2],
+                 party2 = stan_party[idx2,1:2],
+                 experienced2 = stan_experienced[idx2,1:2],
+                 year_idx2 = year_idx[idx2],
+                 N3 = length(idx3), 
+                 mu3 = stan_mu[idx3,1:3], 
+                 sigma3 = stan_sigma[idx3,1:3],
+                 y3 = stan_y[idx3,1:3],
+                 pvi3 = stan_pvi[idx3,1:3],
+                 party3 = stan_party[idx3,1:3],
+                 experienced3 = stan_experienced[idx3,1:3],
+                 year_idx3 = year_idx[idx3],
+                 N4 = length(idx4), 
+                 mu4 = stan_mu[idx4,1:4], 
+                 sigma4 = stan_sigma[idx4,1:4],
+                 y4 = stan_y[idx4,1:4],
+                 pvi4 = stan_pvi[idx4,1:4],
+                 party4 = stan_party[idx4,1:4],
+                 experienced4 = stan_experienced[idx4,1:4],
+                 year_idx4 = year_idx[idx4],
+                 test_N2 = length(test_idx2), 
+                 test_mu2 = test_stan_mu[test_idx2,1:2], 
+                 test_sigma2 = test_stan_sigma[test_idx2,1:2],
+                 test_pvi2 = test_stan_pvi[test_idx2,1:2],
+                 test_party2 = test_stan_party[test_idx2,1:2],
+                 test_experienced2 = test_stan_experienced[test_idx2,1:2],
+                 test_year_idx2 = test_year_idx[test_idx2],
+                 test_N3 = length(test_idx3), 
+                 test_mu3 = test_stan_mu[test_idx3,1:3], 
+                 test_sigma3 = test_stan_sigma[test_idx3,1:3],
+                 test_pvi3 = test_stan_pvi[test_idx3,1:3],
+                 test_party3 = test_stan_party[test_idx3,1:3],
+                 test_experienced3 = test_stan_experienced[test_idx3,1:3],
+                 test_year_idx3 = test_year_idx[test_idx3],
+                 test_N4 = length(test_idx4), 
+                 test_mu4 = test_stan_mu[test_idx4,1:4], 
+                 test_sigma4 = test_stan_sigma[test_idx4,1:4],
+                 test_pvi4 = test_stan_pvi[test_idx4,1:4],
+                 test_party4 = test_stan_party[test_idx4,1:4],
+                 test_experienced4 = test_stan_experienced[test_idx4,1:4],
+                 test_year_idx4 = test_year_idx[test_idx4],
                  max_year_idx = max(c(year_idx, test_year_idx)))
 
 # define stan model
@@ -147,45 +207,14 @@ fit <- stan(file = "model.stan",
             chains = 3, 
             cores = 3, 
             thin = 4,
-            control=list(adapt_delta=.99, max_treedepth = 15),
+            control=list(adapt_delta=.98, max_treedepth = 15),
             )
 
 # summary(fit)
 fit_params = as.data.frame(fit)
 
-# prediction
-
-# define prediction function
-# sample_posterior <- function(mus, sigmas, nc, gs=1, ds=1, fit_params=fit_params){
-#   n = length(fit_params$alpha)
-#   preds = matrix(0, nc, n*gs*ds)
-#   count = 1
-#   for(k in 1:n){
-#     alpha = fit_params$alpha[i]
-#     beta = fit_params$beta[i]
-#     # g: monte carlo normal
-#     for(g in 1:gs){
-#       p = rep(0, 4)
-#       for(j in 1:4){
-#         if(j<=nc){
-#           gamma = rnorm(1, mean = mus[j], sd = sigmas[j])
-#           gamma = min(max(gamma, 0),1)
-#           p[j] = alpha + beta*gamma
-#         }
-#         else{
-#           p[j]=0.0001;
-#         }
-#       }
-#       pred = rdirichlet(ds, p[1:nc])
-#       preds[,count:(count+ds-1)] = t(pred)
-#       count = count + ds
-#     }
-#   }
-#   return(preds)
-# }
-
 # within 95% CI
-flags = matrix(0, test_counter, 4)
+flags = matrix(0, test_counter, C)
 
 CYCLE = c()
 STATE = c()
@@ -200,23 +229,23 @@ MEDIAN = c()
 
 correct_predictions = 0
 
-for(i in 1:test_counter) {
-  state = test_metadata[[i]]
+for(i in 1:length(test_idx2)) {
+  state = test_metadata[[test_idx2[i]]]
   pmu = data2016[data2016$state==state,c("posteriormean")]
   pstd = data2016[data2016$state==state,c("posteriorstd")]
   vote = data2016[data2016$state==state,c("vote")]
   candidates = data2016[data2016$state==state,c("candidate")]
   # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
   preds= c()
-  for(j in 1:test_nc[i]){
-    tmp = paste('test_y[',i,',',j,']',sep='')
+  for(j in 1:2){
+    tmp = paste('test_y2[',i,',',j,']',sep='')
     pred = fit_params[[tmp]]
     preds = c(preds, pred)
     u=quantile(pred,probs=c(0.975),names = FALSE)
     l=quantile(pred,probs=c(0.025),names = FALSE)
     m = median(pred)
-    if (test_stan_y[i,j]<=u & test_stan_y[i,j]>=l){
-      flags[i,j] = 1
+    if (test_stan_y[test_idx2[i],j]<=u & test_stan_y[test_idx2[i],j]>=l){
+      flags[test_idx2[i],j] = 1
     }
     CYCLE = c(CYCLE, 2016)
     STATE = c(STATE,state)
@@ -228,8 +257,8 @@ for(i in 1:test_counter) {
     LOWER95 = c(LOWER95, l)
     UPPER95 = c(UPPER95, u)
   }
-  preds = matrix(preds, nrow = test_nc[i], byrow = TRUE)
-  win_rates = rep(0, test_nc[i])
+  preds = matrix(preds, nrow = 2, byrow = TRUE)
+  win_rates = rep(0, 2)
   for(k in 1:ncol(preds)){
     idx = which.max(preds[,k])
     win_rates[idx] = win_rates[idx] + 1
@@ -240,7 +269,51 @@ for(i in 1:test_counter) {
     correct_predictions = correct_predictions + 1
   }
   else{
-    print(test_metadata[[i]])
+    print(test_metadata[[test_idx2[i]]])
+  }
+}
+
+for(i in 1:length(test_idx4[i])) {
+  state = test_metadata[[test_idx4[i]]]
+  pmu = data2016[data2016$state==state,c("posteriormean")]
+  pstd = data2016[data2016$state==state,c("posteriorstd")]
+  vote = data2016[data2016$state==state,c("vote")]
+  candidates = data2016[data2016$state==state,c("candidate")]
+  # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
+  preds= c()
+  for(j in 1:4){
+    tmp = paste('test_y4[',i,',',j,']',sep='')
+    pred = fit_params[[tmp]]
+    preds = c(preds, pred)
+    u=quantile(pred,probs=c(0.975),names = FALSE)
+    l=quantile(pred,probs=c(0.025),names = FALSE)
+    m = median(pred)
+    if (test_stan_y[test_idx4[i],j]<=u & test_stan_y[test_idx4[i],j]>=l){
+      flags[test_idx4[i],j] = 1
+    }
+    CYCLE = c(CYCLE, 2016)
+    STATE = c(STATE, state)
+    CANDIDATE = c(CANDIDATE,as.character(candidates[j]))
+    POSTERIORMEAN = c(POSTERIORMEAN,pmu[j])
+    POSTERIORSTD = c(POSTERIORSTD,pstd[j])
+    VOTE = c(VOTE, vote[j])
+    MEDIAN = c(MEDIAN, m)
+    LOWER95 = c(LOWER95, l)
+    UPPER95 = c(UPPER95, u)
+  }
+  preds = matrix(preds, nrow = 4, byrow = TRUE)
+  win_rates = rep(0, 4)
+  for(k in 1:ncol(preds)){
+    idx = which.max(preds[,k])
+    win_rates[idx] = win_rates[idx] + 1
+  }
+  win_rates = win_rates / sum(win_rates)
+  WIN = c(WIN, win_rates)
+  if (which.max(win_rates)==which.max(vote)){
+    correct_predictions = correct_predictions + 1
+  }
+  else{
+    print(test_metadata[[test_idx4[i]]])
   }
 }
 

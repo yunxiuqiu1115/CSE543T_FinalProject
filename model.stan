@@ -1,21 +1,56 @@
 data {
-  int<lower=0> N; // number of races
-  int year_idx[N];
-  matrix[N, 4] mu; // vector of prior Gaussian means
-  matrix[N, 4] sigma; // vector of prior Gaussian stds
-  int<lower=0> nc[N]; // number of candidates each race
-  matrix[N, 4] pvi;
-  matrix[N, 4] party;
-  matrix[N, 4] experienced;
-  vector<lower=0, upper=1>[4] y[N]; // vector of true votings
-  int<lower=0> test_N; // number of races
-  matrix[test_N, 4] test_mu; // vector of prior Gaussian means
-  matrix[test_N, 4] test_sigma; // vector of prior Gaussian stds
-  matrix[test_N, 4] test_pvi;
-  matrix[test_N, 4] test_party;
-  matrix[test_N, 4] test_experienced;
-  int<lower=0> test_nc[test_N]; // number of candidates each race
-  int test_year_idx[test_N];
+  int<lower=0> N2; // number of races
+  real mu2[N2, 2]; // vector of prior Gaussian means
+  real sigma2[N2, 2]; // vector of prior Gaussian stds
+  // int<lower=0> nc[N]; // number of candidates each race
+  vector[2] pvi2[N2];
+  vector[2] party2[N2];
+  vector[2] experienced2[N2];
+  vector<lower=0, upper=1>[2] y2[N2]; // vector of true votings
+  int year_idx2[N2];
+  
+  int<lower=0> N3; // number of races
+  real mu3[N3, 3]; // vector of prior Gaussian means
+  real sigma3[N3, 3]; // vector of prior Gaussian stds
+  vector[3] pvi3[N3];
+  vector[3] party3[N3];
+  vector[3] experienced3[N3];
+  vector<lower=0, upper=1>[3] y3[N3]; // vector of true votings
+  int year_idx3[N3];
+  
+  int<lower=0> N4; // number of races
+  real mu4[N4, 4]; // vector of prior Gaussian means
+  real sigma4[N4, 4]; // vector of prior Gaussian stds
+  vector[4] pvi4[N4];
+  vector[4] party4[N4];
+  vector[4] experienced4[N4];
+  vector<lower=0, upper=1>[4] y4[N4]; // vector of true votings
+  int year_idx4[N4];
+  
+  int<lower=0> test_N2; // number of races
+  real test_mu2[test_N2, 2]; // vector of prior Gaussian means
+  real test_sigma2[test_N2, 2]; // vector of prior Gaussian stds
+  vector[2] test_pvi2[test_N2];
+  vector[2] test_party2[test_N2];
+  vector[2] test_experienced2[test_N2];
+  int test_year_idx2[test_N2];
+  
+  int<lower=0> test_N3; // number of races
+  real test_mu3[test_N3, 3]; // vector of prior Gaussian means
+  real test_sigma3[test_N3, 3]; // vector of prior Gaussian stds
+  vector[3] test_pvi3[test_N3];
+  vector[3] test_party3[test_N3];
+  vector[3] test_experienced3[test_N3];
+  int test_year_idx3[test_N3];
+  
+  int<lower=0> test_N4; // number of races
+  real test_mu4[test_N4, 4]; // vector of prior Gaussian means
+  real test_sigma4[test_N4, 4]; // vector of prior Gaussian stds
+  vector[4] test_pvi4[test_N4];
+  vector[4] test_party4[test_N4];
+  vector[4] test_experienced4[test_N4];
+  // int<lower=0> test_nc[test_N]; // number of candidates each race
+  int test_year_idx4[test_N4];
   int max_year_idx;
 }
 
@@ -26,82 +61,172 @@ parameters {
   real eb; // experienced b
   real<lower=0> year_sig; // The SD for the year-level random effects
   vector[max_year_idx] year_re; // Year level random effects in the vote share equation
-  vector<lower=0, upper=1>[4] gamma[N]; // vector of underlying true support rates
+  vector<lower=0, upper=1>[2] gamma2[N2]; // vector of underlying true support rates
+  vector<lower=0, upper=1>[3] gamma3[N3];
+  vector<lower=0, upper=1>[4] gamma4[N4];
 }
 
 transformed parameters{
-  vector<lower=0>[4] p[N]; // vector of underlying dirichlet parameters
-  for(i in 1:N){
-    for(j in 1:4){
-      if(j<=nc[i]){
-        // assume a simple linear relation
-        p[i,j] = alpha + beta*gamma[i,j] + 
-            party[i,j]*pvi[i,j]*ppb + experienced[i,j]*eb 
-            + party[i,j]*year_re[year_idx[i]];
-        if(p[i,j]<0){
-          p[i,j]=0.0001;
+  vector<lower=0>[2] p2[N2]; // vector of underlying dirichlet parameters
+  vector<lower=0>[3] p3[N3];
+  vector<lower=0>[4] p4[N4];
+  
+  for(i in 1:N2){
+    for(j in 1:2){
+        p2[i,j] = alpha + beta*gamma2[i,j] + 
+            party2[i,j]*pvi2[i,j]*ppb + experienced2[i,j]*eb 
+            + party2[i,j]*year_re[year_idx2[i]];
+        if(p2[i,j]<0.0001){
+          p2[i,j] = 0.0001;
         }
-      }
-      else{
-        // hardcode unocurring candidates
-        p[i,j]=0.0001;
-      }
+    }
+  }
+  
+  for(i in 1:N3){
+    for(j in 1:3){
+        p3[i,j] = alpha + beta*gamma3[i,j] + 
+            party3[i,j]*pvi3[i,j]*ppb + experienced3[i,j]*eb 
+            + party3[i,j]*year_re[year_idx3[i]];
+        if(p3[i,j]<0.0001){
+          p3[i,j] = 0.0001;
+        }
+    }
+  }
+  
+  for(i in 1:N4){
+    for(j in 1:4){
+        p4[i,j] = alpha + beta*gamma4[i,j] + 
+            party4[i,j]*pvi4[i,j]*ppb + experienced4[i,j]*eb 
+            + party4[i,j]*year_re[year_idx4[i]];
+        if(p4[i,j]<0.0001){
+          p4[i,j] = 0.0001;
+        }
     }
   }
 }
 
 model {
   // very flat priors on linear model parameters
-  alpha ~ normal(3.5, 0.5);
-  beta ~ normal(11, 1);
+  alpha ~ normal(0, 1);
+  beta ~ normal(0, 1);
   year_sig ~ gamma(1, .5); // Prior on the SD for the year-level RE
   year_re ~ normal(0, year_sig); // Prior for the year-level RE
   // generate underlying true support rates
-  for(i in 1:N){
-    for(j in 1:4){
-      gamma[i,j] ~ normal(mu[i,j], sigma[i,j]);
-    }
+  for(i in 1:N2){
+    gamma2[i] ~ normal(mu2[i], sigma2[i]);
+  }
+  
+  for(i in 1:N3){
+    gamma3[i] ~ normal(mu3[i], sigma3[i]);
+  }
+  
+  for(i in 1:N4){
+    gamma4[i] ~ normal(mu4[i], sigma4[i]);
   }
 
   // generate voting rates from support rates
-  for(i in 1:N){
-    y[i] ~ dirichlet(p[i]);
+  for(i in 1:N2){
+    y2[i] ~ dirichlet(p2[i]);
+  }
+  
+  for(i in 1:N3){
+    y3[i] ~ dirichlet(p3[i]);
+  }
+  
+  for(i in 1:N4){
+    y4[i] ~ dirichlet(p4[i]);
   }
 }
 
 generated quantities {
-  vector[4] test_y[test_N]; // vector of true votings
-  vector[4] test_p[test_N]; // vector of underlying dirichlet parameters
-  vector[4] test_gamma[test_N]; // vector of underlying true support rates
-  for(i in 1:test_N){
-    for(j in 1:4){
-      test_gamma[i,j] = normal_rng(test_mu[i,j], test_sigma[i,j]);
-      if(test_gamma[i,j]<0){
-        test_gamma[i,j] = 0;
+  vector[2] test_y2[test_N2]; // vector of true votings
+  vector<lower=0>[2] test_p2[test_N2]; // vector of underlying dirichlet parameters
+  vector<lower=0, upper=1>[2] test_gamma2[test_N2]; // vector of underlying true support rates
+  
+  vector[3] test_y3[test_N3]; // vector of true votings
+  vector<lower=0>[3] test_p3[test_N3]; // vector of underlying dirichlet parameters
+  vector<lower=0, upper=1>[3] test_gamma3[test_N3]; // vector of underlying true support rates
+  
+  vector[4] test_y4[test_N4]; // vector of true votings
+  vector<lower=0>[4] test_p4[test_N4]; // vector of underlying dirichlet parameters
+  vector<lower=0, upper=1>[4] test_gamma4[test_N4]; // vector of underlying true support rates
+  
+  for(i in 1:test_N2){
+    for(j in 1:2){
+      test_gamma2[i,j] = normal_rng(test_mu2[i,j], test_sigma2[i,j]);
+      if(test_gamma2[i,j]<0){
+        test_gamma2[i,j] = 0;
       }
-      else if(test_gamma[i,j]>1){
-        test_gamma[i,j]=1;
+      else if(test_gamma2[i,j]>1){
+        test_gamma2[i,j]=1;
       }
     }
   }
-  for(i in 1:test_N){
+  
+  for(i in 1:test_N3){
+    for(j in 1:3){
+      test_gamma3[i,j] = normal_rng(test_mu3[i,j], test_sigma3[i,j]);
+      if(test_gamma3[i,j]<0){
+        test_gamma3[i,j] = 0;
+      }
+      else if(test_gamma3[i,j]>1){
+        test_gamma3[i,j]=1;
+      }
+    }
+  }
+  
+  for(i in 1:test_N4){
     for(j in 1:4){
-      if(j<=test_nc[i]){
-        // assume a simple linear relation
-        test_p[i,j] = alpha + beta*test_gamma[i,j] + 
-            test_party[i,j]*test_pvi[i,j]*ppb + test_experienced[i,j]*eb +
-            test_party[i,j]*year_re[test_year_idx[i]];
-        if(test_p[i,j]<0){
-          test_p[i,j]=0;
+      test_gamma4[i,j] = normal_rng(test_mu4[i,j], test_sigma4[i,j]);
+      if(test_gamma4[i,j]<0){
+        test_gamma4[i,j] = 0;
+      }
+      else if(test_gamma4[i,j]>1){
+        test_gamma4[i,j]=1;
+      }
+    }
+  }
+  
+  for(i in 1:test_N2){
+    for(j in 1:2){
+      test_p2[i,j] = alpha + beta*test_gamma2[i,j] + 
+            test_party2[i,j]*test_pvi2[i,j]*ppb + test_experienced2[i,j]*eb +
+            test_party2[i,j]*year_re[test_year_idx2[i]];
+      if(test_p2[i,j]<0.0001){
+          test_p2[i,j] = 0.0001;
         }
-      }
-      else{
-        // hardcode unocurring candidates
-        test_p[i,j]=0.0001;
-      }
     }
   }
-  for (i in 1:test_N)
-    test_y[i] = dirichlet_rng(test_p[i]);
+  
+  for(i in 1:test_N3){
+    for(j in 1:3){
+      test_p3[i,j] = alpha + beta*test_gamma3[i,j] + 
+            test_party3[i,j]*test_pvi3[i,j]*ppb + test_experienced3[i,j]*eb +
+            test_party3[i,j]*year_re[test_year_idx3[i]];
+      if(test_p3[i,j]<0.0001){
+          test_p3[i,j] = 0.0001;
+        }
+    }
+  }
+  
+  for(i in 1:test_N4){
+    for(j in 1:4){
+      test_p4[i,j] = alpha + beta*test_gamma4[i,j] + 
+            test_party4[i,j]*test_pvi4[i,j]*ppb + test_experienced4[i,j]*eb +
+            test_party4[i,j]*year_re[test_year_idx4[i]];
+      if(test_p4[i,j]<0.0001){
+          test_p4[i,j] = 0.0001;
+        }
+    }
+  }
+  
+  for (i in 1:test_N2)
+    test_y2[i] = dirichlet_rng(test_p2[i]);
+    
+  for (i in 1:test_N3)
+    test_y3[i] = dirichlet_rng(test_p3[i]);
+    
+  for (i in 1:test_N4)
+    test_y4[i] = dirichlet_rng(test_p4[i]);
 }
 
