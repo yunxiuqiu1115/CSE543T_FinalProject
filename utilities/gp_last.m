@@ -15,7 +15,7 @@ function [post, nlZ, dnlZ] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys)
     alpha = solve_chol(L,ys-m)/sl;
     % alpha = Vinv*(ys-m);
     post.alpha = alpha;
-    post.sW = ones(n,1)/sqrt(v);
+    post.sW = ones(ns,1)/sqrt(v);
     post.L = pL;
 
     dnlZ = hyp;
