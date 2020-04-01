@@ -115,7 +115,7 @@ function posttrain(CNNdata, allRaces, besthyp)
         party{i} = raceinfos{i}{7};
     end
     forecast = table(cycle, state, candidate, posteriormean, posteriorstd, vote, pvi, party, experienced);
-    writetable(forecast,'forecast1992-2016.csv');
+    writetable(forecast,'forecast1992-2016removetwelveweeks.csv');
 
 %     validforecast = cell(70, 3+6*2);
 %     

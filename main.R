@@ -2,7 +2,7 @@ library(rstan)
 library(MCMCpack)
 
 # loading data
-data = read.csv("results/forecast1992-2016.csv")
+data = read.csv("results/forecast1992-2016removetwelveweeks.csv")
 data = data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
 
 library(dplyr)
@@ -331,4 +331,4 @@ result = data.frame(CYCLE,
 
 names(result) <- tolower(names(result))
 
-write.csv(result,'results/stan_prediction.csv')
+write.csv(result,'results/stan_prediction_twelve_week.csv')

@@ -13,10 +13,10 @@ function CNNGeneric(pollthres,iter,seed)
     CNNdata = indexPollster(CNNdata, pollthres);
     % data2016 = CNNdata(CNNdata.cycle==2016,:);
     % CNNdata = CNNdata(CNNdata.cycle<2016,:);
-    jobname = "RemoveTwoWeeks2016Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    jobname = "RemoveFourWeeks2016Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
     plot_path = "plots/" + jobname;
 
-    parms.mode = true;
+    % parms.mode = true;
     % pollsters having less than threshold of polls will be indexed by nfirm
     parms.nfirm = max(CNNdata.pollsteridx);
     parms.days = min(CNNdata.daysLeft);
@@ -43,6 +43,7 @@ function CNNGeneric(pollthres,iter,seed)
 
     % define model
     [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms);
+    inffunc = @infLast;
     im = {@infPrior, inffunc, prior};
     par = {meanfunc,covfunc,likfunc, xs, ys};
 
@@ -55,11 +56,17 @@ function CNNGeneric(pollthres,iter,seed)
     
     for i=1:counter
         if raceinfos{i}{1}>=2016
-            idx = xs{i}(:,1) <= -14;
+            idx = xs{i}(:,1) <= -7*12;
             xs{i} = xs{i}(idx,:);
             ys{i} = ys{i}(idx);
         end
     end
+    
+%     t_max = [];
+%     for i=1:counter
+%         t_max = [t_max, max(xs{i}(:,1))];
+%     end
+    
     [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
     
 %     data2018 = readData("data/CNNData2018.csv");
