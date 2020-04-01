@@ -43,8 +43,8 @@ function CNNGeneric(pollthres,iter,seed)
 
     % define model
     [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms);
-    inffunc = @infLast;
-    im = {@infPrior, inffunc, prior};
+    inffunctrain = @infLast;
+    im = {@infPrior, inffunctrain, prior};
     par = {meanfunc,covfunc,likfunc, xs, ys};
 
     % training
@@ -53,6 +53,7 @@ function CNNGeneric(pollthres,iter,seed)
     hyp = fixLearn(hyp, im, par{:}, iter, parms);
     
     [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
+    im = {@infPrior, inffunc, prior};
     
     for i=1:counter
         if raceinfos{i}{1}>=2016
