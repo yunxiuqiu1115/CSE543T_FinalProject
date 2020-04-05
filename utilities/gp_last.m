@@ -1,37 +1,64 @@
 function [post, nlZ, dnlZ] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys)
-    [m, v, ~, ~, lp] = gp(hyp, inf, mean, cov, lik, x, y, xs, ys);
-    nlZ = -sum(lp);
-    sn2 = exp(2*hyp.lik);
-    ns = size(xs,1);
-    % Vinv = diag(1./v);
+    % obtain ys_mu, ys_sn2, post
+    [m, v, ~, ~, lp, post] = gp(hyp, inf, mean, cov, lik, x, y, xs, ys);
     
-    if sn2<1e-6                        % very tiny sn2 can lead to numerical trouble
-      L = chol(v+sn2*eye(ns)); sl = 1;   % Cholesky factor of covariance with noise
-      pL = -solve_chol(L,eye(ns));                            % L = -inv(K+inv(sW^2))
-    else
-      L = chol(v/sn2+eye(ns)); sl = sn2;                       % Cholesky factor of B
-      pL = L;                                           % L = chol(eye(n)+sW*sW'.*K)
-    end
-    alpha = solve_chol(L,ys-m)/sl;
-    % alpha = Vinv*(ys-m);
-    post.alpha = alpha;
-    post.sW = ones(ns,1)/sqrt(v);
-    post.L = pL;
-
+    
+    % define posterior derivative
+    alpha = post.alpha;
+    L = post.L;
+%     Vs_inv = diag(1./v);
+    V_inv = solve_chol(L,eye(size(x,1))).*(post.sW*post.sW');
     dnlZ = hyp;
-    Q = solve_chol(L,eye(ns))/sl - alpha*alpha';
     
-    for i = 1:numel(hyp.mean)
-      dnlZ.mean(i) = -feval(mean{:}, hyp.mean, xs, i)'*alpha;
+    % log likelihood of predictive distribution
+    kxs = feval(cov{:}, hyp.cov, xs);
+    kxsx = feval(cov{:}, hyp.cov, xs, x);
+    
+    % get posterior variance
+    if (is_chol(L))
+      % posterior.L contains chol(sqrt(W) * K * sqrt(W) + I)
+      tmp = bsxfun(@times, kxsx', post.sW)';
+      pv = kxs - tmp * solve_chol(L, tmp');
+    else
+      % posterior.L contains -inv(K + inv(W))
+      pv = kxs + kxsx * L * kxsx;
     end
+    
+    Ls = chol(pv);
+    ns = size(xs,1);
+%     m = feval(mean{:}, hyp.mean, xs) + feval(cov{:}, hyp.cov, xs, x)*alpha;
+%     pv = kxs - kxsx*V_inv*kxsx';
+    Vs_inv = inv(pv);
+    
+    b = solve_chol(Ls, (ys-m));
+    nlZ = (ys-m).'*b/2 + log(det(pv)) + ns*log(2*pi)/2;
+%    nlZ = -sum(lp);
+    
+    
+    % V = feval(cov{:}, hyp.cov, x)+exp(2*hyp.lik);
+    % V_inv = inv(V);
+    bt = kxsx*V_inv;
+    bst = (ys-m).'*Vs_inv;
+
+    for i = 1:numel(hyp.mean)
+      dmxi = feval(mean{:}, hyp.mean, x, i)';
+      dmxsi = feval(mean{:}, hyp.mean, xs, i)';
+      dnlZ.mean(i) = -bst*(dmxsi'-bt*dmxi');
+    end
+    
+    sn2 = exp(2*hyp.lik);
+    dsms = -bt*alpha*2*sn2;
+    dsvs = bt*bt'*2*sn2;
+    dnlZ.lik = -bst*dsms - bst*dsvs*bst'/2 + trace(Vs_inv*dsvs)/2;
     
     for i = 1:numel(hyp.cov)
-      % dKi = feval(cov{:}, hyp.cov, xs, [], i);
-      % dnlZ.cov(i) = alpha.'*dKi*alpha/2 + trace(Vinv*dKi)/2;
-      dnlZ.cov(i) = sum(sum(Q.*feval(cov{:}, hyp.cov, xs, [], i)))/2;
+      dKxi = feval(cov{:}, hyp.cov, x, x, i);
+      dKxsxi = feval(cov{:}, hyp.cov, xs, x, i);
+      dKxsi = feval(cov{:}, hyp.cov, xs, xs, i);
+      dKms = (dKxsxi-bt*dKxi)*alpha;
+      dvxs = dKxsi-bt*(2*dKxsxi'-dKxi*bt');
+      % dvxs = diag(diag(dvxs));
+      dnlZ.cov(i) = -bst*dKms - bst*dvxs*bst'/2 + trace(Vs_inv*dvxs);
     end
     
-    % Q = trace(Vinv) - alpha.'*alpha;
-    dnlZ.lik = sn2*trace(Q);
 end
-

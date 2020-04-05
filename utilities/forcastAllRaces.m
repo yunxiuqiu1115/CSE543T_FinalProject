@@ -32,7 +32,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             hyp = full2one(besthyp, i, parms.ncandidates, parms.nfirm);
             [~, ~, fmu, fs2] = gp(hyp, im, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
 
-             fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), i);
+            fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), i);
             predPoll = fmu(end);
             fts(i) = predPoll;
             s2s(i) = fs2(end);

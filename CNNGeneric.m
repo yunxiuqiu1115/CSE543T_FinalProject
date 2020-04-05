@@ -57,7 +57,7 @@ function CNNGeneric(pollthres,iter,seed)
     
     for i=1:counter
         if raceinfos{i}{1}>=2016
-            idx = xs{i}(:,1) <= -7*12;
+            idx = xs{i}(:,1) <= -2*12;
             xs{i} = xs{i}(idx,:);
             ys{i} = ys{i}(idx);
         end
