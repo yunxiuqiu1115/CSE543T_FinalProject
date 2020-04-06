@@ -19,7 +19,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
         fn = fn(~isspace(fn));
         if numel(xs{i})==0
             if i<=parms.ncandidates
-                predPoll = besthyp.mean(param.ncandidates+i) + besthyp.mean(end)*republican;
+                predPoll = besthyp.mean(parms.ncandidates+i) + besthyp.mean(end)*republican;
             else 
                 predPoll = sample_prior(prior).mean(1) + besthyp.mean(end)*republican;
             end
