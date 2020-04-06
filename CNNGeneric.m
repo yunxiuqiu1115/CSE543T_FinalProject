@@ -30,7 +30,7 @@ function CNNGeneric(pollthres,iter,seed)
     parms.a = ones(counter,1)*0.5;
     
     vs = zeros(counter,1);
-    for i=1:numel(raceinfos)
+    for i=1:counter
         pvi =raceinfos{i}{5};
         experienced =raceinfos{i}{6};
         republican = xs{i}(1,5);
@@ -59,21 +59,17 @@ function CNNGeneric(pollthres,iter,seed)
     hyp = sample_separate_prior(prior, parms, counter, seed);
     hyp = fixLearn(hyp, im, par{:}, iter, parms);
     
-    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
+    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years(end-1:end), states);
+    counter = size(xs,1);
     % im = {@infPrior, inffunc, prior};
     
-    for i=1:numel(raceinfos)
+    for i=1:counter
         if raceinfos{i}{1}>=2016
             idx = xs{i}(:,1) <= -2*12;
             xs{i} = xs{i}(idx,:);
             ys{i} = ys{i}(idx);
         end
     end
-    
-%     t_max = [];
-%     for i=1:counter
-%         t_max = [t_max, max(xs{i}(:,1))];
-%     end
     
     [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
     

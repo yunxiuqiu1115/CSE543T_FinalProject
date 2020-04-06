@@ -46,6 +46,7 @@ function hyperparameters = fixLearn(hyperparameters, ...
       
       % fix unshared parameters
       % learn shared parameters independently
+      disp("learn shared parameters");
       p.verbosity = 1;
       p.length = -20;
       hyp = hyperparameters;
