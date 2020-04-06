@@ -1,16 +1,16 @@
 rng('default');
 x = (1:5)';
 y = randn(size(x));
-xs = (6:8)';
+xs = (6:7)';
 ys = randn(size(xs));
 mean = {@meanConst};
 inf = @infExact;
 cov = {@covSEiso};
 lik = @likGauss;
 
-theta.mean = 0.5;
-theta.cov  = [log(0.5); log(2)];
-theta.lik  = log(0.1);
+theta.mean = 1;
+theta.cov  = [log(1); log(1)];
+theta.lik  = log(0.01);
 [~, nlZ, dnlZ] = gp_last(theta, inf, mean, cov, lik, x, y, xs, ys);
 d = 1e-6;
 new_theta = theta;

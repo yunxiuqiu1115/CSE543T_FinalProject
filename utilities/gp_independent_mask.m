@@ -38,10 +38,10 @@ function [nlZ, dnlZ] = gp_independent_mask(hyp, hyperparameters, ...
         
     if (~gradient)
       this_nlZ = gp_mask(hyp, hyp_race, im, mean_function, ...
-             covariance_function, likelihood, xs{i}, ys{i}, unsharedflag);
+             covariance_function, likelihood, xs{i}, ys{i}, unsharedflag, parms, i);
     else
       [this_nlZ, this_dnlZ] = gp_mask(hyp, hyp_race, im,...
-          mean_function, covariance_function, likelihood, xs{i}, ys{i}, unsharedflag);
+          mean_function, covariance_function, likelihood, xs{i}, ys{i}, unsharedflag, parms, i);
       dnlZs{i} = this_dnlZ;
     end
 

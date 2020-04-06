@@ -1,4 +1,11 @@
-function [post, nlZ, dnlZ] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys)
+function [varargout] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys)
+    
+    if nargin<9
+      disp('Usage: [nlZ] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys);')
+      disp('   or: [nlZ dnlZ] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys);')
+      return
+    end
+
     % obtain ys_mu, ys_sn2, post
     [m, ~, ~, ~, ~, post] = gp(hyp, inf, mean, cov, lik, x, y, xs, ys);
     
@@ -24,18 +31,8 @@ function [post, nlZ, dnlZ] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys)
     
     Ls = chol(pv);
     ns = size(xs,1);
-%     m = feval(mean{:}, hyp.mean, xs) + feval(cov{:}, hyp.cov, xs, x)*alpha;
-%     pv = kxs - kxsx*V_inv*kxsx';
-    
     bs = solve_chol(Ls, (ys-m));
     nlZ = (ys-m).'*bs/2 + log(det(pv)) + ns*log(2*pi)/2;
-%    nlZ = -sum(lp);
-    
-    
-    % V = feval(cov{:}, hyp.cov, x)+exp(2*hyp.lik);
-    % V_inv = inv(V);
-%     bt = kxsx*V_inv;
-%     bt = solve_chol(L, kxsx')';
     bt = bsxfun(@times, b, post.sW)';
 
     for i = 1:numel(hyp.mean)
@@ -58,6 +55,12 @@ function [post, nlZ, dnlZ] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys)
       dvxs = dKxsi-bt*(2*dKxsxi'-dKxi*bt');
       Q = solve_chol(Ls, dvxs);
       dnlZ.cov(i) = -bs'*dKms - bs'*dvxs*bs/2 + trace(Q);
+    end
+    
+    if nargout == 1
+        varargout = {nlZ};
+    else
+        varargout = {nlZ, dnlZ};
     end
     
 end

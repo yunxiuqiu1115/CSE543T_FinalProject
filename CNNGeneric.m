@@ -13,10 +13,10 @@ function CNNGeneric(pollthres,iter,seed)
     CNNdata = indexPollster(CNNdata, pollthres);
     % data2016 = CNNdata(CNNdata.cycle==2016,:);
     % CNNdata = CNNdata(CNNdata.cycle<2016,:);
-    jobname = "RemoveFourWeeks2016Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    jobname = "Last2016Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
     plot_path = "plots/" + jobname;
 
-    % parms.mode = true;
+    parms.mode = "last";
     % pollsters having less than threshold of polls will be indexed by nfirm
     parms.nfirm = max(CNNdata.pollsteridx);
     parms.days = min(CNNdata.daysLeft);
@@ -24,27 +24,34 @@ function CNNGeneric(pollthres,iter,seed)
     states = unique(CNNdata.state);
 
     % build training cell arrays
-    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
+    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years(1:end-1), states);
     counter = size(xs,1);
     parms.ncandidates = counter;
     parms.a = ones(counter,1)*0.5;
     
-    for i=1:counter
+    vs = zeros(counter,1);
+    for i=1:numel(raceinfos)
         pvi =raceinfos{i}{5};
         experienced =raceinfos{i}{6};
         republican = xs{i}(1,5);
         parms.a(i) = computePrior(pvi, experienced, republican);
-        if raceinfos{i}{1}>=2016
-            idx = xs{i}(:,1) <= -90;
-            xs{i} = xs{i}(idx,:);
-            ys{i} = ys{i}(idx);
-        end
+%         if raceinfos{i}{1}>=2016
+%             idx = xs{i}(:,1) <= -90;
+%             xs{i} = xs{i}(idx,:);
+%             ys{i} = ys{i}(idx);
+%         end
+        idx = xs{i}(:,1) <= -2*7;
+        xs{i} = xs{i}(idx,:);
+        ys{i} = ys{i}(idx);
+        vs(i) = raceinfos{i}{4}/100;
     end
+    
+    parms.vs = vs;
 
     % define model
     [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms);
-    inffunctrain = @infLast;
-    im = {@infPrior, inffunctrain, prior};
+    % inffunctrain = @infLast;
+    im = {@infPrior, inffunc, prior};
     par = {meanfunc,covfunc,likfunc, xs, ys};
 
     % training
@@ -53,9 +60,9 @@ function CNNGeneric(pollthres,iter,seed)
     hyp = fixLearn(hyp, im, par{:}, iter, parms);
     
     [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
-    im = {@infPrior, inffunc, prior};
+    % im = {@infPrior, inffunc, prior};
     
-    for i=1:counter
+    for i=1:numel(raceinfos)
         if raceinfos{i}{1}>=2016
             idx = xs{i}(:,1) <= -2*12;
             xs{i} = xs{i}(idx,:);
