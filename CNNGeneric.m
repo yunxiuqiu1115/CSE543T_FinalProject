@@ -71,6 +71,8 @@ function CNNGeneric(pollthres,iter,seed)
         end
     end
     
+    save(jobname + ".mat");
+    
     [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
     
 %     data2018 = readData("data/CNNData2018.csv");
@@ -80,5 +82,5 @@ function CNNGeneric(pollthres,iter,seed)
 %     [validfts, valids2s] = performForcasting(hyp, validxs, validys, validraceinfos, plot_path, parms);
     
     % posttrain(CNNdata, allRaces, hyp);
-    save(jobname + ".mat");
+
 end
