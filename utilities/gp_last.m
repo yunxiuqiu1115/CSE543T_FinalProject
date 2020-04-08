@@ -13,6 +13,7 @@ function [varargout] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys)
     alpha = post.alpha;
     L = post.L;
     dnlZ = hyp;
+    ns = size(xs,1);
     
     % log likelihood of predictive distribution
     kxs = feval(cov{:}, hyp.cov, xs);
@@ -30,7 +31,6 @@ function [varargout] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys)
     end
     
     Ls = chol(pv);
-    ns = size(xs,1);
     bs = solve_chol(Ls, (ys-m));
     nlZ = (ys-m).'*bs/2 + log(det(pv)) + ns*log(2*pi)/2;
     bt = bsxfun(@times, b, post.sW)';

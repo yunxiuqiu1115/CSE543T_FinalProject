@@ -12,9 +12,9 @@ function [nlZ, dnlZ] = gp_mask(hyp, hyperparameters,...
   u(mask) = unwrap(hyp);
   hyperparameters = rewrap(hyperparameters, u);
   xstar = [0,0,1,parms.nfirm,x(1,end)];
-  ystar = parms.vs(i);
   if (nargout == 1)
     if (parms.mode == "last")
+        ystar = parms.vs(i);
          nlZ = gp_last(hyperparameters, inference_method, mean_function, ...
            covariance_function, likelihood, x, y, xstar, ystar);
     else
@@ -23,6 +23,7 @@ function [nlZ, dnlZ] = gp_mask(hyp, hyperparameters,...
     end
   else
     if (parms.mode == "last")
+        ystar = parms.vs(i);
         [nlZ, dnlZ] = gp_last(hyperparameters, inference_method, mean_function, ...
            covariance_function, likelihood, x, y, xstar, ystar);
     else
