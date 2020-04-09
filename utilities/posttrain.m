@@ -34,6 +34,8 @@ function posttrain(CNNdata, allRaces, besthyp)
         N = N + l;
     end
     
+    disp(corr(a,b));
+    
     fig = histogram(abs(errors));
     xlabel("absolute forecasting error");
     ylabel("count");

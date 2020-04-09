@@ -11,7 +11,7 @@ function CNNGeneric(pollthres,iter,seed)
     % read race data
     CNNdata = readData("data/CNNData.csv");
     CNNdata = indexPollster(CNNdata, pollthres);
-    jobname = "Last2016Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    jobname = "Last2016FourWeekThres" + pollthres + "Iter" + iter +  "Seed" + seed;
     plot_path = "plots/" + jobname;
 
     parms.mode = "last";
@@ -27,6 +27,8 @@ function CNNGeneric(pollthres,iter,seed)
     parms.ncandidates = counter;
     parms.a = ones(counter,1)*0.5;
     
+    LAST_TIME = -4*7;
+    
     vs = zeros(counter,1);
     for i=1:counter
         pvi =raceinfos{i}{5};
@@ -38,7 +40,7 @@ function CNNGeneric(pollthres,iter,seed)
 %             xs{i} = xs{i}(idx,:);
 %             ys{i} = ys{i}(idx);
 %         end
-        idx = xs{i}(:,1) <= -2*7;
+        idx = xs{i}(:,1) <= LAST_TIME;
         xs{i} = xs{i}(idx,:);
         ys{i} = ys{i}(idx);
         vs(i) = raceinfos{i}{4}/100;
@@ -65,7 +67,7 @@ function CNNGeneric(pollthres,iter,seed)
     
     for i=1:counter
         if raceinfos{i}{1}>=2016
-            idx = xs{i}(:,1) <= -2*12;
+            idx = xs{i}(:,1) <= LAST_TIME;
             xs{i} = xs{i}(idx,:);
             ys{i} = ys{i}(idx);
         end

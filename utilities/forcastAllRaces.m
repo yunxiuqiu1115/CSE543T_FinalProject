@@ -1,7 +1,7 @@
 function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_path, parms)
     % iterate cycle/state race
     [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms);
-    % im = {@infPrior, inffunc, prior};
+    im = {@infPrior, inffunc, prior};
     allRaces = struct;
     n = numel(xs);
     fts = zeros(n,1);
@@ -12,7 +12,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
     p.verbosity = 0;
     p.length = -100;
     mfun = @minimize_v2;
-    for i = 1:n
+    for i = 760:n
         year = raceinfos{i}{1};
         state = raceinfos{i}{2}{1};
         candidateName = raceinfos{i}{3};
@@ -53,7 +53,6 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
                 % training forecasting
                 % im{3}.mean{2}{2} = parms.a(i);
                 hyp = full2one(besthyp, i, parms.ncandidates, parms.nfirm);
-                [~, ~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
             else
                 % testing forecasting
                 % im{3}.mean{2}{2} = computePrior(pvi, experienced, republican);
@@ -61,6 +60,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
                 hyp.mean(1) = sample_prior(prior).mean(1);
                 priorb{2} = computePrior(pvi, experienced, republican);
                 hyp.mean(2) = feval(priorb{:});
+                im{3}.mean{2}{2} = priorb{2};
                 parms.mode ="all";
                 mask = false(size(unwrap(hyp)));
                 liksize = size(hyp.lik, 1);
@@ -68,33 +68,34 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
                 mask(liksize+covsize+1) = 1;
                 mask(liksize+covsize+2) = 1;
                 hypab.mean = hyp.mean(1:2);
-                hypab = feval(mfun, hypab, @gp_mask, p, hyp, inffunc,...
+                hypab = feval(mfun, hypab, @gp_mask, p, hyp, im,...
                         meanfunc, covfunc,...
                         likfunc, xs{i}, ys{i}, mask, parms, i);
                 hyp.mean(1:2) = hypab.mean;
-                [~, ~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
             end
             
-            % fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), i);
+            [~, ~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
+            
+            fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, i);
             predPoll = fmu(end);
             fts(i) = predPoll;
             s2s(i) = fs2(end);
             plot_title = year + " " + state + " " + candidateName;
-%             title(plot_title);
-%             yearFolder = fullfile(plot_path, num2str(year));
-%             stateFolder = fullfile(yearFolder, state);
-%             if ~exist(plot_path, 'dir')
-%                 mkdir(plot_path);
-%             end
-%             if ~exist(yearFolder, 'dir')
-%                 mkdir(yearFolder);
-%             end
-%             if ~exist(stateFolder, 'dir')
-%                 mkdir(stateFolder);
-%             end
-%             filename = fullfile(stateFolder, plot_title + ".jpg");
-%             saveas(fig, filename);
-%             close;
+            title(plot_title);
+            yearFolder = fullfile(plot_path, num2str(year));
+            stateFolder = fullfile(yearFolder, state);
+            if ~exist(plot_path, 'dir')
+                mkdir(plot_path);
+            end
+            if ~exist(yearFolder, 'dir')
+                mkdir(yearFolder);
+            end
+            if ~exist(stateFolder, 'dir')
+                mkdir(stateFolder);
+            end
+            filename = fullfile(stateFolder, plot_title + ".jpg");
+            saveas(fig, filename);
+            close;
             disp(plot_title + " predicted winning rate: " + predPoll);
             disp(plot_title + " actual votes won: " + trueVote + newline);
             if ~isfield(allRaces, fn)
