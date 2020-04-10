@@ -1,7 +1,7 @@
 rng('default');
 x = (1:5)';
 y = randn(size(x));
-xs = (6:7)';
+xs = (6)';
 ys = randn(size(xs));
 mean = {@meanConst};
 inf = @infExact;

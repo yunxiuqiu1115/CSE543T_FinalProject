@@ -32,7 +32,9 @@ function [varargout] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys)
     
     Ls = chol(pv);
     bs = solve_chol(Ls, (ys-m));
-    nlZ = (ys-m).'*bs/2 + log(det(pv)) + ns*log(2*pi)/2;
+    % sum(log(diag(Ls)))
+    % log(det(pv))
+    nlZ = (ys-m).'*bs/2 + sum(log(diag(Ls))) + ns*log(2*pi)/2;
     bt = bsxfun(@times, b, post.sW)';
 
     for i = 1:numel(hyp.mean)
@@ -45,7 +47,7 @@ function [varargout] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys)
     dsms = -bt*alpha*2*sn2;
     dsvs = bt*bt'*2*sn2;
     Q = solve_chol(Ls, dsvs);
-    dnlZ.lik = -bs'*dsms - bs'*dsvs*bs/2 + trace(Q);
+    dnlZ.lik = -bs'*dsms - bs'*dsvs*bs/2 + trace(Q)/2;
     
     for i = 1:numel(hyp.cov)
       dKxi = feval(cov{:}, hyp.cov, x, x, i);
@@ -54,7 +56,7 @@ function [varargout] = gp_last(hyp, inf, mean, cov, lik, x, y, xs, ys)
       dKms = (dKxsxi-bt*dKxi)*alpha;
       dvxs = dKxsi-bt*(2*dKxsxi'-dKxi*bt');
       Q = solve_chol(Ls, dvxs);
-      dnlZ.cov(i) = -bs'*dKms - bs'*dvxs*bs/2 + trace(Q);
+      dnlZ.cov(i) = -bs'*dKms - bs'*dvxs*bs/2 + trace(Q)/2;
     end
     
     if nargout == 1
