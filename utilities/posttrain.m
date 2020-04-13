@@ -150,9 +150,9 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp)
         if cycle{i}==2016
             nlZ = [nlZ, (v-fts(i))^2/2/s2s(i) + log(s2s(i))/2 + log(2*pi)/2];
             if v > u || v < l
-               disp("Posterior for "+cycle{i}+" "+state{i}+" out of 95% CI");
-               disp("95%CI: [" + l + ", " + u + "]" );
-               disp("Actual vote: "+v);
+%                disp("Posterior for "+cycle{i}+" "+state{i}+" out of 95% CI");
+%                disp("95%CI: [" + l + ", " + u + "]" );
+%                disp("Actual vote: "+v);
                Nout_test = Nout_test + 1;
             end   
         else
