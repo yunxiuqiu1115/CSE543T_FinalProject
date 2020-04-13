@@ -2,7 +2,7 @@ library(rstan)
 library(MCMCpack)
 
 # loading data
-data = read.csv("results/forecast1992-2016last.csv")
+data = read.csv("results/forecast1992-2016old14.csv")
 data = data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
 
 library(dplyr)
@@ -221,13 +221,17 @@ STATE = c()
 CANDIDATE = c()
 POSTERIORMEAN = c()
 POSTERIORSTD = c()
+PMEAN = c()
+PSTD = c()
 VOTE = c()
 LOWER95 = c()
 UPPER95 = c()
 WIN = c()
 MEDIAN = c()
+NLZ = c()
 
 correct_predictions = 0
+Nout_test = 0
 
 for(i in 1:length(test_idx2)) {
   state = test_metadata[[test_idx2[i]]]
@@ -243,19 +247,26 @@ for(i in 1:length(test_idx2)) {
     preds = c(preds, pred)
     u=quantile(pred,probs=c(0.975),names = FALSE)
     l=quantile(pred,probs=c(0.025),names = FALSE)
-    m = median(pred)
+    m = mean(pred)
+    s = sd(pred)
     if (test_stan_y[test_idx2[i],j]<=u & test_stan_y[test_idx2[i],j]>=l){
       flags[test_idx2[i],j] = 1
+    }
+    else{
+      Nout_test = Nout_test + 1
     }
     CYCLE = c(CYCLE, 2016)
     STATE = c(STATE,state)
     CANDIDATE = c(CANDIDATE,as.character(candidates[j]))
     POSTERIORMEAN = c(POSTERIORMEAN,pmu[j])
     POSTERIORSTD = c(POSTERIORSTD,pstd[j])
+    PMEAN = c(PMEAN, m)
+    PSTD = c(PSTD, s)
     VOTE = c(VOTE, vote[j])
-    MEDIAN = c(MEDIAN, m)
+    MEDIAN = c(MEDIAN, median(pred))
     LOWER95 = c(LOWER95, l)
     UPPER95 = c(UPPER95, u)
+    NLZ = c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
   }
   preds = matrix(preds, nrow = 2, byrow = TRUE)
   win_rates = rep(0, 2)
@@ -287,19 +298,26 @@ for(i in 1:length(test_idx4[i])) {
     preds = c(preds, pred)
     u=quantile(pred,probs=c(0.975),names = FALSE)
     l=quantile(pred,probs=c(0.025),names = FALSE)
-    m = median(pred)
+    m = mean(pred)
+    s = sd(pred)
     if (test_stan_y[test_idx4[i],j]<=u & test_stan_y[test_idx4[i],j]>=l){
       flags[test_idx4[i],j] = 1
+    }
+    else{
+      Nout_test = Nout_test + 1
     }
     CYCLE = c(CYCLE, 2016)
     STATE = c(STATE, state)
     CANDIDATE = c(CANDIDATE,as.character(candidates[j]))
     POSTERIORMEAN = c(POSTERIORMEAN,pmu[j])
     POSTERIORSTD = c(POSTERIORSTD,pstd[j])
+    PMEAN = c(PMEAN, m)
+    PSTD = c(PSTD, s)
     VOTE = c(VOTE, vote[j])
-    MEDIAN = c(MEDIAN, m)
+    MEDIAN = c(MEDIAN, median(pred))
     LOWER95 = c(LOWER95, l)
     UPPER95 = c(UPPER95, u)
+    NLZ = c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
   }
   preds = matrix(preds, nrow = 4, byrow = TRUE)
   win_rates = rep(0, 4)
@@ -332,3 +350,17 @@ result = data.frame(CYCLE,
 names(result) <- tolower(names(result))
 
 write.csv(result,'results/stan_prediction_last.csv')
+
+print(paste("Correct predictions: ",correct_predictions))
+
+print(paste("Correlation: ",cor(PMEAN, VOTE)))
+
+print(paste("RSME: ",sqrt(mean(PMEAN- VOTE/100)^2)))
+
+print(paste("Predictive averaged nlZ: ",mean(NLZ)))
+
+print(paste("Mean of predictive std: ",mean(PSTD)))
+
+print(paste("Median of predictive std: ",median(PSTD)))
+
+print(paste("Std of predictive std: ",sd(PSTD)))

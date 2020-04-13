@@ -12,7 +12,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
     p.verbosity = 0;
     p.length = -100;
     mfun = @minimize_v2;
-    for i = 760:n
+    for i = 1:n
         year = raceinfos{i}{1};
         state = raceinfos{i}{2}{1};
         candidateName = raceinfos{i}{3};
@@ -30,11 +30,13 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
                 % training forecasting
                 priorb{2} = besthyp.mean(parms.ncandidates+i);
                 predPoll = feval(priorb{:});
+                predPoll = besthyp.mean(parms.ncandidates+i);
             else 
                 % testing forecasting
                 priorb{2} = computePrior(pvi, experienced, republican);
                 predPoll = feval(priorb{:});
                 % + besthyp.mean(end)*republican;
+                predPoll = priorb{2};
             end
             if ~isfield(allRaces, fn)
                 allRaces.(fn) = [predPoll, trueVote];
@@ -57,11 +59,12 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
                 % testing forecasting
                 % im{3}.mean{2}{2} = computePrior(pvi, experienced, republican);
                 hyp = full2one(besthyp, 1, parms.ncandidates, parms.nfirm);
-                hyp.mean(1) = sample_prior(prior).mean(1);
+                hyp.mean(1) = prior.mean{1}{2};
                 priorb{2} = computePrior(pvi, experienced, republican);
                 hyp.mean(2) = feval(priorb{:});
+                hyp.mean(2) = priorb{2};
                 im{3}.mean{2}{2} = priorb{2};
-                parms.mode ="all";
+                parms.mode = "all";
                 mask = false(size(unwrap(hyp)));
                 liksize = size(hyp.lik, 1);
                 covsize = size(hyp.cov,1);
