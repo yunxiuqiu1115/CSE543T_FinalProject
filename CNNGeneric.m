@@ -11,7 +11,7 @@ function CNNGeneric(pollthres,iter,seed)
     % read race data
     CNNdata = readData("data/CNNData.csv");
     CNNdata = indexPollster(CNNdata, pollthres);
-    jobname = "All2016VoteThres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    jobname = "All2016ZeroThres" + pollthres + "Iter" + iter +  "Seed" + seed;
     LAST_TIME = 0;
     plot_path = "plots/" + jobname;
 
@@ -24,7 +24,7 @@ function CNNGeneric(pollthres,iter,seed)
     
 
     % build training cell arrays
-    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years(1:end-1), states);
+    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years(1:end), states);
     counter = size(xs,1);
     parms.ncandidates = counter;
     parms.a = ones(counter,1)*0.5;
@@ -35,18 +35,18 @@ function CNNGeneric(pollthres,iter,seed)
         experienced =raceinfos{i}{6};
         republican = xs{i}(1,5);
         parms.a(i) = computePrior(pvi, experienced, republican);
-%         if raceinfos{i}{1}>=2016
-%             idx = xs{i}(:,1) <= -90;
-%             xs{i} = xs{i}(idx,:);
-%             ys{i} = ys{i}(idx);
-%         end
+        if raceinfos{i}{1}>=2016
+            idx = xs{i}(:,1) <= -90;
+            xs{i} = xs{i}(idx,:);
+            ys{i} = ys{i}(idx);
+        end
         idx = xs{i}(:,1) <= LAST_TIME;
         xs{i} = xs{i}(idx,:);
         ys{i} = ys{i}(idx);
         
         vs(i) = raceinfos{i}{4}/100;
-        xs{i} = [xs{i}; [0,0,1,parms.nfirm, republican]];
-        ys{i} = [ys{i}; vs(i)];
+%         xs{i} = [xs{i}; [0,0,1,parms.nfirm, republican]];
+%         ys{i} = [ys{i}; vs(i)];
     end
     
     parms.vs = vs;
