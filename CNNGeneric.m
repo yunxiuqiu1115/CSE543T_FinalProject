@@ -11,10 +11,11 @@ function CNNGeneric(pollthres,iter,seed)
     % read race data
     CNNdata = readData("data/CNNData.csv");
     CNNdata = indexPollster(CNNdata, pollthres);
-    jobname = "All2016VoteThres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    jobname = "Last2016ZeroThres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    LAST_TIME = -0;
     plot_path = "plots/" + jobname;
 
-    parms.mode = "all";
+    parms.mode = "last";
     % pollsters having less than threshold of polls will be indexed by nfirm
     parms.nfirm = max(CNNdata.pollsteridx);
     parms.days = min(CNNdata.daysLeft);
@@ -27,8 +28,6 @@ function CNNGeneric(pollthres,iter,seed)
     counter = size(xs,1);
     parms.ncandidates = counter;
     parms.a = ones(counter,1)*0.5;
-    
-    LAST_TIME = -0;
     
     vs = zeros(counter,1);
     for i=1:counter
@@ -46,8 +45,8 @@ function CNNGeneric(pollthres,iter,seed)
         ys{i} = ys{i}(idx);
         
         vs(i) = raceinfos{i}{4}/100;
-        xs{i} = [xs{i}; [0,0,1,parms.nfirm, republican]];
-        ys{i} = [ys{i}; vs(i)];
+%         xs{i} = [xs{i}; [0,0,1,parms.nfirm, republican]];
+%         ys{i} = [ys{i}; vs(i)];
     end
     
     parms.vs = vs;
@@ -68,7 +67,7 @@ function CNNGeneric(pollthres,iter,seed)
 
     for i=1:counter
         if raceinfos{i}{1}>=2016
-            idx = xs{i}(:,1) <= -0;
+            idx = xs{i}(:,1) <= -LAST_TIME;
             xs{i} = xs{i}(idx,:);
             ys{i} = ys{i}(idx);
         end
