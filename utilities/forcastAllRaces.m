@@ -73,7 +73,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
                 hypab.mean = hyp.mean(1:2);
                 hypab = feval(mfun, hypab, @gp_mask, p, hyp, im,...
                         meanfunc, covfunc,...
-                        likfunc, xs{i}, ys{i}, mask, parms, i);
+                        likfunc, xs{i}, ys{i}, mask, parms, i, "all");
                 hyp.mean(1:2) = hypab.mean;
             end
             
