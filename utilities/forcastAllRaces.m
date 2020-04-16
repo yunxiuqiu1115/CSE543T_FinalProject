@@ -84,7 +84,6 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             fts(i) = predPoll;
             s2s(i) = fs2(end);
             nlZ = (trueVote/100-fts(i))^2/2/s2s(i) + log(s2s(i))/2 + log(2*pi)/2;
-            disp(i);
             plot_title = year + " " + state + " " + candidateName;
 %             disp(plot_title +  " nlZ: " + nlZ)
 %             disp(fts(i) + " " + trueVote + " " + s2s(i));
