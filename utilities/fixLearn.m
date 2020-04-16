@@ -24,7 +24,7 @@ function hyperparameters = fixLearn(hyperparameters, ...
       p.verbosity = 0;
       p.length = -100;
       trained_hyp = zeros(num_samples, 2);
-      parms.mode = 'all';
+%       parms.mode = 'all';
       parfor i = 1:num_samples
         if mod(i, 50) == 0, disp("training iter" + it + " trainning sample: " + i); end
         hyp = struct;
@@ -39,7 +39,7 @@ function hyperparameters = fixLearn(hyperparameters, ...
         im{3}.mean{2}{2} = as(i);
         hyp = feval(mfun, hyp, @gp_mask, p, hyp_race, im,...
             mean_function, covariance_function,...
-            likelihood, xs{i}, ys{i}, mask, parms, i);
+            likelihood, xs{i}, ys{i}, mask, parms, i, "all");
         trained_hyp(i,:) = hyp.mean;
       end
       hyperparameters.mean(1:num_samples) = trained_hyp(:,1);
