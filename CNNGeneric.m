@@ -20,6 +20,7 @@ function CNNGeneric(pollthres,iter,seed)
     parms.days = min(CNNdata.daysLeft);
     years = unique(CNNdata.cycle);
     states = unique(CNNdata.state);
+    
 
     % build training cell arrays
     [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years(1:end-1), states);
