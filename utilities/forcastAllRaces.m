@@ -12,7 +12,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
     p.verbosity = 0;
     p.length = -100;
     mfun = @minimize_v2;
-    for i = 1:n
+    for i = 825:n
         year = raceinfos{i}{1};
         state = raceinfos{i}{2}{1};
         candidateName = raceinfos{i}{3};
@@ -26,7 +26,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
         if numel(xs{i})==0
             % if there is no data avaiable
             % use prior
-            if i<=parms.ncandidates
+            if i<=760
                 % training forecasting
                 priorb{2} = besthyp.mean(parms.ncandidates+i);
                 predPoll = feval(priorb{:});
@@ -51,7 +51,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             % republican = xs{i}(1,5);
             xstar = [linspace(xs{i}(1,1)-10,0,nz).',zeros(1,nz)',ones(1,nz)',...
                 parms.nfirm*ones(1,nz)',republican*ones(1,nz)'];
-            if i<=parms.ncandidates
+            if i<=760
                 % training forecasting
                 % im{3}.mean{2}{2} = parms.a(i);
                 hyp = full2one(besthyp, i, parms.ncandidates, parms.nfirm);
@@ -83,7 +83,11 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             predPoll = fmu(end);
             fts(i) = predPoll;
             s2s(i) = fs2(end);
+            nlZ = (trueVote/100-fts(i))^2/2/s2s(i) + log(s2s(i))/2 + log(2*pi)/2;
+            disp(i);
             plot_title = year + " " + state + " " + candidateName;
+%             disp(plot_title +  " nlZ: " + nlZ)
+%             disp(fts(i) + " " + trueVote + " " + s2s(i));
             title(plot_title);
             yearFolder = fullfile(plot_path, num2str(year));
             stateFolder = fullfile(yearFolder, state);
@@ -99,8 +103,8 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             filename = fullfile(stateFolder, plot_title + ".jpg");
             saveas(fig, filename);
             close;
-            disp(plot_title + " predicted winning rate: " + predPoll);
-            disp(plot_title + " actual votes won: " + trueVote + newline);
+%             disp(plot_title + " predicted winning rate: " + predPoll);
+%             disp(plot_title + " actual votes won: " + trueVote + newline);
             if ~isfield(allRaces, fn)
                 allRaces.(fn) = [predPoll, trueVote];
             else

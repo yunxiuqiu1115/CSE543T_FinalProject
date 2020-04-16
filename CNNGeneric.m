@@ -11,7 +11,7 @@ function CNNGeneric(pollthres,iter,seed)
     % read race data
     CNNdata = readData("data/CNNData.csv");
     CNNdata = indexPollster(CNNdata, pollthres);
-    jobname = "All2016Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    jobname = "All2016ThresZero" + pollthres + "Iter" + iter +  "Seed" + seed;
     plot_path = "plots/" + jobname;
 
     parms.mode = "all";
@@ -59,7 +59,7 @@ function CNNGeneric(pollthres,iter,seed)
     hyp = sample_separate_prior(prior, parms, counter, seed);
     hyp = fixLearn(hyp, im, par{:}, iter, parms);
     
-    parms.mode = 'all';
+    parms.mode = "all";
     
     [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
     counter = size(xs,1);
@@ -67,7 +67,7 @@ function CNNGeneric(pollthres,iter,seed)
     
     for i=1:counter
         if raceinfos{i}{1}>=2016
-            idx = xs{i}(:,1) <= LAST_TIME;
+            idx = xs{i}(:,1) <= -0;
             xs{i} = xs{i}(idx,:);
             ys{i} = ys{i}(idx);
         end
@@ -84,5 +84,7 @@ function CNNGeneric(pollthres,iter,seed)
 %     [validfts, valids2s] = performForcasting(hyp, validxs, validys, validraceinfos, plot_path, parms);
     
     % posttrain(CNNdata, allRaces, hyp);
+    
+     save(jobname + ".mat");
 
 end

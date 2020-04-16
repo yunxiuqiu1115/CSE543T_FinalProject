@@ -3,6 +3,7 @@ library(MCMCpack)
 
 # loading data
 data = read.csv("results/forecast1992-2016old14.csv")
+outfile = 'results/stan_prediction_old14.csv'
 data = data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
 
 library(dplyr)
@@ -349,13 +350,15 @@ result = data.frame(CYCLE,
 
 names(result) <- tolower(names(result))
 
-write.csv(result,'results/stan_prediction_last.csv')
+write.csv(result,outfile)
 
 print(paste("Correct predictions: ",correct_predictions))
 
 print(paste("Correlation: ",cor(PMEAN, VOTE)))
 
-print(paste("RSME: ",sqrt(mean(PMEAN- VOTE/100)^2)))
+print(paste("RSME: ",sqrt(mean((PMEAN- VOTE/100)^2))))
+
+print(paste("Ratio in 95% : ",1-Nout_test/73))
 
 print(paste("Predictive averaged nlZ: ",mean(NLZ)))
 

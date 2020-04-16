@@ -14,7 +14,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp)
             if p_idx == t_idx
                 nsuc_test = nsuc_test + 1;
             else   
-               misclassify(fn{i}, vs, ps, 'test');
+%                misclassify(fn{i}, vs, ps, 'test');
             end
         else
             N_train = N_train + 1;
@@ -31,7 +31,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp)
     
     accuracy(N_train, nsuc_train, 'training');
     accuracy(N_test, nsuc_test, 'test');
-    accuracy(N, nsuc, 'overall');
+%     accuracy(N, nsuc, 'overall');
 
     N = numel(raceinfos);
     errors = zeros(N,1);
@@ -51,15 +51,14 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp)
         N = N + l;
     end
     
-    disp('correlation of predictive mean and actual vote on training data');
-    disp(corr(a(1:760),b(1:760)));
-    disp('RMSE of predictive mean and actual vote on training data');
-    disp(sqrt(mean((a(1:760)-b(1:760)).^2)));
-    
-    disp('correlation of predictive mean and actual vote on test data');
-    disp(corr(a(761:end),b(761:end)));
-    disp('RMSE of predictive mean and actual vote on test data');
-    disp(sqrt(mean((a(761:end)-b(761:end)).^2)));
+    tmp=corr(a(1:760),b(1:760));
+    fprintf('correlation of predictive mean and actual vote on training data: %0.6f\n',tmp);
+    tmp=sqrt(mean((a(1:760)-b(1:760)).^2));
+    fprintf('RMSE of predictive mean and actual vote on training data: %0.6f\n',tmp);
+    tmp=corr(a(761:end),b(761:end));
+    fprintf('correlation of predictive mean and actual vote on test data: %0.6f\n',tmp);
+    tmp=sqrt(mean((a(761:end)-b(761:end)).^2));
+    fprintf('RMSE of predictive mean and actual vote on test data: %0.6f\n',tmp);
     
 %     fig = histogram(abs(errors));
 %     xlabel("absolute forecasting error");
@@ -161,11 +160,11 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp)
             end
         end
     end
-    disp(Nout_train + "/760 actual votes out of 95% predictive CI on training data.");
-    disp(Nout_test + "/73 actual votes out of 95% predictive CI on test data.");
+    fprintf('95 CI on training data: %0.6f\n',1-Nout_train/760);
+    fprintf('95 CI on test data: %0.6f\n',1-Nout_test/73);
     disp("Test Average nlZ: " + mean(nlZ));
-%     forecast = table(cycle, state, candidate, posteriormean, posteriorstd, vote, pvi, party, experienced);
-%     writetable(forecast,'results/forecast1992-2016old14.csv');
+    forecast = table(cycle, state, candidate, posteriormean, posteriorstd, vote, pvi, party, experienced);
+    writetable(forecast,'results/forecast1992-2016old0.csv');
 
     disp("Length Scale: " + exp(besthyp.cov(1)));
     disp("Output Scale: " + exp(besthyp.cov(2)));
@@ -178,8 +177,8 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp)
 end
 
 function acc = accuracy(N, nsuc, title)
-    disp(N + " " + title + " races run.");
-    disp(nsuc + " successful " + title + " predictions.");
+%     disp(N + " " + title + " races run.");
+%     disp(nsuc + " successful " + title + " predictions.");
     acc = nsuc/N;
     disp(title + " accuracy rate: " + acc); 
 end
