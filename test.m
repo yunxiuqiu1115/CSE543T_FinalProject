@@ -41,8 +41,8 @@
 taus = [42,28,14,0];
 
 for i=1:numel(taus)
-    myrun(taus(i),"model");
-%     myrun(taus(i),"last");
+%     myrun(taus(i),"model");
+    myrun(taus(i),"last");
 end
 
 % diary('off');

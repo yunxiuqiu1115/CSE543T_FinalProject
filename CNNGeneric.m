@@ -24,7 +24,7 @@ function CNNGeneric(pollthres,iter,seed)
     
 
     % build training cell arrays
-    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years(1:end), states);
+    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years(1:end-1), states);
     counter = size(xs,1);
     parms.ncandidates = counter;
     parms.a = ones(counter,1)*0.5;
@@ -35,11 +35,11 @@ function CNNGeneric(pollthres,iter,seed)
         experienced =raceinfos{i}{6};
         republican = xs{i}(1,5);
         parms.a(i) = computePrior(pvi, experienced, republican);
-        if raceinfos{i}{1}>=2016
-            idx = xs{i}(:,1) <= -90;
-            xs{i} = xs{i}(idx,:);
-            ys{i} = ys{i}(idx);
-        end
+%         if raceinfos{i}{1}>=2016
+%             idx = xs{i}(:,1) <= -90;
+%             xs{i} = xs{i}(idx,:);
+%             ys{i} = ys{i}(idx);
+%         end
         idx = xs{i}(:,1) <= LAST_TIME;
         xs{i} = xs{i}(idx,:);
         ys{i} = ys{i}(idx);
