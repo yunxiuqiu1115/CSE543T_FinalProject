@@ -51,7 +51,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             % use MAP
             % republican = xs{i}(1,5);
             xstar = [linspace(xs{i}(1,1)-10,0,nz).',zeros(1,nz)',ones(1,nz)',...
-                parms.nfirm*ones(1,nz)',republican*ones(1,nz)'];
+                parms.nfirm*ones(1,nz)',republican*zeros(1,nz)'];
             if i<=760
                 % training forecasting
                 % im{3}.mean{2}{2} = parms.a(i);
