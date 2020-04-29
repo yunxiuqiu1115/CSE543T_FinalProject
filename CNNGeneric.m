@@ -11,8 +11,8 @@ function CNNGeneric(pollthres,iter,seed)
     % read race data
     CNNdata = readData("data/CNNData.csv");
     CNNdata = indexPollster(CNNdata, pollthres);
-    jobname = "All2016ZeroThres" + pollthres + "Iter" + iter +  "Seed" + seed;
-    LAST_TIME = 0; % positive
+    jobname = "All2016TwoWeekThres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    LAST_TIME = 14; % positive
     plot_path = "plots/" + jobname;
     parms.mode = "all";
     
