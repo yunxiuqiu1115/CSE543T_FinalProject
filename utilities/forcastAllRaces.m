@@ -11,6 +11,9 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
     p.mem = 100;
     p.verbosity = 0;
     p.length = -100;
+%     a_mu = sum(besthyp.mean(1:760))/760;
+%     a_std = std(besthyp.mean(1:760));
+%     b_std = std(besthyp.mean(761:760*2));
     mfun = @minimize_v2;
     for i = 1:n
         year = raceinfos{i}{1};
@@ -29,12 +32,10 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             if i<=760
                 % training forecasting
                 priorb{2} = besthyp.mean(parms.ncandidates+i);
-                predPoll = feval(priorb{:});
                 predPoll = besthyp.mean(parms.ncandidates+i);
             else 
                 % testing forecasting
                 priorb{2} = computePrior(pvi, experienced, republican);
-                predPoll = feval(priorb{:});
                 % + besthyp.mean(end)*republican;
                 predPoll = priorb{2};
             end
@@ -64,6 +65,9 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
                 hyp.mean(2) = feval(priorb{:});
                 hyp.mean(2) = priorb{2};
                 im{3}.mean{2}{2} = priorb{2};
+%                 im{3}.mean{2}{3} = b_std;
+%                 im{3}.mean{1}{2} = a_mu;
+%                 im{3}.mean{1}{3} = a_std;
                 parms.mode = "all";
                 mask = false(size(unwrap(hyp)));
                 liksize = size(hyp.lik, 1);
@@ -77,16 +81,18 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
                 hyp.mean(1:2) = hypab.mean;
             end
             
+%             im{3}.mean{2}{2} = hyp.mean(2);
+%             im{3}.mean{1}{2} = hyp.mean(1);
+            
             [~, ~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
             
-            fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, i);
+            fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, i,hyp.mean(1),hyp.mean(2),besthyp.mean(760*2+xs{i}(:,4)));
             predPoll = fmu(end);
             fts(i) = predPoll;
             s2s(i) = fs2(end);
-            nlZ = (trueVote/100-fts(i))^2/2/s2s(i) + log(s2s(i))/2 + log(2*pi)/2;
+%             nlZ = (trueVote/100-fts(i))^2/2/s2s(i) + log(s2s(i))/2 + log(2*pi)/2;
             plot_title = year + " " + state + " " + candidateName;
-%             disp(plot_title +  " nlZ: " + nlZ)
-%             disp(fts(i) + " " + trueVote + " " + s2s(i));
+%             disp(plot_title +  " nlZ: " + nlZ);
             title(plot_title);
             yearFolder = fullfile(plot_path, num2str(year));
             stateFolder = fullfile(yearFolder, state);

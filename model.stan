@@ -107,7 +107,7 @@ transformed parameters{
 
 model {
   // very flat priors on linear model parameters
-  alpha ~ normal(0, 1);
+  alpha ~ normal(10, 1);
   beta ~ normal(0, 1);
   year_sig ~ gamma(1, .5); // Prior on the SD for the year-level RE
   year_re ~ normal(0, year_sig); // Prior for the year-level RE

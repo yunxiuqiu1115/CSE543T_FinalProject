@@ -11,11 +11,12 @@ function CNNGeneric(pollthres,iter,seed)
     % read race data
     CNNdata = readData("data/CNNData.csv");
     CNNdata = indexPollster(CNNdata, pollthres);
-    jobname = "All2016SixWeekThres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    jobname = "Last2016SixWeekThres" + pollthres + "Iter" + iter +  "Seed" + seed;
     LAST_TIME = 42; % positive
     plot_path = "plots/" + jobname;
-
-    parms.mode = "all";
+    parms.mode = "last";
+    
+    method = parms.mode;
     % pollsters having less than threshold of polls will be indexed by nfirm
     parms.nfirm = max(CNNdata.pollsteridx);
     parms.days = min(CNNdata.daysLeft);
@@ -45,15 +46,12 @@ function CNNGeneric(pollthres,iter,seed)
         ys{i} = ys{i}(idx);
         
         vs(i) = raceinfos{i}{4}/100;
-%         xs{i} = [xs{i}; [0,0,1,parms.nfirm, republican]];
-%         ys{i} = [ys{i}; vs(i)];
     end
     
     parms.vs = vs;
 
     % define model
     [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms);
-    % inffunctrain = @infLast;
     im = {@infPrior, inffunc, prior};
     par = {meanfunc,covfunc,likfunc, xs, ys};
 
@@ -77,13 +75,15 @@ function CNNGeneric(pollthres,iter,seed)
     
     [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
     
+    save(jobname + ".mat");
+    
 %     data2018 = readData("data/CNNData2018.csv");
 %     data2018 = indexPollster(data2018, pollthres, "data/CNNData2018idx.csv");
 %     [validxs, validys, validraceinfos] = buildTrainCellArrays(CNNdata, (2016), states);
 %     parms.valididx = size(xs,1) - size(validxs,1);
 %     [validfts, valids2s] = performForcasting(hyp, validxs, validys, validraceinfos, plot_path, parms);
     
-    % posttrain(CNNdata, allRaces, hyp);
+    posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, method);
     
      save(jobname + ".mat");
 

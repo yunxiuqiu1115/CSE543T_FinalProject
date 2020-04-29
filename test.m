@@ -41,7 +41,7 @@
 taus = [42,28,14,0];
 
 for i=1:numel(taus)
-%     myrun(taus(i),"model");
+    myrun(taus(i),"model");
     myrun(taus(i),"last");
 end
 
@@ -49,11 +49,11 @@ end
 
 function myrun(tau,type)
     if strcmp(type, "model")==1
-        load("model.mat");
-        jobname = "All2016" + tau + "Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
-        plot_path = "plots/" + jobname;
+        load("models/model" + tau + ".mat");
+        method = 'all';
     else
         load(MPLV(tau));
+        method = 'last';
     end
     years = unique(CNNdata.cycle);
     [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
@@ -69,10 +69,10 @@ function myrun(tau,type)
     disp(type);
     disp("tau: "+tau);
     [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
-    posttrain(raceinfos,fts,s2s,allRaces,hyp);
+    posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, method);
 end
 
 function f=MPLV(t)
-    f = "last" + t + ".mat";
+    f = "models/last" + t + ".mat";
 end
 

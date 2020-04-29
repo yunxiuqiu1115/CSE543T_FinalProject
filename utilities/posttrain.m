@@ -1,4 +1,4 @@
-function posttrain(raceinfos, fts, s2s, allRaces, besthyp)
+function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
     N_train = 0; nsuc_train = 0;
     N_test = 0; nsuc_test = 0;
     fn = fieldnames(allRaces);
@@ -164,7 +164,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp)
     fprintf('95 CI on test data: %0.6f\n',1-Nout_test/73);
     disp("Test Average nlZ: " + mean(nlZ));
     forecast = table(cycle, state, candidate, posteriormean, posteriorstd, vote, pvi, party, experienced);
-    writetable(forecast,'results/forecast1992-2016old0.csv');
+    writetable(forecast,strcat('results/forecast1992-2016',method,num2str(tau),'.csv'));
 
     disp("Length Scale: " + exp(besthyp.cov(1)));
     disp("Output Scale: " + exp(besthyp.cov(2)));
