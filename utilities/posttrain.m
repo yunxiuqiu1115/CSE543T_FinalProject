@@ -14,7 +14,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
             if p_idx == t_idx
                 nsuc_test = nsuc_test + 1;
             else   
-%                misclassify(fn{i}, vs, ps, 'test');
+               misclassify(fn{i}, vs, ps, 'test');
             end
         else
             N_train = N_train + 1;
@@ -25,6 +25,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
             end
         end
     end
+    
     
     N = N_train + N_test;
     nsuc = nsuc_train + nsuc_test;

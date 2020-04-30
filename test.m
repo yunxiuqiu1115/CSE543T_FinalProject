@@ -42,15 +42,16 @@ taus = [42,28,14,0];
 
 for i=1:numel(taus)
     myrun(taus(i),"model");
-    myrun(taus(i),"last");
+%     myrun(taus(i),"last");
 end
 
 % diary('off');
 
 function myrun(tau,type)
     if strcmp(type, "model")==1
-        load("models/model" + tau + ".mat");
-        method = 'all';
+%         load("models/all" + tau + ".mat");
+        load("models/all0.mat");
+        method = 'old';
     else
         load(MPLV(tau));
         method = 'last';
@@ -67,12 +68,13 @@ function myrun(tau,type)
     end
 
     disp(type);
+    
     disp("tau: "+tau);
     [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
     posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, method);
 end
 
 function f=MPLV(t)
-    f = "models/last" + t + ".mat";
+    f = "models/last" + t + "-1.mat";
 end
 

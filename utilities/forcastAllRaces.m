@@ -22,7 +22,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
         trueVote = raceinfos{i}{4};
         pvi =raceinfos{i}{5};
         experienced =raceinfos{i}{6};
-        republican = (raceinfos{i}{7}+1)/2;
+        republican = raceinfos{i}{7};
         fn = char(state+""+year);
         fn = fn(~isspace(fn));
         priorb = prior.mean{2};
@@ -51,7 +51,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             % use MAP
             % republican = xs{i}(1,5);
             xstar = [linspace(xs{i}(1,1)-10,0,nz).',zeros(1,nz)',ones(1,nz)',...
-                parms.nfirm*ones(1,nz)',republican*zeros(1,nz)'];
+                parms.nfirm*ones(1,nz)',republican*ones(1,nz)'];
             if i<=760
                 % training forecasting
                 % im{3}.mean{2}{2} = parms.a(i);
@@ -84,30 +84,32 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
 %             im{3}.mean{2}{2} = hyp.mean(2);
 %             im{3}.mean{1}{2} = hyp.mean(1);
             
+            xstar = [linspace(xs{i}(1,1)-10,0,nz).',zeros(1,nz)',ones(1,nz)',...
+                            parms.nfirm*ones(1,nz)',republican*zeros(1,nz)'];
             [~, ~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
             
-            fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, i,hyp.mean(1),hyp.mean(2),besthyp.mean(760*2+xs{i}(:,4)));
+%             fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, i,hyp.mean(1),hyp.mean(2),besthyp.mean(760*2+xs{i}(:,4)));
             predPoll = fmu(end);
             fts(i) = predPoll;
             s2s(i) = fs2(end);
 %             nlZ = (trueVote/100-fts(i))^2/2/s2s(i) + log(s2s(i))/2 + log(2*pi)/2;
-            plot_title = year + " " + state + " " + candidateName;
+%             plot_title = year + " " + state + " " + candidateName;
 %             disp(plot_title +  " nlZ: " + nlZ);
-            title(plot_title);
-            yearFolder = fullfile(plot_path, num2str(year));
-            stateFolder = fullfile(yearFolder, state);
-            if ~exist(plot_path, 'dir')
-                mkdir(plot_path);
-            end
-            if ~exist(yearFolder, 'dir')
-                mkdir(yearFolder);
-            end
-            if ~exist(stateFolder, 'dir')
-                mkdir(stateFolder);
-            end
-            filename = fullfile(stateFolder, plot_title + ".jpg");
-            saveas(fig, filename);
-            close;
+%             title(plot_title);
+%             yearFolder = fullfile(plot_path, num2str(year));
+%             stateFolder = fullfile(yearFolder, state);
+%             if ~exist(plot_path, 'dir')
+%                 mkdir(plot_path);
+%             end
+%             if ~exist(yearFolder, 'dir')
+%                 mkdir(yearFolder);
+%             end
+%             if ~exist(stateFolder, 'dir')
+%                 mkdir(stateFolder);
+%             end
+%             filename = fullfile(stateFolder, plot_title + ".jpg");
+%             saveas(fig, filename);
+%             close;
 %             disp(plot_title + " predicted winning rate: " + predPoll);
 %             disp(plot_title + " actual votes won: " + trueVote + newline);
             if ~isfield(allRaces, fn)

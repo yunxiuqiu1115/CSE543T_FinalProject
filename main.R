@@ -2,7 +2,27 @@ library(rstan)
 library(MCMCpack)
 library(dplyr)
 
-poll2vote <- function(input_file, output_file){
+# gp learnt on all data using mlp
+# feed gp posterior to stan model
+# input_file = "results/forecast1992-2016all0.csv"
+# output_file = "results/stan_prediction_all0.csv"
+
+input_path = 'results/forecast1992-2016'
+output_path = 'results/stan_prediction_'
+
+input_strs = c('all42',
+                'all28',
+                'all14',
+                'all0',
+                'last42',
+                'last28',
+                'last14',
+                'last0')
+
+poll2vote <- function(input_str, input_path ,output_path){
+  input_file = paste(input_path, input_str,'.csv',sep='')
+  output_file = paste(output_path, input_str,'.csv',sep='')
+  
   # loading data
   data = read.csv(input_file)
   print(input_file)
@@ -280,7 +300,6 @@ poll2vote <- function(input_file, output_file){
     WIN = c(WIN, win_rates)
     if (which.max(win_rates)==which.max(vote)){
       correct_predictions = correct_predictions + 1
-      print(test_metadata[[test_idx2[i]]])
     }
     else{
       print("Wrong prediction:")
@@ -333,7 +352,6 @@ poll2vote <- function(input_file, output_file){
     WIN = c(WIN, win_rates)
     if (which.max(win_rates)==which.max(vote)){
       correct_predictions = correct_predictions + 1
-      print(test_metadata[[test_idx4[i]]])
     }
     else{
       print("Wrong prediction:")
@@ -372,18 +390,12 @@ poll2vote <- function(input_file, output_file){
   print(paste("Median of predictive std: ",median(PSTD)))
   
   print(paste("Std of predictive std: ",sd(PSTD)))
+  
+  save.image(file = paste('models/',input_str,'.RData',sep=''))
 }
 
-output_files = c('results/stan_prediction_old42.csv',
-                 'results/stan_prediction_old28.csv',
-                 'results/stan_prediction_old14.csv',
-                 'results/stan_prediction_old0.csv')
-input_files = c("results/forecast1992-2016old42.csv",
-                "results/forecast1992-2016old28.csv",
-                "results/forecast1992-2016old14.csv",
-                "results/forecast1992-2016old0.csv")
 
-for (i in 1:length(input_files)) {
-  poll2vote(input_files[i], output_files[i])
+for (i in 1:length(input_strs)) {
+  poll2vote(input_strs[i], input_path, output_path)
 }
 
