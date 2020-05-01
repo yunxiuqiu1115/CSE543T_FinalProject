@@ -10,47 +10,56 @@ library(dplyr)
 input_path = 'results/forecast1992-2016'
 output_path = 'results/stan_prediction_'
 
-input_strs = c('all42',
-                'all28',
+input_strs = c('all0',
                 'all14',
-                'all0',
-                'last42',
-                'last28',
+                'all28',
+                'all42',
+                'last0',
                 'last14',
-                'last0')
+                'last28',
+                'last42')
 
-poll2vote <- function(input_str, input_path ,output_path){
-  input_file = paste(input_path, input_str,'.csv',sep='')
-  output_file = paste(output_path, input_str,'.csv',sep='')
+input_strs = c('last0')
+
+# poll2vote <- function(input_str, input_path ,output_path){
+  
+# }
+
+
+for (i in 1:length(input_strs)) {
+  input_str = input_strs[i]
+#  poll2vote(input_strs[i], input_path, output_path)
+  input_file <- paste(input_path, input_str,'.csv',sep='')
+  output_file <- paste(output_path, input_str,'.csv',sep='')
   
   # loading data
-  data = read.csv(input_file)
+  data <- read.csv(input_file)
   print(input_file)
-  data = data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
+  data <- data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
   
   data %>%
     group_by(cycle, state) %>%
     summarise(count=n()) %>%
     filter(count >=4)
   
-  data2016 = data[data$cycle==2016,]
-  data = data[data$cycle!=2016,]
-  cycles = unique(data$cycle)
-  states = unique(data$state)
+  data2016 <- data[data$cycle==2016,]
+  data <- data[data$cycle!=2016,]
+  cycles <- unique(data$cycle)
+  states <- unique(data$state)
   
-  C = 4
+  C <- 4
   
   # define variables
-  metadata = list()
-  year_idx = c()
-  mu = list()
-  sigma = list()
-  y = list()
-  nc = c()
-  pvi = list()
-  party = list()
-  experienced = list()
-  counter = 0
+  metadata <- list()
+  year_idx <- c()
+  mu <- list()
+  sigma <- list()
+  y <- list()
+  nc <- c()
+  pvi <- list()
+  party <- list()
+  experienced <- list()
+  counter <- 0
   
   # iterate over races
   for (cycle in cycles) {
@@ -63,7 +72,7 @@ poll2vote <- function(input_str, input_path ,output_path){
       experienced_ = data[data$cycle==cycle & data$state==state,c("experienced")]
       
       if(length(pmu)){
-        counter = counter + 1
+        counter <- counter + 1
         metadata[[counter]] = c(cycle, state)
         mu[[counter]] = pmu
         sigma[[counter]] = pstd
@@ -78,15 +87,15 @@ poll2vote <- function(input_str, input_path ,output_path){
   }
   
   # build stan data
-  stan_mu = matrix(0,counter,C)
-  stan_sigma = matrix(0.0001,counter,C)
-  stan_y = matrix(0,counter,C)
-  stan_pvi = matrix(0,counter,C)
-  stan_party = matrix(0,counter,C)
-  stan_experienced = matrix(0,counter,C)
+  stan_mu <- matrix(0,counter,C)
+  stan_sigma <- matrix(0.0001,counter,C)
+  stan_y <- matrix(0,counter,C)
+  stan_pvi <- matrix(0,counter,C)
+  stan_party <- matrix(0,counter,C)
+  stan_experienced <- matrix(0,counter,C)
   
   for (i in 1:counter) {
-    stan_mu[i,1:nc[i]] = mu[[i]]
+    stan_mu[i,1:nc[i]] <- mu[[i]]
     stan_sigma[i,1:nc[i]] = sigma[[i]]
     stan_y[i,1:nc[i]] = y[[i]]
     stan_y[i,] = stan_y[i,]/sum(stan_y[i,])
@@ -95,9 +104,9 @@ poll2vote <- function(input_str, input_path ,output_path){
     stan_experienced[i, 1:nc[i]] = experienced[[i]]
   }
   
-  idx2 = c()
-  idx3 = c()
-  idx4 = c()
+  idx2 <- c()
+  idx3 <- c()
+  idx4 <- c()
   
   for (i in 1:counter) {
     tmp = sum(stan_mu[i,]!=0)
@@ -107,16 +116,16 @@ poll2vote <- function(input_str, input_path ,output_path){
   }
   
   # test data
-  test_metadata = list()
-  test_year_idx = c()
-  test_mu = list()
-  test_sigma = list()
-  test_y = list()
-  test_nc = c()
-  test_pvi = list()
-  test_party = list()
-  test_experienced = list()
-  test_counter = 0
+  test_metadata <- list()
+  test_year_idx <- c()
+  test_mu <- list()
+  test_sigma <- list()
+  test_y <- list()
+  test_nc <- c()
+  test_pvi <- list()
+  test_party <- list()
+  test_experienced <- list()
+  test_counter <- 0
   
   # iterate over races
   for (state in states) {
@@ -141,12 +150,12 @@ poll2vote <- function(input_str, input_path ,output_path){
   }
   
   # build stan data
-  test_stan_mu = matrix(0,test_counter,C)
-  test_stan_sigma = matrix(0.0001,test_counter,C)
-  test_stan_y = matrix(0.0001,test_counter,C)
-  test_stan_pvi = matrix(0,test_counter,C)
-  test_stan_party = matrix(0,test_counter,C)
-  test_stan_experienced = matrix(0,test_counter,C)
+  test_stan_mu <- matrix(0,test_counter,C)
+  test_stan_sigma <- matrix(0.0001,test_counter,C)
+  test_stan_y <- matrix(0.0001,test_counter,C)
+  test_stan_pvi <- matrix(0,test_counter,C)
+  test_stan_party <- matrix(0,test_counter,C)
+  test_stan_experienced <- matrix(0,test_counter,C)
   
   for (i in 1:test_counter) {
     test_stan_mu[i,1:test_nc[i]] = test_mu[[i]]
@@ -158,9 +167,9 @@ poll2vote <- function(input_str, input_path ,output_path){
     test_stan_experienced[i, 1:test_nc[i]] = test_experienced[[i]]
   }
   
-  test_idx2 = c()
-  test_idx3 = c()
-  test_idx4 = c()
+  test_idx2 <- c()
+  test_idx3 <- c()
+  test_idx4 <- c()
   
   for (i in 1:test_counter) {
     tmp = sum(test_stan_mu[i,]!=0)
@@ -171,52 +180,52 @@ poll2vote <- function(input_str, input_path ,output_path){
   
   
   # define stan data structure
-  stan_data = list(N2 = length(idx2), 
-                   mu2 = stan_mu[idx2,1:2], 
-                   sigma2 = stan_sigma[idx2,1:2],
-                   y2 = stan_y[idx2,1:2],
-                   pvi2 = stan_pvi[idx2,1:2],
-                   party2 = stan_party[idx2,1:2],
-                   experienced2 = stan_experienced[idx2,1:2],
-                   year_idx2 = year_idx[idx2],
-                   N3 = length(idx3), 
-                   mu3 = stan_mu[idx3,1:3], 
-                   sigma3 = stan_sigma[idx3,1:3],
-                   y3 = stan_y[idx3,1:3],
-                   pvi3 = stan_pvi[idx3,1:3],
-                   party3 = stan_party[idx3,1:3],
-                   experienced3 = stan_experienced[idx3,1:3],
-                   year_idx3 = year_idx[idx3],
-                   N4 = length(idx4), 
-                   mu4 = stan_mu[idx4,1:4], 
-                   sigma4 = stan_sigma[idx4,1:4],
-                   y4 = stan_y[idx4,1:4],
-                   pvi4 = stan_pvi[idx4,1:4],
-                   party4 = stan_party[idx4,1:4],
-                   experienced4 = stan_experienced[idx4,1:4],
-                   year_idx4 = year_idx[idx4],
-                   test_N2 = length(test_idx2), 
-                   test_mu2 = test_stan_mu[test_idx2,1:2], 
-                   test_sigma2 = test_stan_sigma[test_idx2,1:2],
-                   test_pvi2 = test_stan_pvi[test_idx2,1:2],
-                   test_party2 = test_stan_party[test_idx2,1:2],
-                   test_experienced2 = test_stan_experienced[test_idx2,1:2],
-                   test_year_idx2 = test_year_idx[test_idx2],
-                   test_N3 = length(test_idx3), 
-                   test_mu3 = test_stan_mu[test_idx3,1:3], 
-                   test_sigma3 = test_stan_sigma[test_idx3,1:3],
-                   test_pvi3 = test_stan_pvi[test_idx3,1:3],
-                   test_party3 = test_stan_party[test_idx3,1:3],
-                   test_experienced3 = test_stan_experienced[test_idx3,1:3],
-                   test_year_idx3 = test_year_idx[test_idx3],
-                   test_N4 = length(test_idx4), 
-                   test_mu4 = test_stan_mu[test_idx4,1:4], 
-                   test_sigma4 = test_stan_sigma[test_idx4,1:4],
-                   test_pvi4 = test_stan_pvi[test_idx4,1:4],
-                   test_party4 = test_stan_party[test_idx4,1:4],
-                   test_experienced4 = test_stan_experienced[test_idx4,1:4],
-                   test_year_idx4 = test_year_idx[test_idx4],
-                   max_year_idx = max(c(year_idx, test_year_idx)))
+  stan_data <- list(N2 = length(idx2), 
+                    mu2 = stan_mu[idx2,1:2], 
+                    sigma2 = stan_sigma[idx2,1:2],
+                    y2 = stan_y[idx2,1:2],
+                    pvi2 = stan_pvi[idx2,1:2],
+                    party2 = stan_party[idx2,1:2],
+                    experienced2 = stan_experienced[idx2,1:2],
+                    year_idx2 = year_idx[idx2],
+                    N3 = length(idx3), 
+                    mu3 = stan_mu[idx3,1:3], 
+                    sigma3 = stan_sigma[idx3,1:3],
+                    y3 = stan_y[idx3,1:3],
+                    pvi3 = stan_pvi[idx3,1:3],
+                    party3 = stan_party[idx3,1:3],
+                    experienced3 = stan_experienced[idx3,1:3],
+                    year_idx3 = year_idx[idx3],
+                    N4 = length(idx4), 
+                    mu4 = stan_mu[idx4,1:4], 
+                    sigma4 = stan_sigma[idx4,1:4],
+                    y4 = stan_y[idx4,1:4],
+                    pvi4 = stan_pvi[idx4,1:4],
+                    party4 = stan_party[idx4,1:4],
+                    experienced4 = stan_experienced[idx4,1:4],
+                    year_idx4 = year_idx[idx4],
+                    test_N2 = length(test_idx2), 
+                    test_mu2 = test_stan_mu[test_idx2,1:2], 
+                    test_sigma2 = test_stan_sigma[test_idx2,1:2],
+                    test_pvi2 = test_stan_pvi[test_idx2,1:2],
+                    test_party2 = test_stan_party[test_idx2,1:2],
+                    test_experienced2 = test_stan_experienced[test_idx2,1:2],
+                    test_year_idx2 = test_year_idx[test_idx2],
+                    test_N3 = length(test_idx3), 
+                    test_mu3 = test_stan_mu[test_idx3,1:3], 
+                    test_sigma3 = test_stan_sigma[test_idx3,1:3],
+                    test_pvi3 = test_stan_pvi[test_idx3,1:3],
+                    test_party3 = test_stan_party[test_idx3,1:3],
+                    test_experienced3 = test_stan_experienced[test_idx3,1:3],
+                    test_year_idx3 = test_year_idx[test_idx3],
+                    test_N4 = length(test_idx4), 
+                    test_mu4 = test_stan_mu[test_idx4,1:4], 
+                    test_sigma4 = test_stan_sigma[test_idx4,1:4],
+                    test_pvi4 = test_stan_pvi[test_idx4,1:4],
+                    test_party4 = test_stan_party[test_idx4,1:4],
+                    test_experienced4 = test_stan_experienced[test_idx4,1:4],
+                    test_year_idx4 = test_year_idx[test_idx4],
+                    max_year_idx = max(c(year_idx, test_year_idx)))
   
   # define stan model
   model <- stan_model("model.stan")
@@ -233,27 +242,90 @@ poll2vote <- function(input_str, input_path ,output_path){
   )
   
   # summary(fit)
-  fit_params = as.data.frame(fit)
+  fit_params <- as.data.frame(fit)
   
   # within 95% CI
-  flags = matrix(0, test_counter, C)
+  flags <- matrix(0, test_counter, C)
   
-  CYCLE = c()
-  STATE = c()
-  CANDIDATE = c()
-  POSTERIORMEAN = c()
-  POSTERIORSTD = c()
-  PMEAN = c()
-  PSTD = c()
-  VOTE = c()
-  LOWER95 = c()
-  UPPER95 = c()
-  WIN = c()
-  MEDIAN = c()
-  NLZ = c()
+  CYCLE <- c()
+  STATE <- c()
+  CANDIDATE <- c()
+  POSTERIORMEAN <- c()
+  POSTERIORSTD <- c()
+  PMEAN <- c()
+  PSTD <- c()
+  VOTE <- c()
+  LOWER95 <- c()
+  UPPER95 <- c()
+  WIN <- c()
+  MEDIAN <- c()
+  NLZ <- c()
   
-  correct_predictions = 0
-  Nout_test = 0
+  correct_predictions <- 0
+  Nout_test <- 0
+  Nout <- 0
+  
+  for(i in 1:length(idx2)) {
+    state = metadata[[idx2[i]]]
+    preds = list()
+    for(j in 1:2){
+      tmp = paste('p2[',i,',',j,']',sep='')
+      pred = fit_params[[tmp]]
+      preds[[j]] = pred
+    }
+    for(j in 1:2){
+      pred = preds[[j]] / (preds[[1]]+preds[[2]])
+      u=quantile(pred,probs=c(0.975),names = FALSE)
+      l=quantile(pred,probs=c(0.025),names = FALSE)
+      m = mean(pred)
+      s = sd(pred)
+      if (stan_y[idx2[i],j]>u & stan_y[idx2[i],j]<l){
+        Nout = Nout + 1
+      }
+    }
+  }
+  
+  for(i in 1:length(idx3)) {
+    state = metadata[[idx3[i]]]
+    preds = list()
+    for(j in 1:3){
+      tmp = paste('p3[',i,',',j,']',sep='')
+      pred = fit_params[[tmp]]
+      preds[[j]] = pred
+    }
+    for(j in 1:2){
+      pred = preds[[j]] / (preds[[1]]+preds[[2]]+preds[[3]])
+      u=quantile(pred,probs=c(0.975),names = FALSE)
+      l=quantile(pred,probs=c(0.025),names = FALSE)
+      m = mean(pred)
+      s = sd(pred)
+      if (stan_y[idx3[i],j]>u & stan_y[idx3[i],j]<l){
+        Nout = Nout + 1
+      }
+    }
+  }
+  
+  for(i in 1:length(idx4)) {
+    state = metadata[[idx4[i]]]
+    preds = list()
+    for(j in 1:4){
+      tmp = paste('p4[',i,',',j,']',sep='')
+      pred = fit_params[[tmp]]
+      preds[[j]] = pred
+    }
+    for(j in 1:2){
+      pred = preds[[j]] / (preds[[1]]+preds[[2]]+preds[[3]]+preds[[4]])
+      u=quantile(pred,probs=c(0.975),names = FALSE)
+      l=quantile(pred,probs=c(0.025),names = FALSE)
+      m = mean(pred)
+      s = sd(pred)
+      if (stan_y[idx4[i],j]>u & stan_y[idx4[i],j]<l){
+        Nout = Nout + 1
+      }
+    }
+  }
+  
+  print(paste("In-sample ratio in 95% :",Nout/760))
   
   for(i in 1:length(test_idx2)) {
     state = test_metadata[[test_idx2[i]]]
@@ -277,27 +349,27 @@ poll2vote <- function(input_str, input_path ,output_path){
       else{
         Nout_test = Nout_test + 1
       }
-      CYCLE = c(CYCLE, 2016)
-      STATE = c(STATE,state)
-      CANDIDATE = c(CANDIDATE,as.character(candidates[j]))
-      POSTERIORMEAN = c(POSTERIORMEAN,pmu[j])
-      POSTERIORSTD = c(POSTERIORSTD,pstd[j])
-      PMEAN = c(PMEAN, m)
-      PSTD = c(PSTD, s)
-      VOTE = c(VOTE, vote[j])
-      MEDIAN = c(MEDIAN, median(pred))
-      LOWER95 = c(LOWER95, l)
-      UPPER95 = c(UPPER95, u)
-      NLZ = c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
+      CYCLE <- c(CYCLE, 2016)
+      STATE <- c(STATE,state)
+      CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
+      POSTERIORMEAN <- c(POSTERIORMEAN,pmu[j])
+      POSTERIORSTD <- c(POSTERIORSTD,pstd[j])
+      PMEAN <- c(PMEAN, m)
+      PSTD <- c(PSTD, s)
+      VOTE <- c(VOTE, vote[j])
+      MEDIAN <- c(MEDIAN, median(pred))
+      LOWER95 <- c(LOWER95, l)
+      UPPER95 <- c(UPPER95, u)
+      NLZ <- c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
     }
-    preds = matrix(preds, nrow = 2, byrow = TRUE)
+    preds <- matrix(preds, nrow = 2, byrow = TRUE)
     win_rates = rep(0, 2)
     for(k in 1:ncol(preds)){
       idx = which.max(preds[,k])
       win_rates[idx] = win_rates[idx] + 1
     }
     win_rates = win_rates / sum(win_rates)
-    WIN = c(WIN, win_rates)
+    WIN <- c(WIN, win_rates)
     if (which.max(win_rates)==which.max(vote)){
       correct_predictions = correct_predictions + 1
     }
@@ -329,27 +401,27 @@ poll2vote <- function(input_str, input_path ,output_path){
       else{
         Nout_test = Nout_test + 1
       }
-      CYCLE = c(CYCLE, 2016)
-      STATE = c(STATE, state)
-      CANDIDATE = c(CANDIDATE,as.character(candidates[j]))
-      POSTERIORMEAN = c(POSTERIORMEAN,pmu[j])
-      POSTERIORSTD = c(POSTERIORSTD,pstd[j])
-      PMEAN = c(PMEAN, m)
-      PSTD = c(PSTD, s)
-      VOTE = c(VOTE, vote[j])
-      MEDIAN = c(MEDIAN, median(pred))
-      LOWER95 = c(LOWER95, l)
-      UPPER95 = c(UPPER95, u)
-      NLZ = c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
+      CYCLE <- c(CYCLE, 2016)
+      STATE <- c(STATE, state)
+      CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
+      POSTERIORMEAN <- c(POSTERIORMEAN,pmu[j])
+      POSTERIORSTD <- c(POSTERIORSTD,pstd[j])
+      PMEAN <- c(PMEAN, m)
+      PSTD <- c(PSTD, s)
+      VOTE <- c(VOTE, vote[j])
+      MEDIAN <- c(MEDIAN, median(pred))
+      LOWER95 <- c(LOWER95, l)
+      UPPER95 <- c(UPPER95, u)
+      NLZ <- c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
     }
-    preds = matrix(preds, nrow = 4, byrow = TRUE)
+    preds <- matrix(preds, nrow = 4, byrow = TRUE)
     win_rates = rep(0, 4)
     for(k in 1:ncol(preds)){
       idx = which.max(preds[,k])
       win_rates[idx] = win_rates[idx] + 1
     }
     win_rates = win_rates / sum(win_rates)
-    WIN = c(WIN, win_rates)
+    WIN <- c(WIN, win_rates)
     if (which.max(win_rates)==which.max(vote)){
       correct_predictions = correct_predictions + 1
     }
@@ -360,16 +432,16 @@ poll2vote <- function(input_str, input_path ,output_path){
   }
   
   # write results to csv
-  result = data.frame(CYCLE,
-                      STATE,
-                      CANDIDATE,
-                      POSTERIORMEAN,
-                      POSTERIORSTD,
-                      VOTE,
-                      LOWER95,
-                      UPPER95,
-                      MEDIAN,
-                      WIN)
+  result <- data.frame(CYCLE,
+                       STATE,
+                       CANDIDATE,
+                       POSTERIORMEAN,
+                       POSTERIORSTD,
+                       VOTE,
+                       LOWER95,
+                       UPPER95,
+                       MEDIAN,
+                       WIN)
   
   names(result) <- tolower(names(result))
   
@@ -392,10 +464,5 @@ poll2vote <- function(input_str, input_path ,output_path){
   print(paste("Std of predictive std: ",sd(PSTD)))
   
   save.image(file = paste('models/',input_str,'.RData',sep=''))
-}
-
-
-for (i in 1:length(input_strs)) {
-  poll2vote(input_strs[i], input_path, output_path)
 }
 
