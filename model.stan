@@ -73,7 +73,7 @@ transformed parameters{
   
   for(i in 1:N2){
     for(j in 1:2){
-        p2[i,j] = alpha + beta*gamma2[i,j] + 
+        p2[i,j] = beta*gamma2[i,j] + 
             party2[i,j]*pvi2[i,j]*ppb + experienced2[i,j]*eb 
             + party2[i,j]*year_re[year_idx2[i]];
         if(p2[i,j]<0.0001){
@@ -84,7 +84,7 @@ transformed parameters{
   
   for(i in 1:N3){
     for(j in 1:3){
-        p3[i,j] = alpha + beta*gamma3[i,j] + 
+        p3[i,j] = beta*gamma3[i,j] + 
             party3[i,j]*pvi3[i,j]*ppb + experienced3[i,j]*eb 
             + party3[i,j]*year_re[year_idx3[i]];
         if(p3[i,j]<0.0001){
@@ -95,7 +95,7 @@ transformed parameters{
   
   for(i in 1:N4){
     for(j in 1:4){
-        p4[i,j] = alpha + beta*gamma4[i,j] + 
+        p4[i,j] = beta*gamma4[i,j] + 
             party4[i,j]*pvi4[i,j]*ppb + experienced4[i,j]*eb 
             + party4[i,j]*year_re[year_idx4[i]];
         if(p4[i,j]<0.0001){
@@ -107,8 +107,8 @@ transformed parameters{
 
 model {
   // very flat priors on linear model parameters
-  alpha ~ normal(0, 500);
-  beta ~ normal(0, 1);
+  alpha ~ normal(0, 100);
+  beta ~ normal(0, 100);
   year_sig ~ gamma(1, .5); // Prior on the SD for the year-level RE
   year_re ~ normal(0, year_sig); // Prior for the year-level RE
   // generate underlying true support rates
@@ -126,15 +126,15 @@ model {
 
   // generate voting rates from support rates
   for(i in 1:N2){
-    y2[i] ~ dirichlet(p2[i]);
+    y2[i] ~ dirichlet(alpha+p2[i]);
   }
   
   for(i in 1:N3){
-    y3[i] ~ dirichlet(p3[i]);
+    y3[i] ~ dirichlet(alpha+p3[i]);
   }
   
   for(i in 1:N4){
-    y4[i] ~ dirichlet(p4[i]);
+    y4[i] ~ dirichlet(alpha+p4[i]);
   }
 }
 
@@ -189,7 +189,7 @@ generated quantities {
   
   for(i in 1:test_N2){
     for(j in 1:2){
-      test_p2[i,j] = alpha + beta*test_gamma2[i,j] + 
+      test_p2[i,j] = beta*test_gamma2[i,j] + 
             test_party2[i,j]*test_pvi2[i,j]*ppb + test_experienced2[i,j]*eb +
             test_party2[i,j]*year_re[test_year_idx2[i]];
       if(test_p2[i,j]<0.0001){
@@ -200,7 +200,7 @@ generated quantities {
   
   for(i in 1:test_N3){
     for(j in 1:3){
-      test_p3[i,j] = alpha + beta*test_gamma3[i,j] + 
+      test_p3[i,j] = beta*test_gamma3[i,j] + 
             test_party3[i,j]*test_pvi3[i,j]*ppb + test_experienced3[i,j]*eb +
             test_party3[i,j]*year_re[test_year_idx3[i]];
       if(test_p3[i,j]<0.0001){
@@ -211,7 +211,7 @@ generated quantities {
   
   for(i in 1:test_N4){
     for(j in 1:4){
-      test_p4[i,j] = alpha + beta*test_gamma4[i,j] + 
+      test_p4[i,j] = beta*test_gamma4[i,j] + 
             test_party4[i,j]*test_pvi4[i,j]*ppb + test_experienced4[i,j]*eb +
             test_party4[i,j]*year_re[test_year_idx4[i]];
       if(test_p4[i,j]<0.0001){
@@ -221,12 +221,12 @@ generated quantities {
   }
   
   for (i in 1:test_N2)
-    test_y2[i] = dirichlet_rng(test_p2[i]);
+    test_y2[i] = dirichlet_rng(alpha+test_p2[i]);
     
   for (i in 1:test_N3)
-    test_y3[i] = dirichlet_rng(test_p3[i]);
+    test_y3[i] = dirichlet_rng(alpha+test_p3[i]);
     
   for (i in 1:test_N4)
-    test_y4[i] = dirichlet_rng(test_p4[i]);
+    test_y4[i] = dirichlet_rng(alpha+test_p4[i]);
 }
 

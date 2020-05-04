@@ -1,3 +1,5 @@
+setwd('/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/')
+
 library(rstan)
 library(MCMCpack)
 library(dplyr)
@@ -19,7 +21,7 @@ input_strs = c('all0',
                 'last28',
                 'last42')
 
-input_strs = c('last0')
+# input_strs = c('all0')
 
 # poll2vote <- function(input_str, input_path ,output_path){
   
@@ -325,7 +327,7 @@ for (i in 1:length(input_strs)) {
     }
   }
   
-  print(paste("In-sample ratio in 95% :",Nout/760))
+  print(paste("In-sample ratio in 95% :",1-Nout/760))
   
   for(i in 1:length(test_idx2)) {
     state = test_metadata[[test_idx2[i]]]

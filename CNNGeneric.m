@@ -57,8 +57,18 @@ function CNNGeneric(pollthres,iter,seed)
 
     % training
     disp("start training...");
-    hyp = sample_separate_prior(prior, parms, counter, seed);
-    hyp = fixLearn(hyp, im, par{:}, iter, parms);
+    best_nlZ = 0;
+    best_hyp = 0;
+    for i=1:10
+        hyp = sample_separate_prior(prior, parms, counter, seed);
+        [hyp,nlZ] = fixLearn(hyp, im, par{:}, iter, parms);
+        if nlZ<best_nlZ
+           best_nlZ = nlZ;
+           best_hyp = hyp;
+        end
+    end
+    
+    hyp = best_hyp;
     
     [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
     counter = size(xs,1);

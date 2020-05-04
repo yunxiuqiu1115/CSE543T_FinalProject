@@ -26,7 +26,6 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
         end
     end
     
-    
     N = N_train + N_test;
     nsuc = nsuc_train + nsuc_test;
     
@@ -60,6 +59,8 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
     fprintf('correlation of predictive mean and actual vote on test data: %0.6f\n',tmp);
     tmp=sqrt(mean((a(761:end)-b(761:end)).^2));
     fprintf('RMSE of predictive mean and actual vote on test data: %0.6f\n',tmp);
+    
+        return;
     
 %     fig = histogram(abs(errors));
 %     xlabel("absolute forecasting error");
