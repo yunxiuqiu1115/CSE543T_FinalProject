@@ -22,7 +22,9 @@ function hyp = sample_separate_prior(prior, parms, n, seed)
     end
     
     for i=1:parms.nfirm
-       hyp.mean(i+2*n) = hyps{1}.mean(2+i);
+       hyp.mean(i+2*n) = prior.mean{2+i}{2};
+       hyp.cov(i+2*n) = prior.cov{2+i}{2};
+%        hyp.mean(i+2*n) = hyps{1}.mean(2+i);
 %        hyp.cov(i+2*n) = hyps{1}.cov(2+i);
     end
 end

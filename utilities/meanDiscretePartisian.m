@@ -4,7 +4,7 @@ function A = meanDiscretePartisian(s, hyp, x, i)
 % integers 1,2,3,..,s, the mean function is parametrized as:
 %
 % m(x) = mu_x if x(:,2) == 1
-% m(x) = -mu_x if x(:,2) == 0
+% m(x) = -mu_x if x(:,2) == -1
 %
 % where mu is a fixed vector of length s.
 %
