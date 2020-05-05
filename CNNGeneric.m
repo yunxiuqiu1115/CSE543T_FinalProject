@@ -59,7 +59,7 @@ function CNNGeneric(pollthres,iter,seed)
     disp("start training...");
     best_nlZ = 0;
     best_hyp = 0;
-    for i=1:10
+    for i=1:1
         hyp = sample_separate_prior(prior, parms, counter, seed);
         [hyp,nlZ] = fixLearn(hyp, im, par{:}, iter, parms);
         if nlZ<best_nlZ
