@@ -24,7 +24,6 @@ function [hyperparameters, nlZ] = fixLearn(hyperparameters, ...
       p.verbosity = 0;
       p.length = -100;
       trained_hyp = zeros(num_samples, 2);
-%       parms.mode = 'all';
       parfor i = 1:num_samples
         if mod(i, 50) == 0, disp("training iter" + it + " trainning sample: " + i); end
         hyp = struct;
