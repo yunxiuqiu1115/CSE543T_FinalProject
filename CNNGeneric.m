@@ -11,7 +11,7 @@ function CNNGeneric(pollthres,iter,seed)
     % read race data
     CNNdata = readData("data/CNNData.csv");
     CNNdata = indexPollster(CNNdata, pollthres);
-    jobname = "All2016RSThres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    jobname = "All2016InitEstiThres" + pollthres + "Iter" + iter +  "Seed" + seed;
     disp(jobname);
     LAST_TIME = 0; % positive
     plot_path = "plots/" + jobname;
@@ -60,7 +60,7 @@ function CNNGeneric(pollthres,iter,seed)
     disp("start training...");
     best_nlZ = 0;
     best_hyp = 0;
-    for i=1:100
+    for i=1:1
         hyp = sample_separate_prior(prior, parms, counter, i);
         [hyp, nlZ] = fixLearn(hyp, im, par{:}, iter, parms);
         disp("hyp");

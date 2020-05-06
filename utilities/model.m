@@ -39,8 +39,50 @@ function [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms)
         pg_mc = {@priorGauss, mu_mc, sigma_mc^2};
         prior.mean = {pg_ml, pg_mc};
 
+        pbs = [-0.0065
+        0.0014
+       -0.0005
+        0.0039
+       -0.0040
+        0.0009
+        0.0006
+        0.0120
+        0.0057
+       -0.0082
+       -0.0023
+       -0.0098
+        0.0025
+        0.0043
+        0.0004
+       -0.0043
+       -0.0029
+       -0.0028
+       -0.0005
+       -0.0018
+       -0.0118
+        0.0029
+        0.0021
+       -0.0001
+       -0.0041
+       -0.0004
+       -0.0028
+        0.0025
+       -0.0011
+        0.0002
+        0.0077
+       -0.0056
+        0.0001
+        0.0013
+       -0.0082
+        0.0062
+       -0.0002
+       -0.0021
+        0.0058
+       -0.0064
+       -0.0026];
+        
         for i=1:parms.nfirm
-            mu_md = 0; sigma_md = 0.05;
+            mu_md = pbs(i); sigma_md = 0.05;
             pg_md = {@priorGauss, mu_md, sigma_md^2};
             prior.mean{2+i} = pg_md;
         end 
