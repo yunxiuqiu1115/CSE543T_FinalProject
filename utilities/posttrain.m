@@ -60,7 +60,6 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
     tmp=sqrt(mean((a(761:end)-b(761:end)).^2));
     fprintf('RMSE of predictive mean and actual vote on test data: %0.6f\n',tmp);
     
-        return;
     
 %     fig = histogram(abs(errors));
 %     xlabel("absolute forecasting error");

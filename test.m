@@ -42,20 +42,26 @@ taus = [42,28,14,0];
 
 for i=1:numel(taus)
     myrun(taus(i),"model");
-    myrun(taus(i),"last");
+%    myrun(taus(i),"last");
 end
 
 % diary('off');
 
 function myrun(tau,type)
+    taus = [42,28,14,0];
+    length_scales = [4.5005,4.4987,4.0310,3.5473];
     if strcmp(type, "model")==1
 %         load("models/all" + tau + ".mat");
-        load("models/all0.mat");
-        method = 'old';
+%         load("models/all0.mat");
+%         method = 'old';
+        load('models/All2016InitEstiThres50Iter20Seed1.mat');
+        method = 'initest';
     else
         load(MPLV(tau));
         method = 'last';
     end
+    idx = taus==tau;
+    hyp.cov(1) = length_scales(idx);
     years = unique(CNNdata.cycle);
     [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
     counter = size(xs,1);
@@ -68,6 +74,7 @@ function myrun(tau,type)
     end
 
     disp(type);
+    plot_path = strcat("plots/All2016InitEst",num2str(tau));
     
     disp("tau: "+tau);
     [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);

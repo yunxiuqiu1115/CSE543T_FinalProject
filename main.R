@@ -21,7 +21,10 @@ input_strs = c('all0',
                 'last28',
                 'last42')
 
-# input_strs = c('all0')
+input_strs = c('initest0',
+               'initest14',
+               'initest28',
+               'initest42')
 
 # poll2vote <- function(input_str, input_path ,output_path){
   
