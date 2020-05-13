@@ -11,11 +11,11 @@ function CNNGeneric(pollthres,iter,seed)
     % read race data
     CNNdata = readData("data/CNNData.csv");
     CNNdata = indexPollster(CNNdata, pollthres);
-    jobname = "All2016FourMonthThres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    jobname = "Last2016FourMonthThres" + pollthres + "Iter" + iter +  "Seed" + seed;
     disp(jobname);
     LAST_TIME = 120; % positive
     plot_path = "plots/" + jobname;
-    parms.mode = "all";
+    parms.mode = "last";
     
     method = parms.mode;
     % pollsters having less than threshold of polls will be indexed by nfirm
