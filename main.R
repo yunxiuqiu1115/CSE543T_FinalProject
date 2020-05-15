@@ -9,22 +9,21 @@ library(dplyr)
 # input_file = "results/forecast1992-2016all0.csv"
 # output_file = "results/stan_prediction_all0.csv"
 
-input_path = 'results/forecast1992-2016'
-output_path = 'results/stan_prediction_'
+input_path = 'results/forecast1992-2018'
+output_path = 'results/stan_pred1618_'
 
 input_strs = c('all0',
                 'all14',
                 'all28',
                 'all42',
+               'all90',
+               'all120',
                 'last0',
                 'last14',
                 'last28',
-                'last42')
-
-input_strs = c('initest0',
-               'initest14',
-               'initest28',
-               'initest42')
+                'last42',
+               'last90',
+               'last120')
 
 # poll2vote <- function(input_str, input_path ,output_path){
   
@@ -47,8 +46,8 @@ for (i in 1:length(input_strs)) {
     summarise(count=n()) %>%
     filter(count >=4)
   
-  data2016 <- data[data$cycle==2016,]
-  data <- data[data$cycle!=2016,]
+  data2016 <- data[(data$cycle==2016 | data$cycle==2018),]
+  data <- data[(data$cycle!=2016 & data$cycle!=2018),]
   cycles <- unique(data$cycle)
   states <- unique(data$state)
   
@@ -133,26 +132,29 @@ for (i in 1:length(input_strs)) {
   test_counter <- 0
   
   # iterate over races
-  for (state in states) {
-    pmu = data2016[data2016$state==state,c("posteriormean")]
-    pstd = data2016[data2016$state==state,c("posteriorstd")]
-    vote = data2016[data2016$state==state,c("vote")]
-    pvi_ = data2016[data2016$state==state,c("pvi")]
-    party_ = data2016[data2016$state==state,c("party")]
-    experienced_ = data2016[data2016$state==state,c("experienced")]
-    if(length(pmu)){
-      test_counter = test_counter + 1
-      test_metadata[[test_counter]] = c(state)
-      test_mu[[test_counter]] = pmu
-      test_sigma[[test_counter]] = pstd
-      test_y[[test_counter]] = vote / 100
-      test_pvi[[test_counter]] = pvi_
-      test_party[[test_counter]] = party_
-      test_experienced[[test_counter]] = experienced_
-      test_nc = c(test_nc, length(vote))
-      test_year_idx = c(test_year_idx, (2016-1990)/2)
+  for (cycle in c(2016, 2018)){
+    for (state in states) {
+      pmu = data2016[(data2016$state==state & data2016$cycle==cycle),c("posteriormean")]
+      pstd = data2016[data2016$state==state & data2016$cycle==cycle,c("posteriorstd")]
+      vote = data2016[data2016$state==state & data2016$cycle==cycle,c("vote")]
+      pvi_ = data2016[data2016$state==state & data2016$cycle==cycle,c("pvi")]
+      party_ = data2016[data2016$state==state & data2016$cycle==cycle,c("party")]
+      experienced_ = data2016[data2016$state==state & data2016$cycle==cycle,c("experienced")]
+      if(length(pmu)){
+        test_counter = test_counter + 1
+        test_metadata[[test_counter]] = c(cycle,state)
+        test_mu[[test_counter]] = pmu
+        test_sigma[[test_counter]] = pstd
+        test_y[[test_counter]] = vote / 100
+        test_pvi[[test_counter]] = pvi_
+        test_party[[test_counter]] = party_
+        test_experienced[[test_counter]] = experienced_
+        test_nc = c(test_nc, length(vote))
+        test_year_idx = c(test_year_idx, (cycle-1990)/2)
+      }
     }
   }
+  
   
   # build stan data
   test_stan_mu <- matrix(0,test_counter,C)
@@ -244,6 +246,7 @@ for (i in 1:length(input_strs)) {
               cores = 3, 
               thin = 4,
               control=list(adapt_delta=.98, max_treedepth = 15),
+              refresh=0
   )
   
   # summary(fit)
@@ -298,7 +301,7 @@ for (i in 1:length(input_strs)) {
       pred = fit_params[[tmp]]
       preds[[j]] = pred
     }
-    for(j in 1:2){
+    for(j in 1:3){
       pred = preds[[j]] / (preds[[1]]+preds[[2]]+preds[[3]])
       u=quantile(pred,probs=c(0.975),names = FALSE)
       l=quantile(pred,probs=c(0.025),names = FALSE)
@@ -318,7 +321,7 @@ for (i in 1:length(input_strs)) {
       pred = fit_params[[tmp]]
       preds[[j]] = pred
     }
-    for(j in 1:2){
+    for(j in 1:4){
       pred = preds[[j]] / (preds[[1]]+preds[[2]]+preds[[3]]+preds[[4]])
       u=quantile(pred,probs=c(0.975),names = FALSE)
       l=quantile(pred,probs=c(0.025),names = FALSE)
@@ -333,11 +336,12 @@ for (i in 1:length(input_strs)) {
   print(paste("In-sample ratio in 95% :",1-Nout/760))
   
   for(i in 1:length(test_idx2)) {
-    state = test_metadata[[test_idx2[i]]]
-    pmu = data2016[data2016$state==state,c("posteriormean")]
-    pstd = data2016[data2016$state==state,c("posteriorstd")]
-    vote = data2016[data2016$state==state,c("vote")]
-    candidates = data2016[data2016$state==state,c("candidate")]
+    cycle = test_metadata[[test_idx2[i]]][1]
+    state = test_metadata[[test_idx2[i]]][2]
+    pmu = data2016[data2016$state==state & data2016$cycle==cycle,c("posteriormean")]
+    pstd = data2016[data2016$state==state & data2016$cycle==cycle,c("posteriorstd")]
+    vote = data2016[data2016$state==state & data2016$cycle==cycle,c("vote")]
+    candidates = data2016[data2016$state==state & data2016$cycle==cycle,c("candidate")]
     # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
     preds= c()
     for(j in 1:2){
@@ -354,7 +358,7 @@ for (i in 1:length(input_strs)) {
       else{
         Nout_test = Nout_test + 1
       }
-      CYCLE <- c(CYCLE, 2016)
+      CYCLE <- c(CYCLE, cycle)
       STATE <- c(STATE,state)
       CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
       POSTERIORMEAN <- c(POSTERIORMEAN,pmu[j])
@@ -380,16 +384,71 @@ for (i in 1:length(input_strs)) {
     }
     else{
       print("Wrong prediction:")
+      print(test_idx2[i])
       print(test_metadata[[test_idx2[i]]])
     }
   }
   
+  for(i in 1:length(test_idx3)) {
+    cycle = test_metadata[[test_idx3[i]]][1]
+    state = test_metadata[[test_idx3[i]]][2]
+    pmu = data2016[data2016$state==state & data2016$cycle==cycle,c("posteriormean")]
+    pstd = data2016[data2016$state==state & data2016$cycle==cycle,c("posteriorstd")]
+    vote = data2016[data2016$state==state & data2016$cycle==cycle,c("vote")]
+    candidates = data2016[data2016$state==state & data2016$cycle==cycle,c("candidate")]
+    # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
+    preds= c()
+    for(j in 1:3){
+      tmp = paste('test_y3[',i,',',j,']',sep='')
+      pred = fit_params[[tmp]]
+      preds = c(preds, pred)
+      u=quantile(pred,probs=c(0.975),names = FALSE)
+      l=quantile(pred,probs=c(0.025),names = FALSE)
+      m = mean(pred)
+      s = sd(pred)
+      if (test_stan_y[test_idx3[i],j]<=u & test_stan_y[test_idx3[i],j]>=l){
+        flags[test_idx3[i],j] = 1
+      }
+      else{
+        Nout_test = Nout_test + 1
+      }
+      CYCLE <- c(CYCLE, cycle)
+      STATE <- c(STATE,state)
+      CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
+      POSTERIORMEAN <- c(POSTERIORMEAN,pmu[j])
+      POSTERIORSTD <- c(POSTERIORSTD,pstd[j])
+      PMEAN <- c(PMEAN, m)
+      PSTD <- c(PSTD, s)
+      VOTE <- c(VOTE, vote[j])
+      MEDIAN <- c(MEDIAN, median(pred))
+      LOWER95 <- c(LOWER95, l)
+      UPPER95 <- c(UPPER95, u)
+      NLZ <- c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
+    }
+    preds <- matrix(preds, nrow = 3, byrow = TRUE)
+    win_rates = rep(0, 3)
+    for(k in 1:ncol(preds)){
+      idx = which.max(preds[,k])
+      win_rates[idx] = win_rates[idx] + 1
+    }
+    win_rates = win_rates / sum(win_rates)
+    WIN <- c(WIN, win_rates)
+    if (which.max(win_rates)==which.max(vote)){
+      correct_predictions = correct_predictions + 1
+    }
+    else{
+      print("Wrong prediction:")
+      print(test_metadata[[test_idx3[i]]])
+    }
+  }
+  
   for(i in 1:length(test_idx4)) {
-    state = test_metadata[[test_idx4[i]]]
-    pmu = data2016[data2016$state==state,c("posteriormean")]
-    pstd = data2016[data2016$state==state,c("posteriorstd")]
-    vote = data2016[data2016$state==state,c("vote")]
-    candidates = data2016[data2016$state==state,c("candidate")]
+    cycle = test_metadata[[test_idx4[i]]][1]
+    state = test_metadata[[test_idx4[i]]][2]
+    pmu = data2016[data2016$state==state & data2016$cycle==cycle ,c("posteriormean")]
+    pstd = data2016[data2016$state==state & data2016$cycle==cycle ,c("posteriorstd")]
+    vote = data2016[data2016$state==state & data2016$cycle==cycle,c("vote")]
+    candidates = data2016[data2016$state==state & data2016$cycle==cycle,c("candidate")]
     # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
     preds= c()
     for(j in 1:4){
@@ -406,7 +465,7 @@ for (i in 1:length(input_strs)) {
       else{
         Nout_test = Nout_test + 1
       }
-      CYCLE <- c(CYCLE, 2016)
+      CYCLE <- c(CYCLE, cycle)
       STATE <- c(STATE, state)
       CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
       POSTERIORMEAN <- c(POSTERIORMEAN,pmu[j])
@@ -458,7 +517,7 @@ for (i in 1:length(input_strs)) {
   
   print(paste("RSME: ",sqrt(mean((PMEAN- VOTE/100)^2))))
   
-  print(paste("Ratio in 95% : ",1-Nout_test/73))
+  print(paste("Ratio in 95% : ",1-Nout_test/139))
   
   print(paste("Predictive averaged nlZ: ",mean(NLZ)))
   

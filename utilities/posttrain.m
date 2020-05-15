@@ -9,7 +9,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
         [~, p_idx] = max(ps);
         [~, t_idx] = max(vs);
         year = fn{i}(end-3:end);
-        if strcmp(year, '2016')==1
+        if strcmp(year, '2016')==1 || strcmp(year,'2018')==1
             N_test = N_test + 1;
             if p_idx == t_idx
                 nsuc_test = nsuc_test + 1;
@@ -147,7 +147,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
         l = posteriormean{i} - 1.96*posteriorstd{i};
         v = vote{i}/100;
         
-        if cycle{i}==2016
+        if cycle{i}==2016 || cycle{i}==2018
             nlZ = [nlZ, (v-fts(i))^2/2/s2s(i) + log(s2s(i))/2 + log(2*pi)/2];
             if v > u || v < l
 %                disp("Posterior for "+cycle{i}+" "+state{i}+" out of 95% CI");
@@ -162,10 +162,10 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
         end
     end
     fprintf('95 CI on training data: %0.6f\n',1-Nout_train/760);
-    fprintf('95 CI on test data: %0.6f\n',1-Nout_test/73);
+    fprintf('95 CI on test data: %0.6f\n',1-Nout_test/(N-760));
     disp("Test Average nlZ: " + mean(nlZ));
     forecast = table(cycle, state, candidate, posteriormean, posteriorstd, vote, pvi, party, experienced);
-    writetable(forecast,strcat('results/forecast1992-2016',method,num2str(tau),'.csv'));
+    writetable(forecast,strcat('results/forecast1992-2018',method,num2str(tau),'.csv'));
 
     disp("Length Scale: " + exp(besthyp.cov(1)));
     disp("Output Scale: " + exp(besthyp.cov(2)));
@@ -178,8 +178,8 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
 end
 
 function acc = accuracy(N, nsuc, title)
-%     disp(N + " " + title + " races run.");
-%     disp(nsuc + " successful " + title + " predictions.");
+    disp(N + " " + title + " races run.");
+    disp(nsuc + " successful " + title + " predictions.");
     acc = nsuc/N;
     disp(title + " accuracy rate: " + acc); 
 end
