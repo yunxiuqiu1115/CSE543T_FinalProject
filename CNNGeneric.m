@@ -11,7 +11,7 @@ function CNNGeneric(pollthres,iter,seed)
     % read race data
     CNNdata = readData("data/CNNData.csv");
     [CNNdata,pollster2idx] = indexPollster(CNNdata, pollthres);
-    LAST_TIME = 42; % positive
+    LAST_TIME = 90; % positive
     jobname = "Last2018" + num2str(LAST_TIME) + "Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
     disp(jobname);
 
