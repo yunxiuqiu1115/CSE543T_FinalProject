@@ -70,7 +70,7 @@ function myrun(tau,type)
     [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
     counter = size(xs,1);
     for i=1:counter
-        if raceinfos{i}{1}>=2016
+        if raceinfos{i}{1}>=2018
             idx = xs{i}(:,1) <= -tau;
             xs{i} = xs{i}(idx,:);
             ys{i} = ys{i}(idx);
