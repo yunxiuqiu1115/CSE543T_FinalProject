@@ -15,6 +15,9 @@ function [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms)
     % mmd = {@meanMask, firmmask, md};
     mmp = {@meanMask, firmbiasmask, mp};
     meanfunc = {@meanSum, {mml, mmc, mmp}};
+    
+    % try no firm
+    meanfunc = {@meanSum, {mml, mmc}};
     cm = {@covMaterniso, 3};
     cdb = {@covDiag, mb};
     cdf = {@covDiag, md};
@@ -22,6 +25,9 @@ function [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms)
     cmd = {@covMask, {covmask, cdb}};
     cmm = {@covMask, {meanmask, cm}};
     covfunc = {@covSum, {cmm, cmd, cmf}};
+    
+    % try no firm
+    covfunc = {@covSum, {cmm, cmd}};
     likfunc = @likGauss;
     inffunc = @infExact;
 
@@ -80,12 +86,13 @@ function [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms)
         0.0058
        -0.0064
        -0.0026];
-        
-        for i=1:parms.nfirm
-            mu_md = pbs(i); sigma_md = 0.05;
-            pg_md = {@priorGauss, mu_md, sigma_md^2};
-            prior.mean{2+i} = pg_md;
-        end 
+       
+   % try no firm
+%         for i=1:parms.nfirm
+%             mu_md = pbs(i); sigma_md = 0.05;
+%             pg_md = {@priorGauss, mu_md, sigma_md^2};
+%             prior.mean{2+i} = pg_md;
+%         end 
     % end
 
         % length scale: 30 days in average,
@@ -98,11 +105,12 @@ function [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms)
         pg_os = {@priorGauss, mu_os, sigma_os^2};
         prior.cov = {pg_ls, pg_os};
 
-        for i=1:parms.nfirm
-            mu_vf = log(0.01); sigma_vf = log(3);
-            pg_vf = {@priorGauss, mu_vf, sigma_vf^2};
-            prior.cov{2+i} = pg_vf;
-        end
+        % try no firm
+%         for i=1:parms.nfirm
+%             mu_vf = log(0.01); sigma_vf = log(3);
+%             pg_vf = {@priorGauss, mu_vf, sigma_vf^2};
+%             prior.cov{2+i} = pg_vf;
+%         end
 
         % total variance: CI for unknown sigma (chi-squared)
         mu_lik = log(0.04); sigma_lik = log(2);
