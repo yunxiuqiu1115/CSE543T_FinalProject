@@ -42,7 +42,7 @@ taus = [0,14,28,42,90,120];
 
 for i=1:numel(taus)
     myrun(taus(i),"model");
-   myrun(taus(i),"last");
+%  myrun(taus(i),"last");
 end
 
 % diary('off');
@@ -52,7 +52,7 @@ function myrun(tau,type)
 %     length_scales = [4.5005,4.4987,4.0310,3.5473];
     if strcmp(type, "model")==1
 %         load("models/all" + tau + ".mat");
-        load("models/All2016InitEstiThres50Iter20Seed1.mat");
+        load("models/all0-18.mat");
         method = 'all';
 %         load('models/All2016InitEstiThres50Iter20Seed1.mat');
 %         method = 'initest';
@@ -62,6 +62,7 @@ function myrun(tau,type)
     end
 %     idx = taus==tau;
 %     hyp.cov(1) = length_scales(idx);
+
     CNNdata = readData("data/CNNData.csv");
     [~,pollster2idx] = indexPollster(CNNdata, pollthres);
     CNNdata = readData("data/CNNData1992to2018.csv");
@@ -82,7 +83,8 @@ function myrun(tau,type)
     
     disp("tau: "+tau);
     parms.days = min(CNNdata.daysLeft);
-    [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
+%     [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
+    [allRaces,fts,s2s] = lm(xs, raceinfos, parms);
     
     posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, method);
 end
