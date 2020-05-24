@@ -12,7 +12,7 @@ function CNNGeneric(pollthres,iter,seed)
     CNNdata = readData("data/CNNData.csv");
     [CNNdata,pollster2idx] = indexPollster(CNNdata, pollthres);
     LAST_TIME = 0; % positive
-    jobname = "AllNoFirm2018" + num2str(LAST_TIME) + "Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
+    jobname = "AllNoFirm2016" + num2str(LAST_TIME) + "Thres" + pollthres + "Iter" + iter +  "Seed" + seed;
     disp(jobname);
 
     plot_path = "plots/" + jobname;
@@ -29,7 +29,7 @@ function CNNGeneric(pollthres,iter,seed)
     parms.nfirm = 0;
 
     % build training cell arrays
-    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years(1:end), states);
+    [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years(1:end-1), states);
     counter = size(xs,1);
     parms.ncandidates = counter;
     parms.a = ones(counter,1)*0.5;
@@ -82,7 +82,7 @@ function CNNGeneric(pollthres,iter,seed)
     counter = size(xs,1);
 
     for i=1:counter
-        if raceinfos{i}{1}>=2018
+        if raceinfos{i}{1}>=2016
             idx = xs{i}(:,1) <= -LAST_TIME;
             xs{i} = xs{i}(idx,:);
             ys{i} = ys{i}(idx);
@@ -90,7 +90,7 @@ function CNNGeneric(pollthres,iter,seed)
     end
     
     save(jobname + ".mat");
-    
+       
     [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
     
     save(jobname + ".mat");

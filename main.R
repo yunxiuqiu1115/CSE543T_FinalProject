@@ -26,8 +26,8 @@ input_strs = c('all0',
                'last90',
                'last120')
 
-input_path = 'results/lm1992-2018'
-output_path = 'results/stan_lm18_'
+input_path = 'results/nofirm1992-2018'
+output_path = 'results/stan_nofirm18_'
 
 
 input_strs = c('all0',

@@ -52,7 +52,7 @@ function myrun(tau,type)
 %     length_scales = [4.5005,4.4987,4.0310,3.5473];
     if strcmp(type, "model")==1
 %         load("models/all" + tau + ".mat");
-        load("models/all0-18.mat");
+        load("models/AllNoFirm20180Thres50Iter10Seed1.mat");
         method = 'all';
 %         load('models/All2016InitEstiThres50Iter20Seed1.mat');
 %         method = 'initest';
@@ -83,8 +83,8 @@ function myrun(tau,type)
     
     disp("tau: "+tau);
     parms.days = min(CNNdata.daysLeft);
-%     [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
-    [allRaces,fts,s2s] = lm(xs, raceinfos, parms);
+    [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
+%     [allRaces,fts,s2s] = lm(xs, raceinfos, parms);
     
     posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, method);
 end
