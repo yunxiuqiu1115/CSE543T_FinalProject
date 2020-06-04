@@ -46,7 +46,7 @@ function [nlZ, dnlZ] = gp_independent_mask(hyp, hyperparameters, ...
     end
 
     % accumulate likelihoods and derivatives
-    nlZ = nlZ + this_nlZ/num_samples;
+    nlZ = nlZ + this_nlZ/num_samples/size(xs{i},1);
   end
   
   if (gradient)
