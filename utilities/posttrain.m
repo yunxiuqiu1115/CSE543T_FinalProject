@@ -9,7 +9,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
         [~, p_idx] = max(ps);
         [~, t_idx] = max(vs);
         year = fn{i}(end-3:end);
-        if strcmp(year,'2018')==1
+        if strcmp(year,'2016')==1
             N_test = N_test + 1;
             if p_idx == t_idx
                 nsuc_test = nsuc_test + 1;
@@ -51,13 +51,14 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
         N = N + l;
     end
     
+    n_train = 760;
 %     tmp=corr(a(1:833),b(1:833));
 %     fprintf('correlation of predictive mean and actual vote on training data: %0.6f\n',tmp);
 %     tmp=sqrt(mean((a(1:833)-b(1:833).^2));
 %     fprintf('RMSE of predictive mean and actual vote on training data: %0.6f\n',tmp);
-    tmp=corr(a(834:end),b(834:end));
+    tmp=corr(a(n_train+1:end),b(n_train+1:end));
     fprintf('correlation of predictive mean and actual vote on test data: %0.6f\n',tmp);
-    tmp=sqrt(mean((a(834:end)-b(834:end)).^2));
+    tmp=sqrt(mean((a(n_train+1:end)-b(n_train+1:end)).^2));
     fprintf('RMSE of predictive mean and actual vote on test data: %0.6f\n',tmp);
     
     
@@ -147,7 +148,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
         l = posteriormean{i} - 1.96*posteriorstd{i};
         v = vote{i}/100;
         
-        if cycle{i}==2018
+        if cycle{i}==2016
             nlZ = [nlZ, (v-fts(i))^2/2/s2s(i) + log(s2s(i))/2 + log(2*pi)/2];
             if v > u || v < l
 %                disp("Posterior for "+cycle{i}+" "+state{i}+" out of 95% CI");
@@ -162,10 +163,10 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
         end
     end
 %     fprintf('95 CI on training data: %0.6f\n',1-Nout_train/833);
-    fprintf('95 CI on test data: %0.6f\n',1-Nout_test/(N-833));
+    fprintf('95 CI on test data: %0.6f\n',1-Nout_test/(N-n_train));
     disp("Test Average nlZ: " + mean(nlZ));
     forecast = table(cycle, state, candidate, posteriormean, posteriorstd, vote, pvi, party, experienced);
-    writetable(forecast,strcat('results/nofirm1992-2018',method,num2str(tau),'.csv'));
+    writetable(forecast,strcat('results/nofirm1992-2016',method,num2str(tau),'.csv'));
 
     disp("Length Scale: " + exp(besthyp.cov(1)));
     disp("Output Scale: " + exp(besthyp.cov(2)));

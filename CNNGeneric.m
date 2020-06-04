@@ -65,11 +65,12 @@ function CNNGeneric(pollthres,iter,seed)
     best_hyp = 0;
     for i=1:1
         hyp = sample_separate_prior(prior, parms, counter, i);
-        [hyp, nlZ] = fixLearn(hyp, im, par{:}, iter, parms);
+        [hyp, nlZs] = fixLearn(hyp, im, par{:}, iter, parms);
+        nlZ = nlZs(end);
         disp("hyp");
         disp(hyp);
-        disp("nlz");
-        disp(nlZ);
+        disp("nlzs");
+        disp(nlZs);
         if nlZ<best_nlZ
            best_nlZ = nlZ;
            best_hyp = hyp;

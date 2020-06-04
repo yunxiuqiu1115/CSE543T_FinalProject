@@ -9,8 +9,8 @@ library(dplyr)
 # input_file = "results/forecast1992-2016all0.csv"
 # output_file = "results/stan_prediction_all0.csv"
 
-input_path = 'results/forecast1992-2018'
-output_path = 'results/stan_pred18_'
+input_path = 'results/forecast1992-2016'
+output_path = 'results/stan_pred16_'
 
 
 input_strs = c('all0',
@@ -26,8 +26,8 @@ input_strs = c('all0',
                'last90',
                'last120')
 
-input_path = 'results/nofirm1992-2018'
-output_path = 'results/stan_nofirm18_'
+input_path = 'results/nofirm1992-2016'
+output_path = 'results/stan_nofirm16_'
 
 
 input_strs = c('all0',
@@ -57,8 +57,8 @@ for (i in 1:length(input_strs)) {
   #data_test <- data[(data$cycle==2016 | data$cycle==2018),]
   #data <- data[(data$cycle!=2016 & data$cycle!=2018),]
   
-  data_test <- data[(data$cycle==2018),]
-  data <- data[(data$cycle!=2018),]
+  data_test <- data[(data$cycle==2016),]
+  data <- data[(data$cycle!=2016),]
   
   cycles <- unique(data$cycle)
   states <- unique(data$state)
@@ -145,7 +145,7 @@ for (i in 1:length(input_strs)) {
   
   # iterate over races
   # for (cycle in c(2016, 2018)){
-  for (cycle in c(2018)){
+  for (cycle in c(2016)){
     for (state in states) {
       pmu = data_test[(data_test$state==state & data_test$cycle==cycle),c("posteriormean")]
       pstd = data_test[data_test$state==state & data_test$cycle==cycle,c("posteriorstd")]
@@ -537,7 +537,7 @@ for (i in 1:length(input_strs)) {
   
   print(paste("RSME: ",sqrt(mean((PMEAN- VOTE/100)^2))))
   
-  print(paste("Ratio in 95% : ",1-Nout_test/66))
+  print(paste("Ratio in 95% : ",1-Nout_test/73))
   
   print(paste("Predictive averaged nlZ: ",mean(NLZ)))
   
