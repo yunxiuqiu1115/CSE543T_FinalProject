@@ -5,6 +5,7 @@ function [hyperparameters, nlZs] = fixLearn(hyperparameters, ...
 % flag = True if this hyp is fixed      
   num_samples = size(xs,1);
   as = parms.a;
+  nlZs = [];
   
   infP = inference_method{1}; 
   inffunc = inference_method{2}; 
