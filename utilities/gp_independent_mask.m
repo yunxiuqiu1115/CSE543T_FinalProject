@@ -3,7 +3,6 @@ function [nlZ, dnlZ] = gp_independent_mask(hyp, hyperparameters, ...
           likelihood, xs, ys, mask, parms)
 
   num_samples = size(xs,1);
-  as = parms.a;
   nfirm = size(hyperparameters.mean, 1) - 2*num_samples;
   
   infP = inference_method{1}; 
@@ -25,35 +24,51 @@ function [nlZ, dnlZ] = gp_independent_mask(hyp, hyperparameters, ...
   end
   
   dnlZs = cell(num_samples, 1);
-  parfor i = 1:num_samples
+  N = 0;
+  for i = 1:num_samples
     if isempty(xs{i}), continue; end
-    % im = {infP, inffunc, priors{i}};
     hyp_race = full2one(hyperparameters, i, num_samples, nfirm);
-    unsharedflag = true(size(unwrap(hyp_race)));
-    unsharedflag(liksize+covsize+1) = 0;
-    unsharedflag(liksize+covsize+2) = 0;
+    unsharedflag = false(size(unwrap(hyp_race)));
+    unsharedflag(covsize+liksize) = 1;
+    unsharedflag(1:2) = 1;
     
     im = {infP, inffunc, prior};
-    im{3}.mean{2}{2} = as(i);
+    N = N + size(xs{i},1);
         
     if (~gradient)
-      this_nlZ = gp_mask(hyp, hyp_race, im, mean_function, ...
+        if i==1
+            this_nlZ = gp_mask(hyp, hyp_race, im, mean_function, ...
              covariance_function, likelihood, xs{i}, ys{i}, unsharedflag, parms, i, parms.mode);
+        else
+            this_nlZ = gp_mask(hyp, hyp_race, inffunc, mean_function, ...
+             covariance_function, likelihood, xs{i}, ys{i}, unsharedflag, parms, i, parms.mode);
+        end
+      
     else
-      [this_nlZ, this_dnlZ] = gp_mask(hyp, hyp_race, im,...
+        if i==1 
+            [this_nlZ, this_dnlZ] = gp_mask(hyp, hyp_race, im,...
           mean_function, covariance_function, likelihood, xs{i}, ys{i}, unsharedflag, parms, i, parms.mode);
-      dnlZs{i} = this_dnlZ;
+        else           
+            [this_nlZ, this_dnlZ] = gp_mask(hyp, hyp_race, inffunc,...
+          mean_function, covariance_function, likelihood, xs{i}, ys{i}, unsharedflag, parms, i, parms.mode);
+        end
+      tmp = unwrap(this_dnlZ);
+%       /size(xs{i},1)
+      dnlZs{i} = rewrap(this_dnlZ, tmp);
     end
 
     % accumulate likelihoods and derivatives
-    nlZ = nlZ + this_nlZ/num_samples/size(xs{i},1);
+    nlZ = nlZ + this_nlZ;
+%     /num_samples
   end
+  nlZ = nlZ/N;
   
   if (gradient)
       tmp = unwrap(dnlZ);
       for i=1:num_samples
           if isempty(dnlZs{i}), continue; end
-          tmp = tmp + unwrap(dnlZs{i})/num_samples;
+          tmp = tmp + unwrap(dnlZs{i})/N;
+%           /num_samples
       end
       dnlZ = rewrap(dnlZ, tmp);
   end

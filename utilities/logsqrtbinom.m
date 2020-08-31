@@ -3,7 +3,7 @@ function A = logsqrtbinom(hyp, x, i)
 %
 % m(x) = p(1-p)/n
 % 
-% x = [p, n]
+% x = [t,p, n]
 %
 % The hyperparameter is:
 %

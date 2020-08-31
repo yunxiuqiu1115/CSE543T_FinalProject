@@ -33,11 +33,12 @@ if dg                                            % vector kxx
   return ;
 else
   if isempty(z)  
-    z = x;
+    K = diag(m);
+  else
+    nz = size(z, 1);
+    flag = (sq_dist(x',z')<sqrt(tol));
+    K = repmat(m,1,nz).*flag; % cross covariances Kxz 
   end
-  nz = size(z, 1);
-  flag = (sq_dist(x',z')<tol*tol);
-  K = repmat(m,1,nz).*flag; % cross covariances Kxz
 end
 
 if nargin<5                                                        % covariances

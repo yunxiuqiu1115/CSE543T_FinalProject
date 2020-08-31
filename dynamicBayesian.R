@@ -1,7 +1,8 @@
 setwd('/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/')
 library(rstan)
+library(dplyr)
 
-output_path = 'results/stan_dynamic16_'
+output_path = 'results/stan_dynamic18_'
 input_strs = c('0',
                '14',
                '28',
@@ -9,7 +10,7 @@ input_strs = c('0',
                '90',
                '120')
 
-input_strs = c('0')
+input_strs = c('7')
 
 for (i in 1:length(input_strs)) {
   input_str = input_strs[i]
@@ -41,7 +42,7 @@ for (i in 1:length(input_strs)) {
   W = 4
   
   # iterate over candidate
-  for (i in 761:833) {
+  for (i in 761:761) {
     c = as.character(c2v$Candidateidentifier[i])
     data = df[as.character(df$Candidateidentifier)==c,]
     cycle = data$cycle[1]
@@ -76,7 +77,7 @@ for (i in 1:length(input_strs)) {
     fit <- stan(file = "dynamicBayesian.stan",
                 data = stan_data, 
                 warmup = 1000, 
-                iter = 10000, 
+                iter = 5000, 
                 chains = 1, 
                 cores = 1, 
                 thin = 4,
@@ -154,5 +155,5 @@ for (i in 1:length(input_strs)) {
   
   names(result) <- tolower(names(result))
   
-  write.csv(result,output_file)
+  # write.csv(result,output_file)
 }

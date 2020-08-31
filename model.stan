@@ -57,8 +57,8 @@ data {
 parameters {
   real<lower=0> alpha;
   real<lower=0> beta;
-  real ppb; // party*pvi b
-  real eb; // experienced b
+  real<upper=0> ppb; // party*pvi b
+  real<lower=0> eb; // experienced b
   real<lower=0> year_sig; // The SD for the year-level random effects
   vector[max_year_idx] year_re; // Year level random effects in the vote share equation
   vector<lower=0, upper=1>[2] gamma2[N2]; // vector of underlying true support rates
@@ -109,6 +109,8 @@ model {
   // very flat priors on linear model parameters
   alpha ~ normal(0, 100);
   beta ~ normal(0, 100);
+  ppb ~ normal(0, 10);
+  eb ~ normal(0, 10);
   year_sig ~ gamma(1, .5); // Prior on the SD for the year-level RE
   year_re ~ normal(0, year_sig); // Prior for the year-level RE
   // generate underlying true support rates

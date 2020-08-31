@@ -1,6 +1,8 @@
-function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
+function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method, j)
+    test_year = 2018;
     N_train = 0; nsuc_train = 0;
     N_test = 0; nsuc_test = 0;
+    n_train = 0;
     fn = fieldnames(allRaces);
     for i=1:numel(fn)
         pvs = allRaces.(fn{i});
@@ -9,15 +11,16 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
         [~, p_idx] = max(ps);
         [~, t_idx] = max(vs);
         year = fn{i}(end-3:end);
-        if strcmp(year,'2016')==1
+        if strcmp(year,int2str(test_year))==1
             N_test = N_test + 1;
             if p_idx == t_idx
                 nsuc_test = nsuc_test + 1;
             else   
-               misclassify(fn{i}, vs, ps, 'test');
+%                misclassify(fn{i}, vs, ps, 'test');
             end
         else
             N_train = N_train + 1;
+            n_train = n_train + numel(ps);
             if p_idx == t_idx
                 nsuc_train = nsuc_train + 1;
             else
@@ -51,11 +54,12 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
         N = N + l;
     end
     
-    n_train = 760;
+%     n_train = 760;
 %     tmp=corr(a(1:833),b(1:833));
 %     fprintf('correlation of predictive mean and actual vote on training data: %0.6f\n',tmp);
 %     tmp=sqrt(mean((a(1:833)-b(1:833).^2));
 %     fprintf('RMSE of predictive mean and actual vote on training data: %0.6f\n',tmp);
+
     tmp=corr(a(n_train+1:end),b(n_train+1:end));
     fprintf('correlation of predictive mean and actual vote on test data: %0.6f\n',tmp);
     tmp=sqrt(mean((a(n_train+1:end)-b(n_train+1:end)).^2));
@@ -135,12 +139,17 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
     nlZ = [];
     for i=1:N
         cycle{i} = raceinfos{i}{1};
-        state{i} = raceinfos{i}{2};
+        state{i} = raceinfos{i}{2}{1};
         candidate{i} = raceinfos{i}{3};
         posteriormean{i} = fts(i);
         posteriorstd{i} = sqrt(s2s(i));
         vote{i} = raceinfos{i}{4};
         pvi{i} = raceinfos{i}{5};
+        
+        if strcmp(state{i},'Georgia Special')
+            pvi{i} = 0;
+        end
+        
         experienced{i} = raceinfos{i}{6};
         party{i} = raceinfos{i}{7};
         
@@ -148,7 +157,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
         l = posteriormean{i} - 1.96*posteriorstd{i};
         v = vote{i}/100;
         
-        if cycle{i}==2016
+        if cycle{i}==test_year
             nlZ = [nlZ, (v-fts(i))^2/2/s2s(i) + log(s2s(i))/2 + log(2*pi)/2];
             if v > u || v < l
 %                disp("Posterior for "+cycle{i}+" "+state{i}+" out of 95% CI");
@@ -163,19 +172,20 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method)
         end
     end
 %     fprintf('95 CI on training data: %0.6f\n',1-Nout_train/833);
+  
     fprintf('95 CI on test data: %0.6f\n',1-Nout_test/(N-n_train));
     disp("Test Average nlZ: " + mean(nlZ));
     forecast = table(cycle, state, candidate, posteriormean, posteriorstd, vote, pvi, party, experienced);
-    writetable(forecast,strcat('results/nofirm1992-2016',method,num2str(tau),'.csv'));
+    writetable(forecast,strcat('results/SB1992-',int2str(test_year),method,num2str(tau), '_', num2str(j),'.csv'));
 
     disp("Length Scale: " + exp(besthyp.cov(1)));
     disp("Output Scale: " + exp(besthyp.cov(2)));
     disp("Noise std: " + exp(besthyp.lik));
     
-    posteriorstd = cell2mat(posteriorstd);
-    disp("Mean of predictive std: " + mean(posteriorstd));
-    disp("Median of predictive std: " + median(posteriorstd));
-    disp("Std of predictive std: " + std(posteriorstd));
+%     posteriorstd = cell2mat(posteriorstd);
+%     disp("Mean of predictive std: " + mean(posteriorstd));
+%     disp("Median of predictive std: " + median(posteriorstd));
+%     disp("Std of predictive std: " + std(posteriorstd));
 end
 
 function acc = accuracy(N, nsuc, title)

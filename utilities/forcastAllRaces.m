@@ -15,13 +15,13 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
 %     a_std = std(besthyp.mean(1:760));
 %     b_std = std(besthyp.mean(761:760*2));
     mfun = @minimize_v2;
-    for i = 808:809
+    for i = 767:767
         year = raceinfos{i}{1};
         state = raceinfos{i}{2}{1};
         candidateName = raceinfos{i}{3};
         trueVote = raceinfos{i}{4};
-        pvi =raceinfos{i}{5};
-        experienced =raceinfos{i}{6};
+        pvi = raceinfos{i}{5};
+        experienced = raceinfos{i}{6};
         republican = raceinfos{i}{7};
         fn = char(state+""+year);
         fn = fn(~isspace(fn));
@@ -55,30 +55,44 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             if i<=760
                 % training forecasting
                 % im{3}.mean{2}{2} = parms.a(i);
-                hyp = full2one(besthyp, i, parms.ncandidates, parms.nfirm);
+%                 hyp = full2one(besthyp, i, parms.ncandidates, parms.nfirm);
+                hyp.mean(1) = 0;
+                hyp.mean(2) = computePrior(pvi, experienced, republican);
+                hyp.cov = besthyp.cov;
+                hyp.lik = besthyp.lik;
+%                 hyp.cov(1)=cov1(i);
+%                 hyp.cov(2)=cov2(i);
+%                 hyp.lik=lik1(i);
             else
                 % testing forecasting
                 % im{3}.mean{2}{2} = computePrior(pvi, experienced, republican);
-                hyp = full2one(besthyp, 1, parms.ncandidates, parms.nfirm);
-                hyp.mean(1) = prior.mean{1}{2};
-                priorb{2} = computePrior(pvi, experienced, republican);
-                hyp.mean(2) = feval(priorb{:});
-                hyp.mean(2) = priorb{2};
-                im{3}.mean{2}{2} = priorb{2};
+%                 hyp = full2one(besthyp, i, parms.ncandidates, parms.nfirm);
+                hyp.mean(1) = 0;
+               
+                hyp.mean(2) = computePrior(pvi, experienced, republican);
+                if strcmp(state,'Georgia Special')
+                    hyp.mean(2) = 0.25;
+                end
+                hyp.cov = besthyp.cov;
+                hyp.lik = besthyp.lik;
+%                 hyp.cov(1)=cov1(i);
+%                 hyp.cov(2)=cov2(i);
+%                 hyp.lik=lik1(i);
+                im{3}.mean{2}{2} = computePrior(pvi, experienced, republican);
 %                 im{3}.mean{2}{3} = b_std;
 %                 im{3}.mean{1}{2} = a_mu;
 %                 im{3}.mean{1}{3} = a_std;
-                parms.mode = "all";
-                mask = false(size(unwrap(hyp)));
-                liksize = size(hyp.lik, 1);
-                covsize = size(hyp.cov,1);
-                mask(liksize+covsize+1) = 1;
-                mask(liksize+covsize+2) = 1;
-                hypab.mean = hyp.mean(1:2);
-                hypab = feval(mfun, hypab, @gp_mask, p, hyp, im,...
-                        meanfunc, covfunc,...
-                        likfunc, xs{i}, ys{i}, mask, parms, i, "all");
-                hyp.mean(1:2) = hypab.mean;
+%                 parms.mode = "all";
+%                 mask = false(size(unwrap(hyp)));
+%                 liksize = size(hyp.lik, 1);
+%                 covsize = size(hyp.cov,1);
+%                 mask(liksize+covsize+1) = 1;
+%                 mask(liksize+covsize+2) = 1;
+%                 hypab.mean = hyp.mean(1:2);
+%                 hypab = feval(mfun, hypab, @gp_mask, p, hyp, im,...
+%                         meanfunc, covfunc,...
+%                         likfunc, xs{i}, ys{i}, mask, parms, i, "all");
+%                 hyp.mean(1:2) = hypab.mean;
             end
             
 %             im{3}.mean{2}{2} = hyp.mean(2);
@@ -86,14 +100,13 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             
             xstar = [linspace(xs{i}(1,1),0,nz).',zeros(1,nz)',ones(1,nz)',...
                             parms.nfirm*ones(1,nz)',republican*zeros(1,nz)'];
-            [~, ~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
+            [~,~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
             
             predPoll = fmu(end);
             fts(i) = predPoll;
             s2s(i) = fs2(end);
-            fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, i,hyp.mean(1),hyp.mean(2));
-%             fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, i,hyp.mean(1),hyp.mean(2),besthyp.mean(0*2+xs{i}(:,4)));
-            plot_title = year + " " + state + " " + candidateName + " " + parms.tau;
+            fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, i);
+            plot_title = year + " " + state + " " + candidateName;
             title(plot_title);
             yearFolder = fullfile(plot_path, num2str(year));
             stateFolder = fullfile(yearFolder, state);

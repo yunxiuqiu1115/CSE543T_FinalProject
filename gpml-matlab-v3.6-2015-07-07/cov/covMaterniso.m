@@ -36,10 +36,26 @@ end
 if dg                                                               % vector kxx
   K = zeros(size(x,1),1);
 else
+  % scale length scale
+%   t = -28;
+%   b = 0.1;
+%   ells = ell * ones(size(x));
+%   ells(x>=t) = ell*(b - x(x>=t)/(-t/(1-b))); 
+%   ells(x>=t) = ells(x>=t)*b;
+  t = -3;
+  b = 2;
+  ells = abs(min((x/b),t)); 
   if xeqz                                                 % symmetric matrix Kxx
+%     K = sq_dist(sqrt(d)./ells'.*x');
     K = sq_dist(sqrt(d)/ell*x');
   else                                                   % cross covariances Kxz
-    K = sq_dist(sqrt(d)/ell*x',sqrt(d)/ell*z');
+%     ells2 = ell * ones(size(z));
+%     ells2(z>=t) = ell*(b - z(z>=t)/(-t/(1-b))); 
+%     ells2(z>=t) = ells2(z>=t)*b;
+%     K = sq_dist(sqrt(d)./ells'.*x',sqrt(d)./ells2'.*z');
+%     ells2 = abs(min((z/b),t));  
+%     K = sq_dist(sqrt(d)./ells'.*x',sqrt(d)./ells2'.*z');
+    K = sq_dist(sqrt(d)/ell*x',sqrt(d)./ell*z');
   end
 end
 
