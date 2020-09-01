@@ -15,7 +15,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
 %     a_std = std(besthyp.mean(1:760));
 %     b_std = std(besthyp.mean(761:760*2));
     mfun = @minimize_v2;
-    for i = 1:n
+    for i = 803:803
         year = raceinfos{i}{1};
         state = raceinfos{i}{2}{1};
         candidateName = raceinfos{i}{3};
@@ -105,23 +105,23 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             predPoll = fmu(end);
             fts(i) = predPoll;
             s2s(i) = fs2(end);
-%             fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, i);
-%             plot_title = year + " " + state + " " + candidateName;
-%             title(plot_title);
-%             yearFolder = fullfile(plot_path, num2str(year));
-%             stateFolder = fullfile(yearFolder, state);
-%             if ~exist(plot_path, 'dir')
-%                 mkdir(plot_path);
-%             end
-%             if ~exist(yearFolder, 'dir')
-%                 mkdir(yearFolder);
-%             end
-%             if ~exist(stateFolder, 'dir')
-%                 mkdir(stateFolder);
-%             end
-%             filename = fullfile(stateFolder, plot_title + ".jpg");
-%             saveas(fig, filename);
-%             close;
+            fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, i);
+            plot_title = year + " " + state + " " + candidateName;
+            title(plot_title);
+            yearFolder = fullfile(plot_path, num2str(year));
+            stateFolder = fullfile(yearFolder, state);
+            if ~exist(plot_path, 'dir')
+                mkdir(plot_path);
+            end
+            if ~exist(yearFolder, 'dir')
+                mkdir(yearFolder);
+            end
+            if ~exist(stateFolder, 'dir')
+                mkdir(stateFolder);
+            end
+            filename = fullfile(stateFolder, plot_title + num2str(parms.j)+ ".jpg");
+            saveas(fig, filename);
+            close;
 %             disp(plot_title + " predicted winning rate: " + predPoll);
 %             disp(plot_title + " actual votes won: " + trueVote + newline);
             if ~isfield(allRaces, fn)

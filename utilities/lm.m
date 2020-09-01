@@ -5,7 +5,7 @@ function [allRaces,fts,s2s] = lm(besthyp, xs, ys, raceinfos, plot_path, parms)
     n = numel(xs);
     fts = zeros(n,1);
     s2s = zeros(n,1);
-    for i = 1:n
+    for i = 803:803
         year = raceinfos{i}{1};
         state = raceinfos{i}{2}{1};
         candidateName = raceinfos{i}{3};
@@ -83,7 +83,7 @@ function [allRaces,fts,s2s] = lm(besthyp, xs, ys, raceinfos, plot_path, parms)
             if ~exist(stateFolder, 'dir')
                 mkdir(stateFolder);
             end
-            filename = fullfile(stateFolder, plot_title + ".jpg");
+            filename = fullfile(stateFolder, plot_title + num2str(parms.j) + ".jpg");
             saveas(fig, filename);
             close;
             

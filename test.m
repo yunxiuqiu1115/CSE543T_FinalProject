@@ -74,8 +74,8 @@ search_size = 100;
 % ts = [65,21,63,86,36,36];
 ts = [89,89,66,12,12,36,36];
 
-% taus = [28];
-% ts = [12];
+taus = [28];
+ts = [12];
 
 % 
 % for i=1:numel(taus)
@@ -169,7 +169,6 @@ function myrun(tau,type, ls, os, lik, j)
    
     
     plot_path = "plots/AllMargLinTre"+num2str(tau);
-%     plot_path = "plots/AllLM"+num2str(tau);
     
     [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
     
@@ -192,10 +191,15 @@ function myrun(tau,type, ls, os, lik, j)
     disp("tau: "+tau);
     parms.days = min(CNNdata.daysLeft);
     parms.tau = tau;
+    parms.j = j;
+    fprintf('ls: %0.4f, os: %0.4f, lik: %0.4f\n',ls, os, lik);
    [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
-%    [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, plot_path, parms);
+   
+   
+    plot_path = "plots/AllLM"+num2str(tau);
+   [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, plot_path, parms);
     
-     posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, method, j);
+%      posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, method, j);
 end
 
 function f=MPLV(t)
