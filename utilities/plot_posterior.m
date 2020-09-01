@@ -1,6 +1,6 @@
 function fig = plot_posterior(fmu, fs2, x, y, xs, v, i)
-%     fig = figure('visible', 'off');
-    fig = figure(i);
+    fig = figure('visible', 'off');
+%     fig = figure(i);
     f = [fmu+2*sqrt(fs2); flip(fmu-2*sqrt(fs2),1)];
     fill([xs; flip(xs,1)], f, [166, 206, 227] / 255, ...
      'facealpha', 0.7, ...

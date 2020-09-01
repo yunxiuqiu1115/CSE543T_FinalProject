@@ -1,10 +1,11 @@
-function [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, parms)
+function [allRaces,fts,s2s] = lm(besthyp, xs, ys, raceinfos, plot_path, parms)
+    
     % iterate cycle/state race
     allRaces = struct;
     n = numel(xs);
     fts = zeros(n,1);
     s2s = zeros(n,1);
-    for i = 767:767
+    for i = 1:n
         year = raceinfos{i}{1};
         state = raceinfos{i}{2}{1};
         candidateName = raceinfos{i}{3};
@@ -18,9 +19,9 @@ function [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, parms)
             fts(i) = computePrior(pvi, experienced, republican);
             s2s(i) = 0.1;
         else 
-            SIGMA_inv = [1/0.002, 0; 0, 1/0.1];
-            SIGMA = [0.002, 0; 0, 0.1];
-            noise = exp(2*hyp.lik);
+            SIGMA_inv = [1/0.002^2, 0; 0, 1/0.1^2];
+            SIGMA = [0.002^2, 0; 0, 0.1^2];
+            noise = exp(2*besthyp.lik);
             mu_b = [0;computePrior(pvi, experienced, republican)];
             x = xs{i};
             y = ys{i};
@@ -37,18 +38,54 @@ function [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, parms)
             LAMBDA = diag(ps.*(1-ps)./ns);
             x = [ts, ones(size(ts,1),1)];
             
-            nz = 200;
+            nz = 5;
             xstar = [linspace(x(1,1),0,nz).', ones(nz,1)];
-            V = x*SIGMA*x'+LAMBDA+noise;
+            V = x*SIGMA*x'+LAMBDA+diag(noise*ones(size(ts,1),1));
             mu_p = mu_b + SIGMA*x'*(V\(y-x*mu_b));
             s2_p = SIGMA - SIGMA*x'*(V\(x*SIGMA));
             
-            fmu =xstar*mu_p;
-            fs2=xstar*s2_p*xstar';
+            fmu = xstar*mu_p;
+            fs2 = diag(xstar*s2_p*xstar');
             fts(i) = fmu(end);
             s2s(i) = fs2(end);
             
-            plot_posterior(fmu, fs2, x(:,1), y, linspace(x(1,1),0,nz).', 0, i);
+%             plot_posterior(fmu, fs2, x(:,1), y, linspace(x(1,1),0,nz).', 0, i);
+
+            x = xs{i};
+            y = ys{i};
+            xstar = [linspace(x(1,1),0,nz).',zeros(1,nz)',ones(1,nz)',...
+                            parms.nfirm*ones(1,nz)',republican*zeros(1,nz)'];
+                        
+            [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms);
+            covfunc{2} = covfunc{2}(2:end);
+            hyp.mean(1) = 0;
+            hyp.mean(2) = computePrior(pvi, experienced, republican);
+            hyp.cov = besthyp.cov(3:4);
+            hyp.lik = besthyp.lik;
+            
+            [~,~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, x, y, xstar);
+            
+            predPoll = fmu(end);
+            fts(i) = predPoll;
+            s2s(i) = fs2(end);
+            fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, i);
+
+            plot_title = year + " " + state + " " + candidateName;
+            title(plot_title);
+            yearFolder = fullfile(plot_path, num2str(year));
+            stateFolder = fullfile(yearFolder, state);
+            if ~exist(plot_path, 'dir')
+                mkdir(plot_path);
+            end
+            if ~exist(yearFolder, 'dir')
+                mkdir(yearFolder);
+            end
+            if ~exist(stateFolder, 'dir')
+                mkdir(stateFolder);
+            end
+            filename = fullfile(stateFolder, plot_title + ".jpg");
+            saveas(fig, filename);
+            close;
             
 %             M = x'*LAMBDA_inv*x+SIGMA_inv + noise;
 %             b = x'*LAMBDA_inv*ps + SIGMA_inv*mu_b;

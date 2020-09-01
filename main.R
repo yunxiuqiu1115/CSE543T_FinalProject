@@ -10,25 +10,8 @@ library(dplyr)
 # input_file = "results/forecast1992-2016all0.csv"
 # output_file = "results/stan_prediction_all0.csv"
 
-input_path = 'results/SB1992-2016all'
-output_path = 'results/stan_lm16_all'
-
-
-input_strs = c('all0',
-                'all14',
-                'all28',
-                'all42',
-               'all90',
-               'all120',
-                'last0',
-                'last14',
-                'last28',
-                'last42',
-               'last90',
-               'last120')
-
-input_path = 'results/SB1992-2018'
-output_path = 'results/stan_sb18_'
+input_path = 'results/SB1992-2016'
+output_path = 'results/stan_sb16_'
 
 
 input_strs = c('all0',
@@ -39,26 +22,20 @@ input_strs = c('all0',
                'all90',
                'all120')
 
-search_size = 1
-
-# y
-# best_cv_idx = c(65,21,63,86,36,36)
+search_size = 100
 
 # f
 best_cv_idx = c(89,89, 66,12,12,36,36)
 
 # fit_objs = c()
 
-# LLs = matrix(data=0, nrow=length(input_strs), ncol=search_size)
-
-# 1:length(input_strs)
+LLs = matrix(data=0, nrow=length(input_strs), ncol=search_size)
 
 for (a in 1:length(input_strs)) {
   for (b in 1:search_size){
     input_str = input_strs[a]
-  #  poll2vote(input_strs[i], input_path, output_path)
-    input_file <- paste(input_path, input_str, '_' , best_cv_idx[a], '.csv',sep='')
-    output_file <- paste(output_path, input_str, '_' , best_cv_idx[a], '.csv',sep='')
+    input_file <- paste(input_path, input_str, '_' , b, '.csv',sep='')
+    output_file <- paste(output_path, input_str, '_' , b, '.csv',sep='')
     
     # loading data
     data <- read.csv(input_file)
@@ -70,8 +47,13 @@ for (a in 1:length(input_strs)) {
       summarise(count=n()) %>%
       filter(count >=4)
     
-    data_test <- data[(data$cycle==2018),]
-    data <- data[(data$cycle!=2016 & data$cycle!=2018 & data$cycle!=2020),]
+    cv_years = c(1992,1994,1996,1998,2000,2002,2004,2006,2008,2010,2012,2014,2016)
+    
+    cv_LL = c()
+    
+    for (cv_year in cv_years) {
+    data_test <- data[(data$cycle==cv_year),]
+    data <- data[(data$cycle!=cv_year & data$cycle!=2018 & data$cycle!=2020),]
     
     # data <- data[(data$cycle!=2016),]
     
@@ -246,12 +228,12 @@ for (a in 1:length(input_strs)) {
                       test_experienced2 = test_stan_experienced[test_idx2,1:2],
                       test_year_idx2 = test_year_idx[test_idx2],
                       test_N3 = length(test_idx3), 
-                      test_mu3 = test_stan_mu[test_idx3,1:3], 
-                      test_sigma3 = test_stan_sigma[test_idx3,1:3],
-                      test_pvi3 = test_stan_pvi[test_idx3,1:3],
-                      test_party3 = test_stan_party[test_idx3,1:3],
-                      test_experienced3 = test_stan_experienced[test_idx3,1:3],
-                      test_year_idx3 = test_year_idx[test_idx3],
+                      test_mu3 = matrix(test_stan_mu[test_idx3,1:3],ncol=3,byrow = FALSE), 
+                      test_sigma3 = matrix(test_stan_sigma[test_idx3,1:3],ncol=3,byrow = FALSE),
+                      test_pvi3 = matrix(test_stan_pvi[test_idx3,1:3],ncol=3,byrow = FALSE),
+                      test_party3 = matrix(test_stan_party[test_idx3,1:3],ncol=3,byrow = FALSE),
+                      test_experienced3 = matrix(test_stan_experienced[test_idx3,1:3],ncol=3,byrow = FALSE),
+                      test_year_idx3 = array(test_year_idx[test_idx3]),
                       test_N4 = length(test_idx4), 
                       test_mu4 = matrix(test_stan_mu[test_idx4,1:4],ncol=4,byrow = FALSE), 
                       test_sigma4 = matrix(test_stan_sigma[test_idx4,1:4],ncol=4,byrow = FALSE),
@@ -549,29 +531,36 @@ for (a in 1:length(input_strs)) {
     
     names(result) <- tolower(names(result))
     
-    # LLs[a,b] = mean(-NLZ)
+    cv_LL = c(cv_LL, mean(-NLZ))
     
     # write.csv(result,output_file)
     
-    print(paste("Correct predictions: ",correct_predictions))
-
-    print(paste("Accuracy: ",correct_predictions/length(test_metadata)))
-
-    print(paste("Correlation: ",cor(PMEAN, VOTE)))
-
-    print(paste("RSME: ",sqrt(mean((PMEAN- VOTE/100)^2))))
-
-    print(paste("Ratio in 95% : ",1-Nout_test/73))
-
-    print(paste("Predictive averaged nlZ: ",mean(NLZ)))
-
-    print(paste("Mean of predictive std: ",mean(PSTD)))
-
-    print(paste("Median of predictive std: ",median(PSTD)))
-
-    print(paste("Std of predictive std: ",sd(PSTD)))
+    # print(paste("Correct predictions: ",correct_predictions))
+    # 
+    # print(paste("Accuracy: ",correct_predictions/length(test_metadata)))
+    # 
+    # print(paste("Correlation: ",cor(PMEAN, VOTE)))
+    # 
+    # print(paste("RSME: ",sqrt(mean((PMEAN- VOTE/100)^2))))
+    # 
+    # print(paste("Ratio in 95% : ",1-Nout_test/73))
+    # 
+    # print(paste("Predictive averaged nlZ: ",mean(NLZ)))
+    # 
+    # print(paste("Mean of predictive std: ",mean(PSTD)))
+    # 
+    # print(paste("Median of predictive std: ",median(PSTD)))
+    # 
+    # print(paste("Std of predictive std: ",sd(PSTD)))
     
+    }
+    LLs[a,b] = mean(cv_LL)
     # save.image(file = paste('models/',input_str,'.RData',sep=''))
   }
 }
 
+
+for (a in 1:length(input_strs)) {
+  print(input_strs[a])
+  print(which(LLs[a,]==max(LLs[a,])))
+}

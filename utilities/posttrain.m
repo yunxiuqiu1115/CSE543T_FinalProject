@@ -1,5 +1,5 @@
 function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method, j)
-    test_year = 2018;
+    test_year = 2016;
     N_train = 0; nsuc_train = 0;
     N_test = 0; nsuc_test = 0;
     n_train = 0;

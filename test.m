@@ -69,21 +69,31 @@
 taus = [0, 7, 14,28,42,90,120];
 
 p = sobolset(3,'Skip',1e3);
-search_size = 1;
+search_size = 100;
 
 % ts = [65,21,63,86,36,36];
 ts = [89,89,66,12,12,36,36];
 
-taus = [14];
-ts = [66];
+% taus = [28];
+% ts = [12];
+
+% 
+% for i=1:numel(taus)
+%     j = ts(i);
+%     ls = p(j,1)*max(taus(i),30)+3; % 3-tau;
+%     os = p(j,2)/10; % 0%-10%
+%     lik = p(j,3)/10; % 0%-10%
+%     myrun(taus(i),"model", ls, os, lik, j);
+% end
 
 
 for i=1:numel(taus)
-    j = ts(i);
-    ls = p(j,1)*max(taus(i),30)+3; % 3-tau;
-    os = p(j,2)/10; % 0%-10%
-    lik = p(j,3)/10; % 0%-10%
-    myrun(taus(i),"model", ls, os, lik, j);
+    for j=1:search_size
+        ls = p(j,1)*max(taus(i),30)+3; % 3-tau;
+        os = p(j,2)/10; % 0%-10%
+        lik = p(j,3)/10; % 0%-10%
+        myrun(taus(i),"model", ls, os, lik, j);
+    end
 end
 
 
@@ -159,6 +169,7 @@ function myrun(tau,type, ls, os, lik, j)
    
     
     plot_path = "plots/AllMargLinTre"+num2str(tau);
+%     plot_path = "plots/AllLM"+num2str(tau);
     
     [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
     
@@ -182,9 +193,9 @@ function myrun(tau,type, ls, os, lik, j)
     parms.days = min(CNNdata.daysLeft);
     parms.tau = tau;
    [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
-   [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, parms);
+%    [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, plot_path, parms);
     
-    posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, method, j);
+     posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, method, j);
 end
 
 function f=MPLV(t)
