@@ -176,6 +176,10 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method, j)
     fprintf('95 CI on test data: %0.6f\n',1-Nout_test/(N-n_train));
     disp("Test Average nlZ: " + mean(nlZ));
     forecast = table(cycle, state, candidate, posteriormean, posteriorstd, vote, pvi, party, experienced);
+    if ~exist('results', 'dir')
+        mkdir('results');
+    end
+
     writetable(forecast,strcat('results/SB1992-',int2str(test_year),method,num2str(tau), '_', num2str(j),'.csv'));
 
     disp("Length Scale: " + exp(besthyp.cov(1)));
