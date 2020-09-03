@@ -1,28 +1,22 @@
-setwd('/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/')
+# setwd('/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/')
 
 library(rstan)
-library(MCMCpack)
-library(bayesplot)
-library(dplyr)
+# library(MCMCpack)
+# library(bayesplot)
+# library(dplyr)
 
-# gp learnt on all data using mlp
-# feed gp posterior to stan model
-# input_file = "results/forecast1992-2016all0.csv"
-# output_file = "results/stan_prediction_all0.csv"
-
-input_path = 'results/SB1992-2016'
-output_path = 'results/stan_sb16_'
-
-
-input_strs = c('all0',
-               'all7',
-               'all14',
-               'all28',
-               'all42',
-               'all90',
-               'all120')
+input_strs = c('0',
+               '7',
+               '14',
+               '28',
+               '42',
+               '90',
+               '120')
 
 search_size = 100
+
+TYPE = 'GP'
+# TYPE = 'LM'
 
 # f
 best_cv_idx = c(89,89, 66,12,12,36,36)
@@ -33,27 +27,26 @@ LLs = matrix(data=0, nrow=length(input_strs), ncol=search_size)
 
 for (a in 1:length(input_strs)) {
   for (b in 1:search_size){
-    input_str = input_strs[a]
-    input_file <- paste(input_path, input_str, '_' , b, '.csv',sep='')
-    output_file <- paste(output_path, input_str, '_' , b, '.csv',sep='')
-    
-    # loading data
-    data <- read.csv(input_file)
-    print(input_file)
-    data <- data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
-    
-    data %>%
-      group_by(cycle, state) %>%
-      summarise(count=n()) %>%
-      filter(count >=4)
     
     cv_years = c(1992,1994,1996,1998,2000,2002,2004,2006,2008,2010,2012,2014,2016)
-    
     cv_LL = c()
     
     for (cv_year in cv_years) {
-    data_test <- data[(data$cycle==cv_year),]
-    data <- data[(data$cycle!=cv_year & data$cycle!=2018 & data$cycle!=2020),]
+      input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', input_strs[a], '_', b ,'.csv',sep='')
+      output_file = paste('results/stan_LOO', TYPE, '_' , cv_year, 'day', input_strs[a], '_', b ,'.csv',sep='')
+      
+      # loading data
+      data <- read.csv(input_file)
+      print(input_file)
+      data <- data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
+      
+      data %>%
+        group_by(cycle, state) %>%
+        summarise(count=n()) %>%
+        filter(count >=4)
+      
+      data_test <- data[(data$cycle==cv_year),]
+      data <- data[(data$cycle!=cv_year & data$cycle!=2018 & data$cycle!=2020),]
     
     # data <- data[(data$cycle!=2016),]
     
@@ -395,13 +388,13 @@ for (a in 1:length(input_strs)) {
       win_rates = win_rates / sum(win_rates)
       
       WIN <- c(WIN, win_rates)
-      if (which.max(win_rates)==which.max(vote)){
-        correct_predictions = correct_predictions + 1
-      }
-      else{
-        print("Wrong prediction:")
-        print(test_metadata[[test_idx2[i]]])
-      }
+      # if (which.max(win_rates)==which.max(vote)){
+      #   correct_predictions = correct_predictions + 1
+      # }
+      # else{
+      #   print("Wrong prediction:")
+      #   print(test_metadata[[test_idx2[i]]])
+      # }
     }
 
     if(length(test_idx3)){
@@ -451,13 +444,13 @@ for (a in 1:length(input_strs)) {
         }
         win_rates = win_rates / sum(win_rates)
         WIN <- c(WIN, win_rates)
-        if (which.max(win_rates)==which.max(vote)){
-          correct_predictions = correct_predictions + 1
-        }
-        else{
-          print("Wrong prediction:")
-          print(test_metadata[[test_idx3[i]]])
-        }
+        # if (which.max(win_rates)==which.max(vote)){
+        #   correct_predictions = correct_predictions + 1
+        # }
+        # else{
+        #   print("Wrong prediction:")
+        #   print(test_metadata[[test_idx3[i]]])
+        # }
       }
     }
 
@@ -508,13 +501,13 @@ for (a in 1:length(input_strs)) {
         }
         win_rates = win_rates / sum(win_rates)
         WIN <- c(WIN, win_rates)
-        if (which.max(win_rates)==which.max(vote)){
-          correct_predictions = correct_predictions + 1
-        }
-        else{
-          print("Wrong prediction:")
-          print(test_metadata[[test_idx4[i]]])
-        }
+        # if (which.max(win_rates)==which.max(vote)){
+        #   correct_predictions = correct_predictions + 1
+        # }
+        # else{
+        #   print("Wrong prediction:")
+        #   print(test_metadata[[test_idx4[i]]])
+        # }
       }
     }
     
@@ -555,7 +548,6 @@ for (a in 1:length(input_strs)) {
     
     }
     LLs[a,b] = mean(cv_LL)
-    # save.image(file = paste('models/',input_str,'.RData',sep=''))
   }
 }
 
@@ -564,3 +556,5 @@ for (a in 1:length(input_strs)) {
   print(input_strs[a])
   print(which(LLs[a,]==max(LLs[a,])))
 }
+
+save.image(file = paste('models/LOOCV_',TYPE ,'.RData',sep=''))

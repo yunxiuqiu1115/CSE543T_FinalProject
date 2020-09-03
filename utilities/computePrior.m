@@ -1,5 +1,10 @@
-function a = computePrior(pvi, experienced, republican)
+function a = computePrior(pvi, experienced, republican, parms)
+    x = ones(size(pvi,1), 6);
+    x(:, 2) = pvi;
     democratic = 1 - republican;
-    a = 18.98808 + pvi*0.66579 + experienced*5.63548 + republican*23.98806 + democratic*25.74237 - pvi*republican*1.2485;
-    a = a/100;
+    x(:, 3) = experienced;
+    x(:, 4) = democratic;
+    x(:, 5) = republican;
+    x(:, 6) = pvi*republican;
+    a = x*parms.coefs;
 end

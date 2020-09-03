@@ -1,5 +1,6 @@
-function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method, j)
-    test_year = 2016;
+function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, parms)
+    j = parms.j;
+    test_year = parms.test_year;
     N_train = 0; nsuc_train = 0;
     N_test = 0; nsuc_test = 0;
     n_train = 0;
@@ -180,11 +181,11 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, method, j)
         mkdir('results');
     end
 
-    writetable(forecast,strcat('results/SB1992-',int2str(test_year),method,num2str(tau), '_', num2str(j),'.csv'));
+    writetable(forecast,strcat('results/LOO',parms.type, '_',int2str(test_year),'day',num2str(tau), '_', num2str(j),'.csv'));
 
-    disp("Length Scale: " + exp(besthyp.cov(1)));
-    disp("Output Scale: " + exp(besthyp.cov(2)));
-    disp("Noise std: " + exp(besthyp.lik));
+%     disp("Length Scale: " + exp(besthyp.cov(1)));
+%     disp("Output Scale: " + exp(besthyp.cov(2)));
+%     disp("Noise std: " + exp(besthyp.lik));
     
 %     posteriorstd = cell2mat(posteriorstd);
 %     disp("Mean of predictive std: " + mean(posteriorstd));

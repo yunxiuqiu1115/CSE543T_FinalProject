@@ -15,7 +15,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
 %     a_std = std(besthyp.mean(1:760));
 %     b_std = std(besthyp.mean(761:760*2));
     mfun = @minimize_v2;
-    for i = 803:803
+    for i = 1:n
         year = raceinfos{i}{1};
         state = raceinfos{i}{2}{1};
         candidateName = raceinfos{i}{3};
@@ -35,7 +35,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
                 predPoll = besthyp.mean(parms.ncandidates+i);
             else 
                 % testing forecasting
-                priorb{2} = computePrior(pvi, experienced, republican);
+                priorb{2} = computePrior(pvi, experienced, republican, parms);
                 % + besthyp.mean(end)*republican;
                 predPoll = priorb{2};
             end
@@ -57,7 +57,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
                 % im{3}.mean{2}{2} = parms.a(i);
 %                 hyp = full2one(besthyp, i, parms.ncandidates, parms.nfirm);
                 hyp.mean(1) = 0;
-                hyp.mean(2) = computePrior(pvi, experienced, republican);
+                hyp.mean(2) = computePrior(pvi, experienced, republican, parms);
                 hyp.cov = besthyp.cov;
                 hyp.lik = besthyp.lik;
 %                 hyp.cov(1)=cov1(i);
@@ -69,7 +69,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
 %                 hyp = full2one(besthyp, i, parms.ncandidates, parms.nfirm);
                 hyp.mean(1) = 0;
                
-                hyp.mean(2) = computePrior(pvi, experienced, republican);
+                hyp.mean(2) = computePrior(pvi, experienced, republican, parms);
                 if strcmp(state,'Georgia Special')
                     hyp.mean(2) = 0.25;
                 end
@@ -78,7 +78,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
 %                 hyp.cov(1)=cov1(i);
 %                 hyp.cov(2)=cov2(i);
 %                 hyp.lik=lik1(i);
-                im{3}.mean{2}{2} = computePrior(pvi, experienced, republican);
+                im{3}.mean{2}{2} = computePrior(pvi, experienced, republican, parms);
 %                 im{3}.mean{2}{3} = b_std;
 %                 im{3}.mean{1}{2} = a_mu;
 %                 im{3}.mean{1}{3} = a_std;
@@ -105,23 +105,24 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             predPoll = fmu(end);
             fts(i) = predPoll;
             s2s(i) = fs2(end);
-            fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, i);
-            plot_title = year + " " + state + " " + candidateName;
-            title(plot_title);
-            yearFolder = fullfile(plot_path, num2str(year));
-            stateFolder = fullfile(yearFolder, state);
-            if ~exist(plot_path, 'dir')
-                mkdir(plot_path);
-            end
-            if ~exist(yearFolder, 'dir')
-                mkdir(yearFolder);
-            end
-            if ~exist(stateFolder, 'dir')
-                mkdir(stateFolder);
-            end
-            filename = fullfile(stateFolder, plot_title + num2str(parms.j)+ ".jpg");
-            saveas(fig, filename);
-            close;
+%             parms.prior = [computePrior(pvi, experienced, republican, parms), 0.1];
+%             fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, parms);
+%             plot_title = year + " " + state + " " + candidateName;
+%             title(plot_title);
+%             yearFolder = fullfile(plot_path, num2str(year));
+%             stateFolder = fullfile(yearFolder, state);
+%             if ~exist(plot_path, 'dir')
+%                 mkdir(plot_path);
+%             end
+%             if ~exist(yearFolder, 'dir')
+%                 mkdir(yearFolder);
+%             end
+%             if ~exist(stateFolder, 'dir')
+%                 mkdir(stateFolder);
+%             end
+%             filename = fullfile(stateFolder, plot_title + num2str(parms.j)+ ".jpg");
+%             saveas(fig, filename);
+%             close;
 %             disp(plot_title + " predicted winning rate: " + predPoll);
 %             disp(plot_title + " actual votes won: " + trueVote + newline);
             if ~isfield(allRaces, fn)

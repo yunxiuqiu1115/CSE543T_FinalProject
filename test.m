@@ -66,6 +66,11 @@
 % 
 % smp = hmcSampler(logpdf,startpoint);
 
+addpath("gpml-matlab-v3.6-2015-07-07");
+addpath("utilities");
+addpath("data");
+startup;
+
 taus = [0, 7, 14,28,42,90,120];
 
 p = sobolset(3,'Skip',1e3);
@@ -74,8 +79,8 @@ search_size = 100;
 % ts = [65,21,63,86,36,36];
 ts = [89,89,66,12,12,36,36];
 
-taus = [28];
-ts = [12];
+% taus = [28];
+% ts = [12];
 
 % 
 % for i=1:numel(taus)
@@ -92,7 +97,8 @@ for i=1:numel(taus)
         ls = p(j,1)*max(taus(i),30)+3; % 3-tau;
         os = p(j,2)/10; % 0%-10%
         lik = p(j,3)/10; % 0%-10%
-        myrun(taus(i),"model", ls, os, lik, j);
+        myrun(taus(i),"GP", ls, os, lik, j);
+%         myrun(taus(i),"LM", ls, os, lik, j);
     end
 end
 
@@ -144,16 +150,9 @@ end
 % diary('off');
 
 function myrun(tau,type, ls, os, lik, j)
-    if strcmp(type, "model")==1
-        method = 'all';
-        load("models/model.mat");
-    else
-        load(MPLV(tau));
-        method = 'last';
-    end
-    
-    CNNdata = readData("data/CNNData1992to2018.csv");
-    [CNNdata, pollster2idx] = indexPollster(CNNdata, pollthres);
+    load("models/model.mat");
+%     CNNdata = readData("data/CNNData1992to2018.csv");
+%     [CNNdata, pollster2idx] = indexPollster(CNNdata, pollthres);
 %     CNNdata2020 = readData("data/CNNData2020.csv");
 %     
 %     CNNdata2020 = indexPollster(CNNdata2020, pollster2idx);
@@ -166,14 +165,7 @@ function myrun(tau,type, ls, os, lik, j)
     parms.nfirm = 0;
     years = unique(CNNdata.cycle);
     states = unique(CNNdata.state);
-   
-    
-    plot_path = "plots/AllMargLinTre"+num2str(tau);
-    
     [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
-    
-    'Arkansas'; 'Delaware'; 'Idaho'; 'Louisiana'; 'Minnesota'; 
-    'Nebraska'; 'Oregon'; 'Rhode Island'; 'South Dakota'; 'Virginia'; 'West Virginia'; 'Wyoming';
     
     counter = size(xs,1);
     for i=1:counter
@@ -181,30 +173,38 @@ function myrun(tau,type, ls, os, lik, j)
         xs{i} = xs{i}(idx,:);
         ys{i} = ys{i}(idx);
     end
-    
+
     hyp.cov(1) = log(ls);
-   	hyp.cov(2) = log(os);
+    hyp.cov(2) = log(os);
     hyp.lik = log(lik);
 
     disp(type);
-    
+
     disp("tau: "+tau);
     parms.days = min(CNNdata.daysLeft);
     parms.tau = tau;
     parms.j = j;
-    fprintf('ls: %0.4f, os: %0.4f, lik: %0.4f\n',ls, os, lik);
-   [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
+%      fprintf('ls: %0.4f, os: %0.4f, lik: %0.4f\n',ls, os, lik);
    
-   
-    plot_path = "plots/AllLM"+num2str(tau);
-   [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, plot_path, parms);
-    
-%      posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, method, j);
+    for y=1:numel(years)
+        parms.test_year = years(y);
+        parms.coefs = priorModel(CNNdata, parms.test_year);
+        parms.type = type;
+        
+        if strcmp(type, "GP")==1
+            plot_path = "plots/GPMargLinTre"+num2str(year)+"_"+num2str(tau);
+            [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
+        else
+            plot_path = "plots/LM"+num2str(tau);
+            [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, plot_path, parms);
+        end        
+        
+%         'Arkansas'; 'Delaware'; 'Idaho'; 'Louisiana'; 'Minnesota'; 
+%         'Nebraska'; 'Oregon'; 'Rhode Island'; 'South Dakota'; 'Virginia'; 'West Virginia'; 'Wyoming';
+        posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, parms);
+    end
 end
 
-function f=MPLV(t)
-    f = "models/last" + t + "-1.mat";
-end
 
 function [lpdf,glpdf] = normalDistGrad(X,Mu,Sigma)
 Z = (X - Mu)./Sigma;
