@@ -1,0 +1,16 @@
+#BSUB -o Senate.%J
+#BSUB -R '(!gpu)'
+#BSUN -N
+#BSUB -J Senate
+
+threshold=50
+iter=20
+seed=1
+
+# matlab -nodisplay -nodesktop -r "CNNGeneric($threshold,$iter,$seed); exit"
+# matlab -nodisplay -nodesktop -r "CNNGeneric(50,5,1); exit"
+
+matlab -nodisplay -nodesktop -r "test; exit"
+module add gcc-8.3.0
+Rscript main.R
+

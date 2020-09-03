@@ -6,7 +6,6 @@ playgrounds/
 *.txt
 *.csv
 *.m~
-run
 CNN.*
 data/*idx.csv
 *.jpg
