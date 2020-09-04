@@ -9,9 +9,6 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, parms)
         pvs = allRaces.(fn{i});
         ps = pvs(1:2:end);
         vs = pvs(2:2:end);
-        if(numel(ps)>4)
-           disp("5"); 
-        end
         [~, p_idx] = max(ps);
         [~, t_idx] = max(vs);
         year = fn{i}(end-3:end);
