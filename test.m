@@ -192,10 +192,10 @@ function myrun(tau,type, ls, os, lik, j)
         parms.type = type;
         
         if strcmp(type, "GP")==1
-            plot_path = "plots/GPMargLinTre"+num2str(year)+"_"+num2str(tau);
+            plot_path = "plots/GPMargLinTre"+num2str(years(y))+"_"+num2str(tau);
             [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
         else
-            plot_path = "plots/LM"+num2str(tau);
+            plot_path = "plots/LMMargLinTre"+num2str(years(y))+"_"+num2str(tau);
             [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, plot_path, parms);
         end        
         
