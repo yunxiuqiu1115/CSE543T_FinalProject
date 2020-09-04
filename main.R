@@ -40,10 +40,10 @@ for (a in 1:length(input_strs)) {
       print(input_file)
       data <- data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
       
-      data %>%
-        group_by(cycle, state) %>%
-        summarise(count=n()) %>%
-        filter(count >=4)
+      # data %>%
+      #   group_by(cycle, state) %>%
+      #   summarise(count=n()) %>%
+      #   filter(count >=4)
       
       data_test <- data[(data$cycle==cv_year),]
       data <- data[(data$cycle!=cv_year & data$cycle!=2018 & data$cycle!=2020),]
