@@ -32,7 +32,7 @@ one_job(){
 
 	nlZs=$(Rscript --vanilla onejob.R $input_str $cv_year $TYPE)
 	echo $nlZs"
-    nlZs=$(bsub -G SEAS-Lab-Garnett < run_code)
+    nlZs=$(bsub -G SEAS-Lab-Garnett < $run_code)
     return $nlZs
 }
 
