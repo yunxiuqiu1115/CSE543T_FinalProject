@@ -1,14 +1,14 @@
 #!/bin/bash
-input_str=$1
-cv_year=$2
-TYPE=$3
-
-JOBNAME="$TYPE""$cv_year"_"$input_str" 
-
 #BSUB -o Senate.%J
 #BSUB -R '(!gpu)'
 #BSUN -N
 #BSUB -J "$TYPE$cv_year_$input_str"
+
+input_str=$1
+cv_year=$2
+TYPE=$3
+
+JOBNAME="$TYPE""$cv_year"_"$input_str"
 
 module add gcc-8.3.0
 
