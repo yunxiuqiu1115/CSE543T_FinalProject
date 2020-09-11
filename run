@@ -22,7 +22,17 @@ one_job(){
     input_str=$1
     cv_year=$2
     TYPE=$3
-    nlZs=$(bsub -G SEAS-Lab-Garnett < "onerun $input_str $cv_year $TYPE")
+    run_code="#!/bin/bash
+	#BSUB -o Senate.%J
+	#BSUB -R '(!gpu)'
+	#BSUN -N
+	#BSUB -J job_name
+
+	module add gcc-8.3.0
+
+	nlZs=$(Rscript --vanilla onejob.R $input_str $cv_year $TYPE)
+	echo $nlZs"
+    nlZs=$(bsub -G SEAS-Lab-Garnett < run_code")
     return $nlZs
 }
 
