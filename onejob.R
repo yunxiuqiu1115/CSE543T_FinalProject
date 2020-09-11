@@ -403,8 +403,10 @@ for (b in 1:search_size){
   names(result) <- tolower(names(result))
 
   averaged_nlZs = c(averaged_nlZs, mean(NLZ))
+  
+  write.csv(mean(NLZ),output_file)
 }
 
-write.csv(averaged_nlZs,output_file)
+
 
 cat(averaged_nlZs)
