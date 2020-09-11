@@ -12,6 +12,7 @@ TYPE = args[3]
 
 search_size = 100
 
+print(paste('results/LOO', TYPE, '_' , cv_year, 'day', input_str ,'.csv',sep=''))
 library(rstan)
 
 averaged_nlZs = c() 
@@ -406,7 +407,6 @@ for (b in 1:search_size){
   
   write.csv(mean(NLZ),output_file)
 }
-
 
 
 cat(averaged_nlZs)
