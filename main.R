@@ -521,26 +521,26 @@ for (a in 1:length(input_strs)) {
     #   theme(plot.title = element_text(hjust=0.5),
     #         panel.background = element_rect(fill = 'white', colour = 'white'))
     
-    # ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
-    #   geom_density_ridges(alpha=0.6) +
-    #   scale_y_discrete(expand = c(0, 0), name = "") +
-    #   # facet_wrap(Type ~ ., scale ="free") +
-    #   scale_x_continuous(expand = c(0, 0), breaks = c(0,20,40,60,80,100),
-    #                      name = "Posterior Vote (%)") +
-    #   theme(panel.grid.minor = element_blank(),
-    #        panel.grid.major.x = element_line(color = "gray")) +
-    #   scale_fill_manual(values = c("blue", "red"), labels = c("DEM", "REP")) +
-    #   scale_color_manual(values = c(NA,NA), guide = "none") +
-    #   coord_cartesian(xlim = c(0, 100), clip='on') +
-    #   guides(fill = guide_legend(
-    #     override.aes = list(
-    #       fill = c("blue", "red"),
-    #       color = NA, point_color = NA)
-    #   )
-    #   ) +
-    #   ggtitle("Posterior predictive density of vote share for major party candidates") +
-    #   theme(plot.title = element_text(hjust=0.5),
-    #         panel.background = element_rect(fill = 'white', colour = 'white'))
+    ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
+      geom_density_ridges(alpha=0.6) +
+      scale_y_discrete(expand = c(0, 0), name = "") +
+      # facet_wrap(Type ~ ., scale ="free") +
+      scale_x_continuous(expand = c(0, 0), breaks = c(0,20,40,60,80,100),
+                         name = "Posterior Vote (%)") +
+      theme(panel.grid.minor = element_blank(),
+           panel.grid.major.x = element_line(color = "gray")) +
+      scale_fill_manual(values = c("blue", "red"), labels = c("DEM", "REP")) +
+      scale_color_manual(values = c(NA,NA), guide = "none") +
+      coord_cartesian(xlim = c(0, 100), clip='on') +
+      guides(fill = guide_legend(
+        override.aes = list(
+          fill = c("blue", "red"),
+          color = NA, point_color = NA)
+      )
+      ) +
+      ggtitle("Posterior predictive density of vote share for major party candidates") +
+      theme(plot.title = element_text(hjust=0.5),
+            panel.background = element_rect(fill = 'white', colour = 'white'))
 
 
     if(length(test_idx3)){
