@@ -3,10 +3,7 @@ input_str=$1
 cv_year=$2
 TYPE=$3
 
-job_name=$TYPE
-job_name+=$cv_year
-job_name+="_"
-job_name+=$input_str
+job_name="$TYPE""$cv_year"_"$input_str"
 
 #BSUB -o Senate.%J
 #BSUB -R '(!gpu)'
