@@ -19,6 +19,7 @@ for TYPE in ${TYPES[@]}; do
     for input_str in ${input_strs[@]}; do
         for cv_year in ${cv_years[@]}; do
     	    nlZs=$(one_job $input_str $cv_year $TYPE)
+	    echo "finish ""$TYPE""$cv_year"_"$input_str"
 	    echo $nlZs
     	done
     done
