@@ -12,7 +12,7 @@ one_job(){
     input_str=$1
     cv_year=$2
     TYPE=$3
-     echo bsub -G SEAS-Lab-Garnett "/home/research/chenyehu/CNNForecasting/onerun $input_str $cv_year $TYPE"
+    echo $(bsub -G SEAS-Lab-Garnett "/home/research/chenyehu/CNNForecasting/onerun $input_str $cv_year $TYPE)"
 }
 
 for TYPE in ${TYPES[@]}; do
