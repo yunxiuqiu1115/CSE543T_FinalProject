@@ -8,7 +8,7 @@ job_name=$TYPE$cv_year$input_str
 #BSUB -o Senate.%J
 #BSUB -R '(!gpu)'
 #BSUN -N
-#BSUB -J $job_name
+#BSUB -J job_name
 
 nlZs=$(Rscript --vanilla onejob.R $input_str $cv_year $TYPE)
 echo $nlZs
