@@ -12,7 +12,7 @@ one_job(){
     input_str=$1
     cv_year=$2
     TYPE=$3
-    nlZs=$(bsub -G SEAS-Lab-Garnett < "onerun $input_str $cv_year $TYPE")
+    nlZs=$(bsub -G SEAS-Lab-Garnett "onerun $input_str $cv_year $TYPE")
     echo $nlZs
 }
 
