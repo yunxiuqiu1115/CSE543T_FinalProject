@@ -12,7 +12,7 @@ TYPE = args[3]
 
 search_size = 100
 
-# library(rstan)
+library(rstan)
 
 averaged_nlZs = c() 
 
