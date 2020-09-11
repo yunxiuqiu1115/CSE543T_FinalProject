@@ -144,6 +144,8 @@ function myrun(tau,type, ls, os, lik, j)
     load("models/model.mat");
 %     CNNdata = readData("data/CNNData1992to2018.csv");
 %     [CNNdata, pollster2idx] = indexPollster(CNNdata, pollthres);
+    CNNdata = readData("data/CNNData.csv");
+    [CNNdata,pollster2idx] = indexPollster(CNNdata, 50);
     CNNdata2018 = readData("data/CNNData2018.csv");
     
     CNNdata2018 = indexPollster(CNNdata2018, pollster2idx);

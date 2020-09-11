@@ -34,6 +34,7 @@ def plot_win(gp_path, stan_path):
     rep_win= np.array(rep_win)[idx]
     dem_win = np.array(dem_win)[idx]
     states = np.array(states)[idx]
+    print(states)
 
     ind = np.arange(len(dem_win))  
     width = 0.5
