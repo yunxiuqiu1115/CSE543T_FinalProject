@@ -10,7 +10,7 @@ JOBNAME="$TYPE""$cv_year"_"$input_str"
 #BSUN -N
 #BSUB -J "$TYPE$cv_year_$input_str"
 
-module add gcc-8.3.0
+module add R-4
 
 nlZs=$(Rscript --vanilla onejob.R $input_str $cv_year $TYPE)
 echo $nlZs
