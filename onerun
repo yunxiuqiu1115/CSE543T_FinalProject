@@ -3,12 +3,12 @@ input_str=$1
 cv_year=$2
 TYPE=$3
 
-job_name="$TYPE""$cv_year"_"$input_str"
+JOBNAME="$TYPE""$cv_year"_"$input_str" 
 
 #BSUB -o Senate.%J
 #BSUB -R '(!gpu)'
 #BSUN -N
-#BSUB -J Senate
+#BSUB -J $JOBNAME
 
 module add gcc-8.3.0
 
