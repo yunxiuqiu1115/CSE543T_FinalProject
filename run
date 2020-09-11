@@ -21,7 +21,7 @@ mkdir -p nlZs
 for TYPE in ${TYPES[@]}; do
 	for input_str in ${input_strs[@]}; do
     		for cv_year in ${cv_years[@]}; do
-    			nlZs=$(bsub -G SEAS-Lab-Garnett onerun input_str cv_year TYPE)
+    			nlZs=$(bsub -G SEAS-Lab-Garnett < onerun $input_str $cv_year $TYPE)
 			echo $nlZs
     		done
 	done
