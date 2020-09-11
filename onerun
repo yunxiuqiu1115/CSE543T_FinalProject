@@ -1,3 +1,4 @@
+#!/bin/bash
 input_str=$1
 cv_year=$2
 TYPE=$3
