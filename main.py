@@ -57,7 +57,7 @@ def plot_win(gp_path, stan_path):
     ax = plt.axes()
     ax.xaxis.set_ticks_position('none') 
     ax.yaxis.set_ticks_position('none') 
-    plt.savefig("plots/wp42.png")
+    plt.savefig("plots/wp42.pdf")
     plt.show()
     plt.close()
 

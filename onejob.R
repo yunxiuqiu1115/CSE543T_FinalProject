@@ -10,18 +10,16 @@ input_str = args[1]
 cv_year = args[2]
 TYPE = args[3]
 
-search_size = 10
+search_size = 100
 
 # library(rstan)
 
 averaged_nlZs = c() 
 
 for (b in 1:search_size){
-  averaged_nlZs = c(averaged_nlZs, b)
   
   input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', input_str, '_', b ,'.csv',sep='')
   output_file = paste('nlZs/', TYPE, '_' , cv_year, 'day', input_str, '_', b,'.csv',sep='')
-  next;
   # loading data
   data <- read.csv(input_file)
   
