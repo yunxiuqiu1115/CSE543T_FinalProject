@@ -101,6 +101,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
             xstar = [linspace(xs{i}(1,1),0,nz).',zeros(1,nz)',ones(1,nz)',...
                             parms.nfirm*ones(1,nz)',republican*zeros(1,nz)'];
             [~,~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
+
             
             predPoll = fmu(end);
             fts(i) = predPoll;
@@ -108,6 +109,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
 %             parms.prior = [computePrior(pvi, experienced, republican, parms), 0.1];
 %             fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, parms);
 %             plot_title = year + " " + state + " " + candidateName;
+%                         disp(plot_title);
 %             title(plot_title);
 %             yearFolder = fullfile(plot_path, num2str(year));
 %             stateFolder = fullfile(yearFolder, state);

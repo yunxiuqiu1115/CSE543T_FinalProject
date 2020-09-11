@@ -4,6 +4,11 @@ library(rstan)
 # library(MCMCpack)
 # library(bayesplot)
 # library(dplyr)
+# library(ggridges)
+# library(ggplot2)
+# library(grid)
+# library(pBrackets)
+
 
 input_strs = c('0',
                '7',
@@ -15,6 +20,8 @@ input_strs = c('0',
 
 search_size = 100
 
+cv_years = c(1992,1994,1996,1998,2000,2002,2004,2006,2008,2010,2012,2014,2016)
+
 TYPE = 'GP'
 # TYPE = 'LM'
 
@@ -25,20 +32,25 @@ best_cv_idx = c(89,89, 66,12,12,36,36)
 
 LLs = matrix(data=0, nrow=length(input_strs), ncol=search_size)
 
+search_size = 1
+input_strs = c('42')
+best_cv_idx = c(12)
+cv_years = c(2020)
+
 for (a in 1:length(input_strs)) {
   for (b in 1:search_size){
-    
-    cv_years = c(1992,1994,1996,1998,2000,2002,2004,2006,2008,2010,2012,2014,2016)
     cv_LL = c()
     
     for (cv_year in cv_years) {
-      input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', input_strs[a], '_', b ,'.csv',sep='')
-      output_file = paste('results/stan_LOO', TYPE, '_' , cv_year, 'day', input_strs[a], '_', b ,'.csv',sep='')
+      input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', input_strs[a], '_', best_cv_idx[a] ,'.csv',sep='')
+      output_file = paste('results/stan_LOO', TYPE, '_' , cv_year, 'day', input_strs[a], '_', best_cv_idx[a] ,'.csv',sep='')
       
       # loading data
       data <- read.csv(input_file)
       print(input_file)
       data <- data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
+      data <- data[data$cycle!=2020 | data$state!='Georgia' | data$candidate!='Loeffler',]
+      data <- data[data$cycle!=2020 | data$state!='Georgia' | data$candidate!='Tarver',]
       
       # data %>%
       #   group_by(cycle, state) %>%
@@ -166,7 +178,6 @@ for (a in 1:length(input_strs)) {
     test_stan_party <- matrix(0,test_counter,C)
     test_stan_experienced <- matrix(0,test_counter,C)
     
-    
     for (i in 1:test_counter) {
       test_stan_mu[i,1:test_nc[i]] = test_mu[[i]]
       test_stan_sigma[i,1:test_nc[i]] = test_sigma[[i]]
@@ -176,6 +187,7 @@ for (a in 1:length(input_strs)) {
       test_stan_party[i,1:test_nc[i]] = test_party[[i]]
       test_stan_experienced[i, 1:test_nc[i]] = test_experienced[[i]]
     }
+    
     
     test_idx2 <- c()
     test_idx3 <- c()
@@ -340,6 +352,11 @@ for (a in 1:length(input_strs)) {
     # }
 
     # print(paste("In-sample ratio in 95% :",1-Nout/760))
+    
+    
+    COLNAMES = c('Posterior_Vote','Party','State','Type')
+    posteriors = data.frame(matrix(ncol = length(COLNAMES), nrow = 0))
+    colnames(posteriors) = COLNAMES
 
     for(i in 1:length(test_idx2)) {
       cycle = test_metadata[[test_idx2[i]]][1]
@@ -360,12 +377,49 @@ for (a in 1:length(input_strs)) {
         l=quantile(pred,probs=c(0.025),names = FALSE)
         m = mean(pred)
         s = sd(pred)
-        if (test_stan_y[test_idx2[i],j]<=u & test_stan_y[test_idx2[i],j]>=l){
-          flags[test_idx2[i],j] = 1
+        
+        one_posterior = data.frame(matrix(ncol = length(COLNAMES), nrow = length(pred)))
+        colnames(one_posterior) = COLNAMES
+        
+        one_posterior$Posterior_Vote = pred*100
+        one_posterior$State = state.abb[match(state,state.name)]
+        if(party[j]==1){
+          one_posterior$Party = 'REP'
+          RepWin = mean(one_posterior$Posterior_Vote>50)
         }
         else{
-          Nout_test = Nout_test + 1
+          one_posterior$Party = 'DEM'
+          RepWin = mean(one_posterior$Posterior_Vote<50)
         }
+        if(RepWin>0.95){
+          one_posterior$Type = "Safe R"
+        }
+        else if (RepWin>0.7) {
+          one_posterior$Type = "Likely R"
+        }
+        else if (RepWin>0.55) {
+          one_posterior$Type = "Lean R"
+        }
+        else if (RepWin>0.45) {
+          one_posterior$Type = "Toss-up"
+        }
+        else if (RepWin>0.3) {
+          one_posterior$Type = "Lean D"
+        }
+        else if (RepWin>0.05) {
+          one_posterior$Type = "Likely D"
+        }
+        else {
+          one_posterior$Type = "Safe D"
+        }
+        posteriors = rbind(posteriors, one_posterior)
+        
+        # if (test_stan_y[test_idx2[i],j]<=u & test_stan_y[test_idx2[i],j]>=l){
+        #   flags[test_idx2[i],j] = 1
+        # }
+        # else{
+        #   Nout_test = Nout_test + 1
+        # }
         CYCLE <- c(CYCLE, cycle)
         STATE <- c(STATE,state)
         CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
@@ -396,6 +450,98 @@ for (a in 1:length(input_strs)) {
       #   print(test_metadata[[test_idx2[i]]])
       # }
     }
+    
+    
+    # posteriors %>%
+    #   ggplot(aes(y = State)) +
+    #   geom_density_ridges(
+    #     aes(x = Posterior_Vote, fill = paste(State, Party)),
+    #     alpha = .8, color = 'grey', from = 0, to = 100
+    #   ) +
+    #   labs(
+    #     x = "Posterior Vote (%)",
+    #     y = "Election State",
+    #     title = "Forecasting REP vs DEM Candidate Vote in 2020 US Senate elections"
+    #   ) +
+    #   scale_y_discrete(expand = c(0, 0)) +
+    #   scale_x_continuous(expand = c(0, 0)) +
+    #   scale_fill_cyclical(
+    #     breaks = c("REP", "DEM"),
+    #     labels = c(`REP` = "REP", `DEM` = "DEM"),
+    #     values = c("#0000ff", "#ff0000","#ff8080", "#8080ff"),
+    #     name = "Party", guide = "legend"
+    #   ) +
+    #   coord_cartesian(clip = "off") +
+    #   theme_ridges(grid = FALSE)
+    
+    LEVELS = posteriors[posteriors$Party=='REP',] %>% 
+      group_by(State) %>% 
+      mutate(tmp = mean(Posterior_Vote)) %>% 
+      select(State, tmp) %>%
+      distinct(State, tmp) %>%
+      arrange(desc(tmp)) %>%
+      select(State)
+    
+    LEVELS = LEVELS$State
+    
+    # WINS = posteriors[posteriors$Party=='REP',] %>% 
+    #   group_by(State) %>% 
+    #   mutate(win = mean(Posterior_Vote>=50)) %>% 
+    #   select(State, win) %>%
+    #   distinct(State, win) %>%
+    #   arrange(desc(win))
+    
+    posteriors$State <- factor(posteriors$State, levels = LEVELS)
+    
+    LIKENAMES = c('Safe R', 'Likely R','Lean R', 'Toss-up', 'Lean D','Likely D','Safe D')
+    posteriors$Type <- factor(posteriors$Type, levels = LIKENAMES)
+
+    # ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
+    #   geom_density_ridges(alpha=0.8) +
+    #   scale_y_discrete(expand = c(0, 0), name = "") +
+    #   scale_x_continuous(expand = c(0, 0), breaks = c(0,10,20,30,40,45,50,55,60,70,80,90,100),
+    #                      labels = c('0','Safe D','20', 'Likely D','40', 'Lean D', '50', 'Lean R', '60', 'Likely R', '80', 'Safe R', '100'), 
+    #                      name = "Posterior Vote (%)") +
+    #   theme(axis.text.x = element_text(angle=60),
+    #         axis.ticks.x = element_line(size = c(.5,0,.5,0,.5,0,.5,0,.5,0,.5,0,.5), 
+    #                                     color = c("black", NA,"black", NA, "black", NA,"black", NA, "black", NA,"black", NA, "black")),
+    #         panel.grid.minor = element_blank(),
+    #         panel.grid.major.x = element_line(color = c("gray",
+    #                                                     NA,"gray", NA, "gray", NA,"gray", NA, "gray", NA,"gray", NA, "gray"))) + 
+    #   scale_fill_manual(values = c("#34AAE0", "#E9141D"), labels = c("DEM", "REP")) +
+    #   scale_color_manual(values = c("#D3D3D3","#D3D3D3"), guide = "none") +
+    #   coord_cartesian(xlim = c(0, 100), clip='on') +
+    #   guides(fill = guide_legend(
+    #     override.aes = list(
+    #       fill = c("#34AAE0", "#E9141D"),
+    #       color = NA, point_color = NA)
+    #   )
+    #   ) +
+    #   ggtitle("Posterior densities for vote shares for major-party candidates") +
+    #   theme(plot.title = element_text(hjust=0.5),
+    #         panel.background = element_rect(fill = 'white', colour = 'white'))
+    
+    # ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
+    #   geom_density_ridges(alpha=0.8) +
+    #   scale_y_discrete(expand = c(0, 0), name = "") +
+    #   # facet_wrap(Type ~ ., scale ="free") +
+    #   scale_x_continuous(expand = c(0, 0), breaks = c(0,20,40,60,80,100),
+    #                      name = "Posterior Vote (%)") +
+    #   theme(panel.grid.minor = element_blank(),
+    #        panel.grid.major.x = element_line(color = "gray")) +
+    #   scale_fill_manual(values = c("blue", "red"), labels = c("DEM", "REP")) +
+    #   scale_color_manual(values = c("#D3D3D3","#D3D3D3"), guide = "none") +
+    #   coord_cartesian(xlim = c(0, 100), clip='on') +
+    #   guides(fill = guide_legend(
+    #     override.aes = list(
+    #       fill = c("blue", "red"),
+    #       color = NA, point_color = NA)
+    #   )
+    #   ) +
+    #   ggtitle("Posterior predictive density of vote share for major party candidates") +
+    #   theme(plot.title = element_text(hjust=0.5),
+    #         panel.background = element_rect(fill = 'white', colour = 'white'))
+    # 
 
     if(length(test_idx3)){
       for(i in 1:length(test_idx3)) {
@@ -417,12 +563,12 @@ for (a in 1:length(input_strs)) {
           l=quantile(pred,probs=c(0.025),names = FALSE)
           m = mean(pred)
           s = sd(pred)
-          if (test_stan_y[test_idx3[i],j]<=u & test_stan_y[test_idx3[i],j]>=l){
-            flags[test_idx3[i],j] = 1
-          }
-          else{
-            Nout_test = Nout_test + 1
-          }
+          # if (test_stan_y[test_idx3[i],j]<=u & test_stan_y[test_idx3[i],j]>=l){
+          #   flags[test_idx3[i],j] = 1
+          # }
+          # else{
+          #   Nout_test = Nout_test + 1
+          # }
           CYCLE <- c(CYCLE, cycle)
           STATE <- c(STATE,state)
           CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
@@ -474,12 +620,12 @@ for (a in 1:length(input_strs)) {
           l=quantile(pred,probs=c(0.025),names = FALSE)
           m = mean(pred)
           s = sd(pred)
-          if (test_stan_y[test_idx4[i],j]<=u & test_stan_y[test_idx4[i],j]>=l){
-            flags[test_idx4[i],j] = 1
-          }
-          else{
-            Nout_test = Nout_test + 1
-          }
+          # if (test_stan_y[test_idx4[i],j]<=u & test_stan_y[test_idx4[i],j]>=l){
+          #   flags[test_idx4[i],j] = 1
+          # }
+          # else{
+          #   Nout_test = Nout_test + 1
+          # }
           CYCLE <- c(CYCLE, cycle)
           STATE <- c(STATE, state)
           CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
@@ -526,7 +672,7 @@ for (a in 1:length(input_strs)) {
     
     cv_LL = c(cv_LL, mean(-NLZ))
     
-    # write.csv(result,output_file)
+    write.csv(result,output_file)
     
     # print(paste("Correct predictions: ",correct_predictions))
     # 
@@ -557,4 +703,4 @@ for (a in 1:length(input_strs)) {
   print(which(LLs[a,]==max(LLs[a,])))
 }
 
-save.image(file = paste('models/LOOCV_',TYPE ,'.RData',sep=''))
+# save.image(file = paste('models/LOOCV_',TYPE ,'.RData',sep=''))

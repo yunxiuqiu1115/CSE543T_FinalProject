@@ -32,7 +32,7 @@ function fig = plot_posterior(fmu, fs2, x, y, xs, v, parms)
 %     colormap(c); colorbar;
 %     legend('95% CI','mean p*','data','actual vote','linear trend','pollster biases','Location', 'Best');
     legend('95% CI pre-forecasting', '95% CI forecasting', 'mean p*','polling data','intercept prior' ,'Location', 'Best');
-    xlabel("Days Before Election"); ylabel("Voter Preference");
+    xlabel("Horizon"); ylabel("Voter Preference");
 end
 
 % fill([xstar(:,1); flip(xstar(:,1),1)], f, [166, 206, 227] / 255, ...

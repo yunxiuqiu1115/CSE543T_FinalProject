@@ -79,28 +79,28 @@ search_size = 100;
 % ts = [65,21,63,86,36,36];
 ts = [89,89,66,12,12,36,36];
 
-% taus = [28];
-% ts = [12];
-
-% 
-% for i=1:numel(taus)
-%     j = ts(i);
-%     ls = p(j,1)*max(taus(i),30)+3; % 3-tau;
-%     os = p(j,2)/10; % 0%-10%
-%     lik = p(j,3)/10; % 0%-10%
-%     myrun(taus(i),"model", ls, os, lik, j);
-% end
+taus = [42];
+ts = [12];
 
 
 for i=1:numel(taus)
-    for j=1:search_size
-        ls = p(j,1)*max(taus(i),30)+3; % 3-tau;
-        os = p(j,2)/10; % 0%-10%
-        lik = p(j,3)/10; % 0%-10%
-        myrun(taus(i),"GP", ls, os, lik, j);
-%         myrun(taus(i),"LM", ls, os, lik, j);
-    end
+    j = ts(i);
+    ls = p(j,1)*max(taus(i),30)+3; % 3-tau;
+    os = p(j,2)/10; % 0%-10%
+    lik = p(j,3)/10; % 0%-10%
+    myrun(taus(i),"GP", ls, os, lik, j);
 end
+
+
+% for i=1:numel(taus)
+%     for j=1:search_size
+%         ls = p(j,1)*max(taus(i),30)+3; % 3-tau;
+%         os = p(j,2)/10; % 0%-10%
+%         lik = p(j,3)/10; % 0%-10%
+%         myrun(taus(i),"GP", ls, os, lik, j);
+% %         myrun(taus(i),"LM", ls, os, lik, j);
+%     end
+% end
 
 
 % for i=1:numel(taus)
@@ -138,27 +138,28 @@ end
 %     close;
 % end
 
-% for i=1:numel(taus)
-%     for j=1:search_size
-%         ls = p(j,1)*max(taus(i),30)+3; % 3-tau;
-%         os = p(j,2)/10; % 0%-5%
-%         lik = p(j,3)/10; % 0%-10%
-%         myrun(taus(i),"model", ls, os, lik, j);
-%     end
-% end
-
 % diary('off');
 
 function myrun(tau,type, ls, os, lik, j)
     load("models/model.mat");
 %     CNNdata = readData("data/CNNData1992to2018.csv");
 %     [CNNdata, pollster2idx] = indexPollster(CNNdata, pollthres);
-%     CNNdata2020 = readData("data/CNNData2020.csv");
-%     
-%     CNNdata2020 = indexPollster(CNNdata2020, pollster2idx);
-%     CNNdata2020(:, ["candidate_name"]) = [];
-%     CNNdata2020.Percentage_of_Vote_won_x = zeros(size(CNNdata2020,1),1);
-%     CNNdata = vertcat(CNNdata, CNNdata2020);
+    CNNdata2018 = readData("data/CNNData2018.csv");
+    
+    CNNdata2018 = indexPollster(CNNdata2018, pollster2idx);
+    CNNdata2018(:, ["candidate_name"]) = [];
+    CNNdata = vertcat(CNNdata, CNNdata2018);
+
+    CNNdata2020 = readData("data/CNNData2020.csv");
+    
+    CNNdata2020 = indexPollster(CNNdata2020, pollster2idx);
+    CNNdata2020(:, ["candidate_name"]) = [];
+    CNNdata2020.Percentage_of_Vote_won_x = zeros(size(CNNdata2020,1),1);
+    CNNdata = vertcat(CNNdata, CNNdata2020);
+    
+    parms.test_year = 2020;
+    parms.coefs = priorModel(CNNdata, parms.test_year);
+    parms.type = type;
 
     parms.nfirm = max(CNNdata.pollsteridx);
     parms.days = min(CNNdata.daysLeft);
@@ -184,25 +185,36 @@ function myrun(tau,type, ls, os, lik, j)
     parms.days = min(CNNdata.daysLeft);
     parms.tau = tau;
     parms.j = j;
+    
+%     NOPOLLSTATES = ['Arkansas'; 'Delaware'; 'Idaho'; 'Louisiana' 'Massachusetts';...
+%         'Minnesota'; 'Nebraska'; 'Oregon'; 'Rhode Island';...
+%         'South Dakota'; 'Virginia'; 'West Virginia'; 'Wyoming'];
+    
+    
+    
+    plot_path = "plots/GPMargLinTre"+num2str(parms.test_year)+"_"+num2str(tau);
+    [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
+    posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, parms);
+    
 %      fprintf('ls: %0.4f, os: %0.4f, lik: %0.4f\n',ls, os, lik);
    
-    for y=1:numel(years)
-        parms.test_year = years(y);
-        parms.coefs = priorModel(CNNdata, parms.test_year);
-        parms.type = type;
-        
-        if strcmp(type, "GP")==1
-            plot_path = "plots/GPMargLinTre"+num2str(years(y))+"_"+num2str(tau);
-            [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
-        else
-            plot_path = "plots/LMMargLinTre"+num2str(years(y))+"_"+num2str(tau);
-            [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, plot_path, parms);
-        end        
-        
-%         'Arkansas'; 'Delaware'; 'Idaho'; 'Louisiana'; 'Minnesota'; 
-%         'Nebraska'; 'Oregon'; 'Rhode Island'; 'South Dakota'; 'Virginia'; 'West Virginia'; 'Wyoming';
-        posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, parms);
-    end
+%     for y=1:numel(years)
+%         parms.test_year = years(y);
+%         parms.coefs = priorModel(CNNdata, parms.test_year);
+%         parms.type = type;
+%         
+%         if strcmp(type, "GP")==1
+%             plot_path = "plots/GPMargLinTre"+num2str(years(y))+"_"+num2str(tau);
+%             [allRaces, fts, s2s] = forcastAllRaces(hyp, xs, ys, raceinfos, plot_path, parms);
+%         else
+%             plot_path = "plots/LMMargLinTre"+num2str(years(y))+"_"+num2str(tau);
+%             [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, plot_path, parms);
+%         end        
+%         
+% %         'Arkansas'; 'Delaware'; 'Idaho'; 'Louisiana'; 'Minnesota'; 
+% %         'Nebraska'; 'Oregon'; 'Rhode Island'; 'South Dakota'; 'Virginia'; 'West Virginia'; 'Wyoming';
+%         posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, parms);
+%     end
 end
 
 

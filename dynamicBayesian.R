@@ -2,6 +2,13 @@ setwd('/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/')
 library(rstan)
 library(dplyr)
 
+df %>%
+  group_by(Candidateidentifier, pollster,daysLeft) %>%
+  summarise(count=n()) %>%
+  filter(count >=2)
+
+df[df$Candidateidentifier=='2018AZMcSally' & df$pollster=='Marist College' & df$daysLeft==-48,]
+
 output_path = 'results/stan_dynamic18_'
 input_strs = c('0',
                '14',

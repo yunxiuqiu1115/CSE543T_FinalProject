@@ -1,0 +1,13 @@
+input_str=$1
+cv_year=$2
+TYPE=$3
+
+job_name="SenateDay"$input_str"Year"$cv_year$TYPE
+
+#BSUB -o Senate.%J
+#BSUB -R '(!gpu)'
+#BSUN -N
+#BSUB -J $job_name
+
+nlZs=$(Rscript --vanilla onejob.R $input_str $cv_year $TYPE)
+echo $nlZs
