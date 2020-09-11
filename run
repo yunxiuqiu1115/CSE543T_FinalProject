@@ -29,7 +29,7 @@ one_job(){
 for TYPE in ${TYPES[@]}; do
     for input_str in ${input_strs[@]}; do
         for cv_year in ${cv_years[@]}; do
-    	    nlZs=one_job($input_str,$cv_year,$TYPE)
+    	    nlZs=$(one_job $input_str $cv_year $TYPE)
 	    echo $nlZs
     	done
     done
