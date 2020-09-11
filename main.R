@@ -500,14 +500,14 @@ for (a in 1:length(input_strs)) {
     #   geom_density_ridges(alpha=0.8) +
     #   scale_y_discrete(expand = c(0, 0), name = "") +
     #   scale_x_continuous(expand = c(0, 0), breaks = c(0,10,20,30,40,45,50,55,60,70,80,90,100),
-    #                      labels = c('0','Safe D','20', 'Likely D','40', 'Lean D', '50', 'Lean R', '60', 'Likely R', '80', 'Safe R', '100'), 
+    #                      labels = c('0','Safe D','20', 'Likely D','40', 'Lean D', '50', 'Lean R', '60', 'Likely R', '80', 'Safe R', '100'),
     #                      name = "Posterior Vote (%)") +
     #   theme(axis.text.x = element_text(angle=60),
-    #         axis.ticks.x = element_line(size = c(.5,0,.5,0,.5,0,.5,0,.5,0,.5,0,.5), 
+    #         axis.ticks.x = element_line(size = c(.5,0,.5,0,.5,0,.5,0,.5,0,.5,0,.5),
     #                                     color = c("black", NA,"black", NA, "black", NA,"black", NA, "black", NA,"black", NA, "black")),
     #         panel.grid.minor = element_blank(),
     #         panel.grid.major.x = element_line(color = c("gray",
-    #                                                     NA,"gray", NA, "gray", NA,"gray", NA, "gray", NA,"gray", NA, "gray"))) + 
+    #                                                     NA,"gray", NA, "gray", NA,"gray", NA, "gray", NA,"gray", NA, "gray"))) +
     #   scale_fill_manual(values = c("#34AAE0", "#E9141D"), labels = c("DEM", "REP")) +
     #   scale_color_manual(values = c("#D3D3D3","#D3D3D3"), guide = "none") +
     #   coord_cartesian(xlim = c(0, 100), clip='on') +
@@ -521,27 +521,27 @@ for (a in 1:length(input_strs)) {
     #   theme(plot.title = element_text(hjust=0.5),
     #         panel.background = element_rect(fill = 'white', colour = 'white'))
     
-    # ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
-    #   geom_density_ridges(alpha=0.8) +
-    #   scale_y_discrete(expand = c(0, 0), name = "") +
-    #   # facet_wrap(Type ~ ., scale ="free") +
-    #   scale_x_continuous(expand = c(0, 0), breaks = c(0,20,40,60,80,100),
-    #                      name = "Posterior Vote (%)") +
-    #   theme(panel.grid.minor = element_blank(),
-    #        panel.grid.major.x = element_line(color = "gray")) +
-    #   scale_fill_manual(values = c("blue", "red"), labels = c("DEM", "REP")) +
-    #   scale_color_manual(values = c("#D3D3D3","#D3D3D3"), guide = "none") +
-    #   coord_cartesian(xlim = c(0, 100), clip='on') +
-    #   guides(fill = guide_legend(
-    #     override.aes = list(
-    #       fill = c("blue", "red"),
-    #       color = NA, point_color = NA)
-    #   )
-    #   ) +
-    #   ggtitle("Posterior predictive density of vote share for major party candidates") +
-    #   theme(plot.title = element_text(hjust=0.5),
-    #         panel.background = element_rect(fill = 'white', colour = 'white'))
-    # 
+    ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
+      geom_density_ridges(alpha=0.6) +
+      scale_y_discrete(expand = c(0, 0), name = "") +
+      # facet_wrap(Type ~ ., scale ="free") +
+      scale_x_continuous(expand = c(0, 0), breaks = c(0,20,40,60,80,100),
+                         name = "Posterior Vote (%)") +
+      theme(panel.grid.minor = element_blank(),
+           panel.grid.major.x = element_line(color = "gray")) +
+      scale_fill_manual(values = c("blue", "red"), labels = c("DEM", "REP")) +
+      scale_color_manual(values = c(NA,NA), guide = "none") +
+      coord_cartesian(xlim = c(0, 100), clip='on') +
+      guides(fill = guide_legend(
+        override.aes = list(
+          fill = c("blue", "red"),
+          color = NA, point_color = NA)
+      )
+      ) +
+      ggtitle("Posterior predictive density of vote share for major party candidates") +
+      theme(plot.title = element_text(hjust=0.5),
+            panel.background = element_rect(fill = 'white', colour = 'white'))
+
 
     if(length(test_idx3)){
       for(i in 1:length(test_idx3)) {

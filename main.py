@@ -37,8 +37,8 @@ def plot_win(gp_path, stan_path):
 
     ind = np.arange(len(dem_win))  
     width = 0.5
-    p1 = plt.barh(ind, dem_win, width, color='blue', alpha=0.8)
-    p2 = plt.barh(ind, rep_win, width, color='red', left=dem_win, alpha=0.8)
+    p1 = plt.barh(ind, dem_win, width, color='blue', alpha=0.7)
+    p2 = plt.barh(ind, rep_win, width, color='red', left=dem_win, alpha=0.7)
 
     to_abbr = us.states.mapping('name', 'abbr')
     labels = []
