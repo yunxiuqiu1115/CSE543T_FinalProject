@@ -33,8 +33,8 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, parms)
     N = N_train + N_test;
     nsuc = nsuc_train + nsuc_test;
     
-%     accuracy(N_train, nsuc_train, 'training');
-    accuracy(N_test, nsuc_test, 'test');
+    accuracy(N_train, nsuc_train, 'training');
+%     accuracy(N_test, nsuc_test, 'test');
 %     accuracy(N, nsuc, 'overall');
 
     N = numel(raceinfos);
@@ -55,76 +55,16 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, parms)
         N = N + l;
     end
     
-%     n_train = 760;
-%     tmp=corr(a(1:833),b(1:833));
-%     fprintf('correlation of predictive mean and actual vote on training data: %0.6f\n',tmp);
-%     tmp=sqrt(mean((a(1:833)-b(1:833).^2));
-%     fprintf('RMSE of predictive mean and actual vote on training data: %0.6f\n',tmp);
+    tmp=corr(a(1:n_train),b(1:n_train));
+    fprintf('correlation of predictive mean and actual vote on train data: %0.4f\n',tmp);
+    tmp=sqrt(mean((a(1:n_train)-b(1:n_train)).^2));
+    fprintf('RMSE of predictive mean and actual vote on train data: %0.4f\n',tmp);
 
-    tmp=corr(a(n_train+1:end),b(n_train+1:end));
-    fprintf('correlation of predictive mean and actual vote on test data: %0.6f\n',tmp);
-    tmp=sqrt(mean((a(n_train+1:end)-b(n_train+1:end)).^2));
-    fprintf('RMSE of predictive mean and actual vote on test data: %0.6f\n',tmp);
+%     tmp=corr(a(n_train+1:end),b(n_train+1:end));
+%     fprintf('correlation of predictive mean and actual vote on test data: %0.4f\n',tmp);
+%     tmp=sqrt(mean((a(n_train+1:end)-b(n_train+1:end)).^2));
+%     fprintf('RMSE of predictive mean and actual vote on test data: %0.4f\n',tmp);
     
-    
-%     fig = histogram(abs(errors));
-%     xlabel("absolute forecasting error");
-%     ylabel("count");
-%     title("Frequency count of absolute forecasting error");
-%     saveas(fig, "errors.jpg");
-%     close;
-
-%     top = 10;
-%     firmsigmas = besthyp.cov(3:end);
-%     [~, indt] = sort(firmsigmas,'descend');
-%     top_ind = indt(1:top);
-%     top_ind(1) = [];
-%     
-%     for i=1:numel(top_ind)
-%         disp(unique(CNNdata(CNNdata.pollsteridx == top_ind(i),:).pollster))
-%         disp((firmsigmas(top_ind(i))))
-%     end
-% 
-%     bottom = 10;
-%     [~, indb] = sort(firmsigmas,'ascend');
-%     bottom_ind = indb(1:bottom);
-%     bottom_ind(1) = 0;
-%     
-%     for i=2:bottom
-%         disp(unique(CNNdata(CNNdata.pollsteridx == bottom_ind(i),:).pollster))
-%         disp((firmsigmas(bottom_ind(i))))
-%     end
-% 
-%     top = 10;
-%     nfirm = size(besthyp.cov,1) - 2;
-%     firmbiases = besthyp.mean(end-nfirm+1:end);
-%     [~, indt] = sort(firmbiases,'descend');
-%     top_ind = indt(1:top);
-% 
-%     for i=1:top
-%         disp(unique(CNNdata(CNNdata.pollsteridx == top_ind(i),:).pollster))
-%     end
-% 
-%     bottom = 10;
-%     [~, indb] = sort(firmbiases,'ascend');
-%     bottom_ind = indb(1:bottom);
-%     bottom_ind(1) = [];
-% 
-%     for i=1:numel(bottom_ind)
-%         disp(unique(CNNdata(CNNdata.pollsteridx == bottom_ind(i),:).pollster))
-%     end
-
-    % histogram(exp(firmsigmas));
-
-%     disp("Forecasting and actual voting correlation is: " + corr(a,b));
-%     fig = scatter(a,b, 'k.');
-%     xlabel("forecasted votes");
-%     ylabel("actual votes");
-%     title("Forecast and actual votes correlation");
-%     saveas(fig, "corr.jpg");
-%     close;
-    
-    % get only 1992 - 2014
     N = length(raceinfos);
     cycle = cell(N,1);
     state = cell(N,1);
@@ -138,6 +78,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, parms)
     Nout_train = 0;
     Nout_test = 0;
     nlZ = [];
+    train_nlZ = [];
     for i=1:N
         cycle{i} = raceinfos{i}{1};
         state{i} = raceinfos{i}{2}{1};
@@ -167,21 +108,25 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, parms)
                Nout_test = Nout_test + 1;
             end   
         else
+            train_nlZ = [train_nlZ, (v-fts(i))^2/2/s2s(i) + log(s2s(i))/2 + log(2*pi)/2];
             if v > u || v < l
                Nout_train = Nout_train+1;
             end
         end
     end
-%     fprintf('95 CI on training data: %0.6f\n',1-Nout_train/833);
+    
+    fprintf('95 CI on training data: %0.4f\n',1-Nout_train/n_train);
+    disp("Train Average nlZ: " + mean(train_nlZ));
   
-    fprintf('95 CI on test data: %0.6f\n',1-Nout_test/(N-n_train));
-    disp("Test Average nlZ: " + mean(nlZ));
+%     fprintf('95 CI on test data: %0.6f\n',1-Nout_test/(N-n_train));
+%     disp("Test Average nlZ: " + mean(nlZ));
+    
     forecast = table(cycle, state, candidate, posteriormean, posteriorstd, vote, pvi, party, experienced);
     if ~exist('results', 'dir')
         mkdir('results');
     end
 
-    writetable(forecast,strcat('results/LOO',parms.type, '_',int2str(test_year),'day',num2str(tau), '_', num2str(j),'.csv'));
+%     writetable(forecast,strcat('results/LOO',parms.type, '_',int2str(test_year),'day',num2str(tau), '_', num2str(j),'.csv'));
 
 %     disp("Length Scale: " + exp(besthyp.cov(1)));
 %     disp("Output Scale: " + exp(besthyp.cov(2)));

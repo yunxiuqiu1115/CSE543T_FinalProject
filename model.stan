@@ -34,6 +34,7 @@ data {
   vector[2] test_party2[test_N2];
   vector[2] test_experienced2[test_N2];
   int test_year_idx2[test_N2];
+  vector<lower=0, upper=1>[2] test_f2[test_N2]; // vector of true votings
   
   int<lower=0> test_N3; // number of races
   real test_mu3[test_N3, 3]; // vector of prior Gaussian means
@@ -42,6 +43,7 @@ data {
   vector[3] test_party3[test_N3];
   vector[3] test_experienced3[test_N3];
   int test_year_idx3[test_N3];
+  vector<lower=0, upper=1>[3] test_f3[test_N3]; 
   
   int<lower=0> test_N4; // number of races
   real test_mu4[test_N4, 4]; // vector of prior Gaussian means
@@ -51,6 +53,7 @@ data {
   vector[4] test_experienced4[test_N4];
   // int<lower=0> test_nc[test_N]; // number of candidates each race
   int test_year_idx4[test_N4];
+  vector<lower=0, upper=1>[4] test_f4[test_N4]; 
   int max_year_idx;
 }
 
@@ -153,6 +156,42 @@ generated quantities {
   vector<lower=0>[4] test_p4[test_N4]; // vector of underlying dirichlet parameters
   vector<lower=0, upper=1>[4] test_gamma4[test_N4]; // vector of underlying true support rates
   
+  vector[2] forecast_y2[N2]; // vector of forecasting votings
+  
+  vector[3] forecast_y3[N3]; // vector of forecasting votings
+  
+  vector[4] forecast_y4[N4]; // vector of forecasting votings
+  
+  vector[N2] ll2;
+
+  vector[N3] ll3;
+
+  vector[N4] ll4;
+  
+  vector[test_N2] test_ll2;
+
+  vector[test_N3] test_ll3;
+
+  vector[test_N4] test_ll4;
+  
+  for (i in 1:N2)
+    forecast_y2[i] = dirichlet_rng(alpha+p2[i]);
+    
+  for (i in 1:N3)
+    forecast_y3[i] = dirichlet_rng(alpha+p3[i]);
+    
+  for (i in 1:N4)
+    forecast_y4[i] = dirichlet_rng(alpha+p4[i]);
+    
+ for (i in 1:N2)
+    ll2[i] = dirichlet_lpdf(y2[i]|alpha+p2[i]);
+
+  for (i in 1:N3)
+    ll3[i] = dirichlet_lpdf(y3[i]|alpha+p3[i]);
+
+  for (i in 1:N4)
+    ll4[i] = dirichlet_lpdf(y4[i]|alpha+p4[i]);
+  
   for(i in 1:test_N2){
     for(j in 1:2){
       test_gamma2[i,j] = normal_rng(test_mu2[i,j], test_sigma2[i,j]);
@@ -230,5 +269,15 @@ generated quantities {
     
   for (i in 1:test_N4)
     test_y4[i] = dirichlet_rng(alpha+test_p4[i]);
+    
+  for (i in 1:test_N2)
+    test_ll2[i] = dirichlet_lpdf(test_f2[i]|alpha+test_p2[i]);
+
+  for (i in 1:test_N3)
+    test_ll3[i] = dirichlet_lpdf(test_f3[i]|alpha+test_p3[i]);
+
+  for (i in 1:test_N4)
+    test_ll4[i] = dirichlet_lpdf(test_f4[i]|alpha+test_p4[i]);
+
 }
 

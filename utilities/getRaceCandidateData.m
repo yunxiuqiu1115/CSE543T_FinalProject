@@ -29,12 +29,12 @@ function [xs, ys, candidateNames, vs, pvis, experienceds, parties]= getRaceCandi
         ss = allCandidatesData.(candidateNames{i}).samplesize;           % samplesize 
         ds = allCandidatesData.(candidateNames{i}).Republican;           % Republican or not
         ps = ns./ss;                                                     % polling proportions
-        is = allCandidatesData.(candidateNames{i}).pollsteridx;          % pollster indexes
+%         is = allCandidatesData.(candidateNames{i}).pollsteridx;          % pollster indexes
         vs(i) = allCandidatesData.(candidateNames{i}).Percentage_of_Vote_won_x(1); % votes won
         parties(i) = 2*ds(1) - 1;
         ds = 2*ds - 1;
-        xs{i} = [ts, ps, ss, is, ds];
-        % candidateid = candidateid + 1;
+        % no longer need index and party
+        xs{i} = [ts, ps, ss];
         ys{i} = ps;
         pvis(i) = allCandidatesData.(candidateNames{i}).pvi(1);
         experienceds(i) = allCandidatesData.(candidateNames{i}).experienced(1);
