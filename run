@@ -9,6 +9,13 @@ declare -a input_strs=(0)
 declare -a cv_years=(1992)
 declare -a TYPES=("GP")
 
+number_file(){
+    input_str=$1
+    cv_year=$2
+    TYPE=$3
+    echo $(ls nlZs/"$TYPE"_"$cv_year"day"$input_str"* | wc -l)
+}
+
 one_job(){
     input_str=$1
     cv_year=$2
@@ -22,7 +29,12 @@ for TYPE in ${TYPES[@]}; do
     for input_str in ${input_strs[@]}; do
         for cv_year in ${cv_years[@]}; do
     	    nlZs=$(one_job $input_str $cv_year $TYPE)
-	    echo $nlZs
+	        echo $nlZs
+            # n=$(number_file $input_str $cv_year $TYPE)
+            # if [ $n -lt 100 ]
+            # then
+            #     echo $TYPE $cv_year $input_str
+            # fi
     	done
     done
 done

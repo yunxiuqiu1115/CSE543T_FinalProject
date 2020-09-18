@@ -13,10 +13,9 @@ function [varout]=test(TYPE, CV)
 
     % define horizons
     taus = [0,7, 14,28,42,90,120];
-    taus = 0;
 
     % define search space
-    search_size = 2;
+    search_size = 100;
     if strcmp(TYPE, "GP")==1
         p = sobolset(3);
     else 
