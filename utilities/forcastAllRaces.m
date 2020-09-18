@@ -10,7 +10,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
 %    - parms: parameters related to functionaity of this function.
 %
 % WARNING: This function is not for the purpose of being directly called. 
-% Function calling this function is responsible for specifying parms for
+% Caller of this function is responsible for specifying parms for
 % required functionalities.
 
     % define model
@@ -33,6 +33,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
         pvi = raceinfos{i}{5};
         experienced = raceinfos{i}{6};
         republican = raceinfos{i}{7};
+        % key for allRaces struct
         fn = char(state+""+year);
         fn = fn(~isspace(fn));
         % compute prior mean on intercept

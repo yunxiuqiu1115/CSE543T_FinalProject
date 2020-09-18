@@ -13,10 +13,12 @@ one_job(){
     input_str=$1
     cv_year=$2
     TYPE=$3
+    # echo $("./onerun $input_str $cv_year $TYPE")
     echo $(bsub -G SEAS-Lab-Garnett "./onerun $input_str $cv_year $TYPE")
 }
 
 for TYPE in ${TYPES[@]}; do
+    bsub -G SEAS-Lab-Garnett "./matlabrun $TYPE"
     for input_str in ${input_strs[@]}; do
         for cv_year in ${cv_years[@]}; do
     	    nlZs=$(one_job $input_str $cv_year $TYPE)

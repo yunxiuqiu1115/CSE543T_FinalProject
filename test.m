@@ -1,9 +1,11 @@
 function [varout]=test(TYPE, CV)
 
-% model TYPE: 'GP', 'LM'
-%
-% CV is 1 if doing loocv
-%
+%  Perform LOYO or testing for GP/LM model
+%  input:
+%    - TYPE: 'GP' or 'LM'
+%    - CV: 1 if doing LOYO, 0 if test 2018
+% 
+    varout = "";
     addpath("gpml-matlab-v3.6-2015-07-07");
     addpath("utilities");
     addpath("data");
@@ -11,9 +13,10 @@ function [varout]=test(TYPE, CV)
 
     % define horizons
     taus = [0,7, 14,28,42,90,120];
+    taus = 0;
 
     % define search space
-    search_size = 100;
+    search_size = 2;
     if strcmp(TYPE, "GP")==1
         p = sobolset(3);
     else 
@@ -23,7 +26,7 @@ function [varout]=test(TYPE, CV)
     % best cv index
     if CV==0
         ts = [32,32,94,46,46,36,36];
-        ts = [7, 79, 34,21, 95, 41, 93];
+%         ts = [7, 79, 34,21, 95, 41, 93];
 
         for i=1:numel(taus)
             j = ts(i);

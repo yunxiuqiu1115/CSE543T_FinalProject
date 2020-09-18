@@ -1,0 +1,9 @@
+#!/bin/bash
+#BSUB -o Senate.%J
+#BSUB -R '(!gpu)'
+#BSUN -N
+#BSUB -J matlab
+
+TYPE=$1
+
+matlab -nodisplay -nodesktop -r "test($TYPE,1); exit"

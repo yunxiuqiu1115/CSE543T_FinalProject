@@ -14,6 +14,8 @@ search_size = 100
 
 print(paste('results/LOO', TYPE, '_' , cv_year, 'day', input_str ,'.csv',sep=''))
 library(rstan)
+options(mc.cores = parallel::detectCores())
+rstan_options(auto_write = TRUE)
 
 averaged_nlZs = c() 
 
@@ -21,18 +23,19 @@ for (b in 1:search_size){
   
   input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', input_str, '_', b ,'.csv',sep='')
   output_file = paste('nlZs/', TYPE, '_' , cv_year, 'day', input_str, '_', b,'.csv',sep='')
+  
   # loading data
   data <- read.csv(input_file)
+  print(input_file)
   
+  # remove some races of ncandidates >= 5
   data <- data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
   data <- data[data$cycle!=2020 | data$state!='Georgia' | data$candidate!='Loeffler',]
   data <- data[data$cycle!=2020 | data$state!='Georgia' | data$candidate!='Tarver',]
   
   data_test <- data[(data$cycle==cv_year),]
   data <- data[(data$cycle!=cv_year & data$cycle!=2018 & data$cycle!=2020),]
-  
-  # data <- data[(data$cycle!=2016),]
-  
+
   cycles <- unique(data$cycle)
   states <- union(unique(data$state), unique(data_test$state))
   
@@ -110,6 +113,7 @@ for (b in 1:search_size){
   test_mu <- list()
   test_sigma <- list()
   test_y <- list()
+  
   test_nc <- c()
   test_pvi <- list()
   test_party <- list()
@@ -117,6 +121,7 @@ for (b in 1:search_size){
   test_counter <- 0
   
   # iterate over races
+  # for (cycle in c(2016, 2018)){
   for (cycle in unique(data_test$cycle)){
     for (state in states) {
       pmu = data_test[(data_test$state==state & data_test$cycle==cycle),c("posteriormean")]
@@ -143,13 +148,14 @@ for (b in 1:search_size){
   # build stan data
   test_stan_mu <- matrix(0,test_counter,C)
   test_stan_sigma <- matrix(0.0001,test_counter,C)
-  test_stan_y <- matrix(0.0001,test_counter,C)
+  test_stan_y <- matrix(0,test_counter,C)
   test_stan_pvi <- matrix(0,test_counter,C)
   test_stan_party <- matrix(0,test_counter,C)
   test_stan_experienced <- matrix(0,test_counter,C)
   
   for (i in 1:test_counter) {
     test_stan_mu[i,1:test_nc[i]] = test_mu[[i]]
+    
     test_stan_sigma[i,1:test_nc[i]] = test_sigma[[i]]
     test_stan_y[i,1:test_nc[i]] = test_y[[i]]
     test_stan_y[i,] = test_stan_y[i,]/sum(test_stan_y[i,])
@@ -202,6 +208,7 @@ for (b in 1:search_size){
                     test_party2 = test_stan_party[test_idx2,1:2],
                     test_experienced2 = test_stan_experienced[test_idx2,1:2],
                     test_year_idx2 = test_year_idx[test_idx2],
+                    test_f2 = test_stan_y[test_idx2,1:2],
                     test_N3 = length(test_idx3), 
                     test_mu3 = matrix(test_stan_mu[test_idx3,1:3],ncol=3,byrow = FALSE), 
                     test_sigma3 = matrix(test_stan_sigma[test_idx3,1:3],ncol=3,byrow = FALSE),
@@ -209,6 +216,7 @@ for (b in 1:search_size){
                     test_party3 = matrix(test_stan_party[test_idx3,1:3],ncol=3,byrow = FALSE),
                     test_experienced3 = matrix(test_stan_experienced[test_idx3,1:3],ncol=3,byrow = FALSE),
                     test_year_idx3 = array(test_year_idx[test_idx3]),
+                    test_f3 = matrix(test_stan_y[test_idx3,1:3],ncol=3,byrow = FALSE),
                     test_N4 = length(test_idx4), 
                     test_mu4 = matrix(test_stan_mu[test_idx4,1:4],ncol=4,byrow = FALSE), 
                     test_sigma4 = matrix(test_stan_sigma[test_idx4,1:4],ncol=4,byrow = FALSE),
@@ -216,6 +224,7 @@ for (b in 1:search_size){
                     test_party4 = matrix(test_stan_party[test_idx4,1:4],ncol=4,byrow = FALSE),
                     test_experienced4 = matrix(test_stan_experienced[test_idx4,1:4],ncol=4,byrow = FALSE),
                     test_year_idx4 = array(test_year_idx[test_idx4]),
+                    test_f4 = matrix(test_stan_y[test_idx4,1:4],ncol=4,byrow = FALSE),
                     max_year_idx = max(c(year_idx, test_year_idx)))
   
   # define stan model
@@ -234,179 +243,27 @@ for (b in 1:search_size){
   )
   
   fit_params <- as.data.frame(fit)
-  
-  # within 95% CI
-  flags <- matrix(0, test_counter, C)
-  
-  CYCLE <- c()
-  STATE <- c()
-  CANDIDATE <- c()
-  POSTERIORMEAN <- c()
-  POSTERIORSTD <- c()
-  PMEAN <- c()
-  PSTD <- c()
-  VOTE <- c()
-  NORM_VOTE <- c()
-  LOWER95 <- c()
-  UPPER95 <- c()
-  WIN <- c()
-  MEDIAN <- c()
   NLZ <- c()
   
-  correct_predictions <- 0
-  Nout_test <- 0
-  Nout <- 0
-  
-  
   for(i in 1:length(test_idx2)) {
-    cycle = test_metadata[[test_idx2[i]]][1]
-    state = test_metadata[[test_idx2[i]]][2]
-    pmu = data_test[data_test$state==state & data_test$cycle==cycle,c("posteriormean")]
-    pstd = data_test[data_test$state==state & data_test$cycle==cycle,c("posteriorstd")]
-    vote = data_test[data_test$state==state & data_test$cycle==cycle,c("vote")]
-    vote = test_y[[test_idx2[i]]]*100/(sum(test_y[[test_idx2[i]]]))
-    party = data_test[data_test$state==state & data_test$cycle==cycle,c("party")]
-    candidates = data_test[data_test$state==state & data_test$cycle==cycle,c("candidate")]
-    # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
-    preds= c()
-    for(j in 1:2){
-      tmp = paste('test_y2[',i,',',j,']',sep='')
-      pred = fit_params[[tmp]]
-      preds = c(preds, pred)
-      u=quantile(pred,probs=c(0.975),names = FALSE)
-      l=quantile(pred,probs=c(0.025),names = FALSE)
-      m = mean(pred)
-      s = sd(pred)
-      
-      CYCLE <- c(CYCLE, cycle)
-      STATE <- c(STATE,state)
-      CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
-      POSTERIORMEAN <- c(POSTERIORMEAN,pmu[j])
-      POSTERIORSTD <- c(POSTERIORSTD,pstd[j])
-      PMEAN <- c(PMEAN, m)
-      PSTD <- c(PSTD, s)
-      VOTE <- c(VOTE, vote[j])
-      MEDIAN <- c(MEDIAN, median(pred))
-      LOWER95 <- c(LOWER95, l)
-      UPPER95 <- c(UPPER95, u)
-      NLZ <- c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
-    }
-    preds <- matrix(preds, nrow = 2, byrow = TRUE)
-    win_rates = rep(0, 2)
-    for(k in 1:ncol(preds)){
-      idx = which.max(preds[,k])
-      win_rates[idx] = win_rates[idx] + 1
-    }
-    win_rates = win_rates / sum(win_rates)
-    
-    WIN <- c(WIN, win_rates)
+    NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('test_ll2[',i,']',sep='')]]))))
   }
   
+
   if(length(test_idx3)){
     for(i in 1:length(test_idx3)) {
-      cycle = test_metadata[[test_idx3[i]]][1]
-      state = test_metadata[[test_idx3[i]]][2]
-      pmu = data_test[data_test$state==state & data_test$cycle==cycle,c("posteriormean")]
-      pstd = data_test[data_test$state==state & data_test$cycle==cycle,c("posteriorstd")]
-      vote = data_test[data_test$state==state & data_test$cycle==cycle,c("vote")]
-      vote= test_y[[test_idx3[i]]]*100/(sum(test_y[[test_idx3[i]]]))
-      party = data_test[data_test$state==state & data_test$cycle==cycle,c("party")]
-      candidates = data_test[data_test$state==state & data_test$cycle==cycle,c("candidate")]
-      # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
-      preds= c()
-      for(j in 1:3){
-        tmp = paste('test_y3[',i,',',j,']',sep='')
-        pred = fit_params[[tmp]]
-        preds = c(preds, pred)
-        u=quantile(pred,probs=c(0.975),names = FALSE)
-        l=quantile(pred,probs=c(0.025),names = FALSE)
-        m = mean(pred)
-        s = sd(pred)
-        CYCLE <- c(CYCLE, cycle)
-        STATE <- c(STATE,state)
-        CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
-        POSTERIORMEAN <- c(POSTERIORMEAN,pmu[j])
-        POSTERIORSTD <- c(POSTERIORSTD,pstd[j])
-        PMEAN <- c(PMEAN, m)
-        PSTD <- c(PSTD, s)
-        VOTE <- c(VOTE, vote[j])
-        MEDIAN <- c(MEDIAN, median(pred))
-        LOWER95 <- c(LOWER95, l)
-        UPPER95 <- c(UPPER95, u)
-        NLZ <- c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
-      }
-      preds <- matrix(preds, nrow = 3, byrow = TRUE)
-      win_rates = rep(0, 3)
-      for(k in 1:ncol(preds)){
-        idx = which.max(preds[,k])
-        win_rates[idx] = win_rates[idx] + 1
-      }
-      win_rates = win_rates / sum(win_rates)
-      WIN <- c(WIN, win_rates)
+      NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('test_ll3[',i,']',sep='')]]))))
     }
   }
   
   if (length(test_idx4)){
     for(i in 1:length(test_idx4)) {
-      cycle = test_metadata[[test_idx4[i]]][1]
-      state = test_metadata[[test_idx4[i]]][2]
-      pmu = data_test[data_test$state==state & data_test$cycle==cycle ,c("posteriormean")]
-      pstd = data_test[data_test$state==state & data_test$cycle==cycle ,c("posteriorstd")]
-      vote = data_test[data_test$state==state & data_test$cycle==cycle,c("vote")]
-      vote= test_y[[test_idx4[i]]]*100/(sum(test_y[[test_idx4[i]]]))
-      party = data_test[data_test$state==state & data_test$cycle==cycle,c("party")]
-      candidates = data_test[data_test$state==state & data_test$cycle==cycle,c("candidate")]
-      # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
-      preds= c()
-      for(j in 1:4){
-        tmp = paste('test_y4[',i,',',j,']',sep='')
-        pred = fit_params[[tmp]]
-        preds = c(preds, pred)
-        u=quantile(pred,probs=c(0.975),names = FALSE)
-        l=quantile(pred,probs=c(0.025),names = FALSE)
-        m = mean(pred)
-        s = sd(pred)
-        CYCLE <- c(CYCLE, cycle)
-        STATE <- c(STATE, state)
-        CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
-        POSTERIORMEAN <- c(POSTERIORMEAN,pmu[j])
-        POSTERIORSTD <- c(POSTERIORSTD,pstd[j])
-        PMEAN <- c(PMEAN, m)
-        PSTD <- c(PSTD, s)
-        VOTE <- c(VOTE, vote[j])
-        MEDIAN <- c(MEDIAN, median(pred))
-        LOWER95 <- c(LOWER95, l)
-        UPPER95 <- c(UPPER95, u)
-        NLZ <- c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
-      }
-      preds <- matrix(preds, nrow = 4, byrow = TRUE)
-      win_rates = rep(0, 4)
-      for(k in 1:ncol(preds)){
-        idx = which.max(preds[,k])
-        win_rates[idx] = win_rates[idx] + 1
-      }
-      win_rates = win_rates / sum(win_rates)
-      WIN <- c(WIN, win_rates)
+      NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('test_ll4[',i,']',sep='')]]))))
     }
   }
-  
-  # write results to csv
-  result <- data.frame(CYCLE,
-                       STATE,
-                       CANDIDATE,
-                       POSTERIORMEAN,
-                       POSTERIORSTD,
-                       LOWER95,
-                       UPPER95,
-                       MEDIAN,
-                       WIN)
-  
-  names(result) <- tolower(names(result))
 
   averaged_nlZs = c(averaged_nlZs, mean(NLZ))
-  
   write.csv(mean(NLZ),output_file)
 }
-
 
 cat(averaged_nlZs)
