@@ -19,7 +19,7 @@ function [varout]=test(TYPE, CV)
     if strcmp(TYPE, "GP")==1
         p = sobolset(3);
     else 
-        p = sobolset(1);
+        p = sobolset(1, 'Skip', 100);
     end
     
     % best cv index
@@ -55,7 +55,7 @@ function [varout]=test(TYPE, CV)
                     % linear model does not have ls/os
                     ls = 0;
                     os = 0;
-                    lik = p(1,3)/10; % 0%-10%
+                    lik = p(j,1)/10; % 0%-10%
                     myrun(taus(i),TYPE, ls, os, lik, j, CV);
                 end
             end

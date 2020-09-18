@@ -46,6 +46,8 @@ function [allRaces,fts,s2s] = lm(besthyp, xs, ys, raceinfos, plot_path, parms)
             % obtain lm posterior
             if parms.plot==0
                 xstar = [0,0,1];
+                % redefine covfunc since it will be overwrited
+                [meanfunc, covfunc, likfunc, inffunc, ~] = model(parms);
                 covfunc{2} = covfunc{2}(2:end);
                 hyp.mean(1) = mu_ml;
                 hyp.mean(2) = mu_b;
