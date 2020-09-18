@@ -38,7 +38,7 @@ function [varout]=test(TYPE, CV)
                 % linear model does not have ls/os
                 ls = 0;
                 os = 0;
-                lik = p(1,1)/10; % 0%-10%
+                lik = p(j,1)/10; % 0%-10%
                 myrun(taus(i),TYPE, ls, os, lik, j, CV);
             end
         end
