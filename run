@@ -5,9 +5,9 @@ declare -a TYPES=("GP" "LM")
 
 mkdir -p nlZs
 
-# declare -a input_strs=(0)
-# declare -a cv_years=(1992)
-# declare -a TYPES=("GP")
+declare -a input_strs=(28)
+declare -a cv_years=(2014)
+declare -a TYPES=("LM")
 
 number_file(){
     input_str=$1

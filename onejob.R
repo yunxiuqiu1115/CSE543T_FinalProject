@@ -12,7 +12,7 @@ TYPE = args[3]
 
 search_size = 100
 
-print(paste('results/LOO', TYPE, '_' , cv_year, 'day', input_str ,'.csv',sep=''))
+print(paste(TYPE, '_' , cv_year, 'day', input_str,sep=''))
 library(rstan)
 options(mc.cores = parallel::detectCores())
 rstan_options(auto_write = TRUE)
@@ -26,7 +26,6 @@ for (b in 1:search_size){
   
   # loading data
   data <- read.csv(input_file)
-  print(input_file)
   
   # remove some races of ncandidates >= 5
   data <- data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
