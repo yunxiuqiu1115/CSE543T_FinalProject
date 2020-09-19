@@ -10,7 +10,7 @@ input_str = args[1]
 cv_year = args[2]
 TYPE = args[3]
 
-search_size = 100
+search_size = 2
 
 print(paste(TYPE, '_' , cv_year, 'day', input_str,sep=''))
 library(rstan)
