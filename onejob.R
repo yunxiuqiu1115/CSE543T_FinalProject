@@ -10,12 +10,10 @@ input_str = args[1]
 cv_year = args[2]
 TYPE = args[3]
 
-search_size = 2
+search_size = 100
 
 print(paste(TYPE, '_' , cv_year, 'day', input_str,sep=''))
 library(rstan)
-options(mc.cores = parallel::detectCores())
-rstan_options(auto_write = TRUE)
 
 averaged_nlZs = c() 
 
