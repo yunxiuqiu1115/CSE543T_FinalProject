@@ -10,12 +10,12 @@ input_str = args[1]
 cv_year = args[2]
 TYPE = args[3]
 
-search_size = 100
+search_size = 1
 
 print(paste(TYPE, '_' , cv_year, 'day', input_str,sep=''))
 library(rstan)
 
-averaged_nlZs = c() 
+averaged_nlZs = c(1) 
 
 for (b in 1:search_size){
   
@@ -24,6 +24,9 @@ for (b in 1:search_size){
   
   # loading data
   data <- read.csv(input_file)
+  
+  write.csv(1,output_file)
+  next
   
   # remove some races of ncandidates >= 5
   data <- data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
@@ -260,6 +263,8 @@ for (b in 1:search_size){
   }
 
   averaged_nlZs = c(averaged_nlZs, mean(NLZ))
+  print(mean(NLZ))
+  print(output_file)
   write.csv(mean(NLZ),output_file)
 }
 
