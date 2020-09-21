@@ -15,10 +15,10 @@ search_size = 100
 print(paste(TYPE, '_' , cv_year, 'day', input_str,sep=''))
 library(rstan)
 
-averaged_nlZs = c() 
+averaged_nlZs = c()
 
 for (b in 1:search_size){
-  
+  # load the prior files
   input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', input_str, '_', b ,'.csv',sep='')
   output_file = paste('nlZs/', TYPE, '_' , cv_year, 'day', input_str, '_', b,'.csv',sep='')
   
@@ -36,6 +36,7 @@ for (b in 1:search_size){
   cycles <- unique(data$cycle)
   states <- union(unique(data$state), unique(data_test$state))
   
+  # maximal number of candidates allowed in the model  
   C <- 4
   
   # define variables
@@ -53,6 +54,7 @@ for (b in 1:search_size){
   # iterate over races
   for (cycle in cycles) {
     for (state in states) {
+      # obtain priors and fundamentals
       pmu = data[data$cycle==cycle & data$state==state,c("posteriormean")]
       pstd = data[data$cycle==cycle & data$state==state,c("posteriorstd")]
       vote = data[data$cycle==cycle & data$state==state,c("vote")]
@@ -60,6 +62,8 @@ for (b in 1:search_size){
       party_ = data[data$cycle==cycle & data$state==state,c("party")]
       experienced_ = data[data$cycle==cycle & data$state==state,c("experienced")]
       
+      # not every state has election in all election cycles
+      # proceed only it has
       if(length(pmu)){
         counter <- counter + 1
         metadata[[counter]] = c(cycle, state)
@@ -93,6 +97,7 @@ for (b in 1:search_size){
     stan_experienced[i, 1:nc[i]] = experienced[[i]]
   }
   
+  # split data into categories based on number of candidates
   idx2 <- c()
   idx3 <- c()
   idx4 <- c()
@@ -118,7 +123,6 @@ for (b in 1:search_size){
   test_counter <- 0
   
   # iterate over races
-  # for (cycle in c(2016, 2018)){
   for (cycle in unique(data_test$cycle)){
     for (state in states) {
       pmu = data_test[(data_test$state==state & data_test$cycle==cycle),c("posteriormean")]
@@ -240,6 +244,8 @@ for (b in 1:search_size){
   )
   
   fit_params <- as.data.frame(fit)
+  
+  # only care about nlz in the loyo process
   NLZ <- c()
   
   for(i in 1:length(test_idx2)) {
@@ -259,8 +265,10 @@ for (b in 1:search_size){
     }
   }
 
+  # write results to disk
   averaged_nlZs = c(averaged_nlZs, mean(NLZ))
   write.csv(mean(NLZ),output_file)
 }
 
+# echo to terminal
 cat(averaged_nlZs)

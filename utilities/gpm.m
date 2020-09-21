@@ -1,29 +1,41 @@
-function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_path, parms)
+function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, parms)
 
-%  obtain posterior belief of voter preferences on day 0 using gp model
+%  Obtain posterior belief of voter preferences on election day using gp model
 %  input:
-%    - besthyp: hyperparameters
-%    - x: [tau, polling proportion, sample size]
-%    - y: [polling proportion]
-%    - raceinfos: [year, state, candidatename, actual vote share, pvi, experienced, isRep]
+%    - hyperparameter: hyperparameter of mean/cov/lik
+%    - xs: cell array of polling data in form of [tau, polling proportion, sample size]
+%    - ys: cell array of [polling proportion]
+%    - raceinfos: election metadata [year, state, candidatename, actual vote share, pvi, experienced, isRep]
 %    - plot_path: path of plots if parms.plot==1
-%    - parms: parameters related to functionaity of this function.
+%    - parms: function keyword arguments
+%       - tau: forecasting horizon
+%       - j: current index of searching sequence
+%       - type: prior model, 'GP' or 'LM'
+%       - plot:
+%           - 1: generate plots of underlying voter preference for each election race
+%           - 0: just obtain posterior belief of voter preference on election day
+%       - test_year: validation year in LOYO process or test year in testing process
+%       - coefs: the coefs of prior linear model for the linear trend intercept
 %
-% WARNING: This function is not for the purpose of being directly called. 
-% Caller of this function is responsible for specifying parms for
-% required functionalities.
+% Caller of this function should specify the keyword arguments parms.
+%
 
     % define model
-    [meanfunc, covfunc, likfunc, inffunc, prior] = model(parms);
+    [meanfunc, covfunc, likfunc, inffunc, prior] = model();
     mu_ml = prior.slope(1);
     sigma_mc = prior.intercept(2);
     
-    % iterate every race
+    % AllRaces is a struct with key year+state.
+    % Value of allRaces struct is an array of [model posterior mean, actual
+    % vote, ...] of all candidates for the year/state race
     allRaces = struct;
     n = numel(xs);
+    
+    % fts/s2s are the array of posterior mean/var on election day of all races
     fts = zeros(n,1);
     s2s = zeros(n,1);
-    nz = 200;
+    
+    % iterate every race
     for i = 1:n
         % obtain metadata
         year = raceinfos{i}{1};
@@ -33,11 +45,14 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
         pvi = raceinfos{i}{5};
         experienced = raceinfos{i}{6};
         republican = raceinfos{i}{7};
+        
         % key for allRaces struct
         fn = char(state+""+year);
         fn = fn(~isspace(fn));
+        
         % compute prior mean on intercept
         mu_b = computePrior(pvi, experienced, republican, parms);
+        
         if numel(xs{i})==0
             % if there is no data avaiable
             % use prior
@@ -47,30 +62,39 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
                 allRaces.(fn) = [allRaces.(fn), mu_b , trueVote];
             end
             fts(i) = mu_b;
-            s2s(i) = sigma_mc^2 + exp(2*besthyp.cov(2));
+            s2s(i) = sigma_mc^2 + exp(2*hyperparameter.cov(2));
         else
             % if there is data avaiable   
-            % define hyp
+            % define hyp for one specific race
+            % hyp is exactly the same of hyperparameter except potentially
+            % different prior mean of linear trend intercept
             hyp.mean(1) = mu_ml;
             hyp.mean(2) = mu_b;
-            hyp.cov = besthyp.cov;
-            hyp.lik = besthyp.lik;
+            hyp.cov = hyperparameter.cov;
+            hyp.lik = hyperparameter.lik;
             
             % obtain gp posterior
             if parms.plot==0
+                % obtain gp posterior on election day only
+                % test position is [day 0, 0 polling porportion, 1 samplesize]
                 xstar = [0,0,1];
                 [~, ~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
                 predPoll = fmu(end);
                 fts(i) = predPoll;
                 s2s(i) = fs2(end);
-            % plot upon required
             else 
+                % plot upon required
+                % define 200 test location from the earliest poll day to
+                % election day
+                nz = 200;
                 xstar = [linspace(xs{i}(1,1),0,nz).',zeros(1,nz)',ones(1,nz)'];
                 [~, ~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
                 parms.prior = [mu_b, sigma_mc];
                 fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, parms);
                 plot_title = year + " " + state + " " + candidateName;
                 title(plot_title);
+                
+                % save plot to files
                 yearFolder = fullfile(plot_path, num2str(year));
                 stateFolder = fullfile(yearFolder, state);
                 if ~exist(plot_path, 'dir')
@@ -87,6 +111,7 @@ function [allRaces,fts,s2s] = forcastAllRaces(besthyp, xs, ys, raceinfos, plot_p
                 close;
             end   
              
+            % update allRaces struct
             if ~isfield(allRaces, fn)
                 allRaces.(fn) = [predPoll, trueVote];
             else

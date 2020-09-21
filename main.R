@@ -1,5 +1,6 @@
 setwd('/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/')
 
+# load packages
 library(rstan)
 library(MCMCpack)
 library(dplyr)
@@ -7,8 +8,8 @@ library(ggridges)
 library(ggplot2)
 library(grid)
 
-
-input_strs = c('0',
+# define horizons
+horizons = c('0',
                '7',
                '14',
                '28',
@@ -16,55 +17,53 @@ input_strs = c('0',
                '90',
                '120')
 
+# define search size
 search_size = 100
 
-cv_years = c(1992,1994,1996,1998,2000,2002,2004,2006,2008,2010,2012,2014,2016)
-
+# define model type: gp prior or lm prior
 TYPE = 'GP'
 # TYPE = 'LM'
 
-# f
+# the optimal index of hyperparameters in the loyo process
+# optimal index can be obtained with loocv_nlZs.R
 best_cv_idx = c(32,32,94,46,46,36,36)
 # best_cv_idx = c(7, 79, 34,21, 95, 41, 93)
 
+# store the stan_model fit objects
 fit_objs = c()
 
-search_size = 1
-# input_strs = c('42')
-# best_cv_idx = c(12)
-# cv_years = c(2020)
+# define the test year
+test_year = 2018
 
-cv_year = 2018
+for (a in 1:length(horizons)) {
+  
+  # load the prior files
+  input_file = paste('results/LOO', TYPE, '_' , test_year, 'day', horizons[a], '_', best_cv_idx[a] ,'.csv',sep='')
+  output_file = paste('results/stan_LOO', TYPE, '_' , test_year, 'day', horizons[a], '_', best_cv_idx[a] ,'.csv',sep='')
+  data <- read.csv(input_file)
+  print(input_file)
+  
+  # remove unlike candidates of races with >4 candidates
+  data <- data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
+  data <- data[data$cycle!=2020 | data$state!='Georgia' | data$candidate!='Loeffler',]
+  data <- data[data$cycle!=2020 | data$state!='Georgia' | data$candidate!='Tarver',]
+  
+  # data %>%
+  #   group_by(cycle, state) %>%
+  #   summarise(count=n()) %>%
+  #   filter(count >=4)
+  
+  # split training and testing data
+  data_test <- data[(data$cycle==test_year),]
+  data <- data[(data$cycle!=test_year & data$cycle!=2018 & data$cycle!=2020),]
 
-for (a in 1:length(input_strs)) {
-  for (b in 1:search_size){
-    
-    input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', input_strs[a], '_', best_cv_idx[a] ,'.csv',sep='')
-    output_file = paste('results/stan_LOO', TYPE, '_' , cv_year, 'day', input_strs[a], '_', best_cv_idx[a] ,'.csv',sep='')
-    
-    # loading data
-    data <- read.csv(input_file)
-    print(input_file)
-    data <- data[data$cycle!=2016 | data$state!='Louisiana' | data$candidate!='Flemsing',]
-    data <- data[data$cycle!=2020 | data$state!='Georgia' | data$candidate!='Loeffler',]
-    data <- data[data$cycle!=2020 | data$state!='Georgia' | data$candidate!='Tarver',]
-    
-    # data %>%
-    #   group_by(cycle, state) %>%
-    #   summarise(count=n()) %>%
-    #   filter(count >=4)
-    
-    data_test <- data[(data$cycle==cv_year),]
-    data <- data[(data$cycle!=cv_year & data$cycle!=2018 & data$cycle!=2020),]
-  
-  # data <- data[(data$cycle!=2016),]
-  
   cycles <- unique(data$cycle)
   states <- union(unique(data$state), unique(data_test$state))
-  
+
+  # maximal number of candidates allowed in the model  
   C <- 4
   
-  # define variables
+  # define meta variables
   metadata <- list()
   year_idx <- c()
   mu <- list()
@@ -79,6 +78,7 @@ for (a in 1:length(input_strs)) {
   # iterate over races
   for (cycle in cycles) {
     for (state in states) {
+      # obtain priors and fundamentals
       pmu = data[data$cycle==cycle & data$state==state,c("posteriormean")]
       pstd = data[data$cycle==cycle & data$state==state,c("posteriorstd")]
       vote = data[data$cycle==cycle & data$state==state,c("vote")]
@@ -86,6 +86,8 @@ for (a in 1:length(input_strs)) {
       party_ = data[data$cycle==cycle & data$state==state,c("party")]
       experienced_ = data[data$cycle==cycle & data$state==state,c("experienced")]
       
+      # not every state has election in all election cycles
+      # proceed only it has
       if(length(pmu)){
         counter <- counter + 1
         metadata[[counter]] = c(cycle, state)
@@ -119,6 +121,7 @@ for (a in 1:length(input_strs)) {
     stan_experienced[i, 1:nc[i]] = experienced[[i]]
   }
   
+  # split data into categories based on number of candidates
   idx2 <- c()
   idx3 <- c()
   idx4 <- c()
@@ -144,7 +147,6 @@ for (a in 1:length(input_strs)) {
   test_counter <- 0
   
   # iterate over races
-  # for (cycle in c(2016, 2018)){
   for (cycle in unique(data_test$cycle)){
     for (state in states) {
       pmu = data_test[(data_test$state==state & data_test$cycle==cycle),c("posteriormean")]
@@ -269,10 +271,6 @@ for (a in 1:length(input_strs)) {
   fit_params <- as.data.frame(fit)
   
   fit_objs = c(fit_objs, fit)
-
-  
-  # within 95% CI
-  flags <- matrix(0, test_counter, C)
   
   Nout_train = 0
   correct_predictions = 0
@@ -504,12 +502,10 @@ for (a in 1:length(input_strs)) {
       }
       posteriors = rbind(posteriors, one_posterior)
       
-      if (test_stan_y[test_idx2[i],j]<=u & test_stan_y[test_idx2[i],j]>=l){
-        flags[test_idx2[i],j] = 1
-      }
-      else{
+      if (test_stan_y[test_idx2[i],j]>u | test_stan_y[test_idx2[i],j]<l){
         Nout_test = Nout_test + 1
       }
+
       CYCLE <- c(CYCLE, cycle)
       STATE <- c(STATE,state)
       CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
@@ -521,7 +517,6 @@ for (a in 1:length(input_strs)) {
       MEDIAN <- c(MEDIAN, median(pred))
       LOWER95 <- c(LOWER95, l)
       UPPER95 <- c(UPPER95, u)
-      # NLZ <- c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
     }
     NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('test_ll2[',i,']',sep='')]]))))
     preds <- matrix(preds, nrow = 2, byrow = TRUE)
@@ -543,28 +538,6 @@ for (a in 1:length(input_strs)) {
   }
   
   
-  # posteriors %>%
-  #   ggplot(aes(y = State)) +
-  #   geom_density_ridges(
-  #     aes(x = Posterior_Vote, fill = paste(State, Party)),
-  #     alpha = .8, color = 'grey', from = 0, to = 100
-  #   ) +
-  #   labs(
-  #     x = "Posterior Vote (%)",
-  #     y = "Election State",
-  #     title = "Forecasting REP vs DEM Candidate Vote in 2020 US Senate elections"
-  #   ) +
-  #   scale_y_discrete(expand = c(0, 0)) +
-  #   scale_x_continuous(expand = c(0, 0)) +
-  #   scale_fill_cyclical(
-  #     breaks = c("REP", "DEM"),
-  #     labels = c(`REP` = "REP", `DEM` = "DEM"),
-  #     values = c("#0000ff", "#ff0000","#ff8080", "#8080ff"),
-  #     name = "Party", guide = "legend"
-  #   ) +
-  #   coord_cartesian(clip = "off") +
-  #   theme_ridges(grid = FALSE)
-  
   LEVELS = posteriors[posteriors$Party=='REP',] %>% 
     group_by(State) %>% 
     mutate(tmp = mean(Posterior_Vote)) %>% 
@@ -574,13 +547,6 @@ for (a in 1:length(input_strs)) {
     select(State)
   
   LEVELS = LEVELS$State
-  
-  # WINS = posteriors[posteriors$Party=='REP',] %>% 
-  #   group_by(State) %>% 
-  #   mutate(win = mean(Posterior_Vote>=50)) %>% 
-  #   select(State, win) %>%
-  #   distinct(State, win) %>%
-  #   arrange(desc(win))
   
   posteriors$State <- factor(posteriors$State, levels = LEVELS)
   
@@ -654,10 +620,7 @@ for (a in 1:length(input_strs)) {
         l=quantile(pred,probs=c(0.025),names = FALSE)
         m = mean(pred)
         s = sd(pred)
-        if (test_stan_y[test_idx3[i],j]<=u & test_stan_y[test_idx3[i],j]>=l){
-          flags[test_idx3[i],j] = 1
-        }
-        else{
+        if (test_stan_y[test_idx3[i],j]>u | test_stan_y[test_idx3[i],j]<l){
           Nout_test = Nout_test + 1
         }
         CYCLE <- c(CYCLE, cycle)
@@ -671,7 +634,6 @@ for (a in 1:length(input_strs)) {
         MEDIAN <- c(MEDIAN, median(pred))
         LOWER95 <- c(LOWER95, l)
         UPPER95 <- c(UPPER95, u)
-        # NLZ <- c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
       }
       NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('test_ll3[',i,']',sep='')]]))))
       preds <- matrix(preds, nrow = 3, byrow = TRUE)
@@ -712,10 +674,7 @@ for (a in 1:length(input_strs)) {
         l=quantile(pred,probs=c(0.025),names = FALSE)
         m = mean(pred)
         s = sd(pred)
-        if (test_stan_y[test_idx4[i],j]<=u & test_stan_y[test_idx4[i],j]>=l){
-          flags[test_idx4[i],j] = 1
-        }
-        else{
+        if (test_stan_y[test_idx4[i],j]>u | test_stan_y[test_idx4[i],j]<l){
           Nout_test = Nout_test + 1
         }
         CYCLE <- c(CYCLE, cycle)
@@ -729,7 +688,6 @@ for (a in 1:length(input_strs)) {
         MEDIAN <- c(MEDIAN, median(pred))
         LOWER95 <- c(LOWER95, l)
         UPPER95 <- c(UPPER95, u)
-        # NLZ <- c(NLZ, (vote[j]/100-m)^2/2/s^2 + log(s) + log(2*pi)/2)
       }
       NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('test_ll4[',i,']',sep='')]]))))
       preds <- matrix(preds, nrow = 4, byrow = TRUE)
@@ -784,7 +742,7 @@ for (a in 1:length(input_strs)) {
   print(paste("Median of predictive std: ",median(PSTD)))
 
   print(paste("Std of predictive std: ",sd(PSTD)))
-  }
 }
 
+# save the r session
 # save.image(file = paste('models/LOOCV_',TYPE ,'.RData',sep=''))

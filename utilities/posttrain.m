@@ -1,4 +1,9 @@
-function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, parms)
+function posttrain(raceinfos, fts, s2s, allRaces, hyp, tau, parms)
+%
+%   Post train process
+%   Compute corr, rmse, accuracy, coverage rate and nlz of training/test set
+%   Write posteriors results to csv file.
+%
     j = parms.j;
     test_year = parms.test_year;
     N_train = 0; nsuc_train = 0;
@@ -128,14 +133,14 @@ function posttrain(raceinfos, fts, s2s, allRaces, besthyp, tau, parms)
 
     writetable(forecast,strcat('results/LOO',parms.type, '_',int2str(test_year),'day',num2str(tau), '_', num2str(j),'.csv'));
 
-%     disp("Length Scale: " + exp(besthyp.cov(1)));
-%     disp("Output Scale: " + exp(besthyp.cov(2)));
-%     disp("Noise std: " + exp(besthyp.lik));
+    disp("Length Scale: " + exp(hyp.cov(1)));
+    disp("Output Scale: " + exp(hyp.cov(2)));
+    disp("Noise std: " + exp(hyp.lik));
     
-%     posteriorstd = cell2mat(posteriorstd);
-%     disp("Mean of predictive std: " + mean(posteriorstd));
-%     disp("Median of predictive std: " + median(posteriorstd));
-%     disp("Std of predictive std: " + std(posteriorstd));
+    posteriorstd = cell2mat(posteriorstd);
+    disp("Mean of predictive std: " + mean(posteriorstd));
+    disp("Median of predictive std: " + median(posteriorstd));
+    disp("Std of predictive std: " + std(posteriorstd));
 end
 
 function acc = accuracy(N, nsuc, title)

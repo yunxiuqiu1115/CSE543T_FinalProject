@@ -76,9 +76,11 @@ transformed parameters{
   
   for(i in 1:N2){
     for(j in 1:2){
+        # a linear model for the concentration parameters in the Dirichlet distribution
         p2[i,j] = beta*gamma2[i,j] + 
             party2[i,j]*pvi2[i,j]*ppb + experienced2[i,j]*eb 
             + party2[i,j]*year_re[year_idx2[i]];
+        # numerical stablity
         if(p2[i,j]<0.0001){
           p2[i,j] = 0.0001;
         }
@@ -162,18 +164,19 @@ generated quantities {
   
   vector[4] forecast_y4[N4]; // vector of forecasting votings
   
-  vector[N2] ll2;
+  vector[N2] ll2; // vector of in-sample model log likelihood
 
   vector[N3] ll3;
 
   vector[N4] ll4;
   
-  vector[test_N2] test_ll2;
+  vector[test_N2] test_ll2;  // vector of out-of-sample model log likelihood
 
   vector[test_N3] test_ll3;
 
   vector[test_N4] test_ll4;
   
+  # generate in-sample forecasting
   for (i in 1:N2)
     forecast_y2[i] = dirichlet_rng(alpha+p2[i]);
     
@@ -183,7 +186,8 @@ generated quantities {
   for (i in 1:N4)
     forecast_y4[i] = dirichlet_rng(alpha+p4[i]);
     
- for (i in 1:N2)
+  # obtain in-sample log likelihood
+  for (i in 1:N2)
     ll2[i] = dirichlet_lpdf(y2[i]|alpha+p2[i]);
 
   for (i in 1:N3)
@@ -192,6 +196,9 @@ generated quantities {
   for (i in 1:N4)
     ll4[i] = dirichlet_lpdf(y4[i]|alpha+p4[i]);
   
+  # generate samples for voter preference priors as 
+  # one of the independent variables for the concentration
+  # parameters for test data
   for(i in 1:test_N2){
     for(j in 1:2){
       test_gamma2[i,j] = normal_rng(test_mu2[i,j], test_sigma2[i,j]);
@@ -228,6 +235,7 @@ generated quantities {
     }
   }
   
+  # the linear model for the concentration parameters in the Dirichlet distribution
   for(i in 1:test_N2){
     for(j in 1:2){
       test_p2[i,j] = beta*test_gamma2[i,j] + 
@@ -261,6 +269,7 @@ generated quantities {
     }
   }
   
+  # generate out-of-sample forecasting
   for (i in 1:test_N2)
     test_y2[i] = dirichlet_rng(alpha+test_p2[i]);
     
@@ -270,6 +279,7 @@ generated quantities {
   for (i in 1:test_N4)
     test_y4[i] = dirichlet_rng(alpha+test_p4[i]);
     
+  # obtain out-of-sample log likelihood
   for (i in 1:test_N2)
     test_ll2[i] = dirichlet_lpdf(test_f2[i]|alpha+test_p2[i]);
 
