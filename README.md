@@ -73,8 +73,8 @@ install.packages('grid')
 ## Usage
 
 We exploit Leave-one-year-out (LOYO) validation procedure to determine optimal hyperparameters to our gp model for different forecasting horizons. To train the model at predefined horizons, run matlab code
-```Matlab
-[~]=main('GP', 1)
+```sh
+matlab -nodisplay -nodesktop -r "main('GP', 1); exit"
 ```
 
 This will generate files containing gp posteriors of 1992-2016 races for different forecasting horizons and gp hyperparameters. Then for each LOYO year/horizon, run R code
@@ -88,13 +88,11 @@ Rscript loocv_nlZs.R
 ```
 
 To forecast 2020 races at predefined horizons, run matlab and R code
-```Matlab
-[~]=main('GP', 3)
-```
-
 ```sh
+matlab -nodisplay -nodesktop -r "main('GP', 3); exit"
 Rscript main.R 2020 'GP'
 ```
+
 
 <!-- LICENSE -->
 ## License
