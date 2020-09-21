@@ -93,7 +93,7 @@ To forecast 2020 races at predefined horizons, run matlab and R code
 ```
 
 ```sh
-Rscript main.R
+Rscript main.R 2020 'GP'
 ```
 
 <!-- LICENSE -->
@@ -105,7 +105,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - chenyehu@wustl.edu
+Yehu Chen - chenyehu@wustl.edu
 
 Project Link: [https://github.com/yahoochen97/CNNForecasting](https://github.com/yahoochen97/CNNForecasting)
 

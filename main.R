@@ -1,5 +1,25 @@
 setwd('/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/')
 
+#!/usr/bin/env Rscript
+args = commandArgs(trailingOnly=TRUE)
+
+# test if there is at least one argument: if not, use default 2020 with GP model
+if (length(args)==0) {
+  test_year = 2020
+  # define model type: gp prior or lm prior
+  TYPE = 'GP'
+}
+if (length(args)==1){
+  # define the test year
+  test_year = as.double(args[1])
+  TYPE = 'GP'
+}
+if (length(args)==2){
+  # define the test year
+  test_year = as.double(args[1])
+  TYPE = args[2]
+}
+
 # load packages
 library(rstan)
 library(MCMCpack)
@@ -17,13 +37,6 @@ horizons = c('0',
                '90',
                '120')
 
-# define search size
-search_size = 100
-
-# define model type: gp prior or lm prior
-TYPE = 'GP'
-# TYPE = 'LM'
-
 # the optimal index of hyperparameters in the loyo process
 # optimal index can be obtained with loocv_nlZs.R
 best_cv_idx = c(32,32,94,46,46,36,36)
@@ -31,9 +44,6 @@ best_cv_idx = c(32,32,94,46,46,36,36)
 
 # store the stan_model fit objects
 fit_objs = c()
-
-# define the test year
-test_year = 2018
 
 for (a in 1:length(horizons)) {
   

@@ -3,24 +3,24 @@ args = commandArgs(trailingOnly=TRUE)
 
 # test if there is at least one argument: if not, return an error
 if (length(args)==0) {
-  stop("At least one argument must be supplied (input_str, cv_year, type).n", call.=FALSE)
+  stop("At least one argument must be supplied (horizon, cv_year, type).n", call.=FALSE)
 }
 
-input_str = args[1]
+horizon = args[1]
 cv_year = args[2]
 TYPE = args[3]
 
 search_size = 100
 
-print(paste(TYPE, '_' , cv_year, 'day', input_str,sep=''))
+print(paste(TYPE, '_' , cv_year, 'day', horizon,sep=''))
 library(rstan)
 
 averaged_nlZs = c()
 
 for (b in 1:search_size){
   # load the prior files
-  input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', input_str, '_', b ,'.csv',sep='')
-  output_file = paste('nlZs/', TYPE, '_' , cv_year, 'day', input_str, '_', b,'.csv',sep='')
+  input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', horizon, '_', b ,'.csv',sep='')
+  output_file = paste('nlZs/', TYPE, '_' , cv_year, 'day', horizon, '_', b,'.csv',sep='')
   
   # loading data
   data <- read.csv(input_file)
