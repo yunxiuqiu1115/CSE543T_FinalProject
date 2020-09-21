@@ -14,6 +14,7 @@ search_size = 100
 
 print(paste(TYPE, '_' , cv_year, 'day', horizon,sep=''))
 library(rstan)
+rstan_options(auto_write=TRUE)
 
 averaged_nlZs = c()
 

@@ -28,6 +28,8 @@ library(ggridges)
 library(ggplot2)
 library(grid)
 
+rstan_options(auto_write=TRUE)
+
 # define horizons
 horizons = c('0',
                '7',

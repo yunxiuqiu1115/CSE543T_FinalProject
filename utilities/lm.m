@@ -82,11 +82,7 @@ function [allRaces,fts,s2s] = lm(hyperparameter, xs, ys, raceinfos, plot_path, p
                 hyp.cov = hyperparameter.cov(3:4);
                 hyp.lik = hyperparameter.lik;
 
-                [~, ~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, x, y, xstar);
-
-                predPoll = fmu(end);
-                fts(i) = predPoll;
-                s2s(i) = fs2(end);
+                [~, ~, fts(i), s2s(i)] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, x, y, xstar);
             else
                 % plot upon required
                 % define 200 test location from the earliest poll day to
@@ -94,6 +90,8 @@ function [allRaces,fts,s2s] = lm(hyperparameter, xs, ys, raceinfos, plot_path, p
                 nz = 200;
                 xstar = [linspace(xs{i}(1,1),0,nz).',zeros(1,nz)',ones(1,nz)'];
                 [~, ~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
+                fts(i) = fmu(end);
+                s2s(i) = s2s(end);
                 parms.prior = [mu_b, simga_mc];
                 fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, parms);
                 plot_title = year + " " + state + " " + candidateName;
