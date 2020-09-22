@@ -1,4 +1,4 @@
-function [varout]=main(TYPE, mode)
+function [varout]=main(TYPE, mode, tau)
 
 %  main function of obtaining gp posteriors for each election race
 %  input:
@@ -7,7 +7,8 @@ function [varout]=main(TYPE, mode)
 %      -: 1 for doing LOYO on year 1992 to 2016
 %      -: 2 for testing 2018 races
 %      -: 3 for forecasting 2020 races
-% 
+%    - tau: forecasting horizon
+%
 
     % define output
     varout = "";
@@ -19,14 +20,15 @@ function [varout]=main(TYPE, mode)
     startup;
 
     % define horizons
-    taus = [0,7, 14,28,42,90,120];
+%     taus = [0,7, 14,28,42,90,120];
 
     % define search space
     search_size = 100;
     if strcmp(TYPE, "GP")==1
         p = sobolset(3);
     else 
-        p = sobolset(1, 'Skip', 100);
+        search_size = 20;
+        p = linspace(0,0.1,search_size);
     end
     
     if mode>=2
@@ -38,36 +40,34 @@ function [varout]=main(TYPE, mode)
         for i=1:numel(taus)
             j = ts(i);
             if strcmp(TYPE, "GP")==1
-                ls = p(j,1)*max(taus(i),30)+3; % 3-tau;
-                os = p(j,2)/10; % 0%-10%
-                lik = p(j,3)/10; % 0%-10%
+                ls = p(j,1)*max(taus(i),27)+3; % 3-tau; at least 3-30
+                os = p(j,2)/20; % 0%-5%
+                lik = p(j,3)/20; % 0%-5%
                 myrun(taus(i),TYPE, ls, os, lik, j, mode);
             else 
                 % linear model does not have ls/os
-                ls = 0;
-                os = 0;
-                lik = p(j,1)/10; % 0%-10%
+                ls = 0; os = 0;
+                lik = p(j); % 0%-10%
                 myrun(taus(i),TYPE, ls, os, lik, j, mode);
             end
         end
     else
         % performing a sobel sequence search
-        for i=1:numel(taus)
+%         for i=1:numel(taus)
             for j=1:search_size
                 if strcmp(TYPE, "GP")==1
-                    ls = p(j,1)*max(taus(i),30)+3; % 3-tau;
-                    os = p(j,2)/10; % 0%-10%
-                    lik = p(j,3)/10; % 0%-10%
-                    myrun(taus(i),TYPE, ls, os, lik, j, mode);
+                    ls = p(j,1)*max(tau,27)+3; % 3-tau; at least 3-30
+                    os = p(j,2)/20; % 0%-5%
+                    lik = p(j,3)/20; % 0%-5%
+                    myrun(tau,TYPE, ls, os, lik, j, mode);
                 else 
                     % linear model does not have ls/os
-                    ls = 0;
-                    os = 0;
-                    lik = p(j,1)/10; % 0%-10%
-                    myrun(taus(i),TYPE, ls, os, lik, j, mode);
+                    ls = 0; os = 0;
+                    lik = p(j); % 0%-10%
+                    myrun(tau,TYPE, ls, os, lik, j, mode);
                 end
             end
-        end
+%         end
     end
 end
 

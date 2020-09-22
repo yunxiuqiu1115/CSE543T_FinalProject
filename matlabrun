@@ -5,5 +5,6 @@
 #BSUB -J matlab
 
 TYPE=$1
+horizon=$2
 
-matlab -nodisplay -nodesktop -r "test('$TYPE',1); exit"
+matlab -nodisplay -nodesktop -r "test('$TYPE',1,'$horizon'); exit"

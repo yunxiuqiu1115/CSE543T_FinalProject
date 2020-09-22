@@ -112,9 +112,9 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
              
             % update allRaces struct
             if ~isfield(allRaces, fn)
-                allRaces.(fn) = [ft2(i), trueVote];
+                allRaces.(fn) = [fts(i), trueVote];
             else
-                allRaces.(fn) = [allRaces.(fn), ft2(i), trueVote];
+                allRaces.(fn) = [allRaces.(fn), fts(i), trueVote];
             end
         end
     end
