@@ -12,13 +12,10 @@ function [meanfunc, covfunc, likfunc, inffunc, prior] = model()
     covmask = [false, true, true];
     
     % define masked mean function of linear trends
-    %   - mml: masked linear slope mean
     %   - mmc: masled linear intercept mean
     mc = {@meanConst};
-    ml = {@meanLinear};
-    mml = {@meanMask, meanmask, ml};
     mmc = {@meanMask, meanmask, mc};
-    meanfunc = {@meanSum, {mml, mmc}};
+    meanfunc = mmc;
     
     % define masked covariance function of non-linear trends
     %    - cmd: masked diagonal in-poll covariance

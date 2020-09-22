@@ -18,7 +18,7 @@ function [xs, ys, candidateNames, vs, pvis, experienceds, parties]= getRaceCandi
 %   - vs: actual vote shares
 %   - pvis: cook partisan voting indices
 %   - experience: whether candidates has served in office
-%   - parties: indicators of candidate parties (1 if republican, -1 if democratic)
+%   - parties: indicators of candidate parties (1 if republican, -1 if democratic, 0 if third party)
 
     % obtain data given year/state
     oneRaceData = data(data.cycle==year & strcmp(data.state, state), :);
@@ -51,11 +51,20 @@ function [xs, ys, candidateNames, vs, pvis, experienceds, parties]= getRaceCandi
         ts = allCandidatesData.(candidateNames{i}).daysLeft;             % daysLeft
         ns = allCandidatesData.(candidateNames{i}).numberSupport;        % numberSupport
         ss = allCandidatesData.(candidateNames{i}).samplesize;           % samplesize 
-        ds = allCandidatesData.(candidateNames{i}).Republican;           % Republican or not
+        rs = allCandidatesData.(candidateNames{i}).Republican;           % Republican or not
+        ds = allCandidatesData.(candidateNames{i}).Democrat;             % Democrat or not
         ps = ns./ss;                                                     % polling proportions
         vs(i) = allCandidatesData.(candidateNames{i}).Percentage_of_Vote_won_x(1); % actual vote shares
-        % ds is the same across one candidate
-        parties(i) = 2*ds(1) - 1;
+        % ds, rs is the same across one candidate
+        % indicators of candidate parties (1 if republican, -1 if democratic, 0 if third party)
+        if ds(1)==1
+            parties(i) = 1;
+        elseif rs(1) == 1
+            parties(i) = -1;
+        else
+            parties(i) = 0;
+        end
+            
         xs{i} = [ts, ps, ss];
         ys{i} = ps;
         pvis(i) = allCandidatesData.(candidateNames{i}).pvi(1);

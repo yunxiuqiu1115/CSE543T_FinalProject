@@ -1,7 +1,11 @@
-function a = computePrior(pvi, experienced, republican, parms)
+function a = computePrior(pvi, experienced, party, parms)
+%
+%  Compute prior mean on intercept given fundementals and precomputed parms.coefs
+%
     x = ones(size(pvi,1), 6);
     x(:, 2) = pvi;
-    democratic = 1 - republican;
+    republican = (party==1);
+    democratic = (party==-1);
     x(:, 3) = experienced;
     x(:, 4) = democratic;
     x(:, 5) = republican;

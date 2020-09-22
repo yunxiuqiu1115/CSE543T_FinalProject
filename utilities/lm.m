@@ -44,14 +44,14 @@ function [allRaces,fts,s2s] = lm(hyperparameter, xs, ys, raceinfos, plot_path, p
         trueVote = raceinfos{i}{4};
         pvi =raceinfos{i}{5};
         experienced =raceinfos{i}{6};
-        republican = raceinfos{i}{7};
+        party = raceinfos{i}{7};
         
         % key for allRaces struct
         fn = char(state+""+year);
         fn = fn(~isspace(fn));
         
         % precompute prior mean of linear trend intercept
-        mu_b = computePrior(pvi, experienced, republican, parms);
+        mu_b = computePrior(pvi, experienced, party, parms);
         
         % obtain lm posterior
         if numel(xs{i})==0
@@ -77,8 +77,7 @@ function [allRaces,fts,s2s] = lm(hyperparameter, xs, ys, raceinfos, plot_path, p
                 % hyp is exactly the same of hyperparameter except potentially
                 % different prior mean of linear trend intercept and an
                 % absense of Matérn covariance
-                hyp.mean(1) = mu_ml;
-                hyp.mean(2) = mu_b;
+                hyp.mean = [mu_b];
                 hyp.cov = hyperparameter.cov(3:4);
                 hyp.lik = hyperparameter.lik;
 
@@ -93,7 +92,7 @@ function [allRaces,fts,s2s] = lm(hyperparameter, xs, ys, raceinfos, plot_path, p
                 fts(i) = fmu(end);
                 s2s(i) = s2s(end);
                 parms.prior = [mu_b, simga_mc];
-                fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), trueVote/100, parms);
+                fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), parms);
                 plot_title = year + " " + state + " " + candidateName;
                 title(plot_title);
                 

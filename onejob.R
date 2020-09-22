@@ -10,7 +10,7 @@ horizon = args[1]
 cv_year = args[2]
 TYPE = args[3]
 
-search_size = 100
+search_size = 1
 
 print(paste(TYPE, '_' , cv_year, 'day', horizon,sep=''))
 library(rstan)
@@ -275,3 +275,28 @@ for (b in 1:search_size){
 
 # echo to terminal
 cat(averaged_nlZs)
+
+
+# CYCLE = c()
+# STATE = c()
+# NAME = c()
+# REPUBLICAN =c()
+# DEMOCRATIC = c()
+# for (i in 1:nrow(tmp)) {
+#   cycle = tmp$cycle[i]
+#   state = toString(tmp$state[i])
+#   cs = unique(data[(data$cycle==cycle & data$state==state),]$Candidateidentifier)
+#   for (c in cs){
+#     c = toString(c)
+#     r = (data[(data$Candidateidentifier==c),]$Republican[1])
+#     d = (data[(data$Candidateidentifier==c),]$Democrat[1])
+#     CYCLE = c(CYCLE, cycle)
+#     STATE = c(STATE, state)
+#     NAME = c(NAME, c)
+#     REPUBLICAN = c(REPUBLICAN, r)
+#     DEMOCRATIC = c(DEMOCRATIC, d)
+#   }
+# }
+# 
+# result = data.frame(CYCLE,STATE,NAME,REPUBLICAN,DEMOCRATIC)
+# write.csv(result, "data/countGE3.csv")
