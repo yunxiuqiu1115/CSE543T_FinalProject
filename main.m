@@ -98,7 +98,7 @@ function myrun(tau,type, ls, os, lik, j, mode)
     elseif mode==3
         % forecast 2020 races
         CNNdata2020 = readData("data/CNNData2020.csv");
-        CNNdata2020(:, ["candidate_name"]) = [];
+        CNNdata2020(:, ["candidate_name"]) = [];C
         CNNdata2020.Percentage_of_Vote_won_x = zeros(size(CNNdata2020,1),1);
         CNNdata = vertcat(CNNdata, CNNdata2020);
     end
