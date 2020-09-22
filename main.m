@@ -25,7 +25,7 @@ function [varout]=main(TYPE, mode, tau)
     % define search space
     search_size = 100;
     if strcmp(TYPE, "GP")==1
-        p = sobolset(3);
+        p = sobolset(3, 'Skip', 1);
     else 
         search_size = 20;
         p = linspace(0,0.1,search_size);
@@ -40,7 +40,7 @@ function [varout]=main(TYPE, mode, tau)
         for i=1:numel(taus)
             j = ts(i);
             if strcmp(TYPE, "GP")==1
-                ls = p(j,1)*max(taus(i),27)+3; % 3-tau; at least 3-30
+                ls = p(j,1)*(56-7)+7; % 3-tau; at least 3-30
                 os = p(j,2)/20; % 0%-5%
                 lik = p(j,3)/20; % 0%-5%
                 myrun(taus(i),TYPE, ls, os, lik, j, mode);
@@ -56,7 +56,7 @@ function [varout]=main(TYPE, mode, tau)
 %         for i=1:numel(taus)
             for j=1:search_size
                 if strcmp(TYPE, "GP")==1
-                    ls = p(j,1)*max(tau,27)+3; % 3-tau; at least 3-30
+                    ls = p(j,1)*(56-7)+7; % 3-tau; at least 3-30
                     os = p(j,2)/20; % 0%-5%
                     lik = p(j,3)/20; % 0%-5%
                     myrun(tau,TYPE, ls, os, lik, j, mode);

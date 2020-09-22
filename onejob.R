@@ -233,15 +233,17 @@ for (b in 1:search_size){
   model <- stan_model("model.stan")
   
   # train stan model
+  # set seed to be the location in the search sequence
   fit <- stan(file = "model.stan",
               data = stan_data, 
               warmup = 500, 
-              iter = 3000, 
-              chains = 3, 
-              cores = 3, 
+              iter = 5000, 
+              chains = 1, 
+              cores = 1, 
               thin = 4,
               control=list(adapt_delta=.98, max_treedepth = 15),
-              refresh=0
+              seed = b,
+              refresh = 0
   )
   
   fit_params <- as.data.frame(fit)

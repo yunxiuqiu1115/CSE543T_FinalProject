@@ -14,7 +14,7 @@ search_size = 100
 cv_years = c(1992,1994,1996,1998,2000,2002,2004,2006,2008,2010,2012,2014,2016)
 
 # model type
-TYPES = c('GP' ,'LM')
+TYPES = c('LM')
 
 for (TYPE in TYPES) {
   for (a in 1:length(horizons)) {

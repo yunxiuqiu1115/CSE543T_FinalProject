@@ -1,3 +1,4 @@
+
 data {
   int<lower=0> N2; // number of races
   real mu2[N2, 2]; // vector of prior Gaussian means
@@ -55,6 +56,8 @@ data {
   int test_year_idx4[test_N4];
   vector<lower=0, upper=1>[4] test_f4[test_N4]; 
   int max_year_idx;
+  
+  
 }
 
 parameters {
@@ -67,6 +70,8 @@ parameters {
   vector<lower=0, upper=1>[2] gamma2[N2]; // vector of underlying true support rates
   vector<lower=0, upper=1>[3] gamma3[N3];
   vector<lower=0, upper=1>[4] gamma4[N4];
+  
+  
 }
 
 transformed parameters{
@@ -108,6 +113,8 @@ transformed parameters{
         }
     }
   }
+  
+  
 }
 
 model {
@@ -143,6 +150,8 @@ model {
   for(i in 1:N4){
     y4[i] ~ dirichlet(alpha+p4[i]);
   }
+  
+  
 }
 
 generated quantities {
@@ -289,5 +298,10 @@ generated quantities {
   for (i in 1:test_N4)
     test_ll4[i] = dirichlet_lpdf(test_f4[i]|alpha+test_p4[i]);
 
+
 }
+
+
+
+
 
