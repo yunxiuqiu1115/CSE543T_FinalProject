@@ -26,15 +26,15 @@ one_job(){
 for TYPE in ${TYPES[@]}; do
     for input_str in ${input_strs[@]}; do
     bsub -G SEAS-Lab-Garnett "./matlabrun '$TYPE' '$input_str'"
-        for cv_year in ${cv_years[@]}; do
-    	    # nlZs=$(one_job $input_str $cv_year $TYPE)
-	        # echo $nlZs
-            # n=$(number_file $input_str $cv_year $TYPE)
-            # if [ $n -lt 100 ]
-            # then
-            #     echo $TYPE $cv_year $input_str
-            # fi
-    	done
+        # for cv_year in ${cv_years[@]}; do
+    	#     nlZs=$(one_job $input_str $cv_year $TYPE)
+	    #     echo $nlZs
+        #     # n=$(number_file $input_str $cv_year $TYPE)
+        #     # if [ $n -lt 100 ]
+        #     # then
+        #     #     echo $TYPE $cv_year $input_str
+        #     # fi
+    	# done
     done
 done
 
