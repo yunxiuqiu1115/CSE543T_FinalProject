@@ -276,6 +276,7 @@ for (a in 1:length(horizons)) {
               cores = 3, 
               thin = 4,
               control=list(adapt_delta=.98, max_treedepth = 15),
+              seed = b,
               refresh=0
   )
   

@@ -7,4 +7,4 @@
 TYPE=$1
 horizon=$2
 
-matlab -nodisplay -nodesktop -r "test('$TYPE',1,'$horizon'); exit"
+matlab -nodisplay -nodesktop -r "main('$TYPE',1,'$horizon'); exit"

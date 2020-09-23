@@ -38,7 +38,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, hyp, tau, parms)
     N = N_train + N_test;
     nsuc = nsuc_train + nsuc_test;
     
-    accuracy(N_train, nsuc_train, 'training');
+%     accuracy(N_train, nsuc_train, 'training');
 %     accuracy(N_test, nsuc_test, 'test');
 %     accuracy(N, nsuc, 'overall');
 
@@ -60,10 +60,10 @@ function posttrain(raceinfos, fts, s2s, allRaces, hyp, tau, parms)
         N = N + l;
     end
     
-    tmp=corr(a(1:n_train),b(1:n_train));
-    fprintf('correlation of predictive mean and actual vote on train data: %0.4f\n',tmp);
-    tmp=sqrt(mean((a(1:n_train)-b(1:n_train)).^2));
-    fprintf('RMSE of predictive mean and actual vote on train data: %0.4f\n',tmp);
+%     tmp=corr(a(1:n_train),b(1:n_train));
+%     fprintf('correlation of predictive mean and actual vote on train data: %0.4f\n',tmp);
+%     tmp=sqrt(mean((a(1:n_train)-b(1:n_train)).^2));
+%     fprintf('RMSE of predictive mean and actual vote on train data: %0.4f\n',tmp);
 
 %     tmp=corr(a(n_train+1:end),b(n_train+1:end));
 %     fprintf('correlation of predictive mean and actual vote on test data: %0.4f\n',tmp);
@@ -120,8 +120,8 @@ function posttrain(raceinfos, fts, s2s, allRaces, hyp, tau, parms)
         end
     end
     
-    fprintf('95 CI on training data: %0.4f\n',1-Nout_train/n_train);
-    disp("Train Average nlZ: " + mean(train_nlZ));
+%     fprintf('95 CI on training data: %0.4f\n',1-Nout_train/n_train);
+%     disp("Train Average nlZ: " + mean(train_nlZ));
   
 %     fprintf('95 CI on test data: %0.6f\n',1-Nout_test/(N-n_train));
 %     disp("Test Average nlZ: " + mean(nlZ));
@@ -137,10 +137,10 @@ function posttrain(raceinfos, fts, s2s, allRaces, hyp, tau, parms)
     disp("Output Scale: " + exp(hyp.cov(2)));
     disp("Noise std: " + exp(hyp.lik));
     
-    posteriorstd = cell2mat(posteriorstd);
-    disp("Mean of predictive std: " + mean(posteriorstd));
-    disp("Median of predictive std: " + median(posteriorstd));
-    disp("Std of predictive std: " + std(posteriorstd));
+%     posteriorstd = cell2mat(posteriorstd);
+%     disp("Mean of predictive std: " + mean(posteriorstd));
+%     disp("Median of predictive std: " + median(posteriorstd));
+%     disp("Std of predictive std: " + std(posteriorstd));
 end
 
 function acc = accuracy(N, nsuc, title)
