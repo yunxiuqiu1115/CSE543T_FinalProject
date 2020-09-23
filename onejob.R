@@ -12,6 +12,14 @@ TYPE = args[3]
 
 search_size = 1
 
+if (TYPE=='GP'){
+  search_size = 100
+}
+if(TYPE=='LM'){
+  search_size = 20
+}
+
+
 print(paste(TYPE, '_' , cv_year, 'day', horizon,sep=''))
 library(rstan)
 rstan_options(auto_write=TRUE)

@@ -1,5 +1,5 @@
 #!/bin/bash
-declare -a input_strs=(0 7 14 28 42 90 120)
+declare -a input_strs=(0 7 14 21 28 42 56)
 declare -a cv_years=(1992 1994 1996 1998 2000 2002 2004 2006 2008 2010 2012 2014 2016)
 declare -a TYPES=("GP" "LM")
 
@@ -7,7 +7,6 @@ mkdir -p nlZs
 
 # declare -a input_strs=(28)
 # declare -a cv_years=(2014)
-# declare -a TYPES=("LM")
 
 number_file(){
     input_str=$1

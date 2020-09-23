@@ -20,7 +20,8 @@ function [varout]=main(TYPE, mode, tau)
     startup;
 
     % define horizons
-%     taus = [0,7, 14,28,42,90,120];
+    % 8/6/4/3/2/1/0 weeks
+    taus = [0,7, 14,21, 28,42, 56];
 
     % define search space
     search_size = 100;
@@ -98,7 +99,7 @@ function myrun(tau,type, ls, os, lik, j, mode)
     elseif mode==3
         % forecast 2020 races
         CNNdata2020 = readData("data/CNNData2020.csv");
-        CNNdata2020(:, ["candidate_name"]) = [];Cun
+        CNNdata2020(:, ["candidate_name"]) = [];
         CNNdata2020.Percentage_of_Vote_won_x = zeros(size(CNNdata2020,1),1);
         CNNdata = vertcat(CNNdata, CNNdata2020);
     end

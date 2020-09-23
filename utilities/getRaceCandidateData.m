@@ -25,7 +25,7 @@ function [xs, ys, candidateNames, vs, pvis, experienceds, parties]= getRaceCandi
     
     % return empty arrays in there is no election for that year/state combination
     if ~size(oneRaceData,1), xs = []; ys = []; candidateNames = []; vs = []; pvis = []; experienceds = []; parties = []; return ; end
-    oneRaceData(:, ["cycle", "state", "pollster", "Democrat"]) = [];
+    oneRaceData(:, ["cycle", "state", "pollster"]) = [];
     
     % divide data into candidate group
     [G, candidates_identifiers] = findgroups(oneRaceData.Candidateidentifier);
