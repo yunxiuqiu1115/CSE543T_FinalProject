@@ -91,7 +91,7 @@ function myrun(tau,type, ls, os, lik, j, mode)
 %       - pvi: Cook partisan voting index of the election state
 %       - experienced: 1 if the candidate has served in any political office, 0 otherwise
 
-    CNNdata = readData("data/CNNData1992-2016.csv");
+    CNNdata = readData("data/CNNdata1992-2016.csv");
     
     if mode==2
         % test on 2018 data
