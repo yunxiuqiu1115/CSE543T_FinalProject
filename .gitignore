@@ -8,7 +8,6 @@ playgrounds/
 *.csv
 *.m~
 CNN.*
-data/*idx.csv
 *.jpg
 .Rproj.user
 *.Rproj*
