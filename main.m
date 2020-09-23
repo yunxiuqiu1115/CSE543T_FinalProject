@@ -12,6 +12,9 @@ function [varout]=main(TYPE, mode, tau)
 
     % define output
     varout = "";
+    disp(TYPE);
+    disp(mode);
+    disp(tau);
     
     % load gmpl, utilities and data
     addpath("gpml-matlab-v3.6-2015-07-07");
