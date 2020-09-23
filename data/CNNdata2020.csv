@@ -1,0 +1,460 @@
+cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numberSupport,Democrat,Republican,pvi,experienced
+2020,Alabama,Morning Consult,609,Doug Jones,2020ALJones,-94,213,1,0,-14.47,1
+2020,Alabama,Morning Consult,609,Tommy Tuberville,2020ALTuberville,-94,316,0,1,-14.47,0
+2020,Alabama,Auburn University at Montgomery,558,Doug Jones,2020ALJones,-118,198,1,0,-14.47,1
+2020,Alabama,Auburn University at Montgomery,558,Tommy Tuberville,2020ALTuberville,-118,244,0,1,-14.47,0
+2020,Alabama,Cygnal,530,Doug Jones,2020ALJones,-141,189,1,0,-14.47,1
+2020,Alabama,Cygnal,530,Tommy Tuberville,2020ALTuberville,-141,263,0,1,-14.47,0
+2020,Alabama,Mason-Dixon Polling & Strategy,625,Doug Jones,2020ALJones,-272,262,1,0,-14.47,1
+2020,Alabama,Mason-Dixon Polling & Strategy,625,Tommy Tuberville,2020ALTuberville,-272,312,0,1,-14.47,0
+2020,Alabama,JMC Analytics,525,Doug Jones,2020ALJones,-322,210,1,0,-14.47,1
+2020,Alabama,JMC Analytics,525,Tommy Tuberville,2020ALTuberville,-322,246,0,1,-14.47,0
+2020,Alaska,Public Policy Polling,1081,Al Gross,2020AKGross,-119,367,1,0,-9.39,0
+2020,Alaska,Public Policy Polling,1081,Dan Sullivan,2020AKSullivan,-119,421,0,1,-9.39,1
+2020,Alaska,Alaska Survey Research,663,Al Gross,2020AKGross,-120,265,1,0,-9.39,0
+2020,Alaska,Alaska Survey Research,663,Dan Sullivan,2020AKSullivan,-120,351,0,1,-9.39,1
+2020,Arizona,Change Research,470,Mark Kelly,2020AZKelly,-59,239,1,0,-2.47,0
+2020,Arizona,Change Research,470,Martha McSally,2020AZMcSally,-59,211,0,1,-2.47,1
+2020,Arizona,Redfield & Wilton Strategies,830,Mark Kelly,2020AZKelly,-61,439,1,0,-2.47,0
+2020,Arizona,Redfield & Wilton Strategies,830,Martha McSally,2020AZMcSally,-61,315,0,1,-2.47,1
+2020,Arizona,Fox News/Beacon Research/Shaw & Co. Research,772,Mark Kelly,2020AZKelly,-64,432,1,0,-2.47,0
+2020,Arizona,Fox News/Beacon Research/Shaw & Co. Research,772,Martha McSally,2020AZMcSally,-64,301,0,1,-2.47,1
+2020,Arizona,Redfield & Wilton Strategies,856,Mark Kelly,2020AZKelly,-78,453,1,0,-2.47,0
+2020,Arizona,Redfield & Wilton Strategies,856,Martha McSally,2020AZMcSally,-78,291,0,1,-2.47,1
+2020,Arizona,Emerson College,661,Mark Kelly,2020AZKelly,-86,342,1,0,-2.47,0
+2020,Arizona,Emerson College,661,Martha McSally,2020AZMcSally,-86,272,0,1,-2.47,1
+2020,Arizona,Change Research,428,Mark Kelly,2020AZKelly,-87,209,1,0,-2.47,0
+2020,Arizona,Change Research,428,Martha McSally,2020AZMcSally,-87,184,0,1,-2.47,1
+2020,Arizona,OH Predictive Insights,603,Mark Kelly,2020AZKelly,-92,289,1,0,-2.47,0
+2020,Arizona,OH Predictive Insights,603,Martha McSally,2020AZMcSally,-92,259,0,1,-2.47,1
+2020,Arizona,Data for Progress,1215,Mark Kelly,2020AZKelly,-94,607,1,0,-2.47,0
+2020,Arizona,Data for Progress,1215,Martha McSally,2020AZMcSally,-94,486,0,1,-2.47,1
+2020,Arizona,Change Research,365,Mark Kelly,2020AZKelly,-101,171,1,0,-2.47,0
+2020,Arizona,Change Research,365,Martha McSally,2020AZMcSally,-101,164,0,1,-2.47,1
+2020,Arizona,Morning Consult,908,Mark Kelly,2020AZKelly,-101,472,1,0,-2.47,0
+2020,Arizona,Morning Consult,908,Martha McSally,2020AZMcSally,-101,326,0,1,-2.47,1
+2020,Arizona,SSRS,873,Mark Kelly,2020AZKelly,-103,436,1,0,-2.47,0
+2020,Arizona,SSRS,873,Martha McSally,2020AZMcSally,-103,375,0,1,-2.47,1
+2020,Arizona,Redfield & Wilton Strategies,858,Mark Kelly,2020AZKelly,-104,454,1,0,-2.47,0
+2020,Arizona,Redfield & Wilton Strategies,858,Martha McSally,2020AZMcSally,-104,300,0,1,-2.47,1
+2020,Arizona,Marist College,826,Mark Kelly,2020AZKelly,-105,437,1,0,-2.47,0
+2020,Arizona,Marist College,826,Martha McSally,2020AZMcSally,-105,338,0,1,-2.47,1
+2020,Arizona,Change Research,345,Mark Kelly,2020AZKelly,-115,179,1,0,-2.47,0
+2020,Arizona,Change Research,345,Martha McSally,2020AZMcSally,-115,155,0,1,-2.47,1
+2020,Arizona,YouGov,1087,Mark Kelly,2020AZKelly,-117,500,1,0,-2.47,0
+2020,Arizona,YouGov,1087,Martha McSally,2020AZMcSally,-117,456,0,1,-2.47,1
+2020,Arizona,OH Predictive Insights,600,Mark Kelly,2020AZKelly,-120,312,1,0,-2.47,0
+2020,Arizona,OH Predictive Insights,600,Martha McSally,2020AZMcSally,-120,258,0,1,-2.47,1
+2020,Arizona,Data Orbital,600,Mark Kelly,2020AZKelly,-128,299,1,0,-2.47,0
+2020,Arizona,Data Orbital,600,Martha McSally,2020AZMcSally,-128,256,0,1,-2.47,1
+2020,Arizona,Change Research,311,Mark Kelly,2020AZKelly,-129,164,1,0,-2.47,0
+2020,Arizona,Change Research,311,Martha McSally,2020AZMcSally,-129,136,0,1,-2.47,1
+2020,Arizona,Redfield & Wilton Strategies,865,Mark Kelly,2020AZKelly,-140,423,1,0,-2.47,0
+2020,Arizona,Redfield & Wilton Strategies,865,Martha McSally,2020AZMcSally,-140,294,0,1,-2.47,1
+2020,Arizona,Siena College/The New York Times Upshot,650,Mark Kelly,2020AZKelly,-141,305,1,0,-2.47,0
+2020,Arizona,Siena College/The New York Times Upshot,650,Martha McSally,2020AZMcSally,-141,247,0,1,-2.47,1
+2020,Arizona,Civiqs,1368,Mark Kelly,2020AZKelly,-142,697,1,0,-2.47,0
+2020,Arizona,Civiqs,1368,Martha McSally,2020AZMcSally,-142,574,0,1,-2.47,1
+2020,Arizona,Fox News/Beacon Research/Shaw & Co. Research,1002,Mark Kelly,2020AZKelly,-155,501,1,0,-2.47,0
+2020,Arizona,Fox News/Beacon Research/Shaw & Co. Research,1002,Martha McSally,2020AZMcSally,-155,370,0,1,-2.47,1
+2020,Arizona,HighGround Inc.,400,Mark Kelly,2020AZKelly,-166,205,1,0,-2.47,0
+2020,Arizona,HighGround Inc.,400,Martha McSally,2020AZMcSally,-166,165,0,1,-2.47,1
+2020,Arizona,OH Predictive Insights,600,Mark Kelly,2020AZKelly,-177,306,1,0,-2.47,0
+2020,Arizona,OH Predictive Insights,600,Martha McSally,2020AZMcSally,-177,228,0,1,-2.47,1
+2020,Arizona,OH Predictive Insights,600,Mark Kelly,2020AZKelly,-210,306,1,0,-2.47,0
+2020,Arizona,OH Predictive Insights,600,Martha McSally,2020AZMcSally,-210,252,0,1,-2.47,1
+2020,Arizona,Marist College,2523,Mark Kelly,2020AZKelly,-234,1211,1,0,-2.47,0
+2020,Arizona,Marist College,2523,Martha McSally,2020AZMcSally,-234,1135,0,1,-2.47,1
+2020,Arizona,Monmouth University,847,Mark Kelly,2020AZKelly,-235,423,1,0,-2.47,0
+2020,Arizona,Monmouth University,847,Martha McSally,2020AZMcSally,-235,372,0,1,-2.47,1
+2020,Arizona,Latino Decisions,1036,Mark Kelly,2020AZKelly,-238,497,1,0,-2.47,0
+2020,Arizona,Latino Decisions,1036,Martha McSally,2020AZMcSally,-238,372,0,1,-2.47,1
+2020,Arizona,OH Predictive Insights,600,Mark Kelly,2020AZKelly,-245,294,1,0,-2.47,0
+2020,Arizona,OH Predictive Insights,600,Martha McSally,2020AZMcSally,-245,252,0,1,-2.47,1
+2020,Arizona,Public Policy Polling,666,Mark Kelly,2020AZKelly,-246,313,1,0,-2.47,0
+2020,Arizona,Public Policy Polling,666,Martha McSally,2020AZMcSally,-246,279,0,1,-2.47,1
+2020,Arizona,HighGround Inc.,400,Mark Kelly,2020AZKelly,-269,184,1,0,-2.47,0
+2020,Arizona,HighGround Inc.,400,Martha McSally,2020AZMcSally,-269,157,0,1,-2.47,1
+2020,Arizona,Public Policy Polling,760,Mark Kelly,2020AZKelly,-305,349,1,0,-2.47,0
+2020,Arizona,Public Policy Polling,760,Martha McSally,2020AZMcSally,-305,319,0,1,-2.47,1
+2020,Arizona,OH Predictive Insights,628,Mark Kelly,2020AZKelly,-336,295,1,0,-2.47,0
+2020,Arizona,OH Predictive Insights,628,Martha McSally,2020AZMcSally,-336,276,0,1,-2.47,1
+2020,Arizona,Emerson College,901,Mark Kelly,2020AZKelly,-373,416,1,0,-2.47,0
+2020,Arizona,Emerson College,901,Martha McSally,2020AZMcSally,-373,403,0,1,-2.47,1
+2020,Arizona,Change Research,856,Mark Kelly,2020AZKelly,-403,428,1,0,-2.47,0
+2020,Arizona,Change Research,856,Martha McSally,2020AZMcSally,-403,402,0,1,-2.47,1
+2020,Arizona,Bendixen & Amandi International,520,Mark Kelly,2020AZKelly,-419,218,1,0,-2.47,0
+2020,Arizona,Bendixen & Amandi International,520,Martha McSally,2020AZMcSally,-419,218,0,1,-2.47,1
+2020,Arizona,OH Predictive Insights,600,Mark Kelly,2020AZKelly,-448,276,1,0,-2.47,0
+2020,Arizona,OH Predictive Insights,600,Martha McSally,2020AZMcSally,-448,246,0,1,-2.47,1
+2020,Arizona,"Fabrizio, Lee & Associates",600,Mark Kelly,2020AZKelly,-462,264,1,0,-2.47,0
+2020,Arizona,"Fabrizio, Lee & Associates",600,Martha McSally,2020AZMcSally,-462,270,0,1,-2.47,1
+2020,Arizona,OH Predictive Insights,600,Mark Kelly,2020AZKelly,-552,264,1,0,-2.47,0
+2020,Arizona,OH Predictive Insights,600,Martha McSally,2020AZMcSally,-552,270,0,1,-2.47,1
+2020,Arizona,OH Predictive Insights,600,Mark Kelly,2020AZKelly,-630,264,1,0,-2.47,0
+2020,Arizona,OH Predictive Insights,600,Martha McSally,2020AZMcSally,-630,276,0,1,-2.47,1
+2020,Arkansas,NA,1,Tom Cotton,2020ARCotton,1,0,0,1,-14.99,1
+2020,Arkansas,NA,1,Ricky Harrington,2020ARHarrington,1,0,0,0,-14.99,0
+2020,Colorado,Morning Consult,638,John Hickenlooper,2020COHickenlooper,-66,306,1,0,0.77,1
+2020,Colorado,Morning Consult,638,Cory Gardner,2020COGardner,-66,248,0,1,0.77,1
+2020,Colorado,Morning Consult,616,John Hickenlooper,2020COHickenlooper,-101,295,1,0,0.77,1
+2020,Colorado,Morning Consult,616,Cory Gardner,2020COGardner,-101,258,0,1,0.77,1
+2020,Colorado,Keating Research/OnSight Public Affairs/Melanson,600,John Hickenlooper,2020COHickenlooper,-185,324,1,0,0.77,1
+2020,Colorado,Keating Research/OnSight Public Affairs/Melanson,600,Cory Gardner,2020COGardner,-185,216,0,1,0.77,1
+2020,Colorado,Montana State University Bozeman,379,John Hickenlooper,2020COHickenlooper,-199,181,1,0,0.77,1
+2020,Colorado,Montana State University Bozeman,379,Cory Gardner,2020COGardner,-199,117,0,1,0.77,1
+2020,Colorado,Keating Research/OnSight Public Affairs/Melanson,500,John Hickenlooper,2020COHickenlooper,-387,265,1,0,0.77,1
+2020,Colorado,Keating Research/OnSight Public Affairs/Melanson,500,Cory Gardner,2020COGardner,-387,210,0,1,0.77,1
+2020,Colorado,Emerson College,1000,John Hickenlooper,2020COHickenlooper,-443,525,1,0,0.77,1
+2020,Colorado,Emerson College,1000,Cory Gardner,2020COGardner,-443,397,0,1,0.77,1
+2020,Georgia,SurveyUSA,623,Jon Ossoff,2020GAOssoff,-88,255,1,0,-5.23,0
+2020,Georgia,SurveyUSA,623,David A. Perdue,2020GAPerdue,-88,274,0,1,-5.23,1
+2020,GeorgiaS,SurveyUSA,623,Ed Tarver,2020GATarver,-88,18,1,0,-5.23,0
+2020,Georgia,YouGov,1101,Jon Ossoff,2020GAOssoff,-96,473,1,0,-5.23,0
+2020,Georgia,YouGov,1101,David A. Perdue,2020GAPerdue,-96,495,0,1,-5.23,1
+2020,Georgia,Monmouth University,402,Jon Ossoff,2020GAOssoff,-100,172,1,0,-5.23,0
+2020,Georgia,Monmouth University,402,David A. Perdue,2020GAPerdue,-100,201,0,1,-5.23,1
+2020,Georgia,Monmouth University,402,David A. Perdue,2020GAPerdue,-100,205,0,1,-5.23,1
+2020,Georgia,Morning Consult,1337,Jon Ossoff,2020GAOssoff,-101,561,1,0,-5.23,0
+2020,Georgia,Morning Consult,1337,David A. Perdue,2020GAPerdue,-101,601,0,1,-5.23,1
+2020,Georgia,Fox News/Beacon Research/Shaw & Co. Research,1013,Jon Ossoff,2020GAOssoff,-134,425,1,0,-5.23,0
+2020,Georgia,Fox News/Beacon Research/Shaw & Co. Research,1013,David A. Perdue,2020GAPerdue,-134,455,0,1,-5.23,1
+2020,Georgia,Civiqs,1339,Jon Ossoff,2020GAOssoff,-170,629,1,0,-5.23,0
+2020,Georgia,Civiqs,1339,David A. Perdue,2020GAPerdue,-170,602,0,1,-5.23,1
+2020,GeorgiaS,Civiqs,1339,Ed Tarver,2020GATarver,-170,80,1,0,-5.23,0
+2020,GeorgiaS,Civiqs,1339,Ed Tarver,2020GATarver,-233,575,1,0,-5.23,0
+2020,GeorgiaS,Civiqs,1339,Ed Tarver,2020GATarver,-233,562,1,0,-5.23,0
+2020,GeorgiaS,University of Georgia,1117,Ed Tarver,2020GATarver,-247,39,1,0,-5.23,0
+2020,GeorgiaS,SurveyUSA,623,Raphael Warnock,2020GAWarnock,-88,105,1,0,-5.23,0
+2020,GeorgiaS,SurveyUSA,623,Kelly Loeffler,2020GALoeffler,-88,161,0,1,-5.23,0
+2020,GeorgiaS,SurveyUSA,623,Doug Collins,2020GACollins,-88,105,0,1,-5.23,1
+2020,GeorgiaS,Civiqs,1339,Raphael Warnock,2020GAWarnock,-170,241,1,0,-5.23,0
+2020,GeorgiaS,Civiqs,1339,Doug Collins,2020GACollins,-170,455,0,1,-5.23,1
+2020,GeorgiaS,Civiqs,1339,Kelly Loeffler,2020GALoeffler,-170,160,0,1,-5.23,0
+2020,GeorgiaS,Civiqs,1339,Kelly Loeffler,2020GALoeffler,-233,428,0,1,-5.23,0
+2020,GeorgiaS,Civiqs,1339,Raphael Warnock,2020GAWarnock,-233,602,1,0,-5.23,0
+2020,GeorgiaS,Civiqs,1339,Doug Collins,2020GACollins,-233,589,0,1,-5.23,1
+2020,GeorgiaS,Civiqs,1339,Doug Collins,2020GACollins,-233,602,0,1,-5.23,1
+2020,GeorgiaS,University of Georgia,1117,Doug Collins,2020GACollins,-247,230,0,1,-5.23,1
+2020,GeorgiaS,University of Georgia,1117,Kelly Loeffler,2020GALoeffler,-247,213,0,1,-5.23,0
+2020,GeorgiaS,University of Georgia,1117,Raphael Warnock,2020GAWarnock,-247,69,1,0,-5.23,0
+2020,Idaho,Spry Strategies,600,Paulette E. Jordan,2020IDJordan,-64,166,1,0,-18.78,1
+2020,Idaho,Spry Strategies,600,James E. Risch,2020IDRisch,-64,320,0,1,-18.78,1
+2020,Iowa,Monmouth University,401,Theresa Greenfield,2020IAGreenfield,-93,188,1,0,-2.64,1
+2020,Iowa,Monmouth University,401,Joni K. Ernst,2020IAErnst,-93,192,0,1,-2.64,1
+2020,Iowa,Data for Progress,1101,Theresa Greenfield,2020IAGreenfield,-94,495,1,0,-2.64,1
+2020,Iowa,Data for Progress,1101,Joni K. Ernst,2020IAErnst,-94,473,0,1,-2.64,1
+2020,Iowa,RMG Research,500,Theresa Greenfield,2020IAGreenfield,-97,200,1,0,-2.64,1
+2020,Iowa,RMG Research,500,Joni K. Ernst,2020IAErnst,-97,180,0,1,-2.64,1
+2020,Iowa,Selzer & Co.,674,Theresa Greenfield,2020IAGreenfield,-147,310,1,0,-2.64,1
+2020,Iowa,Selzer & Co.,674,Joni K. Ernst,2020IAErnst,-147,289,0,1,-2.64,1
+2020,Iowa,Civiqs,865,Theresa Greenfield,2020IAGreenfield,-149,415,1,0,-2.64,1
+2020,Iowa,Civiqs,865,Joni K. Ernst,2020IAErnst,-149,389,0,1,-2.64,1
+2020,Iowa,Public Policy Polling,1222,Theresa Greenfield,2020IAGreenfield,-187,513,1,0,-2.64,1
+2020,Iowa,Public Policy Polling,1222,Joni K. Ernst,2020IAErnst,-187,525,0,1,-2.64,1
+2020,Iowa,Emerson College,888,Theresa Greenfield,2020IAGreenfield,-385,355,1,0,-2.64,1
+2020,Iowa,Emerson College,888,Joni K. Ernst,2020IAErnst,-385,412,0,1,-2.64,1
+2020,Kansas,SurveyUSA,1202,Barbara Bollier,2020KSBollier,-87,528,1,0,-13.31,1
+2020,Kansas,SurveyUSA,1202,Roger Marshall,2020KSMarshall,-87,552,0,1,-13.31,1
+2020,Kansas,Civiqs,699,Barbara Bollier,2020KSBollier,-156,286,1,0,-13.31,1
+2020,Kansas,Civiqs,699,Roger Marshall,2020KSMarshall,-156,293,0,1,-13.31,1
+2020,Kansas,Public Policy Polling,1567,Barbara Bollier,2020KSBollier,-238,579,1,0,-13.31,1
+2020,Kansas,Public Policy Polling,1567,Roger Marshall,2020KSMarshall,-238,736,0,1,-13.31,1
+2020,Kentucky,Quinnipiac University,909,Amy McGrath,2020KYMcGrath,-93,399,1,0,-15.74,1
+2020,Kentucky,Quinnipiac University,909,Mitch McConnell,2020KYMcConnell,-93,445,0,1,-15.74,1
+2020,Kentucky,Morning Consult,793,Amy McGrath,2020KYMcGrath,-94,285,1,0,-15.74,1
+2020,Kentucky,Morning Consult,793,Mitch McConnell,2020KYMcConnell,-94,420,0,1,-15.74,1
+2020,Kentucky,Civiqs,898,Amy McGrath,2020KYMcGrath,-142,296,1,0,-15.74,1
+2020,Kentucky,Civiqs,898,Mitch McConnell,2020KYMcConnell,-142,475,0,1,-15.74,1
+2020,Kentucky,RMG Research,500,Amy McGrath,2020KYMcGrath,-164,205,1,0,-15.74,1
+2020,Kentucky,RMG Research,500,Mitch McConnell,2020KYMcConnell,-164,200,0,1,-15.74,1
+2020,Kentucky,"Fabrizio, Lee & Associates",600,Amy McGrath,2020KYMcGrath,-462,276,1,0,-15.74,1
+2020,Kentucky,"Fabrizio, Lee & Associates",600,Mitch McConnell,2020KYMcConnell,-462,282,0,1,-15.74,1
+2020,Maine,Critical Insights,453,Sara Gideon,2020MEGideon,-87,194,1,0,2.9,1
+2020,Maine,Critical Insights,453,Susan M. Collins,2020MECollins,-87,172,0,1,2.9,1
+2020,Maine,Quinnipiac University,807,Sara Gideon,2020MEGideon,-93,379,1,0,2.9,1
+2020,Maine,Quinnipiac University,807,Susan M. Collins,2020MECollins,-93,347,0,1,2.9,1
+2020,Maine,RMG Research,500,Sara Gideon,2020MEGideon,-94,240,1,0,2.9,1
+2020,Maine,RMG Research,500,Susan M. Collins,2020MECollins,-94,205,0,1,2.9,1
+2020,Maine,Data for Progress,866,Sara Gideon,2020MEGideon,-94,415,1,0,2.9,1
+2020,Maine,Data for Progress,866,Susan M. Collins,2020MECollins,-94,389,0,1,2.9,1
+2020,Maine,Colby College,888,Sara Gideon,2020MEGideon,-103,390,1,0,2.9,1
+2020,Maine,Colby College,888,Susan M. Collins,2020MECollins,-103,346,0,1,2.9,1
+2020,Maine,Public Policy Polling,1022,Sara Gideon,2020MEGideon,-124,470,1,0,2.9,1
+2020,Maine,Public Policy Polling,1022,Susan M. Collins,2020MECollins,-124,429,0,1,2.9,1
+2020,Maine,Public Policy Polling,872,Sara Gideon,2020MEGideon,-246,409,1,0,2.9,1
+2020,Maine,Public Policy Polling,872,Susan M. Collins,2020MECollins,-246,374,0,1,2.9,1
+2020,Maine,SocialSphere,1008,Sara Gideon,2020MEGideon,-265,433,1,0,2.9,1
+2020,Maine,SocialSphere,1008,Susan M. Collins,2020MECollins,-265,423,0,1,2.9,1
+2020,Maine,"Fabrizio, Lee & Associates",600,Sara Gideon,2020MEGideon,-462,210,1,0,2.9,1
+2020,Maine,"Fabrizio, Lee & Associates",600,Susan M. Collins,2020MECollins,-462,312,0,1,2.9,1
+2020,Maine,Gravis Marketing,767,Sara Gideon,2020MEGideon,-499,276,1,0,2.9,1
+2020,Maine,Gravis Marketing,767,Susan M. Collins,2020MECollins,-499,398,0,1,2.9,1
+2020,Maine,Gravis Marketing,767,Sara Gideon,2020MEGideon,-499,230,1,0,2.9,1
+2020,Maine,Gravis Marketing,767,Susan M. Collins,2020MECollins,-499,337,0,1,2.9,1
+2020,Maine,Pan Atlantic Research,500,Sara Gideon,2020MEGideon,-602,145,1,0,2.9,1
+2020,Maine,Pan Atlantic Research,500,Susan M. Collins,2020MECollins,-602,256,0,1,2.9,1
+2020,Massachusetts,NA,1,Ed Markey,2020MAMarkey,1,0,1,0,12.22,1
+2020,Massachusetts,NA,1,Kevin O'Connor,2020MAConnor,1,0,0,1,12.22,1
+2020,Michigan,Change Research,876,Gary C. Peters,2020MIPeters,-59,438,1,0,1.31,1
+2020,Michigan,Change Research,876,John James,2020MIJames,-59,402,0,1,1.31,0
+2020,Michigan,Glengariff Group,600,Gary C. Peters,2020MIPeters,-62,264,1,0,1.31,1
+2020,Michigan,Glengariff Group,600,John James,2020MIJames,-62,246,0,1,1.31,0
+2020,Michigan,Redfield & Wilton Strategies,967,Gary C. Peters,2020MIPeters,-62,483,1,0,1.31,1
+2020,Michigan,Redfield & Wilton Strategies,967,John James,2020MIJames,-62,367,0,1,1.31,0
+2020,Michigan,Change Research,809,Gary C. Peters,2020MIPeters,-73,404,1,0,1.31,1
+2020,Michigan,Change Research,809,John James,2020MIJames,-73,364,0,1,1.31,0
+2020,Michigan,Trafalgar Group,1048,Gary C. Peters,2020MIPeters,-73,488,1,0,1.31,1
+2020,Michigan,Trafalgar Group,1048,John James,2020MIJames,-73,504,0,1,1.31,0
+2020,Michigan,Redfield & Wilton Strategies,812,Gary C. Peters,2020MIPeters,-78,389,1,0,1.31,1
+2020,Michigan,Redfield & Wilton Strategies,812,John James,2020MIJames,-78,316,0,1,1.31,0
+2020,Michigan,Change Research,413,Gary C. Peters,2020MIPeters,-87,198,1,0,1.31,1
+2020,Michigan,Change Research,413,John James,2020MIJames,-87,185,0,1,1.31,0
+2020,Michigan,EPIC-MRA,600,Gary C. Peters,2020MIPeters,-97,300,1,0,1.31,1
+2020,Michigan,EPIC-MRA,600,John James,2020MIJames,-97,240,0,1,1.31,0
+2020,Michigan,Change Research,413,Gary C. Peters,2020MIPeters,-101,198,1,0,1.31,1
+2020,Michigan,Change Research,413,John James,2020MIJames,-101,181,0,1,1.31,0
+2020,Michigan,Morning Consult,1320,Gary C. Peters,2020MIPeters,-101,646,1,0,1.31,1
+2020,Michigan,Morning Consult,1320,John James,2020MIJames,-101,462,0,1,1.31,0
+2020,Michigan,Redfield & Wilton Strategies,811,Gary C. Peters,2020MIPeters,-103,421,1,0,1.31,1
+2020,Michigan,Redfield & Wilton Strategies,811,John James,2020MIJames,-103,283,0,1,1.31,0
+2020,Michigan,SSRS,927,Gary C. Peters,2020MIPeters,-103,500,1,0,1.31,1
+2020,Michigan,SSRS,927,John James,2020MIJames,-103,352,0,1,1.31,0
+2020,Michigan,Gravis Marketing,754,Gary C. Peters,2020MIPeters,-105,369,1,0,1.31,1
+2020,Michigan,Gravis Marketing,754,John James,2020MIJames,-105,294,0,1,1.31,0
+2020,Michigan,Marketing Resource Group (MRG),600,Gary C. Peters,2020MIPeters,-106,243,1,0,1.31,1
+2020,Michigan,Marketing Resource Group (MRG),600,John James,2020MIJames,-106,201,0,1,1.31,0
+2020,Michigan,Fox News/Beacon Research/Shaw & Co. Research,756,Gary C. Peters,2020MIPeters,-107,362,1,0,1.31,1
+2020,Michigan,Fox News/Beacon Research/Shaw & Co. Research,756,John James,2020MIJames,-107,287,0,1,1.31,0
+2020,Michigan,Change Research,824,Gary C. Peters,2020MIPeters,-115,412,1,0,1.31,1
+2020,Michigan,Change Research,824,John James,2020MIJames,-115,354,0,1,1.31,0
+2020,Michigan,Change Research,699,Gary C. Peters,2020MIPeters,-129,342,1,0,1.31,1
+2020,Michigan,Change Research,699,John James,2020MIJames,-129,293,0,1,1.31,0
+2020,Michigan,Siena College/The New York Times Upshot,610,Gary C. Peters,2020MIPeters,-140,250,1,0,1.31,1
+2020,Michigan,Siena College/The New York Times Upshot,610,John James,2020MIJames,-140,189,0,1,1.31,0
+2020,Michigan,Redfield & Wilton Strategies,826,Gary C. Peters,2020MIPeters,-141,413,1,0,1.31,1
+2020,Michigan,Redfield & Wilton Strategies,826,John James,2020MIJames,-141,264,0,1,1.31,0
+2020,Michigan,Marketing Resource Group (MRG),600,Gary C. Peters,2020MIPeters,-142,218,1,0,1.31,1
+2020,Michigan,Marketing Resource Group (MRG),600,John James,2020MIJames,-142,181,0,1,1.31,0
+2020,Michigan,IBD/TIPP,907,Gary C. Peters,2020MIPeters,-145,426,1,0,1.31,1
+2020,Michigan,IBD/TIPP,907,John James,2020MIJames,-145,317,0,1,1.31,0
+2020,Michigan,Kiaer Research,543,Gary C. Peters,2020MIPeters,-150,260,1,0,1.31,1
+2020,Michigan,Kiaer Research,543,John James,2020MIJames,-150,173,0,1,1.31,0
+2020,Michigan,EPIC-MRA,600,Gary C. Peters,2020MIPeters,-154,306,1,0,1.31,1
+2020,Michigan,EPIC-MRA,600,John James,2020MIJames,-154,216,0,1,1.31,0
+2020,Michigan,Change Research,3070,Gary C. Peters,2020MIPeters,-171,1468,1,0,1.31,1
+2020,Michigan,Change Research,3070,John James,2020MIJames,-171,1328,0,1,1.31,0
+2020,Michigan,Fox News/Beacon Research/Shaw & Co. Research,801,Gary C. Peters,2020MIPeters,-197,368,1,0,1.31,1
+2020,Michigan,Fox News/Beacon Research/Shaw & Co. Research,801,John James,2020MIJames,-197,288,0,1,1.31,0
+2020,Michigan,Marketing Resource Group (MRG),600,Gary C. Peters,2020MIPeters,-229,252,1,0,1.31,1
+2020,Michigan,Marketing Resource Group (MRG),600,John James,2020MIJames,-229,210,0,1,1.31,0
+2020,Michigan,Optimus,550,Gary C. Peters,2020MIPeters,-242,221,1,0,1.31,1
+2020,Michigan,Optimus,550,John James,2020MIJames,-242,226,0,1,1.31,0
+2020,Michigan,Quinnipiac University,845,Gary C. Peters,2020MIPeters,-260,380,1,0,1.31,1
+2020,Michigan,Quinnipiac University,845,John James,2020MIJames,-260,329,0,1,1.31,0
+2020,Michigan,Baldwin Wallace University,1023,Gary C. Peters,2020MIPeters,-289,428,1,0,1.31,1
+2020,Michigan,Baldwin Wallace University,1023,John James,2020MIJames,-289,329,0,1,1.31,0
+2020,Michigan,Glengariff Group,600,Gary C. Peters,2020MIPeters,-302,261,1,0,1.31,1
+2020,Michigan,Glengariff Group,600,John James,2020MIJames,-302,238,0,1,1.31,0
+2020,Michigan,Emerson College,1051,Gary C. Peters,2020MIPeters,-367,482,1,0,1.31,1
+2020,Michigan,Emerson College,1051,John James,2020MIJames,-367,416,0,1,1.31,0
+2020,Michigan,Marketing Resource Group (MRG),600,Gary C. Peters,2020MIPeters,-391,258,1,0,1.31,1
+2020,Michigan,Marketing Resource Group (MRG),600,John James,2020MIJames,-391,237,0,1,1.31,0
+2020,Michigan,Target Insyght,804,Gary C. Peters,2020MIPeters,-405,426,1,0,1.31,1
+2020,Michigan,Target Insyght,804,John James,2020MIJames,-405,297,0,1,1.31,0
+2020,Michigan,Denno Research,600,Gary C. Peters,2020MIPeters,-407,237,1,0,1.31,1
+2020,Michigan,Denno Research,600,John James,2020MIJames,-407,235,0,1,1.31,0
+2020,Michigan,Target Insyght,800,Gary C. Peters,2020MIPeters,-559,400,1,0,1.31,1
+2020,Michigan,Target Insyght,800,John James,2020MIJames,-559,288,0,1,1.31,0
+2020,Michigan,Emerson College,743,Gary C. Peters,2020MIPeters,-605,323,1,0,1.31,1
+2020,Michigan,Emerson College,743,John James,2020MIJames,-605,316,0,1,1.31,0
+2020,Minnesota,Public Policy Polling,877,Tina Smith,2020MNSmith,-61,429,1,0,0.64,1
+2020,Minnesota,Public Policy Polling,877,Jason Lewis,2020MNLewis,-61,359,0,1,0.64,1
+2020,Minnesota,Emerson College,733,Tina Smith,2020MNSmith,-86,353,1,0,0.64,1
+2020,Minnesota,Emerson College,733,Jason Lewis,2020MNLewis,-86,328,0,1,0.64,1
+2020,Minnesota,NA,1,Tina Smith,2020MNSmith,1,0,1,0,0.64,1
+2020,Minnesota,NA,1,Jason Lewis,2020MNLewis,1,0,0,1,0.64,1
+2020,Mississippi,Impact Management Group,606,Mike Espy,2020MSEspy,-181,185,1,0,-9.13,1
+2020,Mississippi,Impact Management Group,606,Cindy Hyde-Smith,2020MSHyde-Smith,-181,353,0,1,-9.13,1
+2020,Mississippi,Mason-Dixon Polling & Strategy,625,Mike Espy,2020MSEspy,-250,268,1,0,-9.13,1
+2020,Mississippi,Mason-Dixon Polling & Strategy,625,Cindy Hyde-Smith,2020MSHyde-Smith,-250,331,0,1,-9.13,1
+2020,Mississippi,Chism Strategies,618,Mike Espy,2020MSEspy,-302,222,1,0,-9.13,1
+2020,Mississippi,Chism Strategies,618,Cindy Hyde-Smith,2020MSHyde-Smith,-302,273,0,1,-9.13,1
+2020,Montana,Emerson College,584,Steve Bullock,2020MTBullock,-94,255,1,0,-10.61,1
+2020,Montana,Emerson College,584,Steve Daines,2020MTDaines,-94,292,0,1,-10.61,1
+2020,Montana,Civiqs,873,Steve Bullock,2020MTBullock,-114,410,1,0,-10.61,1
+2020,Montana,Civiqs,873,Steve Daines,2020MTDaines,-114,427,0,1,-10.61,1
+2020,Montana,Public Policy Polling,1224,Steve Bullock,2020MTBullock,-117,563,1,0,-10.61,1
+2020,Montana,Public Policy Polling,1224,Steve Daines,2020MTDaines,-117,538,0,1,-10.61,1
+2020,Montana,University of Montana,517,Steve Bullock,2020MTBullock,-131,244,1,0,-10.61,1
+2020,Montana,University of Montana,517,Steve Daines,2020MTDaines,-131,222,0,1,-10.61,1
+2020,Montana,Montana State University Bozeman,459,Steve Bullock,2020MTBullock,-191,212,1,0,-10.61,1
+2020,Montana,Montana State University Bozeman,459,Steve Daines,2020MTDaines,-191,180,0,1,-10.61,1
+2020,Nebraska,NA,1,Ben Sasse,2020NESasse,1,0,0,1,-14.06,1
+2020,Nebraska,NA,1,Chris Janicek,2020NEJanicek,1,0,1,0,-14.06,0
+2020,New Hampshire,University of New Hampshire,1889,Jeanne Shaheen,2020NHShaheen,-64,1020,1,0,-0.01,1
+2020,New Hampshire,University of New Hampshire,1889,Corky Messner,2020NHMessner,-64,680,0,1,-0.01,0
+2020,New Hampshire,University of New Hampshire,1893,Jeanne Shaheen,2020NHShaheen,-99,1022,1,0,-0.01,1
+2020,New Hampshire,University of New Hampshire,1893,Corky Messner,2020NHMessner,-99,662,0,1,-0.01,0
+2020,New Hampshire,University of New Hampshire,932,Jeanne Shaheen,2020NHShaheen,-135,466,1,0,-0.01,1
+2020,New Hampshire,University of New Hampshire,932,Corky Messner,2020NHMessner,-135,344,0,1,-0.01,0
+2020,New Hampshire,University of New Hampshire,788,Jeanne Shaheen,2020NHShaheen,-170,409,1,0,-0.01,1
+2020,New Hampshire,University of New Hampshire,788,Corky Messner,2020NHMessner,-170,267,0,1,-0.01,0
+2020,New Hampshire,University of New Hampshire,576,Jeanne Shaheen,2020NHShaheen,-253,299,1,0,-0.01,1
+2020,New Hampshire,University of New Hampshire,576,Corky Messner,2020NHMessner,-253,161,0,1,-0.01,0
+2020,New Jersey,Emerson College,500,Cory A. Booker,2020NJBooker,-58,257,1,0,8.07,1
+2020,New Jersey,Emerson College,500,Rik Mehta,2020NJMehta,-58,137,0,1,8.07,0
+2020,New Jersey,Monmouth University,317,Cory A. Booker,2020NJBooker,-199,174,1,0,8.07,1
+2020,New Jersey,Monmouth University,317,Rik Mehta,2020NJMehta,-199,101,0,1,8.07,0
+2020,New Mexico,Research & Polling Inc.,1123,Ben Ray Luj??n,2020NMLujan,-63,550,1,0,2.96,1
+2020,New Mexico,Research & Polling Inc.,1123,Mark Ronchetti,2020NMRonchetti,-63,449,0,1,2.96,0
+2020,New Mexico,Public Policy Polling,740,Ben Ray Luj??n,2020NMLujan,-144,355,1,0,2.96,1
+2020,New Mexico,Public Policy Polling,740,Mark Ronchetti,2020NMRonchetti,-144,251,0,1,2.96,0
+2020,North Carolina,Change Research,442,Cal Cunningham,2020NCCunningham,-59,225,1,0,-3.32,1
+2020,North Carolina,Change Research,442,Thom Tillis,2020NCTillis,-59,194,0,1,-3.32,1
+2020,North Carolina,Redfield & Wilton Strategies,951,Cal Cunningham,2020NCCunningham,-62,446,1,0,-3.32,1
+2020,North Carolina,Redfield & Wilton Strategies,951,Thom Tillis,2020NCTillis,-62,351,0,1,-3.32,1
+2020,North Carolina,Fox News/Beacon Research/Shaw & Co. Research,722,Cal Cunningham,2020NCCunningham,-64,346,1,0,-3.32,1
+2020,North Carolina,Fox News/Beacon Research/Shaw & Co. Research,722,Thom Tillis,2020NCTillis,-64,303,0,1,-3.32,1
+2020,North Carolina,Monmouth University,401,Cal Cunningham,2020NCCunningham,-64,188,1,0,-3.32,1
+2020,North Carolina,Monmouth University,401,Thom Tillis,2020NCTillis,-64,180,0,1,-3.32,1
+2020,North Carolina,Monmouth University,401,Cal Cunningham,2020NCCunningham,-64,184,1,0,-3.32,1
+2020,North Carolina,Monmouth University,401,Thom Tillis,2020NCTillis,-64,184,0,1,-3.32,1
+2020,North Carolina,East Carolina University,1101,Cal Cunningham,2020NCCunningham,-66,485,1,0,-3.32,1
+2020,North Carolina,East Carolina University,1101,Thom Tillis,2020NCTillis,-66,480,0,1,-3.32,1
+2020,North Carolina,Change Research,560,Cal Cunningham,2020NCCunningham,-73,291,1,0,-3.32,1
+2020,North Carolina,Change Research,560,Thom Tillis,2020NCTillis,-73,235,0,1,-3.32,1
+2020,North Carolina,Morning Consult,1541,Cal Cunningham,2020NCCunningham,-73,724,1,0,-3.32,1
+2020,North Carolina,Morning Consult,1541,Thom Tillis,2020NCTillis,-73,600,0,1,-3.32,1
+2020,North Carolina,Redfield & Wilton Strategies,967,Cal Cunningham,2020NCCunningham,-79,454,1,0,-3.32,1
+2020,North Carolina,Redfield & Wilton Strategies,967,Thom Tillis,2020NCTillis,-79,367,0,1,-3.32,1
+2020,North Carolina,East Carolina University,1255,Cal Cunningham,2020NCCunningham,-83,555,1,0,-3.32,1
+2020,North Carolina,East Carolina University,1255,Thom Tillis,2020NCTillis,-83,499,0,1,-3.32,1
+2020,North Carolina,Emerson College,673,Cal Cunningham,2020NCCunningham,-86,298,1,0,-3.32,1
+2020,North Carolina,Emerson College,673,Thom Tillis,2020NCTillis,-86,279,0,1,-3.32,1
+2020,North Carolina,Harper Polling,600,Cal Cunningham,2020NCCunningham,-86,246,1,0,-3.32,1
+2020,North Carolina,Harper Polling,600,Thom Tillis,2020NCTillis,-86,228,0,1,-3.32,1
+2020,North Carolina,Change Research,491,Cal Cunningham,2020NCCunningham,-87,235,1,0,-3.32,1
+2020,North Carolina,Change Research,491,Thom Tillis,2020NCTillis,-87,211,0,1,-3.32,1
+2020,North Carolina,Data for Progress,1170,Cal Cunningham,2020NCCunningham,-94,573,1,0,-3.32,1
+2020,North Carolina,Data for Progress,1170,Thom Tillis,2020NCTillis,-94,479,0,1,-3.32,1
+2020,North Carolina,YouGov,1121,Cal Cunningham,2020NCCunningham,-96,538,1,0,-3.32,1
+2020,North Carolina,YouGov,1121,Thom Tillis,2020NCTillis,-96,437,0,1,-3.32,1
+2020,North Carolina,Change Research,284,Cal Cunningham,2020NCCunningham,-101,147,1,0,-3.32,1
+2020,North Carolina,Change Research,284,Thom Tillis,2020NCTillis,-101,113,0,1,-3.32,1
+2020,North Carolina,Morning Consult,1504,Cal Cunningham,2020NCCunningham,-101,691,1,0,-3.32,1
+2020,North Carolina,Morning Consult,1504,Thom Tillis,2020NCTillis,-101,556,0,1,-3.32,1
+2020,North Carolina,Cardinal Point Analytics (CardinalGPS),735,Cal Cunningham,2020NCCunningham,-103,315,1,0,-3.32,1
+2020,North Carolina,Cardinal Point Analytics (CardinalGPS),735,Thom Tillis,2020NCTillis,-103,316,0,1,-3.32,1
+2020,North Carolina,Marist College,882,Cal Cunningham,2020NCCunningham,-105,441,1,0,-3.32,1
+2020,North Carolina,Marist College,882,Thom Tillis,2020NCTillis,-105,361,0,1,-3.32,1
+2020,North Carolina,Redfield & Wilton Strategies,919,Cal Cunningham,2020NCCunningham,-106,431,1,0,-3.32,1
+2020,North Carolina,Redfield & Wilton Strategies,919,Thom Tillis,2020NCTillis,-106,330,0,1,-3.32,1
+2020,North Carolina,Cardinal Point Analytics (CardinalGPS),547,Cal Cunningham,2020NCCunningham,-112,258,1,0,-3.32,1
+2020,North Carolina,Cardinal Point Analytics (CardinalGPS),547,Thom Tillis,2020NCTillis,-112,241,0,1,-3.32,1
+2020,North Carolina,Change Research,655,Cal Cunningham,2020NCCunningham,-115,320,1,0,-3.32,1
+2020,North Carolina,Change Research,655,Thom Tillis,2020NCTillis,-115,275,0,1,-3.32,1
+2020,North Carolina,Public Policy Polling,818,Cal Cunningham,2020NCCunningham,-119,384,1,0,-3.32,1
+2020,North Carolina,Public Policy Polling,818,Thom Tillis,2020NCTillis,-119,319,0,1,-3.32,1
+2020,North Carolina,Change Research,468,Cal Cunningham,2020NCCunningham,-129,238,1,0,-3.32,1
+2020,North Carolina,Change Research,468,Thom Tillis,2020NCTillis,-129,191,0,1,-3.32,1
+2020,North Carolina,East Carolina University,1149,Cal Cunningham,2020NCCunningham,-132,473,1,0,-3.32,1
+2020,North Carolina,East Carolina University,1149,Thom Tillis,2020NCTillis,-132,473,0,1,-3.32,1
+2020,North Carolina,Public Policy Polling,1157,Cal Cunningham,2020NCCunningham,-134,509,1,0,-3.32,1
+2020,North Carolina,Public Policy Polling,1157,Thom Tillis,2020NCTillis,-134,462,0,1,-3.32,1
+2020,North Carolina,Fox News/Beacon Research/Shaw & Co. Research,1012,Cal Cunningham,2020NCCunningham,-134,394,1,0,-3.32,1
+2020,North Carolina,Fox News/Beacon Research/Shaw & Co. Research,1012,Thom Tillis,2020NCTillis,-134,374,0,1,-3.32,1
+2020,North Carolina,Siena College/The New York Times Upshot,653,Cal Cunningham,2020NCCunningham,-139,274,1,0,-3.32,1
+2020,North Carolina,Siena College/The New York Times Upshot,653,Thom Tillis,2020NCTillis,-139,254,0,1,-3.32,1
+2020,North Carolina,Redfield & Wilton Strategies,902,Cal Cunningham,2020NCCunningham,-140,405,1,0,-3.32,1
+2020,North Carolina,Redfield & Wilton Strategies,902,Thom Tillis,2020NCTillis,-140,324,0,1,-3.32,1
+2020,North Carolina,Public Policy Polling,949,Cal Cunningham,2020NCCunningham,-154,408,1,0,-3.32,1
+2020,North Carolina,Public Policy Polling,949,Thom Tillis,2020NCTillis,-154,389,0,1,-3.32,1
+2020,North Carolina,Harper Polling,500,Cal Cunningham,2020NCCunningham,-160,180,1,0,-3.32,1
+2020,North Carolina,Harper Polling,500,Thom Tillis,2020NCTillis,-160,190,0,1,-3.32,1
+2020,North Carolina,Neighborhood Research and Media,391,Cal Cunningham,2020NCCunningham,-167,136,1,0,-3.32,1
+2020,North Carolina,Neighborhood Research and Media,391,Thom Tillis,2020NCTillis,-167,129,0,1,-3.32,1
+2020,North Carolina,East Carolina University,1111,Cal Cunningham,2020NCCunningham,-179,439,1,0,-3.32,1
+2020,North Carolina,East Carolina University,1111,Thom Tillis,2020NCTillis,-179,457,0,1,-3.32,1
+2020,North Carolina,Civiqs,1362,Cal Cunningham,2020NCCunningham,-184,681,1,0,-3.32,1
+2020,North Carolina,Civiqs,1362,Thom Tillis,2020NCTillis,-184,558,0,1,-3.32,1
+2020,North Carolina,Meredith College,604,Cal Cunningham,2020NCCunningham,-190,262,1,0,-3.32,1
+2020,North Carolina,Meredith College,604,Thom Tillis,2020NCTillis,-190,207,0,1,-3.32,1
+2020,North Carolina,SurveyUSA,580,Cal Cunningham,2020NCCunningham,-192,237,1,0,-3.32,1
+2020,North Carolina,SurveyUSA,580,Thom Tillis,2020NCTillis,-192,226,0,1,-3.32,1
+2020,North Carolina,Public Policy Polling,1318,Cal Cunningham,2020NCCunningham,-203,619,1,0,-3.32,1
+2020,North Carolina,Public Policy Polling,1318,Thom Tillis,2020NCTillis,-203,527,0,1,-3.32,1
+2020,North Carolina,Harper Polling,500,Cal Cunningham,2020NCCunningham,-211,170,1,0,-3.32,1
+2020,North Carolina,Harper Polling,500,Thom Tillis,2020NCTillis,-211,190,0,1,-3.32,1
+2020,North Carolina,East Carolina University,1288,Cal Cunningham,2020NCCunningham,-250,539,1,0,-3.32,1
+2020,North Carolina,East Carolina University,1288,Thom Tillis,2020NCTillis,-250,566,0,1,-3.32,1
+2020,North Carolina,Marist College,2120,Cal Cunningham,2020NCCunningham,-251,1017,1,0,-3.32,1
+2020,North Carolina,Marist College,2120,Thom Tillis,2020NCTillis,-251,911,0,1,-3.32,1
+2020,North Carolina,Meredith College,998,Cal Cunningham,2020NCCunningham,-394,325,1,0,-3.32,1
+2020,North Carolina,Meredith College,998,Thom Tillis,2020NCTillis,-394,332,0,1,-3.32,1
+2020,North Carolina,"Fabrizio, Lee & Associates",600,Cal Cunningham,2020NCCunningham,-462,252,1,0,-3.32,1
+2020,North Carolina,"Fabrizio, Lee & Associates",600,Thom Tillis,2020NCTillis,-462,246,0,1,-3.32,1
+2020,North Carolina,Public Policy Polling,610,Cal Cunningham,2020NCCunningham,-505,250,1,0,-3.32,1
+2020,North Carolina,Public Policy Polling,610,Thom Tillis,2020NCTillis,-505,244,0,1,-3.32,1
+2020,Oklahoma,Amber Integrated,500,Abby Broyles,2020OKBroyles,-241,155,1,0,-19.56,0
+2020,Oklahoma,Amber Integrated,500,James M. Inhofe,2020OKInhofe,-241,285,0,1,-19.56,1
+2020,Oregon,NA,1,Jeff Merkley,2020ORMerkley,1,0,1,0,4.47,1
+2020,Oregon,NA,1,Jo Rae Perkins,2020ORPerkins,1,0,0,1,4.47,1
+2020,Rhode Island,NA,1,Jack Reed,2020RIReed,1,0,1,0,9.78,1
+2020,Rhode Island,NA,1,Allen Waters,2020RIWaters,1,0,0,1,9.78,0
+2020,South Carolina,Quinnipiac University,914,Jaime Harrison,2020SCHarrison,-93,402,1,0,-7.77,1
+2020,South Carolina,Quinnipiac University,914,Lindsey Graham,2020SCGraham,-93,402,0,1,-7.77,1
+2020,South Carolina,Morning Consult,741,Jaime Harrison,2020SCHarrison,-94,318,1,0,-7.77,1
+2020,South Carolina,Morning Consult,741,Lindsey Graham,2020SCGraham,-94,326,0,1,-7.77,1
+2020,South Carolina,Gravis Marketing,604,Jaime Harrison,2020SCHarrison,-110,247,1,0,-7.77,1
+2020,South Carolina,Gravis Marketing,604,Lindsey Graham,2020SCGraham,-110,289,0,1,-7.77,1
+2020,South Carolina,Civiqs,591,Jaime Harrison,2020SCHarrison,-162,248,1,0,-7.77,1
+2020,South Carolina,Civiqs,591,Lindsey Graham,2020SCGraham,-162,248,0,1,-7.77,1
+2020,South Carolina,Marist College,2382,Jaime Harrison,2020SCHarrison,-257,881,1,0,-7.77,1
+2020,South Carolina,Marist College,2382,Lindsey Graham,2020SCGraham,-257,1286,0,1,-7.77,1
+2020,South Carolina,East Carolina University,1756,Jaime Harrison,2020SCHarrison,-276,667,1,0,-7.77,1
+2020,South Carolina,East Carolina University,1756,Lindsey Graham,2020SCGraham,-276,895,0,1,-7.77,1
+2020,South Carolina,Change Research,998,Jaime Harrison,2020SCHarrison,-329,449,1,0,-7.77,1
+2020,South Carolina,Change Research,998,Lindsey Graham,2020SCGraham,-329,469,0,1,-7.77,1
+2020,South Carolina,Change Research,2312,Jaime Harrison,2020SCHarrison,-509,809,1,0,-7.77,1
+2020,South Carolina,Change Research,2312,Lindsey Graham,2020SCGraham,-509,1202,0,1,-7.77,1
+2020,South Dakota,NA,1,Mike Rounds,2020SDRounds,1,0,0,1,-14.13,1
+2020,South Dakota,NA,1,Dan Ahlers,2020SDAhlers,1,0,1,0,-14.13,1
+2020,Texas,University of Texas at Tyler,901,Mary Jennings Hegar,2020TXHegar,-63,252,1,0,-5.55,0
+2020,Texas,University of Texas at Tyler,901,John Cornyn,2020TXCornyn,-63,351,0,1,-5.55,1
+2020,Texas,Data for Progress,2295,Mary Jennings Hegar,2020TXHegar,-71,918,1,0,-5.55,0
+2020,Texas,Data for Progress,2295,John Cornyn,2020TXCornyn,-71,1055,0,1,-5.55,1
+2020,Texas,YouGov,846,Mary Jennings Hegar,2020TXHegar,-83,316,1,0,-5.55,0
+2020,Texas,YouGov,846,John Cornyn,2020TXCornyn,-83,375,0,1,-5.55,1
+2020,Texas,Morning Consult,2576,Mary Jennings Hegar,2020TXHegar,-94,978,1,0,-5.55,0
+2020,Texas,Morning Consult,2576,John Cornyn,2020TXCornyn,-94,1133,0,1,-5.55,1
+2020,Texas,Quinnipiac University,880,Mary Jennings Hegar,2020TXHegar,-107,334,1,0,-5.55,0
+2020,Texas,Quinnipiac University,880,John Cornyn,2020TXCornyn,-107,413,0,1,-5.55,1
+2020,Texas,YouGov,1179,Mary Jennings Hegar,2020TXHegar,-117,424,1,0,-5.55,0
+2020,Texas,YouGov,1179,John Cornyn,2020TXCornyn,-117,518,0,1,-5.55,1
+2020,Texas,University of Texas at Tyler,1677,Mary Jennings Hegar,2020TXHegar,-120,486,1,0,-5.55,0
+2020,Texas,University of Texas at Tyler,1677,John Cornyn,2020TXCornyn,-120,704,0,1,-5.55,1
+2020,Texas,Fox News/Beacon Research/Shaw & Co. Research,1001,Mary Jennings Hegar,2020TXHegar,-134,360,1,0,-5.55,0
+2020,Texas,Fox News/Beacon Research/Shaw & Co. Research,1001,John Cornyn,2020TXCornyn,-134,460,0,1,-5.55,1
+2020,Texas,University of Texas at Tyler,1183,Mary Jennings Hegar,2020TXHegar,-191,283,1,0,-5.55,0
+2020,Texas,University of Texas at Tyler,1183,John Cornyn,2020TXCornyn,-191,437,0,1,-5.55,1
+2020,Texas,Marist College,2409,Mary Jennings Hegar,2020TXHegar,-251,987,1,0,-5.55,0
+2020,Texas,Marist College,2409,John Cornyn,2020TXCornyn,-251,1180,0,1,-5.55,1
+2020,Texas,Emerson College,799,Mary Jennings Hegar,2020TXHegar,-556,94,1,0,-5.55,0
+2020,Texas,Emerson College,799,John Cornyn,2020TXCornyn,-556,229,0,1,-5.55,1
+2020,Virginia,Roanoke College,566,Mark R. Warner,2020VAWarner,-74,311,1,0,0.59,1
+2020,Virginia,Roanoke College,566,Daniel M. Gade,2020VAGade,-74,192,0,1,0.59,1
+2020,West Virginia,NA,1,Shelley Moore Capito,2020WVCapito,1,0,0,1,-19.58,1
+2020,West Virginia,NA,1,Paula Jean Swearengin,2020WVSwearengin,1,0,1,0,-19.58,1
+2020,Wyoming,NA,1,Cynthia Lummis,2020WYLummis,1,0,0,1,-24.97,1
+2020,Wyoming,NA,1,Merav Ben-David,2020WYDavid,1,0,1,0,-24.97,0
+2020,Illinois,NA,1,Dick Durbin,2020ILDurbin,1,0,1,0,7.9,1
+2020,Illinois,NA,1,Mark Curran,2020ILCurran,1,0,0,1,7.9,1
+2020,Tennessee,NA,1,Bill Hagerty,2020TNHagerty,1,0,0,1,-12.87,1
+2020,Tennessee,NA,1,Marquita Bradshaw,2020TNBradshaw,1,0,1,0,-12.87,0
+2020,Illinois,NA,1,Dick Durbin,2020ILDurbin,1,0,1,0,7.9,1
+2020,Illinois,NA,1,Mark Curran,2020ILCurran,1,0,0,1,7.9,1
+2020,Tennessee,NA,1,Bill Hagerty,2020TNHagerty,1,0,0,1,-12.87,1
+2020,Tennessee,NA,1,Marquita Bradshaw,2020TNBradshaw,1,0,1,0,-12.87,0
+2020,Delaware,NA,1,Chris Coons,2020DECoons,1,0,1,0,6.19,1
+2020,Delaware,NA,1,Lauren Witzke,2020DECWitzke,1,0,0,1,6.19,0

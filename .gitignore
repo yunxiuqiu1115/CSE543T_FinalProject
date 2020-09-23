@@ -5,7 +5,6 @@ plots/
 playgrounds/
 *.mat
 *.txt
-*.csv
 *.m~
 CNN.*
 *.jpg
