@@ -25,7 +25,7 @@ one_job(){
 
 for TYPE in ${TYPES[@]}; do
     for input_str in ${input_strs[@]}; do
-    bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett "./matlabrun '$TYPE' $input_str"
+        bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett "./matlabrun $TYPE $input_str"
         # for cv_year in ${cv_years[@]}; do
     	#     nlZs=$(one_job $input_str $cv_year $TYPE)
 	    #     echo $nlZs
