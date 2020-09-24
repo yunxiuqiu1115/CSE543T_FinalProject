@@ -167,11 +167,11 @@ generated quantities {
   vector<lower=0>[4] test_p4[test_N4]; // vector of underlying dirichlet parameters
   vector<lower=0, upper=1>[4] test_gamma4[test_N4]; // vector of underlying true support rates
   
-  vector[2] forecast_y2[N2]; // vector of forecasting votings
+  vector[2] rep_y2[N2]; // vector of forecasting votings
   
-  vector[3] forecast_y3[N3]; // vector of forecasting votings
+  vector[3] rep_y3[N3]; // vector of forecasting votings
   
-  vector[4] forecast_y4[N4]; // vector of forecasting votings
+  vector[4] rep_y4[N4]; // vector of forecasting votings
   
   vector[N2] ll2; // vector of in-sample model log likelihood
 
@@ -187,13 +187,13 @@ generated quantities {
   
   // generate in-sample forecasting
   for (i in 1:N2)
-    forecast_y2[i] = dirichlet_rng(alpha+p2[i]);
+    rep_y2[i] = dirichlet_rng(alpha+p2[i]);
     
   for (i in 1:N3)
-    forecast_y3[i] = dirichlet_rng(alpha+p3[i]);
+    rep_y3[i] = dirichlet_rng(alpha+p3[i]);
     
   for (i in 1:N4)
-    forecast_y4[i] = dirichlet_rng(alpha+p4[i]);
+    rep_y4[i] = dirichlet_rng(alpha+p4[i]);
     
   // obtain in-sample log likelihood
   for (i in 1:N2)

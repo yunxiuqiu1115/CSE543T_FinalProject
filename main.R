@@ -303,7 +303,7 @@ for (a in 1:length(horizons)) {
     # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
     preds= c()
     for(j in 1:2){
-      tmp = paste('forecast_y2[',i,',',j,']',sep='')
+      tmp = paste('rep_y2[',i,',',j,']',sep='')
       pred = fit_params[[tmp]]
       preds = c(preds, pred)
       u=quantile(pred,probs=c(0.975),names = FALSE)
@@ -346,7 +346,7 @@ for (a in 1:length(horizons)) {
     # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
     preds= c()
     for(j in 1:3){
-      tmp = paste('forecast_y3[',i,',',j,']',sep='')
+      tmp = paste('rep_y3[',i,',',j,']',sep='')
       pred = fit_params[[tmp]]
       preds = c(preds, pred)
       u=quantile(pred,probs=c(0.975),names = FALSE)
@@ -391,7 +391,7 @@ for (a in 1:length(horizons)) {
     # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
     preds= c()
     for(j in 1:4){
-      tmp = paste('forecast_y4[',i,',',j,']',sep='')
+      tmp = paste('rep_y4[',i,',',j,']',sep='')
       pred = fit_params[[tmp]]
       preds = c(preds, pred)
       u=quantile(pred,probs=c(0.975),names = FALSE)

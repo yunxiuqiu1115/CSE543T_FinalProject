@@ -192,6 +192,7 @@ function myrun(tau,type, ls, os, lik, j, mode)
         % iterate over 1992-2016
         for y=1:numel(years)
             parms.test_year = years(y);
+            disp(parms.test_year);
             % precompute coefs of prior linear model of the linear trend intercept
             parms.coefs = priorModel(CNNdata, parms.test_year);
             plot_path = "plots/" + type + "MargLinTre"+num2str(parms.test_year)+"_"+num2str(tau);
