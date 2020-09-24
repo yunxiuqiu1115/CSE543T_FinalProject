@@ -5,7 +5,7 @@ args = commandArgs(trailingOnly=TRUE)
 
 # test if there is at least one argument: if not, use default 2020 with GP model
 if (length(args)==0) {
-  test_year = 2020
+  test_year = 2018
   # define model type: gp prior or lm prior
   TYPE = 'GP'
 }
@@ -47,7 +47,8 @@ best_cv_idx = c(32,32,94,46,46,36,36)
 # store the stan_model fit objects
 fit_objs = c()
 
-for (a in 1:length(horizons)) {
+# for (a in 1:length(horizons))
+for (a in 1:1) {
   
   # load the prior files
   input_file = paste('results/LOO', TYPE, '_' , test_year, 'day', horizons[a], '_', best_cv_idx[a] ,'.csv',sep='')
@@ -231,13 +232,13 @@ for (a in 1:length(horizons)) {
                     experienced3 = stan_experienced[idx3,1:3],
                     year_idx3 = year_idx[idx3],
                     N4 = length(idx4), 
-                    mu4 = stan_mu[idx4,1:4], 
-                    sigma4 = stan_sigma[idx4,1:4],
-                    y4 = stan_y[idx4,1:4],
-                    pvi4 = stan_pvi[idx4,1:4],
-                    party4 = stan_party[idx4,1:4],
-                    experienced4 = stan_experienced[idx4,1:4],
-                    year_idx4 = year_idx[idx4],
+                    mu4 = matrix(stan_mu[idx4,1:4],ncol=4,byrow = FALSE), 
+                    sigma4 = matrix(stan_sigma[idx4,1:4],ncol=4,byrow = FALSE),
+                    y4 = matrix(stan_y[idx4,1:4],ncol=4,byrow = FALSE),
+                    pvi4 = matrix(stan_pvi[idx4,1:4],ncol=4,byrow = FALSE),
+                    party4 = matrix(stan_party[idx4,1:4],ncol=4,byrow = FALSE),
+                    experienced4 = matrix(stan_experienced[idx4,1:4],ncol=4,byrow = FALSE),
+                    year_idx4 = array(year_idx[idx4]),
                     test_N2 = length(test_idx2), 
                     test_mu2 = test_stan_mu[test_idx2,1:2], 
                     test_sigma2 = test_stan_sigma[test_idx2,1:2],
@@ -276,7 +277,7 @@ for (a in 1:length(horizons)) {
               cores = 3, 
               thin = 4,
               control=list(adapt_delta=.98, max_treedepth = 15),
-              seed = b,
+              seed = a,
               refresh=0
   )
   

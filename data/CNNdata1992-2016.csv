@@ -2138,7 +2138,6 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2000,Tennessee,2000TNFrist,65.09569312,500,-10,300,"Zogby Interactive/JZ Analytics",1,0,-3.442875062,1
 2000,Michigan,2000MIStabenow,49.47475637,600,-3,306,"Zogby Interactive/JZ Analytics",0,1,2.594646897,1
 2000,Michigan,2000MIStabenow,49.47475637,600,-5,270,"Zogby Interactive/JZ Analytics",0,1,2.594646897,1
-2000,Massachusetts,2000MAKennedy,72.68906141,400,-14,240,"RKM Research and Communications Inc.",0,1,13.9051458,1
 2000,Virginia,2000VARobb,47.68026057,625,-118,243,"Mason-Dixon Polling & Research Inc.",0,1,-5.78731635,1
 2000,Vermont,2000VTFlanagan,25.42530329,400,-28,140,"Research 2000",0,1,8.450551111,0
 2000,Minnesota,2000MNDayton,48.83419025,625,-46,287,"Mason-Dixon Polling & Research Inc.",0,1,4.646772932,0
@@ -2149,7 +2148,6 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2000,Missouri,2000MOAshcroft,48.39341019,600,-7,276,"Zogby Interactive/JZ Analytics",1,0,-1.182309363,1
 2000,Michigan,2000MIAbraham,47.86093479,500,-329,205,"EPIC-MRA",1,0,2.594646897,1
 2000,Missouri,2000MOAshcroft,48.39341019,600,-11,258,"Zogby Interactive/JZ Analytics",1,0,-1.182309363,1
-2000,Massachusetts,2000MARobinson,12.86213848,400,-14,64,"KRC/Communications Research",1,0,13.9051458,0
 2000,Michigan,2000MIStabenow,49.47475637,600,-12,258,"Zogby Interactive/JZ Analytics",0,1,2.594646897,1
 2000,Missouri,2000MOCarnahan,50.46659321,600,-7,276,"Zogby Interactive/JZ Analytics",0,1,-1.182309363,1
 2000,Michigan,2000MIAbraham,47.86093479,500,-277,225,"EPIC-MRA",1,0,2.594646897,1
@@ -2162,7 +2160,6 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2000,New York,2000NYLazio,43.00588849,871,-13,383,"CBS News/New York Times",1,0,11.28868836,0
 2000,Minnesota,2000MNDayton,48.83419025,514,-24,246,"St. Cloud State University",0,1,4.646772932,0
 2000,Michigan,2000MIStabenow,49.47475637,600,-11,264,"Zogby Interactive/JZ Analytics",0,1,2.594646897,1
-2000,Massachusetts,2000MARobinson,12.86213848,400,-145,72,"University of Massachusetts Lowell",1,0,13.9051458,0
 2000,Missouri,2000MOAshcroft,48.39341019,600,-10,258,"Zogby Interactive/JZ Analytics",1,0,-1.182309363,1
 2000,Missouri,2000MOCarnahan,50.46659321,625,-116,268,"Mason-Dixon Polling & Research Inc.",0,1,-1.182309363,1
 2000,Washington,2000WAGorton,48.63972594,400,-20,184,"Elway Research",1,0,2.464912098,1
@@ -2201,7 +2198,6 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2000,Washington,2000WACantwell,48.73028493,500,-7,215,"Zogby Interactive/JZ Analytics",0,1,2.464912098,1
 2000,Washington,2000WACantwell,48.73028493,500,-9,225,"Zogby Interactive/JZ Analytics",0,1,2.464912098,1
 2000,New York,2000NYLazio,43.00588849,700,-10,336,"Zogby Interactive/JZ Analytics",1,0,11.28868836,0
-2000,Massachusetts,2000MARobinson,12.86213848,400,-85,64,"RKM Research and Communications Inc.",1,0,13.9051458,0
 2000,Georgia,2000GAMattingly,37.90294719,627,-26,188,"Mason-Dixon Polling & Research Inc.",1,0,-5.360454246,0
 2000,Maryland,2000MDSarbanes,63.17809151,625,-267,368,"Mason-Dixon Polling & Research Inc.",0,1,3.90556482,1
 2000,Minnesota,2000MNGrams,43.29263656,900,-7,333,"Star Tribune",1,0,4.646772932,1
@@ -2212,7 +2208,6 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2000,Pennsylvania,2000PASantorum,52.4117813,550,-12,264,"Millersville University",1,0,0.430016027,1
 2000,Florida,2000FLMcCollum,46.19211639,600,-6,216,"Zogby Interactive/JZ Analytics",1,0,-1.575657054,1
 2000,Pennsylvania,2000PASantorum,52.4117813,600,-5,300,"Zogby Interactive/JZ Analytics",1,0,0.430016027,1
-2000,Massachusetts,2000MAKennedy,72.68906141,400,-85,272,"RKM Research and Communications Inc.",0,1,13.9051458,1
 2000,Michigan,2000MIStabenow,49.47475637,800,-85,272,"Mitchell Research & Communications",0,1,2.594646897,1
 2000,Minnesota,2000MNGrams,43.29263656,625,-116,287,"Mason-Dixon Polling & Research Inc.",1,0,4.646772932,1
 2000,Tennessee,2000TNFrist,65.09569312,500,-12,310,"Zogby Interactive/JZ Analytics",1,0,-3.442875062,1
@@ -2245,13 +2240,11 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2000,Michigan,2000MIAbraham,47.86093479,600,-5,270,"Zogby Interactive/JZ Analytics",1,0,2.594646897,1
 2000,New York,2000NYLazio,43.00588849,700,-11,322,"Zogby Interactive/JZ Analytics",1,0,11.28868836,0
 2000,New York,2000NYLazio,43.00588849,600,-104,288,"Mahoney, Strimple, Goncharenko",1,0,11.28868836,0
-2000,Massachusetts,2000MAKennedy,72.68906141,400,-14,272,"KRC/Communications Research",0,1,13.9051458,1
 2000,Nevada,2000NVBernstein,39.69346106,400,-114,140,"Fairbank, Maslin, Maullin, Metz & Associates",0,1,-4.143118816,0
 2000,Montana,2000MTBurns,50.55429894,628,-15,282,"Mason-Dixon Polling & Research Inc.",1,0,-6.417773955,1
 2000,Tennessee,2000TNFrist,65.09569312,500,-6,285,"Zogby Interactive/JZ Analytics",1,0,-3.442875062,1
 2000,Pennsylvania,2000PASantorum,52.4117813,500,-213,215,"Mellman Group",1,0,0.430016027,1
 2000,Washington,2000WAGorton,48.63972594,500,-3,235,"Zogby Interactive/JZ Analytics",1,0,2.464912098,1
-2000,Massachusetts,2000MARobinson,12.86213848,400,-14,44,"RKM Research and Communications Inc.",1,0,13.9051458,0
 2000,New York,2000NYClinton,55.27137149,700,-8,315,"Zogby Interactive/JZ Analytics",0,1,11.28868836,0
 2000,Virginia,2000VARobb,47.68026057,399,-59,159,"Roanoke College",0,1,-5.78731635,1
 2000,Virginia,2000VARobb,47.68026057,1009,-16,464,"ABC News/Washington Post",0,1,-5.78731635,1
@@ -2313,13 +2306,10 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2000,New York,2000NYLazio,43.00588849,850,-61,357,"Blum & Weprin Associates",1,0,11.28868836,0
 2000,Ohio,2000OHDeWine,59.89790069,816,-330,448,"Ohio State University",1,0,-1.133120713,1
 2000,Florida,2000FLNelson,51.04361119,600,-6,264,"Zogby Interactive/JZ Analytics",0,1,-1.575657054,1
-2000,Massachusetts,2000MAHowell,11.88188134,400,-14,32,"KRC/Communications Research",0,0,13.9051458,0
-2000,Massachusetts,2000MAKennedy,72.68906141,401,-13,256,"University of Massachusetts Lowell",0,1,13.9051458,1
 2000,Tennessee,2000TNClark,32.20718724,500,-8,145,"Zogby Interactive/JZ Analytics",0,1,-3.442875062,0
 2000,Indiana,2000INJohnson,31.85111567,600,-26,108,"Research 2000",0,1,-7.876549218,0
 2000,New York,2000NYClinton,55.27137149,700,-6,350,"Zogby Interactive/JZ Analytics",0,1,11.28868836,0
 2000,Minnesota,2000MNGrams,43.29263656,625,-46,256,"Mason-Dixon Polling & Research Inc.",1,0,4.646772932,1
-2000,Massachusetts,2000MARobinson,12.86213848,401,-13,44,"University of Massachusetts Lowell",1,0,13.9051458,0
 2000,Ohio,2000OHDeWine,59.89790069,600,-4,360,"Zogby Interactive/JZ Analytics",1,0,-1.133120713,1
 2000,Missouri,2000MOCarnahan,50.46659321,600,-353,234,"Garin-Hart-Yang Research Group",0,1,-1.182309363,1
 2000,Missouri,2000MOCarnahan,50.46659321,800,-280,344,"Market Strategies International",0,1,-1.182309363,1
@@ -2345,8 +2335,6 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2000,Missouri,2000MOAshcroft,48.39341019,600,-12,270,"Zogby Interactive/JZ Analytics",1,0,-1.182309363,1
 2000,Missouri,2000MOAshcroft,48.39341019,600,-54,270,"Zogby Interactive/JZ Analytics",1,0,-1.182309363,1
 2000,New York,2000NYLazio,43.00588849,700,-12,329,"Zogby Interactive/JZ Analytics",1,0,11.28868836,0
-2000,Massachusetts,2000MAHowell,11.88188134,401,-13,52,"University of Massachusetts Lowell",0,0,13.9051458,0
-2000,Massachusetts,2000MAHowell,11.88188134,400,-14,36,"RKM Research and Communications Inc.",0,0,13.9051458,0
 2000,Missouri,2000MOAshcroft,48.39341019,600,-3,282,"Zogby Interactive/JZ Analytics",1,0,-1.182309363,1
 2000,New York,2000NYLazio,43.00588849,979,-6,381,"Quinnipiac University",1,0,11.28868836,0
 2000,Vermont,2000VTJeffords,65.55736568,400,-298,227,"Research 2000",1,0,8.450551111,1
@@ -2588,7 +2576,6 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2000,Minnesota,2000MNGrams,43.29263656,900,-24,333,"Star Tribune",1,0,4.646772932,1
 2000,Tennessee,2000TNFrist,65.09569312,500,-7,295,"Zogby Interactive/JZ Analytics",1,0,-3.442875062,1
 2000,Tennessee,2000TNFrist,65.09569312,500,-8,290,"Zogby Interactive/JZ Analytics",1,0,-3.442875062,1
-2000,Massachusetts,2000MAKennedy,72.68906141,400,-145,268,"University of Massachusetts Lowell",0,1,13.9051458,1
 2000,New Jersey,2000NJFranks,47.09635894,500,-7,220,"Tarrance Group",1,0,5.238337242,1
 2000,New York,2000NYClinton,55.27137149,700,-7,329,"Zogby Interactive/JZ Analytics",0,1,11.28868836,0
 2000,Nebraska,2000NENelson,50.9992056,806,-278,427,"Cooper & Secrest",0,1,-15.28345319,1
@@ -11769,7 +11756,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Nevada,2016NVHeck,44.67037,525,-8,236,"Rasmussen Reports/Pulse Opinion Research",1,0,1.442596,1
 2016,Colorado,2016COBennet,49.97067,500,-71,240,"Magellan Strategies",0,1,0.7811624,1
 2016,Maryland,2016MDVan Hollen,60.88788,772,-12,517,"SurveyMonkey",0,1,11.35451,1
-2016,California,2016CASanchez,38.39717,1426,-62,285,"YouGov",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,1426,-62,285,"YouGov",0,1,9.909283,1
 2016,South Carolina,2016SCScott,60.56945,1290,-91,580,"Public Policy Polling",1,0,-7.270816,1
 2016,Florida,2016FLMurphy,44.31485,3356,-11,1644,"SurveyMonkey",0,1,-1.52036,1
 2016,South Carolina,2016SCDixon,36.92983,1290,-91,361,"Public Policy Polling",0,1,-7.270816,0
@@ -11791,7 +11778,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Ohio,2016OHStrickland,37.15756,405,-38,157,"Monmouth University",0,1,-0.446556,1
 2016,North Carolina,2016NCBurr,51.06178,300,-150,108,"Greenberg Quinlan Rosner (Democracy Corps)",1,0,-2.997193,1
 2016,New Hampshire,2016NHAyotte,47.84371,400,-52,188,"Monmouth University",1,0,0.8717656,1
-2016,California,2016CAHarris,61.60283,2655,-8,1354,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,2655,-8,1354,"SurveyMonkey",0,1,9.909283,1
 2016,Wisconsin,2016WIJohnson,50.17297,665,-124,266,"Marquette University Law School",1,0,1.550815,1
 2016,Pennsylvania,2016PAMcGinty,47.28905,1505,-102,617,"Public Policy Polling",0,1,0.7697237,0
 2016,New Hampshire,2016NHWood Hassan,47.9813,400,-146,196,"Global Strategy Group",0,1,0.8717656,1
@@ -11814,12 +11801,12 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Ohio,2016OHPortman,58.02888,782,-34,398,"Public Policy Polling",1,0,-0.446556,1
 2016,North Carolina,2016NCRoss,45.36569,300,-150,114,"Greenberg Quinlan Rosner (Democracy Corps)",0,1,-2.997193,1
 2016,Iowa,2016IAGrassley,60.0899,1781,-7,1015,"SurveyMonkey",1,0,0.9949758,1
-2016,California,2016CAHarris,61.60283,4212,-68,1263,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,4212,-68,1263,"SurveyMonkey",0,1,9.909283,1
 2016,North Dakota,2016NDHoeven,78.47802,260,-12,187,"SurveyMonkey",1,0,-12.07549,1
 2016,Colorado,2016COBennet,49.97067,400,-40,212,"Monmouth University",0,1,0.7811624,1
 2016,Oregon,2016ORWyden,56.60084,1595,-7,1004,"SurveyMonkey",0,1,4.307221,1
 2016,New Hampshire,2016NHWood Hassan,47.9813,990,-90,415,"YouGov",0,1,0.8717656,1
-2016,California,2016CASanchez,38.39717,1055,-60,263,"Public Policy Institute of California",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,1055,-60,263,"Public Policy Institute of California",0,1,9.909283,1
 2016,North Carolina,2016NCBurr,51.06178,1250,-268,562,"SurveyUSA",1,0,-2.997193,1
 2016,New Hampshire,2016NHWood Hassan,47.9813,737,-63,324,"Marist College",0,1,0.8717656,1
 2016,North Carolina,2016NCBurr,51.06178,875,-26,402,"Rasmussen Reports/Pulse Opinion Research",1,0,-2.997193,1
@@ -11828,11 +11815,11 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,New Hampshire,2016NHWood Hassan,47.9813,649,-153,305,"Public Policy Polling",0,1,0.8717656,1
 2016,Nevada,2016NVCortez Masto,47.09887,500,-85,185,"Suffolk University",0,1,1.442596,1
 2016,Maryland,2016MDVan Hollen,60.88788,851,-11,561,"SurveyMonkey",0,1,11.35451,1
-2016,California,2016CAHarris,61.60283,2505,-14,1252,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,2505,-14,1252,"SurveyMonkey",0,1,9.909283,1
 2016,Utah,2016UTLee,68.14589,1238,-159,631,"SurveyUSA",1,0,-26.58997,1
 2016,Colorado,2016COBennet,49.97067,830,-91,448,"Quinnipiac University",0,1,0.7811624,1
 2016,Kansas,2016KSWiesner,32.23813,537,-123,177,"SurveyUSA",0,1,-13.07984,0
-2016,California,2016CASanchez,38.39717,2505,-14,751,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,2505,-14,751,"SurveyMonkey",0,1,9.909283,1
 2016,Wisconsin,2016WIJohnson,50.17297,891,-8,392,"Public Policy Polling",1,0,1.550815,1
 2016,Missouri,2016MOBlunt,49.18425,1119,-8,481,"SurveyMonkey",1,0,-6.743064,1
 2016,Ohio,2016OHPortman,58.02888,1152,-30,551,"Baldwin Wallace University",1,0,-0.446556,1
@@ -11847,7 +11834,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Illinois,2016ILKirk,39.78042,1003,-14,381,"SurveyMonkey",1,0,6.61408,1
 2016,New Hampshire,2016NHWood Hassan,47.9813,513,-11,235,"University of New Hampshire",0,1,0.8717656,1
 2016,Colorado,2016COBennet,49.97067,1402,-13,686,"SurveyMonkey",0,1,0.7811624,1
-2016,California,2016CASanchez,38.39717,2316,-12,717,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,2316,-12,717,"SurveyMonkey",0,1,9.909283,1
 2016,Wisconsin,2016WIFeingold,46.81099,800,-75,440,"Global Strategy Group",0,1,1.550815,1
 2016,Idaho,2016IDCrapo,66.13471,498,-11,303,"SurveyMonkey",1,0,-18.38378,1
 2016,Wisconsin,2016WIJohnson,50.17297,1568,-11,752,"SurveyMonkey",1,0,1.550815,1
@@ -11960,14 +11947,14 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Ohio,2016OHStrickland,37.15756,500,-113,163,"Suffolk University",0,1,-0.446556,1
 2016,Colorado,2016COGlenn,44.30569,704,-5,281,"Public Policy Polling",1,0,0.7811624,1
 2016,Florida,2016FLMurphy,44.31485,533,-29,234,"Opinion Savvy/InsiderAdvantage",0,1,-1.52036,1
-2016,California,2016CAHarris,61.60283,500,-83,205,"Val Smith",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,500,-83,205,"Val Smith",0,1,9.909283,1
 2016,Alaska,2016AKStock,13.2269,660,-41,46,"Ivan Moore Research",0,0,-9.280357,0
 2016,Ohio,2016OHStrickland,37.15756,812,-101,324,"Quinnipiac University",0,1,-0.446556,1
 2016,Florida,2016FLMurphy,44.31485,667,-42,273,"University of North Florida",0,1,-1.52036,1
 2016,New Hampshire,2016NHWood Hassan,47.9813,525,-13,236,"Rasmussen Reports/Pulse Opinion Research",0,1,0.8717656,1
-2016,California,2016CASanchez,38.39717,2712,-7,840,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,2712,-7,840,"SurveyMonkey",0,1,9.909283,1
 2016,Florida,2016FLRubio,51.98113,1056,-101,506,"Quinnipiac University",1,0,-1.52036,1
-2016,California,2016CAHarris,61.60283,747,-11,351,"SurveyUSA",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,747,-11,351,"SurveyUSA",0,1,9.909283,1
 2016,New Hampshire,2016NHWood Hassan,47.9813,597,-262,244,"University of New Hampshire",0,1,0.8717656,1
 2016,Utah,2016UTSnow,27.05789,1428,-8,514,"SurveyMonkey",0,1,-26.58997,0
 2016,Florida,2016FLRubio,51.98113,2901,-12,1421,"SurveyMonkey",1,0,-1.52036,1
@@ -11994,7 +11981,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,South Dakota,2016SDThune,71.82786,298,-14,199,"SurveyMonkey",1,0,-11.18063,1
 2016,Oregon,2016ORCallahan,33.34767,1150,-11,368,"SurveyMonkey",1,0,4.307221,0
 2016,Missouri,2016MOKander,46.39196,600,-60,252,"Emerson College",0,1,-6.743064,1
-2016,California,2016CAHarris,61.60283,1024,-25,430,"Public Policy Institute of California",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,1024,-25,430,"Public Policy Institute of California",0,1,9.909283,1
 2016,Florida,2016FLRubio,51.98113,871,-126,409,"Marist College",1,0,-1.52036,1
 2016,Florida,2016FLMurphy,44.31485,744,-65,275,"Public Policy Polling",0,1,-1.52036,1
 2016,Pennsylvania,2016PAToomey,48.71992,525,-9,220,"Rasmussen Reports/Pulse Opinion Research",1,0,0.7697237,1
@@ -12027,7 +12014,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Colorado,2016COBennet,49.97067,1246,-36,585,"Gravis Marketing",0,1,0.7811624,1
 2016,North Carolina,2016NCBurr,51.06178,600,-25,264,"National Research Inc.",1,0,-2.997193,1
 2016,Florida,2016FLMurphy,44.31485,1000,-20,380,"Associated Industries of Florida",0,1,-1.52036,1
-2016,California,2016CASanchez,38.39717,2284,-13,685,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,2284,-13,685,"SurveyMonkey",0,1,9.909283,1
 2016,Washington,2016WAVance,40.98699,503,-208,160,"Elway Research",1,0,5.665377,1
 2016,Colorado,2016COBennet,49.97067,1532,-14,735,"SurveyMonkey",0,1,0.7811624,1
 2016,Arkansas,2016AREldridge,36.17102,593,-12,254,"SurveyMonkey",0,1,-14.11913,0
@@ -12066,7 +12053,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Missouri,2016MOBlunt,49.18425,959,-120,393,"Public Policy Polling",1,0,-6.743064,1
 2016,Colorado,2016COGlenn,44.30569,1927,-11,867,"SurveyMonkey",1,0,0.7811624,1
 2016,Iowa,2016IAGrassley,60.0899,500,-92,260,"Suffolk University",1,0,0.9949758,1
-2016,California,2016CAHarris,61.60283,622,-32,304,"Sacramento State",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,622,-32,304,"Sacramento State",0,1,9.909283,1
 2016,North Carolina,2016NCBurr,51.06178,1169,-8,561,"Public Policy Polling",1,0,-2.997193,1
 2016,Florida,2016FLRubio,51.98113,500,-99,230,"Suffolk University",1,0,-1.52036,1
 2016,Pennsylvania,2016PAMcGinty,47.28905,525,-6,220,"Rasmussen Reports/Pulse Opinion Research",0,1,0.7697237,0
@@ -12106,7 +12093,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Pennsylvania,2016PAMcGinty,47.28905,402,-39,184,"Monmouth University",0,1,0.7697237,0
 2016,North Carolina,2016NCRoss,45.36569,644,-57,283,"Elon University",0,1,-2.997193,1
 2016,North Carolina,2016NCBurr,51.06178,1886,-12,829,"SurveyMonkey",1,0,-2.997193,1
-2016,California,2016CASanchez,38.39717,725,-26,174,"SurveyUSA",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,725,-26,174,"SurveyUSA",0,1,9.909283,1
 2016,North Carolina,2016NCBurr,51.06178,525,-7,246,"Rasmussen Reports/Pulse Opinion Research",1,0,-2.997193,1
 2016,North Carolina,2016NCRoss,45.36569,525,-8,236,"Rasmussen Reports/Pulse Opinion Research",0,1,-2.997193,1
 2016,Kansas,2016KSWiesner,32.23813,1311,-7,485,"SurveyMonkey",0,1,-13.07984,0
@@ -12125,7 +12112,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,North Carolina,2016NCBurr,51.06178,875,-22,402,"Rasmussen Reports/Pulse Opinion Research",1,0,-2.997193,1
 2016,North Carolina,2016NCBurr,51.06178,600,-29,270,"Emerson College",1,0,-2.997193,1
 2016,North Carolina,2016NCRoss,45.36569,3126,-7,1469,"SurveyMonkey",0,1,-2.997193,1
-2016,California,2016CASanchez,38.39717,956,-153,229,"Field Research Corp. (Field Poll)",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,956,-153,229,"Field Research Corp. (Field Poll)",0,1,9.909283,1
 2016,New Hampshire,2016NHWood Hassan,47.9813,466,-9,223,"University of New Hampshire",0,1,0.8717656,1
 2016,Nevada,2016NVCortez Masto,47.09887,525,-14,225,"Rasmussen Reports/Pulse Opinion Research",0,1,1.442596,1
 2016,North Carolina,2016NCRoss,45.36569,960,-200,345,"Public Policy Polling",0,1,-2.997193,1
@@ -12162,10 +12149,10 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,New Hampshire,2016NHWood Hassan,47.9813,820,-93,377,"Vox Populi Communications",0,1,0.8717656,1
 2016,New Hampshire,2016NHAyotte,47.84371,658,-12,243,"SurveyMonkey",1,0,0.8717656,1
 2016,Ohio,2016OHPortman,58.02888,400,-217,188,"Garin-Hart-Yang Research Group",1,0,-0.446556,1
-2016,California,2016CAHarris,61.60283,996,-179,338,"Public Policy Institute of California",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,996,-179,338,"Public Policy Institute of California",0,1,9.909283,1
 2016,Colorado,2016COGlenn,44.30569,685,-29,260,"Quinnipiac University",1,0,0.7811624,1
 2016,Hawaii,2016HICarroll,22.24231,426,-7,110,"SurveyMonkey",1,0,19.74026,1
-2016,California,2016CAHarris,61.60283,956,-153,372,"Field Research Corp. (Field Poll)",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,956,-153,372,"Field Research Corp. (Field Poll)",0,1,9.909283,1
 2016,Colorado,2016COGlenn,44.30569,1402,-13,658,"SurveyMonkey",1,0,0.7811624,1
 2016,Arizona,2016AZKirkpatrick,40.74891,2609,-7,1174,"SurveyMonkey",0,1,-6.574613,1
 2016,Iowa,2016IAJudge,35.65523,867,-13,355,"SurveyMonkey",0,1,0.9949758,1
@@ -12180,7 +12167,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,New Hampshire,2016NHWood Hassan,47.9813,525,-14,241,"Rasmussen Reports/Pulse Opinion Research",0,1,0.8717656,1
 2016,Pennsylvania,2016PAMcGinty,47.28905,931,-5,437,"YouGov",0,1,0.7697237,0
 2016,New Hampshire,2016NHAyotte,47.84371,408,-13,200,"Praecones Analytica",1,0,0.8717656,1
-2016,California,2016CAHarris,61.60283,1498,-14,704,"YouGov",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,1498,-14,704,"YouGov",0,1,9.909283,1
 2016,Colorado,2016COBennet,49.97067,794,-126,420,"Marist College",0,1,0.7811624,1
 2016,New Hampshire,2016NHAyotte,47.84371,525,-9,236,"Rasmussen Reports/Pulse Opinion Research",1,0,0.8717656,1
 2016,Nevada,2016NVCortez Masto,47.09887,800,-53,320,"Rasmussen Reports/Pulse Opinion Research",0,1,1.442596,1
@@ -12229,11 +12216,11 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Colorado,2016COBennet,49.97067,896,-49,474,"CNN/Opinion Research Corp.",0,1,0.7811624,1
 2016,New Hampshire,2016NHAyotte,47.84371,781,-8,351,"Public Policy Polling",1,0,0.8717656,1
 2016,Pennsylvania,2016PAToomey,48.71992,824,-16,362,"Siena College",1,0,0.7697237,1
-2016,California,2016CASanchez,38.39717,2088,-215,396,"Gravis Marketing",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,2088,-215,396,"Gravis Marketing",0,1,9.909283,1
 2016,North Carolina,2016NCRoss,45.36569,1576,-244,646,"SurveyUSA",0,1,-2.997193,1
 2016,North Carolina,2016NCBurr,51.06178,525,-14,252,"Rasmussen Reports/Pulse Opinion Research",1,0,-2.997193,1
 2016,North Carolina,2016NCBurr,51.06178,650,-13,312,"Emerson College",1,0,-2.997193,1
-2016,California,2016CASanchez,38.39717,1553,-152,372,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,1553,-152,372,"SurveyMonkey",0,1,9.909283,1
 2016,Nevada,2016NVHeck,44.67037,688,-8,302,"Public Policy Polling",1,0,1.442596,1
 2016,Indiana,2016INBayh,42.41272,600,-63,264,"Public Opinion Strategies",0,1,-7.165074,1
 2016,Arizona,2016AZKirkpatrick,40.74891,1748,-11,786,"SurveyMonkey",0,1,-6.574613,1
@@ -12269,13 +12256,13 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Indiana,2016INBayh,42.41272,1123,-32,516,"Lucid",0,1,-7.165074,1
 2016,Ohio,2016OHPortman,58.02888,500,-57,195,"Suffolk University",1,0,-0.446556,1
 2016,Florida,2016FLMurphy,44.31485,821,-35,328,"Gravis Marketing",0,1,-1.52036,1
-2016,California,2016CAHarris,61.60283,1002,-166,400,"Field Research Corp. (Field Poll)",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,1002,-166,400,"Field Research Corp. (Field Poll)",0,1,9.909283,1
 2016,Florida,2016FLMurphy,44.31485,507,-23,187,"Cherry Communications",0,1,-1.52036,1
 2016,Alaska,2016AKMurkowski,44.358,660,-41,330,"Ivan Moore Research",1,0,-9.280357,1
 2016,Wisconsin,2016WIJohnson,50.17297,616,-210,252,"St. Norbert College",1,0,1.550815,1
 2016,North Dakota,2016NDHoeven,78.47802,288,-8,210,"SurveyMonkey",1,0,-12.07549,1
 2016,Nevada,2016NVCortez Masto,47.09887,525,-15,225,"Rasmussen Reports/Pulse Opinion Research",0,1,1.442596,1
-2016,California,2016CAHarris,61.60283,915,-85,466,"Sacramento State",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,915,-85,466,"Sacramento State",0,1,9.909283,1
 2016,Arizona,2016AZKirkpatrick,40.74891,701,-246,280,"Merrill Poll",0,1,-6.574613,1
 2016,Indiana,2016INBayh,42.41272,600,-36,252,"Public Opinion Strategies",0,1,-7.165074,1
 2016,Florida,2016FLRubio,51.98113,700,-122,280,"JMC Enterprises",1,0,-1.52036,1
@@ -12287,7 +12274,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Pennsylvania,2016PAMcGinty,47.28905,405,-9,170,"Muhlenberg College",0,1,0.7697237,0
 2016,Kentucky,2016KYGray,42.72451,602,-14,234,"Western Kentucky University",0,1,-13.50655,1
 2016,Wisconsin,2016WIJohnson,50.17297,683,-96,266,"Marquette University Law School",1,0,1.550815,1
-2016,California,2016CAHarris,61.60283,1250,-35,512,"YouGov",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,1250,-35,512,"YouGov",0,1,9.909283,1
 2016,Wisconsin,2016WIJohnson,50.17297,800,-75,296,"Global Strategy Group",1,0,1.550815,1
 2016,Ohio,2016OHStrickland,37.15756,500,-57,155,"Suffolk University",0,1,-0.446556,1
 2016,Wisconsin,2016WIFeingold,46.81099,1129,-7,553,"Clarity Campaign Labs",0,1,1.550815,1
@@ -12310,7 +12297,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,South Dakota,2016SDThune,71.82786,600,-15,324,"Nielson Brothers Polling",1,0,-11.18063,1
 2016,Florida,2016FLMurphy,44.31485,875,-22,358,"Rasmussen Reports/Pulse Opinion Research",0,1,-1.52036,1
 2016,Iowa,2016IAJudge,35.65523,822,-126,345,"Marist College",0,1,0.9949758,1
-2016,California,2016CASanchez,38.39717,1498,-14,344,"YouGov",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,1498,-14,344,"YouGov",0,1,9.909283,1
 2016,Missouri,2016MOKander,46.39196,650,-11,292,"Emerson College",0,1,-6.743064,1
 2016,Indiana,2016INBayh,42.41272,600,-99,348,"Expedition Strategies",0,1,-7.165074,1
 2016,New Hampshire,2016NHAyotte,47.84371,525,-14,225,"Rasmussen Reports/Pulse Opinion Research",1,0,0.8717656,1
@@ -12323,7 +12310,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,New Hampshire,2016NHAyotte,47.84371,525,-16,220,"Rasmussen Reports/Pulse Opinion Research",1,0,0.8717656,1
 2016,North Carolina,2016NCRoss,45.36569,875,-19,385,"Rasmussen Reports/Pulse Opinion Research",0,1,-2.997193,1
 2016,Nevada,2016NVHeck,44.67037,985,-19,462,"Marist College",1,0,1.442596,1
-2016,California,2016CAHarris,61.60283,2284,-13,1164,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,2284,-13,1164,"SurveyMonkey",0,1,9.909283,1
 2016,South Dakota,2016SDWilliams,28.17214,400,-21,108,"Mason-Dixon Polling & Research Inc.",0,1,-11.18063,0
 2016,Nevada,2016NVCortez Masto,47.09887,688,-8,323,"Public Policy Polling",0,1,1.442596,1
 2016,Vermont,2016VTMilne,33.0255,449,-11,125,"SurveyMonkey",1,0,16.28475,0
@@ -12336,7 +12323,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Oklahoma,2016OKLankford,67.73896,1271,-7,775,"SurveyMonkey",1,0,-18.73418,1
 2016,Ohio,2016OHPortman,58.02888,900,-4,439,"Emerson College",1,0,-0.446556,1
 2016,Georgia,2016GAIsakson,54.78385,973,-9,447,"Marist College",1,0,-5.922468,1
-2016,California,2016CASanchez,38.39717,500,-83,75,"Val Smith",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,500,-83,75,"Val Smith",0,1,9.909283,1
 2016,New Hampshire,2016NHWood Hassan,47.9813,468,-10,219,"University of New Hampshire",0,1,0.8717656,1
 2016,Ohio,2016OHPortman,58.02888,1248,-249,499,"Public Policy Polling",1,0,-0.446556,1
 2016,Florida,2016FLRubio,51.98113,821,-35,361,"Gravis Marketing",1,0,-1.52036,1
@@ -12361,7 +12348,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Illinois,2016ILDuckworth,54.86174,911,-13,501,"SurveyMonkey",0,1,6.61408,1
 2016,Maryland,2016MDVan Hollen,60.88788,1056,-8,675,"SurveyMonkey",0,1,11.35451,1
 2016,North Carolina,2016NCRoss,45.36569,861,-42,335,"Public Policy Polling",0,1,-2.997193,1
-2016,California,2016CAHarris,61.60283,401,-4,200,"Insights West",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,401,-4,200,"Insights West",0,1,9.909283,1
 2016,Arizona,2016AZKirkpatrick,40.74891,1028,-31,462,"SurveyMonkey",0,1,-6.574613,1
 2016,Indiana,2016INYoung,52.11224,923,-11,479,"SurveyMonkey",1,0,-7.165074,1
 2016,Connecticut,2016CTCarter,34.61939,554,-14,210,"SurveyMonkey",1,0,6.812904,1
@@ -12369,7 +12356,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Georgia,2016GABarksdale,41.03329,1003,-22,310,"Abt Associates",0,1,-5.922468,0
 2016,Pennsylvania,2016PAMcGinty,47.28905,3217,-14,1447,"Gravis Marketing",0,1,0.7697237,0
 2016,Florida,2016FLMurphy,44.31485,820,-42,328,"Mason-Dixon Polling & Research Inc.",0,1,-1.52036,1
-2016,California,2016CASanchez,38.39717,996,-179,258,"Public Policy Institute of California",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,996,-179,258,"Public Policy Institute of California",0,1,9.909283,1
 2016,Maryland,2016MDVan Hollen,60.88788,695,-13,458,"SurveyMonkey",0,1,11.35451,1
 2016,Illinois,2016ILKirk,39.78042,600,-13,204,"Loras College",1,0,6.61408,1
 2016,North Carolina,2016NCRoss,45.36569,651,-25,279,"SurveyUSA",0,1,-2.997193,1
@@ -12385,13 +12372,13 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Colorado,2016COGlenn,44.30569,1004,-22,401,"University of Colorado",1,0,0.7811624,1
 2016,Indiana,2016INBayh,42.41272,544,-29,266,"Ball State University",0,1,-7.165074,1
 2016,Pennsylvania,2016PAMcGinty,47.28905,525,-8,225,"Rasmussen Reports/Pulse Opinion Research",0,1,0.7697237,0
-2016,California,2016CAHarris,61.60283,712,-61,313,"SurveyUSA",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,712,-61,313,"SurveyUSA",0,1,9.909283,1
 2016,Pennsylvania,2016PAToomey,48.71992,2078,-13,955,"SurveyMonkey",1,0,0.7697237,1
 2016,Missouri,2016MOKander,46.39196,1698,-12,747,"BK Strategies",0,1,-6.743064,1
 2016,Kentucky,2016KYPaul,57.27329,1155,-8,589,"SurveyMonkey",1,0,-13.50655,1
 2016,Colorado,2016COGlenn,44.30569,2412,-8,1085,"SurveyMonkey",1,0,0.7811624,1
 2016,Maryland,2016MDVan Hollen,60.88788,754,-82,414,"OpinionWorks",0,1,11.35451,1
-2016,California,2016CAHarris,61.60283,2528,-11,1289,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,2528,-11,1289,"SurveyMonkey",0,1,9.909283,1
 2016,North Carolina,2016NCRoss,45.36569,525,-12,220,"Rasmussen Reports/Pulse Opinion Research",0,1,-2.997193,1
 2016,North Carolina,2016NCRoss,45.36569,659,-11,283,"SurveyUSA",0,1,-2.997193,1
 2016,Nevada,2016NVHeck,44.67037,525,-15,220,"Rasmussen Reports/Pulse Opinion Research",1,0,1.442596,1
@@ -12419,8 +12406,8 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Wisconsin,2016WIJohnson,50.17297,500,-8,225,"Loras College",1,0,1.550815,1
 2016,Indiana,2016INYoung,52.11224,674,-14,337,"SurveyMonkey",1,0,-7.165074,1
 2016,Pennsylvania,2016PAMcGinty,47.28905,949,-46,408,"Gravis Marketing",0,1,0.7697237,0
-2016,California,2016CASanchez,38.39717,1500,-17,495,"Greenberg Quinlan Rosner/American Viewpoint",0,0,9.909283,1
-2016,California,2016CASanchez,38.39717,747,-11,201,"SurveyUSA",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,1500,-17,495,"Greenberg Quinlan Rosner/American Viewpoint",0,1,9.909283,1
+2016,California,2016CASanchez,38.39717,747,-11,201,"SurveyUSA",0,1,9.909283,1
 2016,New York,2016NYSchumer,70.60208,2208,-7,1567,"SurveyMonkey",0,1,12.31719,1
 2016,New York,2016NYLong,27.16701,800,-72,184,"Emerson College",1,0,12.31719,0
 2016,Nevada,2016NVCortez Masto,47.09887,600,-28,264,"Public Opinion Strategies",0,1,1.442596,1
@@ -12438,7 +12425,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Florida,2016FLRubio,51.98113,875,-21,420,"Rasmussen Reports/Pulse Opinion Research",1,0,-1.52036,1
 2016,Colorado,2016COGlenn,44.30569,500,-71,190,"Magellan Strategies",1,0,0.7811624,1
 2016,New Hampshire,2016NHAyotte,47.84371,469,-122,196,"University of New Hampshire",1,0,0.8717656,1
-2016,California,2016CASanchez,38.39717,4212,-68,673,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,4212,-68,673,"SurveyMonkey",0,1,9.909283,1
 2016,Colorado,2016COBennet,49.97067,799,-47,343,"Gravis Marketing",0,1,0.7811624,1
 2016,New Hampshire,2016NHWood Hassan,47.9813,1001,-7,440,"Gravis Marketing",0,1,0.8717656,1
 2016,New Hampshire,2016NHAyotte,47.84371,609,-102,225,"MassINC Polling Group",1,0,0.8717656,1
@@ -12446,7 +12433,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Kentucky,2016KYGray,42.72451,1016,-13,283,"Google Surveys",0,1,-13.50655,1
 2016,Florida,2016FLRubio,51.98113,826,-42,346,"Public Policy Polling",1,0,-1.52036,1
 2016,Connecticut,2016CTBlumenthal,63.1917,1173,-8,727,"SurveyMonkey",0,1,6.812904,1
-2016,California,2016CASanchez,38.39717,515,-57,144,"Insights West",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,515,-57,144,"Insights West",0,1,9.909283,1
 2016,Florida,2016FLRubio,51.98113,545,-42,261,"Quinnipiac University",1,0,-1.52036,1
 2016,Colorado,2016COBennet,49.97067,956,-31,497,"SurveyMonkey",0,1,0.7811624,1
 2016,Washington,2016WAMurray,59.01301,402,-4,213,"Insights West",0,1,5.665377,1
@@ -12491,7 +12478,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Utah,2016UTSnow,27.05789,1479,-7,532,"SurveyMonkey",0,1,-26.58997,0
 2016,Florida,2016FLMurphy,44.31485,1380,-86,524,"Saint Leo University",0,1,-1.52036,1
 2016,North Carolina,2016NCRoss,45.36569,800,-73,330,"Emerson College",0,1,-2.997193,1
-2016,California,2016CAHarris,61.60283,1055,-60,337,"Public Policy Institute of California",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,1055,-60,337,"Public Policy Institute of California",0,1,9.909283,1
 2016,Oregon,2016ORCallahan,33.34767,743,-14,252,"SurveyMonkey",1,0,4.307221,0
 2016,New Hampshire,2016NHWood Hassan,47.9813,525,-6,262,"Rasmussen Reports/Pulse Opinion Research",0,1,0.8717656,1
 2016,North Carolina,2016NCRoss,45.36569,500,-64,185,"Suffolk University",0,1,-2.997193,1
@@ -12523,7 +12510,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Pennsylvania,2016PAToomey,48.71992,681,-8,279,"Susquehanna Polling & Research Inc.",1,0,0.7697237,1
 2016,Florida,2016FLMurphy,44.31485,700,-122,231,"JMC Enterprises",0,1,-1.52036,1
 2016,Florida,2016FLMurphy,44.31485,871,-126,383,"Marist College",0,1,-1.52036,1
-2016,California,2016CASanchez,38.39717,712,-61,192,"SurveyUSA",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,712,-61,192,"SurveyUSA",0,1,9.909283,1
 2016,South Dakota,2016SDThune,71.82786,400,-21,260,"Mason-Dixon Polling & Research Inc.",1,0,-11.18063,1
 2016,New Hampshire,2016NHAyotte,47.84371,645,-6,290,"University of New Hampshire",1,0,0.8717656,1
 2016,Kansas,2016KSMoran,62.17525,596,-13,327,"SurveyUSA",1,0,-13.07984,1
@@ -12544,7 +12531,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,New Hampshire,2016NHAyotte,47.84371,501,-180,230,"MassINC Polling Group",1,0,0.8717656,1
 2016,Nevada,2016NVCortez Masto,47.09887,600,-11,270,"JMC Enterprises",0,1,1.442596,1
 2016,Ohio,2016OHPortman,58.02888,875,-19,437,"Rasmussen Reports/Pulse Opinion Research",1,0,-0.446556,1
-2016,California,2016CAHarris,61.60283,2316,-12,1181,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,2316,-12,1181,"SurveyMonkey",0,1,9.909283,1
 2016,Arizona,2016AZMcCain,53.71047,401,-18,200,"Monmouth University",1,0,-6.574613,1
 2016,Arizona,2016AZMcCain,53.71047,550,-10,269,"Data Orbital",1,0,-6.574613,1
 2016,Ohio,2016OHPortman,58.02888,1586,-13,904,"SurveyMonkey",1,0,-0.446556,1
@@ -12614,9 +12601,9 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Ohio,2016OHPortman,58.02888,300,-150,120,"Greenberg Quinlan Rosner (Democracy Corps)",1,0,-0.446556,1
 2016,Wisconsin,2016WIFeingold,46.81099,1401,-13,602,"Marquette University Law School",0,1,1.550815,1
 2016,Iowa,2016IAGrassley,60.0899,1135,-31,635,"SurveyMonkey",1,0,0.9949758,1
-2016,California,2016CASanchez,38.39717,401,-4,88,"Insights West",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,401,-4,88,"Insights West",0,1,9.909283,1
 2016,Kentucky,2016KYPaul,57.27329,816,-27,269,"Google Surveys",1,0,-13.50655,1
-2016,California,2016CASanchez,38.39717,915,-85,173,"Sacramento State",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,915,-85,173,"Sacramento State",0,1,9.909283,1
 2016,Ohio,2016OHPortman,58.02888,1134,-74,544,"Public Policy Polling",1,0,-0.446556,1
 2016,North Dakota,2016NDHoeven,78.47802,313,-7,231,"SurveyMonkey",1,0,-12.07549,1
 2016,Pennsylvania,2016PAToomey,48.71992,982,-131,481,"Quinnipiac University",1,0,0.7697237,1
@@ -12626,7 +12613,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Arizona,2016AZMcCain,53.71047,1461,-12,730,"SurveyMonkey",1,0,-6.574613,1
 2016,Oklahoma,2016OKLankford,67.73896,1116,-8,669,"SurveyMonkey",1,0,-18.73418,1
 2016,Colorado,2016COGlenn,44.30569,694,-42,235,"Public Policy Polling",1,0,0.7811624,1
-2016,California,2016CASanchez,38.39717,1056,-121,211,"Public Policy Institute of California",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,1056,-121,211,"Public Policy Institute of California",0,1,9.909283,1
 2016,Nevada,2016NVCortez Masto,47.09887,1124,-8,550,"SurveyMonkey",0,1,1.442596,1
 2016,Ohio,2016OHPortman,58.02888,848,-126,373,"Marist College",1,0,-0.446556,1
 2016,South Dakota,2016SDThune,71.82786,1115,-20,635,"Remington Research Group",1,0,-11.18063,1
@@ -12640,17 +12627,16 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,New Hampshire,2016NHWood Hassan,47.9813,401,-17,184,"Monmouth University",0,1,0.8717656,1
 2016,Arizona,2016AZKirkpatrick,40.74891,448,-155,138,"Behavior Research Center (Rocky Mountain)",0,1,-6.574613,1
 2016,Indiana,2016INYoung,52.11224,600,-36,245,"Public Opinion Strategies",1,0,-7.165074,1
-2016,California,2016CASanchez,38.39717,1250,-35,275,"YouGov",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,1250,-35,275,"YouGov",0,1,9.909283,1
 2016,Maryland,2016MDSzeliga,35.67485,514,-52,123,"Goucher College",1,0,11.35451,1
 2016,Iowa,2016IAJudge,35.65523,827,-70,355,"Public Policy Polling",0,1,0.9949758,1
-2016,Louisiana,2016LACampbell,39.34539,1107,-71,298,"Remington Research Group",0,1,-10.70757,1
 2016,Kansas,2016KSWiesner,32.23813,313,-7,40,"Fort Hays State University",0,1,-13.07984,0
 2016,Arizona,2016AZKirkpatrick,40.74891,504,-340,181,"Strategies 360",0,1,-6.574613,1
 2016,Nevada,2016NVCortez Masto,47.09887,994,-13,467,"SurveyMonkey",0,1,1.442596,1
 2016,Nevada,2016NVCortez Masto,47.09887,1207,-7,603,"SurveyMonkey",0,1,1.442596,1
 2016,Vermont,2016VTMilne,33.0255,436,-14,143,"SurveyMonkey",1,0,16.28475,0
 2016,New Hampshire,2016NHAyotte,47.84371,500,-8,222,"Suffolk University",1,0,0.8717656,1
-2016,California,2016CAHarris,61.60283,725,-26,326,"SurveyUSA",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,725,-26,326,"SurveyUSA",0,1,9.909283,1
 2016,Nevada,2016NVHeck,44.67037,627,-63,294,"Marist College",1,0,1.442596,1
 2016,Pennsylvania,2016PAToomey,48.71992,1449,-31,681,"SurveyMonkey",1,0,0.7697237,1
 2016,Ohio,2016OHPortman,58.02888,525,-8,262,"Rasmussen Reports/Pulse Opinion Research",1,0,-0.446556,1
@@ -12680,7 +12666,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,North Carolina,2016NCRoss,45.36569,843,-235,295,"Public Policy Polling",0,1,-2.997193,1
 2016,Ohio,2016OHStrickland,37.15756,889,-97,382,"Marist College",0,1,-0.446556,1
 2016,Ohio,2016OHPortman,58.02888,799,-196,303,"Public Policy Polling",1,0,-0.446556,1
-2016,California,2016CASanchez,38.39717,2655,-8,849,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,2655,-8,849,"SurveyMonkey",0,1,9.909283,1
 2016,North Carolina,2016NCBurr,51.06178,1018,-14,488,"Marist College",1,0,-2.997193,1
 2016,Illinois,2016ILDuckworth,54.86174,600,-13,252,"Loras College",0,1,6.61408,1
 2016,Missouri,2016MOBlunt,49.18425,600,-60,240,"Emerson College",1,0,-6.743064,1
@@ -12714,7 +12700,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,North Carolina,2016NCRoss,45.36569,907,-126,371,"Marist College",0,1,-2.997193,1
 2016,Wisconsin,2016WIJohnson,50.17297,800,-152,326,"Marquette University Law School",1,0,1.550815,1
 2016,Wisconsin,2016WIJohnson,50.17297,300,-150,135,"Greenberg Quinlan Rosner (Democracy Corps)",1,0,1.550815,1
-2016,California,2016CAHarris,61.60283,751,-42,300,"SurveyUSA",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,751,-42,300,"SurveyUSA",0,1,9.909283,1
 2016,Georgia,2016GAIsakson,54.78385,570,-102,273,"SurveyUSA",1,0,-5.922468,1
 2016,North Carolina,2016NCRoss,45.36569,1250,-268,462,"SurveyUSA",0,1,-2.997193,1
 2016,Kentucky,2016KYPaul,57.27329,1315,-7,657,"SurveyMonkey",1,0,-13.50655,1
@@ -12723,12 +12709,11 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,North Carolina,2016NCRoss,45.36569,710,-16,283,"Elon University",0,1,-2.997193,1
 2016,Florida,2016FLRubio,51.98113,622,-90,278,"Opinion Savvy/InsiderAdvantage",1,0,-1.52036,1
 2016,New Hampshire,2016NHWood Hassan,47.9813,525,-15,236,"Rasmussen Reports/Pulse Opinion Research",0,1,0.8717656,1
-2016,California,2016CAHarris,61.60283,1500,-17,690,"Greenberg Quinlan Rosner/American Viewpoint",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,1500,-17,690,"Greenberg Quinlan Rosner/American Viewpoint",0,1,9.909283,1
 2016,Connecticut,2016CTBlumenthal,63.1917,1000,-67,537,"Emerson College",0,1,6.812904,1
 2016,Nevada,2016NVHeck,44.67037,996,-27,388,"YouGov",1,0,1.442596,1
 2016,Illinois,2016ILDuckworth,54.86174,1823,-7,1020,"SurveyMonkey",0,1,6.61408,1
 2016,North Carolina,2016NCRoss,45.36569,1169,-8,526,"Public Policy Polling",0,1,-2.997193,1
-2016,Louisiana,2016LAKennedy,60.65461,1107,-71,564,"Remington Research Group",1,0,-10.70757,0
 2016,Ohio,2016OHStrickland,37.15756,875,-26,332,"Rasmussen Reports/Pulse Opinion Research",0,1,-0.446556,1
 2016,Wisconsin,2016WIFeingold,46.81099,1271,-12,610,"SurveyMonkey",0,1,1.550815,1
 2016,Wisconsin,2016WIJohnson,50.17297,1195,-14,585,"SurveyMonkey",1,0,1.550815,1
@@ -12779,7 +12764,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Arizona,2016AZMcCain,53.71047,1748,-11,874,"SurveyMonkey",1,0,-6.574613,1
 2016,Oklahoma,2016OKWorkman,24.57869,519,-13,181,"SurveyMonkey",0,1,-18.73418,0
 2016,Arkansas,2016AREldridge,36.17102,751,-140,217,"Hendrix College",0,1,-14.11913,0
-2016,California,2016CASanchez,38.39717,751,-42,217,"SurveyUSA",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,751,-42,217,"SurveyUSA",0,1,9.909283,1
 2016,Pennsylvania,2016PAToomey,48.71992,525,-12,220,"Rasmussen Reports/Pulse Opinion Research",1,0,0.7697237,1
 2016,Ohio,2016OHStrickland,37.15756,825,-271,330,"Baldwin Wallace University",0,1,-0.446556,1
 2016,New Hampshire,2016NHWood Hassan,47.9813,515,-8,247,"University of New Hampshire",0,1,0.8717656,1
@@ -12864,7 +12849,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Iowa,2016IAJudge,35.65523,401,-123,168,"Monmouth University",0,1,0.9949758,1
 2016,Iowa,2016IAJudge,35.65523,998,-118,369,"YouGov",0,1,0.9949758,1
 2016,Arkansas,2016ARBoozman,59.77163,463,-18,240,"Hendrix College",1,0,-14.11913,1
-2016,California,2016CASanchez,38.39717,2528,-11,783,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,2528,-11,783,"SurveyMonkey",0,1,9.909283,1
 2016,Nevada,2016NVHeck,44.67037,600,-63,282,"Greenberg Quinlan Rosner (Democracy Corps)",1,0,1.442596,1
 2016,Nevada,2016NVHeck,44.67037,800,-53,352,"Rasmussen Reports/Pulse Opinion Research",1,0,1.442596,1
 2016,Colorado,2016COGlenn,44.30569,400,-40,140,"Monmouth University",1,0,0.7811624,1
@@ -12972,7 +12957,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Vermont,2016VTLeahy,61.26115,579,-40,341,"Castleton University",0,1,16.28475,1
 2016,Arizona,2016AZMcCain,53.71047,701,-246,287,"Merrill Poll",1,0,-6.574613,1
 2016,North Carolina,2016NCRoss,45.36569,875,-21,376,"Rasmussen Reports/Pulse Opinion Research",0,1,-2.997193,1
-2016,California,2016CASanchez,38.39717,622,-32,149,"Sacramento State",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,622,-32,149,"Sacramento State",0,1,9.909283,1
 2016,New Hampshire,2016NHAyotte,47.84371,1197,-298,586,"Gravis Marketing",1,0,0.8717656,1
 2016,Arizona,2016AZKirkpatrick,40.74891,590,-306,218,"Behavior Research Center (Rocky Mountain)",0,1,-6.574613,1
 2016,Ohio,2016OHPortman,58.02888,724,-29,398,"Marist College",1,0,-0.446556,1
@@ -13043,7 +13028,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,North Carolina,2016NCBurr,51.06178,401,-80,180,"Monmouth University",1,0,-2.997193,1
 2016,Ohio,2016OHStrickland,37.15756,525,-14,220,"Rasmussen Reports/Pulse Opinion Research",0,1,-0.446556,1
 2016,Wisconsin,2016WIJohnson,50.17297,853,-153,349,"Public Policy Polling",1,0,1.550815,1
-2016,California,2016CAHarris,61.60283,1056,-121,401,"Public Policy Institute of California",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,1056,-121,401,"Public Policy Institute of California",0,1,9.909283,1
 2016,Colorado,2016COGlenn,44.30569,972,-11,398,"Lucid",1,0,0.7811624,1
 2016,Missouri,2016MOKander,46.39196,406,-30,178,"Monmouth University",0,1,-6.743064,1
 2016,Colorado,2016COGlenn,44.30569,1631,-12,750,"SurveyMonkey",1,0,0.7811624,1
@@ -13112,7 +13097,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Washington,2016WAMurray,59.01301,745,-14,454,"SurveyMonkey",0,1,5.665377,1
 2016,Florida,2016FLRubio,51.98113,619,-41,291,"Opinion Savvy/InsiderAdvantage",1,0,-1.52036,1
 2016,Pennsylvania,2016PAToomey,48.71992,863,-13,284,"Franklin & Marshall College",1,0,0.7697237,1
-2016,California,2016CAHarris,61.60283,1426,-62,598,"YouGov",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,1426,-62,598,"YouGov",0,1,9.909283,1
 2016,North Carolina,2016NCRoss,45.36569,875,-22,385,"Rasmussen Reports/Pulse Opinion Research",0,1,-2.997193,1
 2016,Arizona,2016AZMcCain,53.71047,2609,-7,1304,"SurveyMonkey",1,0,-6.574613,1
 2016,Kansas,2016KSMoran,62.17525,313,-7,241,"Fort Hays State University",1,0,-13.07984,1
@@ -13150,9 +13135,9 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,North Carolina,2016NCRoss,45.36569,402,-19,172,"Monmouth University",0,1,-2.997193,1
 2016,Florida,2016FLMurphy,44.31485,500,-21,190,"Google Surveys",0,1,-1.52036,1
 2016,Kentucky,2016KYGray,42.72451,1315,-7,604,"SurveyMonkey",0,1,-13.50655,1
-2016,California,2016CAHarris,61.60283,2088,-215,605,"Gravis Marketing",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,2088,-215,605,"Gravis Marketing",0,1,9.909283,1
 2016,Ohio,2016OHPortman,58.02888,850,-47,374,"Gravis Marketing",1,0,-0.446556,1
-2016,California,2016CAHarris,61.60283,515,-57,216,"Insights West",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,515,-57,216,"Insights West",0,1,9.909283,1
 2016,Colorado,2016COGlenn,44.30569,1532,-14,704,"SurveyMonkey",1,0,0.7811624,1
 2016,Oregon,2016ORCallahan,33.34767,1248,-35,411,"Gravis Marketing",1,0,4.307221,0
 2016,Oregon,2016ORCallahan,33.34767,654,-29,209,"SurveyUSA",1,0,4.307221,0
@@ -13174,8 +13159,8 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Arizona,2016AZMcCain,53.71047,448,-155,179,"Behavior Research Center (Rocky Mountain)",1,0,-6.574613,1
 2016,Kentucky,2016KYGray,42.72451,811,-13,340,"Cygnal",0,1,-13.50655,1
 2016,Kentucky,2016KYGray,42.72451,815,-55,206,"Google Surveys",0,1,-13.50655,1
-2016,California,2016CASanchez,38.39717,1002,-166,260,"Field Research Corp. (Field Poll)",0,0,9.909283,1
-2016,California,2016CAHarris,61.60283,2712,-7,1410,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,1002,-166,260,"Field Research Corp. (Field Poll)",0,1,9.909283,1
+2016,California,2016CAHarris,61.60283,2712,-7,1410,"SurveyMonkey",0,1,9.909283,1
 2016,Illinois,2016ILDuckworth,54.86174,500,-12,268,"Emerson College",0,1,6.61408,1
 2016,Arizona,2016AZKirkpatrick,40.74891,400,-25,141,"HighGround",0,1,-6.574613,1
 2016,North Carolina,2016NCRoss,45.36569,600,-29,259,"Emerson College",0,1,-2.997193,1
@@ -13192,7 +13177,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Utah,2016UTLee,68.14589,750,-10,442,"Rasmussen Reports/Pulse Opinion Research",1,0,-26.58997,1
 2016,Pennsylvania,2016PAToomey,48.71992,1200,-79,504,"GBA Strategies",1,0,0.7697237,1
 2016,New Hampshire,2016NHWood Hassan,47.9813,654,-32,281,"University of Massachusetts Lowell",0,1,0.8717656,1
-2016,California,2016CASanchez,38.39717,1024,-25,204,"Public Policy Institute of California",0,0,9.909283,1
+2016,California,2016CASanchez,38.39717,1024,-25,204,"Public Policy Institute of California",0,1,9.909283,1
 2016,Iowa,2016IAJudge,35.65523,500,-92,210,"Suffolk University",0,1,0.9949758,1
 2016,Connecticut,2016CTBlumenthal,63.1917,925,-11,573,"SurveyMonkey",0,1,6.812904,1
 2016,Missouri,2016MOBlunt,49.18425,671,-14,301,"SurveyMonkey",1,0,-6.743064,1
@@ -13337,7 +13322,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Pennsylvania,2016PAMcGinty,47.28905,1200,-79,564,"GBA Strategies",0,1,0.7697237,0
 2016,Missouri,2016MOKander,46.39196,674,-236,235,"DFM Research",0,1,-6.743064,1
 2016,Pennsylvania,2016PAMcGinty,47.28905,2078,-13,1039,"SurveyMonkey",0,1,0.7697237,0
-2016,California,2016CAHarris,61.60283,1553,-152,667,"SurveyMonkey",0,0,9.909283,1
+2016,California,2016CAHarris,61.60283,1553,-152,667,"SurveyMonkey",0,1,9.909283,1
 2016,Pennsylvania,2016PAToomey,48.71992,525,-13,210,"Rasmussen Reports/Pulse Opinion Research",1,0,0.7697237,1
 2016,Colorado,2016COBennet,49.97067,500,-27,235,"Magellan Strategies",0,1,0.7811624,1
 2016,New Hampshire,2016NHAyotte,47.84371,692,-5,311,"University of New Hampshire",1,0,0.8717656,1
@@ -13485,81 +13470,6 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2016,Florida,2016FLMurphy,44.31485,3574,-8,1751,"SurveyMonkey",0,1,-1.52036,1
 2016,New Hampshire,2016NHAyotte,47.84371,525,-15,220,"Rasmussen Reports/Pulse Opinion Research",1,0,0.8717656,1
 2016,Missouri,2016MOKander,46.39196,625,-108,268,"Mason-Dixon Polling & Research Inc.",0,1,-6.743064,1
-2016,Louisiana,2016LAKennedy,25,605,-71,109,"Anzalone Liszt Grove Research",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,605,-71,42,"Anzalone Liszt Grove Research",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,605,-71,79,"Anzalone Liszt Grove Research",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,605,-71,79,"Anzalone Liszt Grove Research",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,605,-71,36,"Anzalone Liszt Grove Research",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,600,-161,144,"Anzalone Liszt Grove Research",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,600,-161,84,"Anzalone Liszt Grove Research",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,600,-161,54,"Anzalone Liszt Grove Research",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,600,-161,66,"Anzalone Liszt Grove Research",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,600,-161,42,"Anzalone Liszt Grove Research",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,625,-22,150,"Mason-Dixon Polling & Research, Inc.",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,625,-22,119,"Mason-Dixon Polling & Research, Inc.",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,625,-22,75,"Mason-Dixon Polling & Research, Inc.",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,625,-22,69,"Mason-Dixon Polling & Research, Inc.",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,625,-22,62,"Mason-Dixon Polling & Research, Inc.",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,500,-20,110,"Southern Media & Opinion Research",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,500,-20,80,"Southern Media & Opinion Research",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,500,-20,60,"Southern Media & Opinion Research",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,500,-20,70,"Southern Media & Opinion Research",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,500,-20,45,"Southern Media & Opinion Research",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,500,-54,85,"Southern Media & Opinion Research",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,500,-54,45,"Southern Media & Opinion Research",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,500,-54,55,"Southern Media & Opinion Research",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,500,-54,75,"Southern Media & Opinion Research",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,500,-54,40,"Southern Media & Opinion Research",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,500,-173,160,"Southern Media & Opinion Research",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,500,-173,45,"Southern Media & Opinion Research",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,500,-173,20,"Southern Media & Opinion Research",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,500,-173,50,"Southern Media & Opinion Research",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,500,-173,25,"Southern Media & Opinion Research",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,500,-209,110,"Southern Media & Opinion Research",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,500,-209,35,"Southern Media & Opinion Research",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,500,-209,20,"Southern Media & Opinion Research",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,500,-209,50,"Southern Media & Opinion Research",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,500,-209,30,"Southern Media & Opinion Research",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,982,-7,206,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,982,-7,128,"SurveyMonkey",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,982,-7,206,"SurveyMonkey",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,982,-7,137,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,982,-7,118,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,840,-8,176,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,840,-8,118,"SurveyMonkey",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,840,-8,168,"SurveyMonkey",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,840,-8,126,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,840,-8,92,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,646,-11,136,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,646,-11,90,"SurveyMonkey",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,646,-11,123,"SurveyMonkey",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,646,-11,97,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,646,-11,71,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,546,-12,115,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,546,-12,71,"SurveyMonkey",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,546,-12,115,"SurveyMonkey",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,546,-12,71,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,546,-12,66,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,470,-13,108,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,470,-13,61,"SurveyMonkey",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,470,-13,99,"SurveyMonkey",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,470,-13,61,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,470,-13,56,"SurveyMonkey",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,614,-22,111,"The Times-Picayune/Lucid",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,614,-22,104,"The Times-Picayune/Lucid",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,614,-22,74,"The Times-Picayune/Lucid",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,614,-22,74,"The Times-Picayune/Lucid",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,614,-22,61,"The Times-Picayune/Lucid",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,603,-22,133,"University of New Orleans",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,603,-22,90,"University of New Orleans",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,603,-22,60,"University of New Orleans",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,603,-22,90,"University of New Orleans",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,603,-22,66,"University of New Orleans",1,0,-10.708,1
-2016,Louisiana,2016LAKennedy,25,1107,-71,299,"Remington Research Group",1,0,-10.708,1
-2016,Louisiana,2016LACampbell,17.5,1107,-71,177,"Remington Research Group",0,1,-10.708,1
-2016,Louisiana,2016LAFayard,12.5,1107,-71,133,"Remington Research Group",0,1,-10.708,0
-2016,Louisiana,2016LABoustany,15.4,1107,-71,144,"Remington Research Group",1,0,-10.708,1
-2016,Louisiana,2016LAFlemsing,10.6,1107,-71,66,"Remington Research Group",1,0,-10.708,1
 1994,Hawaii,1994HIAkaka,71.8,1,1,0,"NA",0,1,8.7,1
 1994,Hawaii,1994HIHustace,24.2,1,1,0,"NA",1,0,8.7,0
 1994,North Dakota,1994NDConrad,58,1,1,0,"NA",0,1,-2.69,1
@@ -13610,11 +13520,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2004,Wisconsin,2004WIMichels,44.1,1,1,0,"NA",1,0,1.4343,0
 1994,Mississippi,1994MSLott,68.8,1,1,0,"NA",1,0,-8.3805,1
 1994,Mississippi,1994MSHarper,31.2,1,1,0,"NA",0,1,-8.3805,1
-2002,Massachusetts,2002MAKerry,80,1,1,0,"NA",0,1,13.9,1
-2002,Massachusetts,2002MACloud,18.4,1,1,0,"NA",0,0,13.9,0
 2006,Mississippi,2006MSLott,63.6,1,1,0,"NA",1,0,-8.683,1
 2006,Mississippi,2006MSFleming,34.9,1,1,0,"NA",0,1,-8.683,1
-2008,Arkansas,2008Pryor,79.5,1,1,0,"NA",0,1,-13.868,1
-2008,Arkansas,2008ARKennedy,20.5,1,1,0,"NA",0,0,-13.868,0
 2012,Vermont,2012VTSanders,71,1,1,0,"NA",0,1,15.2,0
 2012,Vermont,2012VTMacGovern,24.9,1,1,0,"NA",1,0,15.2,1

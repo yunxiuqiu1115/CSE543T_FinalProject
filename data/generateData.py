@@ -159,6 +159,9 @@ for i in range(n):
 data2018['pvi'] = pvis
 data2018['experienced'] = experienceds
 
+# Code Angus King and Bernard Sanders as dem
+data2018.loc[data2018.Candidateidentifier.isin(['2018VTSanders', '2018MEKing']),'Democrat'] = 1
+
 # Indicate 2018 special election
 data2018.loc[data2018.Candidateidentifier.isin(['2018MSSmith', '2018MSEspy']),'state'] = 'MississippiS'
 data2018.loc[data2018.Candidateidentifier.isin(['2018MNSmith', '2018MNHousley']),'state'] = 'MinnesotaS'

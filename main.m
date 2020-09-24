@@ -35,7 +35,7 @@ function [varout]=main(TYPE, mode, tau)
     if mode>=2
         % no search needed
         % forecasting year 2018 or 2020
-        % ts = [32,32,94,46,46,36,36];
+        ts = [32,32,94,46,46,36,36];
         % ts = [7, 79, 34,21, 95, 41, 93];
 
         for i=1:numel(taus)
