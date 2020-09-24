@@ -1,0 +1,29 @@
+﻿cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numberSupport,Democrat,Republican,pvi,experienced
+2020,Arkansas,NA,1,Tom Cotton,2020ARCotton,1,0,0,1,-14.99,1
+2020,Arkansas,NA,1,Ricky Harrington,2020ARHarrington,1,0,0,0,-14.99,0
+2020,Massachusetts,NA,1,Ed Markey,2020MAMarkey,1,0,1,0,12.22,1
+2020,Massachusetts,NA,1,Kevin O'Connor,2020MAConnor,1,0,0,1,12.22,1
+2020,Minnesota,NA,1,Tina Smith,2020MNSmith,1,0,1,0,0.64,1
+2020,Minnesota,NA,1,Jason Lewis,2020MNLewis,1,0,0,1,0.64,1
+2020,Nebraska,NA,1,Ben Sasse,2020NESasse,1,0,0,1,-14.06,1
+2020,Nebraska,NA,1,Chris Janicek,2020NEJanicek,1,0,1,0,-14.06,0
+2020,Oregon,NA,1,Jeff Merkley,2020ORMerkley,1,0,1,0,4.47,1
+2020,Oregon,NA,1,Jo Rae Perkins,2020ORPerkins,1,0,0,1,4.47,1
+2020,Rhode Island,NA,1,Jack Reed,2020RIReed,1,0,1,0,9.78,1
+2020,Rhode Island,NA,1,Allen Waters,2020RIWaters,1,0,0,1,9.78,0
+2020,South Dakota,NA,1,Mike Rounds,2020SDRounds,1,0,0,1,-14.13,1
+2020,South Dakota,NA,1,Dan Ahlers,2020SDAhlers,1,0,1,0,-14.13,1
+2020,West Virginia,NA,1,Shelley Moore Capito,2020WVCapito,1,0,0,1,-19.58,1
+2020,West Virginia,NA,1,Paula Jean Swearengin,2020WVSwearengin,1,0,1,0,-19.58,1
+2020,Wyoming,NA,1,Cynthia Lummis,2020WYLummis,1,0,0,1,-24.97,1
+2020,Wyoming,NA,1,Merav Ben-David,2020WYDavid,1,0,1,0,-24.97,0
+2020,Illinois,NA,1,Dick Durbin,2020ILDurbin,1,0,1,0,7.9,1
+2020,Illinois,NA,1,Mark Curran,2020ILCurran,1,0,0,1,7.9,1
+2020,Tennessee,NA,1,Bill Hagerty,2020TNHagerty,1,0,0,1,-12.87,1
+2020,Tennessee,NA,1,Marquita Bradshaw,2020TNBradshaw,1,0,1,0,-12.87,0
+2020,Illinois,NA,1,Dick Durbin,2020ILDurbin,1,0,1,0,7.9,1
+2020,Illinois,NA,1,Mark Curran,2020ILCurran,1,0,0,1,7.9,1
+2020,Tennessee,NA,1,Bill Hagerty,2020TNHagerty,1,0,0,1,-12.87,1
+2020,Tennessee,NA,1,Marquita Bradshaw,2020TNBradshaw,1,0,1,0,-12.87,0
+2020,Delaware,NA,1,Chris Coons,2020DECoons,1,0,1,0,6.19,1
+2020,Delaware,NA,1,Lauren Witzke,2020DECWitzke,1,0,0,1,6.19,0

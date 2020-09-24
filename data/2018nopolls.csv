@@ -1,0 +1,9 @@
+﻿cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numberSupport,Democrat,Republican,Percentage.of.Vote.won.x,pvi,experienced
+2018,Hawaii,NA,1,Mazie Hirono,2018HIHirono,1,0,1,0,71.2,18.04,1
+2018,Hawaii,NA,1,Ron Curtis,2018HICurtis,1,0,0,1,28.8,18.04,0
+2018,Nebraska,NA,1,Deb Fischer,2018NEFischer,1,0,0,1,57.7,-14.06,1
+2018,Nebraska,NA,1,Jane Raybould,2018NERaybould,1,0,1,0,38.62,-14.06,1
+2018,MinnesotaS,NA,1,Tina Smith,2018MNSmith,1,0,1,0,53,1.975,1
+2018,MinnesotaS,NA,1,Karin Housley,2018MNHousley,1,0,0,1,42.4,1.975,1
+2018,MississippiS,NA,1,Mike Espy,2018MSEspy,1,0,1,0,46.4,-7.7676,0
+2018,MississippiS,NA,1,Cindy Hyde-Smith,2018MSSmith,1,0,0,1,53.6,-7.7676,1
