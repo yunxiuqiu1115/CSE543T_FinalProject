@@ -10,4 +10,4 @@ horizon=$2
 # echo $TYPE
 # echo $horizon
 
-matlab -nodisplay -nodesktop -r "main($TYPE,1,$horizon); exit"
+matlab -nodisplay -nodesktop -r "main('$TYPE',1,$horizon); exit"
