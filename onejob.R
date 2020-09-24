@@ -286,28 +286,28 @@ for (b in 1:search_size){
 # echo to terminal
 cat(averaged_nlZs)
 
-tmp = data %>% group_by(cycle,state) %>% summarise(count=n_distinct(Candidateidentifier)) %>% filter(count>=3)
-
-CYCLE = c()
-STATE = c()
-NAME = c()
-REPUBLICAN =c()
-DEMOCRATIC = c()
-for (i in 1:nrow(tmp)) {
-  cycle = tmp$cycle[i]
-  state = toString(tmp$state[i])
-  cs = unique(data[(data$cycle==cycle & data$state==state),]$Candidateidentifier)
-  for (c in cs){
-    c = toString(c)
-    r = (data[(data$Candidateidentifier==c),]$Republican[1])
-    d = (data[(data$Candidateidentifier==c),]$Democrat[1])
-    CYCLE = c(CYCLE, cycle)
-    STATE = c(STATE, state)
-    NAME = c(NAME, c)
-    REPUBLICAN = c(REPUBLICAN, r)
-    DEMOCRATIC = c(DEMOCRATIC, d)
-  }
-}
-
-result = data.frame(CYCLE,STATE,NAME,REPUBLICAN,DEMOCRATIC)
-write.csv(result, "data/countGE3.csv")
+# tmp = data %>% group_by(cycle,state) %>% summarise(count=n_distinct(Candidateidentifier)) %>% filter(count>=3)
+# 
+# CYCLE = c()
+# STATE = c()
+# NAME = c()
+# REPUBLICAN =c()
+# DEMOCRATIC = c()
+# for (i in 1:nrow(tmp)) {
+#   cycle = tmp$cycle[i]
+#   state = toString(tmp$state[i])
+#   cs = unique(data[(data$cycle==cycle & data$state==state),]$Candidateidentifier)
+#   for (c in cs){
+#     c = toString(c)
+#     r = (data[(data$Candidateidentifier==c),]$Republican[1])
+#     d = (data[(data$Candidateidentifier==c),]$Democrat[1])
+#     CYCLE = c(CYCLE, cycle)
+#     STATE = c(STATE, state)
+#     NAME = c(NAME, c)
+#     REPUBLICAN = c(REPUBLICAN, r)
+#     DEMOCRATIC = c(DEMOCRATIC, d)
+#   }
+# }
+# 
+# result = data.frame(CYCLE,STATE,NAME,REPUBLICAN,DEMOCRATIC)
+# write.csv(result, "data/countGE3.csv")
