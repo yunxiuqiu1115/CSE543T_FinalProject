@@ -17,8 +17,6 @@ if(TYPE=='LM'){
   search_size = 20
 }
 
-search_size = 1
-
 print(paste(TYPE, '_' , cv_year, 'day', horizon,sep=''))
 library(rstan)
 rstan_options(auto_write=TRUE)
@@ -26,8 +24,6 @@ rstan_options(auto_write=TRUE)
 averaged_nlZs = c()
 
 for (b in 1:search_size){
-  averaged_nlZs = c(averaged_nlZs,1)
-  next
   # load the prior files
   input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', horizon, '_', b ,'.csv',sep='')
   output_file = paste('nlZs/', TYPE, '_' , cv_year, 'day', horizon, '_', b,'.csv',sep='')
