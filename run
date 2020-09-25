@@ -5,8 +5,8 @@ declare -a TYPES=("GP" "LM")
 
 mkdir -p nlZs
 
-# declare -a input_strs=(28)
-# declare -a cv_years=(2012)
+declare -a input_strs=(28)
+declare -a cv_years=(2012)
 
 number_file(){
     input_str=$1
@@ -19,16 +19,26 @@ one_job(){
     input_str=$1
     cv_year=$2
     TYPE=$3
+    IDX=$4
     # echo $("./onerun $input_str $cv_year $TYPE")
-    echo $(bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett  "./onerun $input_str $cv_year $TYPE")
+    echo $(bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett  "./onerun $input_str $cv_year $TYPE $IDX")
 }
 
 for TYPE in ${TYPES[@]}; do
     for input_str in ${input_strs[@]}; do
         # bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett "./matlabrun '$TYPE' $input_str"
         for cv_year in ${cv_years[@]}; do
-    	    nlZs=$(one_job $input_str $cv_year $TYPE)
-	        echo $nlZs
+            if [ "$TYPE" = "GP" ]; then
+                SEARCH_SIZE=100
+            else
+                SEARCH_SIZE=20
+            fi
+            for (( i=1; i<=$SEARCH_SIZE; i++ )) do 
+                nlZs=$(one_job $input_str $cv_year $TYPE $i)
+	            echo $nlZs
+            done
+    	    # nlZs=$(one_job $input_str $cv_year $TYPE)
+	        # echo $nlZs
             # n=$(number_file $input_str $cv_year $TYPE)
             # if [ $n -lt 100 ]
             # then

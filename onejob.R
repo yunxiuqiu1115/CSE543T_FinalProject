@@ -9,6 +9,7 @@ if (length(args)==0) {
 horizon = args[1]
 cv_year = args[2]
 TYPE = args[3]
+IDX = arg[4]
 
 if (TYPE=='GP'){
   search_size = 100
@@ -23,7 +24,11 @@ rstan_options(auto_write=TRUE)
 
 averaged_nlZs = c()
 
-for (b in 1:search_size){
+if(IDX>search_size){
+  stop("IDX exceeds search size.n", call.=FALSE)
+}
+
+for (b in c(IDX)){
   # load the prior files
   input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', horizon, '_', b ,'.csv',sep='')
   output_file = paste('nlZs/', TYPE, '_' , cv_year, 'day', horizon, '_', b,'.csv',sep='')
