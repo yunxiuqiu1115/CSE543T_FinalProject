@@ -5,8 +5,8 @@ declare -a TYPES=("GP" "LM")
 
 mkdir -p nlZs
 
-declare -a input_strs=(28)
-declare -a cv_years=(2012)
+# declare -a input_strs=(28)
+# declare -a cv_years=(2012)
 
 number_file(){
     input_str=$1
@@ -20,7 +20,7 @@ one_job(){
     cv_year=$2
     TYPE=$3
     # echo $("./onerun $input_str $cv_year $TYPE")
-    echo $(bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett -e error$TYPE.log "./onerun $input_str $cv_year $TYPE")
+    echo $(bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett  "./onerun $input_str $cv_year $TYPE")
 }
 
 for TYPE in ${TYPES[@]}; do

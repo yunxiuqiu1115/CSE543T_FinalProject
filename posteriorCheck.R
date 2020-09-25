@@ -12,9 +12,6 @@ for(year in c(2000)){
     if (year!=cycle){
       next
     }
-    if(cycle==year & state=='Pennsylvania'){
-      print(i)
-    }
     vote = data[data$state==state & data$cycle==cycle,c("vote")]
     vote = y[[idx2[i]]]/(sum(y[[idx2[i]]]))
     for(j in 1:2){
