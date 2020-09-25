@@ -9,7 +9,7 @@ TYPE=$3
 module add R-4
 module add gcc-8.3.0
 
-TMPDIR=/export/cluster-tmp/
+export TMPDIR=/export/cluster-tmp/chenyehu
 
 nlZs=$(Rscript --vanilla onejob.R $input_str $cv_year $TYPE)
 echo $nlZs

@@ -17,6 +17,7 @@ if(TYPE=='LM'){
   search_size = 20
 }
 
+search_size = 1
 
 print(paste(TYPE, '_' , cv_year, 'day', horizon,sep=''))
 library(rstan)
