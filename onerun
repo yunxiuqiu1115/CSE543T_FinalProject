@@ -1,8 +1,6 @@
 #!/bin/bash
-#BSUB -o Senate.%J
-#BSUB -R '(!gpu)'
 #BSUN -N
-#BSUB -J myjob
+
 
 input_str=$1
 cv_year=$2
