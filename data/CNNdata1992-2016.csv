@@ -5420,14 +5420,14 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Oregon,2008ORSmith,45.55344712,600,-8,252,"Research 2000",1,0,3.353242184,1
 2008,Oregon,2008ORMerkley,48.90467009,700,-50,315,"Rasmussen Reports/Pulse Opinion Research",0,1,3.353242184,1
 2008,Oregon,2008ORMerkley,48.90467009,698,-17,307,"YouGov",0,1,3.353242184,1
-2008,Georgia,2008GAMartin,42.56041752,547,-24,235,"SurveyUSA",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,547,-52,235,"SurveyUSA",0,1,-7.112719708,1
 2008,New Hampshire,2008NHShaheen,51.58962387,600,-13,282,"GfK Group",0,1,1.933575489,1
 2008,New Hampshire,2008NHShaheen,51.58962387,401,-190,184,"Dartmouth College",0,1,1.933575489,1
 2008,South Carolina,2008SCConley,42.24686884,542,-118,173,"Public Policy Polling",0,1,-7.394307149,0
-2008,Georgia,2008GAMartin,42.56041752,800,-15,352,"Strategic Vision LLC",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,800,-58,288,"Strategic Vision LLC",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,800,-43,352,"Strategic Vision LLC",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,800,-86,288,"Strategic Vision LLC",0,1,-7.112719708,1
 2008,South Carolina,2008SCConley,42.24686884,600,-43,252,"Research 2000",0,1,-7.394307149,0
-2008,Georgia,2008GAMartin,42.56041752,683,-5,300,"SurveyUSA",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,683,-33,300,"SurveyUSA",0,1,-7.112719708,1
 2008,Kansas,2008KSSlattery,36.45846583,808,-152,290,"Cooper & Secrest",0,1,-11.62514826,1
 2008,Oregon,2008ORMerkley,48.90467009,500,-5,245,"Rasmussen Reports/Pulse Opinion Research",0,1,3.353242184,1
 2008,Minnesota,2008MNFranken,41.9913228,500,-7,195,"Rasmussen Reports/Pulse Opinion Research",0,1,3.005342176,0
@@ -5437,9 +5437,9 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Minnesota,2008MNFranken,41.9913228,1106,-55,409,"Star Tribune",0,1,3.005342176,0
 2008,Louisiana,2008LAKennedy,45.72334114,436,-17,170,"YouGov",1,0,-6.085249095,0
 2008,South Carolina,2008SCGraham,57.52464291,500,-47,250,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.394307149,1
-2008,Georgia,2008GAMartin,42.56041752,800,-30,352,"Strategic Vision LLC",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,800,-58,352,"Strategic Vision LLC",0,1,-7.112719708,1
 2008,Oregon,2008ORSmith,45.55344712,500,-146,235,"Rasmussen Reports/Pulse Opinion Research",1,0,3.353242184,1
-2008,Georgia,2008GAMartin,42.56041752,800,-131,224,"Strategic Vision LLC",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,800,-159,224,"Strategic Vision LLC",0,1,-7.112719708,1
 2008,South Carolina,2008SCConley,42.24686884,654,-7,255,"SurveyUSA",0,1,-7.394307149,0
 2008,Oregon,2008ORMerkley,48.90467009,1424,-7,726,"Public Policy Polling",0,1,3.353242184,1
 2008,Oregon,2008ORMerkley,48.90467009,672,-10,329,"SurveyUSA",0,1,3.353242184,1
@@ -5450,29 +5450,29 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Louisiana,2008LALandrieu,52.10964613,500,-117,245,"Rasmussen Reports/Pulse Opinion Research",0,1,-6.085249095,1
 2008,Louisiana,2008LAKennedy,45.72334114,600,-223,228,"Southern Media & Opinion Research",1,0,-6.085249095,0
 2008,Alabama,2008ALFigures,36.52044883,697,-27,230,"SurveyUSA",0,1,-11.65787787,1
-2008,Georgia,2008GAMartin,42.56041752,800,-4,352,"Strategic Vision LLC",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,800,-32,352,"Strategic Vision LLC",0,1,-7.112719708,1
 2008,Oregon,2008ORSmith,45.55344712,500,-265,240,"Rasmussen Reports/Pulse Opinion Research",1,0,3.353242184,1
 2008,Alabama,2008ALFigures,36.52044883,500,-43,150,"Rasmussen Reports/Pulse Opinion Research",0,1,-11.65787787,1
 2008,Alabama,2008ALFigures,36.52044883,500,-96,160,"Rasmussen Reports/Pulse Opinion Research",0,1,-11.65787787,1
 2008,Alabama,2008ALFigures,36.52044883,500,-131,170,"Rasmussen Reports/Pulse Opinion Research",0,1,-11.65787787,1
 2008,Alabama,2008ALFigures,36.52044883,500,-161,145,"Rasmussen Reports/Pulse Opinion Research",0,1,-11.65787787,1
-2008,Georgia,2008GAMartin,42.56041752,637,-8,280,"Opinion Savvy/InsiderAdvantage",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,637,-36,280,"Opinion Savvy/InsiderAdvantage",0,1,-7.112719708,1
 2008,Alabama,2008ALSessions,63.36223195,697,-27,446,"SurveyUSA",1,0,-11.65787787,1
 2008,Alabama,2008ALSessions,63.36223195,650,-8,422,"SurveyUSA",1,0,-11.65787787,1
 2008,Alabama,2008ALFigures,36.52044883,500,-216,180,"Rasmussen Reports/Pulse Opinion Research",0,1,-11.65787787,1
 2008,New Hampshire,2008NHShaheen,51.58962387,816,-5,391,"University of New Hampshire",0,1,1.933575489,1
 2008,Louisiana,2008LAKennedy,45.72334114,600,-171,198,"Mellman Group",1,0,-6.085249095,0
-2008,Georgia,2008GAChambliss,57.43958248,547,-24,251,"SurveyUSA",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,677,-37,311,"SurveyUSA",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,684,-51,362,"SurveyUSA",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,547,-52,251,"SurveyUSA",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,677,-65,311,"SurveyUSA",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,684,-79,362,"SurveyUSA",1,0,-7.112719708,1
 2008,South Carolina,2008SCConley,42.24686884,690,-44,276,"SurveyUSA",0,1,-7.394307149,0
-2008,Georgia,2008GAMartin,42.56041752,600,-19,264,"Greenberg Quinlan Rosner (Democracy Corps)",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,600,-47,264,"Greenberg Quinlan Rosner (Democracy Corps)",0,1,-7.112719708,1
 2008,Louisiana,2008LAKennedy,45.72334114,643,-334,270,"SurveyUSA",1,0,-6.085249095,0
 2008,New Hampshire,2008NHShaheen,51.58962387,800,-8,384,"Strategic Vision LLC",0,1,1.933575489,1
 2008,Alabama,2008ALFigures,36.52044883,650,-8,208,"SurveyUSA",0,1,-11.65787787,1
-2008,Georgia,2008GAMartin,42.56041752,677,-37,297,"SurveyUSA",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,684,-51,246,"SurveyUSA",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,910,-17,336,"YouGov",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,677,-65,297,"SurveyUSA",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,684,-79,246,"SurveyUSA",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,910,-45,336,"YouGov",0,1,-7.112719708,1
 2008,South Carolina,2008SCGraham,57.52464291,654,-7,379,"SurveyUSA",1,0,-7.394307149,1
 2008,Alabama,2008ALSessions,63.36223195,500,-216,285,"Rasmussen Reports/Pulse Opinion Research",1,0,-11.65787787,1
 2008,Alabama,2008ALSessions,63.36223195,500,-96,295,"Rasmussen Reports/Pulse Opinion Research",1,0,-11.65787787,1
@@ -5480,9 +5480,9 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,South Carolina,2008SCConley,42.24686884,728,-17,225,"YouGov",0,1,-7.394307149,0
 2008,Alabama,2008ALSessions,63.36223195,500,-161,310,"Rasmussen Reports/Pulse Opinion Research",1,0,-11.65787787,1
 2008,Alabama,2008ALSessions,63.36223195,500,-131,290,"Rasmussen Reports/Pulse Opinion Research",1,0,-11.65787787,1
-2008,Georgia,2008GAChambliss,57.43958248,690,-12,365,"CNN/Opinion Research Corp.",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,600,-41,222,"Mellman Group",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,600,-90,252,"Mellman Group",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,690,-40,365,"CNN/Opinion Research Corp.",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,600,-69,222,"Mellman Group",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,600,-118,252,"Mellman Group",1,0,-7.112719708,1
 2008,Maine,2008MEAllen,38.58343801,500,-33,215,"Rasmussen Reports/Pulse Opinion Research",0,1,5.822149153,1
 2008,Oregon,2008ORMerkley,48.90467009,800,-176,336,"Feldman Group",0,1,3.353242184,1
 2008,Maine,2008MEAllen,38.58343801,400,-22,144,"SMS Research & Marketing Services Inc.",0,1,5.822149153,1
@@ -5491,16 +5491,16 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Iowa,2008IAHarkin,62.65578029,600,-36,336,"Research 2000",0,1,0.904484164,1
 2008,Minnesota,2008MNColeman,41.98353015,1076,-32,398,"Quinnipiac University",1,0,3.005342176,1
 2008,Maine,2008MEAllen,38.58343801,674,-6,283,"SurveyUSA",0,1,5.822149153,1
-2008,Georgia,2008GAMartin,42.56041752,500,-13,225,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,910,-17,391,"YouGov",1,0,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,500,-49,215,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,500,-82,220,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,500,-110,200,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,500,-131,195,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,500,-41,225,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,910,-45,391,"YouGov",1,0,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,500,-77,215,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,500,-110,220,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,500,-138,200,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,500,-159,195,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
 2008,Maine,2008MEAllen,38.58343801,500,-48,210,"Rasmussen Reports/Pulse Opinion Research",0,1,5.822149153,1
 2008,Maine,2008MEAllen,38.58343801,500,-84,200,"Rasmussen Reports/Pulse Opinion Research",0,1,5.822149153,1
-2008,Georgia,2008GAMartin,42.56041752,500,-229,165,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,600,-7,276,"Research 2000",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,500,-257,165,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,600,-35,276,"Research 2000",0,1,-7.112719708,1
 2008,North Carolina,2008NCHagan,52.6527808,852,-76,426,"Greenberg Quinlan Rosner (Democracy Corps)",0,1,-5.002555677,1
 2008,North Carolina,2008NCHagan,52.6527808,614,-77,245,"Opinion Savvy/InsiderAdvantage",0,1,-5.002555677,1
 2008,North Carolina,2008NCHagan,52.6527808,625,-7,281,"Mason-Dixon Polling & Research Inc.",0,1,-5.002555677,1
@@ -5509,12 +5509,12 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,North Carolina,2008NCHagan,52.6527808,1038,-10,498,"Public Policy Polling",0,1,-5.002555677,1
 2008,Idaho,2008IDRisch,57.65439375,500,-99,210,"Research 2000",1,0,-18.0803657,1
 2008,Idaho,2008IDRisch,57.65439375,372,-17,208,"YouGov",1,0,-18.0803657,1
-2008,Georgia,2008GAMartin,42.56041752,690,-12,303,"CNN/Opinion Research Corp.",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,600,-41,204,"Mellman Group",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,600,-90,216,"Mellman Group",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,600,-5,234,"Public Opinion Strategies",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,690,-40,303,"CNN/Opinion Research Corp.",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,600,-69,204,"Mellman Group",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,600,-118,216,"Mellman Group",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,600,-33,234,"Public Opinion Strategies",0,1,-7.112719708,1
 2008,North Carolina,2008NCHagan,52.6527808,616,-180,264,"Public Policy Polling",0,1,-5.002555677,1
-2008,Georgia,2008GAChambliss,57.43958248,683,-5,327,"SurveyUSA",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,683,-33,327,"SurveyUSA",1,0,-7.112719708,1
 2008,Kansas,2008KSSlattery,36.45846583,666,-44,233,"SurveyUSA",0,1,-11.62514826,1
 2008,Kansas,2008KSSlattery,36.45846583,641,-78,198,"SurveyUSA",0,1,-11.62514826,1
 2008,Idaho,2008IDRisch,57.65439375,500,-56,290,"Rasmussen Reports/Pulse Opinion Research",1,0,-18.0803657,1
@@ -5522,13 +5522,13 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,New Hampshire,2008NHShaheen,51.58962387,500,-265,245,"Rasmussen Reports/Pulse Opinion Research",0,1,1.933575489,1
 2008,Nebraska,2008NEJohanns,57.52021108,500,-173,275,"Rasmussen Reports/Pulse Opinion Research",1,0,-15.60683524,1
 2008,Illinois,2008ILDurbin,67.84095114,500,-119,315,"Rasmussen Reports/Pulse Opinion Research",0,1,6.448869358,1
-2008,Georgia,2008GAMartin,42.56041752,531,-26,238,"Opinion Savvy/InsiderAdvantage",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,625,-13,243,"Mason-Dixon Polling & Research Inc.",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,1253,-4,576,"Public Policy Polling",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,800,-56,264,"Public Opinion Strategies",0,1,-7.112719708,1
-2008,Georgia,2008GAMartin,42.56041752,500,-5,215,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,531,-54,238,"Opinion Savvy/InsiderAdvantage",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,625,-41,243,"Mason-Dixon Polling & Research Inc.",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,1253,-32,576,"Public Policy Polling",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,800,-84,264,"Public Opinion Strategies",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,500,-33,215,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
 2008,Virginia,2008VAGilmore,33.72854346,500,-145,165,"Rasmussen Reports/Pulse Opinion Research",1,0,-2.892307504,1
-2008,Georgia,2008GAMartin,42.56041752,500,-28,220,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,500,-56,220,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
 2008,Virginia,2008VAGilmore,33.72854346,500,-222,195,"Rasmussen Reports/Pulse Opinion Research",1,0,-2.892307504,1
 2008,Virginia,2008VAGilmore,33.72854346,500,-259,185,"Rasmussen Reports/Pulse Opinion Research",1,0,-2.892307504,1
 2008,Virginia,2008VAGilmore,33.72854346,500,-306,190,"Rasmussen Reports/Pulse Opinion Research",1,0,-2.892307504,1
@@ -5549,10 +5549,10 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,North Carolina,2008NCHagan,52.6527808,750,-30,330,"Anzalone",0,1,-5.002555677,1
 2008,North Carolina,2008NCHagan,52.6527808,750,-44,322,"Anzalone",0,1,-5.002555677,1
 2008,Oklahoma,2008OKInhofe,56.67985082,859,-51,489,"SoonerPoll.com",1,0,-14.32757576,1
-2008,Georgia,2008GAChambliss,57.43958248,800,-15,368,"Strategic Vision LLC",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,800,-30,376,"Strategic Vision LLC",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,800,-58,432,"Strategic Vision LLC",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,800,-131,455,"Strategic Vision LLC",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,800,-43,368,"Strategic Vision LLC",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,800,-58,376,"Strategic Vision LLC",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,800,-86,432,"Strategic Vision LLC",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,800,-159,455,"Strategic Vision LLC",1,0,-7.112719708,1
 2008,South Carolina,2008SCGraham,57.52464291,500,-43,250,"Quinn",1,0,-7.394307149,1
 2008,Virginia,2008VAWarner,65.03255021,625,-15,362,"Mason-Dixon Polling & Research Inc.",0,1,-2.892307504,1
 2008,Virginia,2008VAWarner,65.03255021,625,-36,356,"Mason-Dixon Polling & Research Inc.",0,1,-2.892307504,1
@@ -5577,9 +5577,9 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Alaska,2008AKBegich,47.76708013,500,-45,240,"Ivan Moore Research",0,1,-11.98358259,1
 2008,Delaware,2008DEBiden,64.68651258,601,-48,414,"Fairleigh Dickinson University (PublicMind)",0,1,5.076934838,1
 2008,North Carolina,2008NCDole,44.18359679,600,-7,270,"Research 2000",1,0,-5.002555677,1
-2008,Georgia,2008GAChambliss,57.43958248,500,-49,250,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,500,-82,250,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,500,-110,255,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,500,-77,250,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,500,-110,250,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,500,-138,255,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
 2008,Virginia,2008VAGilmore,33.72854346,1261,-146,453,"Zogby Interactive/JZ Analytics",1,0,-2.892307504,1
 2008,Virginia,2008VAGilmore,33.72854346,721,-12,252,"CNN/Opinion Research Corp.",1,0,-2.892307504,1
 2008,Minnesota,2008MNColeman,41.98353015,655,-19,268,"SurveyUSA",1,0,3.005342176,1
@@ -5603,12 +5603,12 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Minnesota,2008MNFranken,41.9913228,1117,-176,491,"Star Tribune",0,1,3.005342176,0
 2008,Minnesota,2008MNColeman,41.98353015,500,-243,230,"McLaughlin & Associates",1,0,3.005342176,1
 2008,South Dakota,2008SDDykstra,37.50830766,603,-13,192,"Greenberg Quinlan Rosner (Democracy Corps)",1,0,-9.672674893,1
-2008,Georgia,2008GAChambliss,57.43958248,600,-19,288,"Greenberg Quinlan Rosner (Democracy Corps)",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,512,-2,245,"Opinion Savvy/InsiderAdvantage",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,637,-8,293,"Opinion Savvy/InsiderAdvantage",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,615,-12,270,"Opinion Savvy/InsiderAdvantage",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,531,-26,238,"Opinion Savvy/InsiderAdvantage",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,625,-13,281,"Mason-Dixon Polling & Research Inc.",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,600,-47,288,"Greenberg Quinlan Rosner (Democracy Corps)",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,512,-30,245,"Opinion Savvy/InsiderAdvantage",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,637,-36,293,"Opinion Savvy/InsiderAdvantage",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,615,-40,270,"Opinion Savvy/InsiderAdvantage",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,531,-54,238,"Opinion Savvy/InsiderAdvantage",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,625,-41,281,"Mason-Dixon Polling & Research Inc.",1,0,-7.112719708,1
 2008,Minnesota,2008MNFranken,41.9913228,700,-47,329,"Rasmussen Reports/Pulse Opinion Research",0,1,3.005342176,0
 2008,Iowa,2008IAReed,37.26124779,500,-89,180,"Rasmussen Reports/Pulse Opinion Research",1,0,0.904484164,0
 2008,Minnesota,2008MNColeman,41.98353015,500,-230,240,"Rasmussen Reports/Pulse Opinion Research",1,0,3.005342176,1
@@ -5616,14 +5616,14 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Alaska,2008AKBegich,47.76708013,413,-97,231,"Ivan Moore Research",0,1,-11.98358259,1
 2008,Alaska,2008AKBegich,47.76708013,500,-63,220,"Moore Information",0,1,-11.98358259,1
 2008,Minnesota,2008MNColeman,41.98353015,509,-21,183,"St. Cloud State University",1,0,3.005342176,1
-2008,Georgia,2008GAChambliss,57.43958248,500,-131,265,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,500,-153,260,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,500,-182,270,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,500,-229,255,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,600,-7,282,"Research 2000",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,500,-159,265,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,500,-181,260,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,500,-210,270,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,500,-257,255,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,600,-35,282,"Research 2000",1,0,-7.112719708,1
 2008,Alaska,2008AKStevens,46.52291461,500,-66,230,"Ivan Moore Research",1,0,-11.98358259,1
-2008,Georgia,2008GAChambliss,57.43958248,600,-36,270,"Research 2000",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,800,-4,384,"Strategic Vision LLC",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,600,-64,270,"Research 2000",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,800,-32,384,"Strategic Vision LLC",1,0,-7.112719708,1
 2008,North Carolina,2008NCHagan,52.6527808,823,-104,329,"Public Policy Polling",0,1,-5.002555677,1
 2008,Minnesota,2008MNColeman,41.98353015,418,-11,154,"Humphrey Institute",1,0,3.005342176,1
 2008,Minnesota,2008MNBarkley,15.15254368,600,-36,84,"Mellman Group",0,0,3.005342176,1
@@ -5648,9 +5648,9 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Alaska,2008AKBegich,47.76708013,600,-50,300,"Research 2000",0,1,-11.98358259,1
 2008,Alaska,2008AKBegich,47.76708013,600,-113,282,"Research 2000",0,1,-11.98358259,1
 2008,Alaska,2008AKBegich,47.76708013,600,-176,288,"Research 2000",0,1,-11.98358259,1
-2008,Georgia,2008GAChambliss,57.43958248,500,-5,240,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,500,-13,235,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
-2008,Georgia,2008GAChambliss,57.43958248,500,-28,250,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,500,-33,240,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,500,-41,235,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,500,-56,250,"Rasmussen Reports/Pulse Opinion Research",1,0,-7.112719708,1
 2008,Colorado,2008COSchaffer,42.49169709,500,-14,190,"Behavior Research Center (Rocky Mountain)",1,0,-1.123090903,1
 2008,Alaska,2008AKBegich,47.76708013,600,-337,282,"Research 2000",0,1,-11.98358259,1
 2008,Alaska,2008AKBegich,47.76708013,358,-17,157,"YouGov",0,1,-11.98358259,1
@@ -5685,7 +5685,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Iowa,2008IAReed,37.26124779,692,-27,256,"SurveyUSA",1,0,0.904484164,0
 2008,Virginia,2008VAWarner,65.03255021,500,-306,265,"Rasmussen Reports/Pulse Opinion Research",0,1,-2.892307504,1
 2008,Alaska,2008AKStevens,46.52291461,600,-21,276,"Research 2000",1,0,-11.98358259,1
-2008,Georgia,2008GAChambliss,57.43958248,800,-56,416,"Public Opinion Strategies",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,800,-84,416,"Public Opinion Strategies",1,0,-7.112719708,1
 2008,Alaska,2008AKStevens,46.52291461,600,-113,270,"Research 2000",1,0,-11.98358259,1
 2008,Alaska,2008AKStevens,46.52291461,600,-176,258,"Research 2000",1,0,-11.98358259,1
 2008,Iowa,2008IAReed,37.26124779,500,-147,185,"Rasmussen Reports/Pulse Opinion Research",1,0,0.904484164,0
@@ -6152,7 +6152,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,New Hampshire,2008NHSununu,45.25171024,439,-193,175,"University of New Hampshire",1,0,1.933575489,1
 2008,New Hampshire,2008NHSununu,45.25171024,700,-5,308,"Rasmussen Reports/Pulse Opinion Research",1,0,1.933575489,1
 2008,Virginia,2008VAWarner,65.03255021,601,-13,348,"GfK Group",0,1,-2.892307504,1
-2008,Georgia,2008GAMartin,42.56041752,600,-36,264,"Research 2000",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,600,-64,264,"Research 2000",0,1,-7.112719708,1
 2008,North Carolina,2008NCDole,44.18359679,614,-77,245,"Opinion Savvy/InsiderAdvantage",1,0,-5.002555677,1
 2008,North Carolina,2008NCDole,44.18359679,625,-7,287,"Mason-Dixon Polling & Research Inc.",1,0,-5.002555677,1
 2008,North Carolina,2008NCDole,44.18359679,402,-12,148,"National Journal",1,0,-5.002555677,1
@@ -6444,7 +6444,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,New Jersey,2008NJLautenberg,56.03011677,800,-51,376,"Strategic Vision LLC",0,1,4.610717909,1
 2008,Wyoming,2008WYRothfuss,24.25763965,600,-21,204,"Research 2000",0,1,-19.07310726,0
 2008,Minnesota,2008MNColeman,41.98353015,500,-83,245,"Rasmussen Reports/Pulse Opinion Research",1,0,3.005342176,1
-2008,Georgia,2008GAMartin,42.56041752,500,-182,165,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,500,-210,165,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
 2008,Oregon,2008ORMerkley,48.90467009,300,-161,102,"Public Opinion Strategies",0,1,3.353242184,1
 2008,Louisiana,2008LAKennedy,45.72334114,500,-8,220,"OnMessage Inc.",1,0,-6.085249095,0
 2008,Oregon,2008ORSmith,45.55344712,500,-223,235,"Rasmussen Reports/Pulse Opinion Research",1,0,3.353242184,1
@@ -6477,7 +6477,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Kansas,2008KSRoberts,60.05839645,3004,-130,1622,"TargetPoint",1,0,-11.62514826,1
 2008,New Mexico,2008NMPearce,38.67200874,700,-57,308,"Rasmussen Reports/Pulse Opinion Research",1,0,0.842990528,1
 2008,Kansas,2008KSRoberts,60.05839645,500,-23,280,"Public Opinion Strategies",1,0,-11.62514826,1
-2008,Georgia,2008GAMartin,42.56041752,512,-2,220,"Opinion Savvy/InsiderAdvantage",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,512,-30,220,"Opinion Savvy/InsiderAdvantage",0,1,-7.112719708,1
 2008,Virginia,2008VAWarner,65.03255021,721,-12,454,"CNN/Opinion Research Corp.",0,1,-2.892307504,1
 2008,North Carolina,2008NCDole,44.18359679,600,-324,276,"Research 2000",1,0,-5.002555677,1
 2008,Maine,2008MEAllen,38.58343801,500,-174,210,"Rasmussen Reports/Pulse Opinion Research",0,1,5.822149153,1
@@ -6493,7 +6493,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Tennessee,2008TNAlexander,65.14422056,500,-19,310,"Rasmussen Reports/Pulse Opinion Research",1,0,-5.940702708,1
 2008,Delaware,2008DEO'Donnell,35.31348742,346,-17,107,"YouGov",1,0,5.076934838,0
 2008,Maine,2008MECollins,61.33097746,425,-22,229,"Market Decisions",1,0,5.822149153,1
-2008,Georgia,2008GAChambliss,57.43958248,600,-21,282,"Research 2000",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,600,-49,282,"Research 2000",1,0,-7.112719708,1
 2008,Nebraska,2008NEKleeb,40.05698344,500,-99,170,"Rasmussen Reports/Pulse Opinion Research",0,1,-15.60683524,0
 2008,Kentucky,2008KYMcConnell,52.96561957,717,-43,322,"Mason-Dixon Polling & Research Inc.",1,0,-8.763621707,1
 2008,Minnesota,2008MNBarkley,15.15254368,734,-55,102,"SurveyUSA",0,0,3.005342176,1
@@ -6557,7 +6557,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Iowa,2008IAReed,37.26124779,500,-12,205,"Rasmussen Reports/Pulse Opinion Research",1,0,0.904484164,0
 2008,Iowa,2008IAReed,37.26124779,795,-17,286,"YouGov",1,0,0.904484164,0
 2008,Virginia,2008VAWarner,65.03255021,672,-5,396,"SurveyUSA",0,1,-2.892307504,1
-2008,Georgia,2008GAChambliss,57.43958248,1253,-4,601,"Public Policy Polling",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,1253,-32,601,"Public Policy Polling",1,0,-7.112719708,1
 2008,North Carolina,2008NCHagan,52.6527808,600,-8,270,"Tel Opinion Research",0,1,-5.002555677,1
 2008,Oklahoma,2008OKRice,39.1838844,491,-17,191,"YouGov",0,1,-14.32757576,1
 2008,New Jersey,2008NJZimmer,41.95400071,790,-36,268,"Fairleigh Dickinson University (PublicMind)",1,0,4.610717909,1
@@ -6579,7 +6579,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Kansas,2008KSRoberts,60.05839645,540,-135,275,"SurveyUSA",1,0,-11.62514826,1
 2008,Oklahoma,2008OKInhofe,56.67985082,745,-324,447,"SoonerPoll.com",1,0,-14.32757576,1
 2008,New Hampshire,2008NHShaheen,51.58962387,558,-324,228,"American Research Group",0,1,1.933575489,1
-2008,Georgia,2008GAMartin,42.56041752,600,-21,270,"Research 2000",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,600,-49,270,"Research 2000",0,1,-7.112719708,1
 2008,Minnesota,2008MNColeman,41.98353015,700,-47,336,"Rasmussen Reports/Pulse Opinion Research",1,0,3.005342176,1
 2008,Oklahoma,2008OKInhofe,56.67985082,801,-31,424,"SoonerPoll.com",1,0,-14.32757576,1
 2008,Maine,2008MECollins,61.33097746,674,-6,377,"SurveyUSA",1,0,5.822149153,1
@@ -6655,7 +6655,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Wyoming,2008WYEnzi,75.6347371,246,-17,167,"YouGov",1,0,-19.07310726,1
 2008,Oregon,2008ORMerkley,48.90467009,499,-25,179,"Riley Research Associates",0,1,3.353242184,1
 2008,New Hampshire,2008NHSununu,45.25171024,600,-18,258,"Research 2000",1,0,1.933575489,1
-2008,Georgia,2008GAChambliss,57.43958248,600,-5,288,"Public Opinion Strategies",1,0,-7.112719708,1
+2008,Georgia,2008GAChambliss,57.43958248,600,-33,288,"Public Opinion Strategies",1,0,-7.112719708,1
 2008,Wyoming,2008WYEnzi,75.6347371,625,-22,450,"Mason-Dixon Polling & Research Inc.",1,0,-19.07310726,1
 2008,Oregon,2008ORMerkley,48.90467009,500,-223,170,"Rasmussen Reports/Pulse Opinion Research",0,1,3.353242184,1
 2008,Texas,2008TXCornyn,54.82087821,500,-132,240,"Rasmussen Reports/Pulse Opinion Research",1,0,-10.27202546,1
@@ -6665,7 +6665,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Massachusetts,2008MABeatty,30.91711635,500,-159,125,"Rasmussen Reports/Pulse Opinion Research",1,0,13.98553607,0
 2008,North Carolina,2008NCHagan,52.6527808,655,-87,268,"SurveyUSA",0,1,-5.002555677,1
 2008,South Carolina,2008SCConley,42.24686884,500,-43,160,"Quinn",0,1,-7.394307149,0
-2008,Georgia,2008GAMartin,42.56041752,500,-153,180,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,500,-181,180,"Rasmussen Reports/Pulse Opinion Research",0,1,-7.112719708,1
 2008,Michigan,2008MILevin,62.66496446,500,-148,275,"Rasmussen Reports/Pulse Opinion Research",0,1,2.968999364,1
 2008,New Jersey,2008NJZimmer,41.95400071,801,-6,248,"Monmouth University",1,0,4.610717909,1
 2008,New Mexico,2008NMPearce,38.67200874,659,-36,237,"Research & Polling Inc.",1,0,0.842990528,1
@@ -6685,7 +6685,7 @@ cycle,state,Candidateidentifier,Percentage_of_Vote_won_x,samplesize,daysLeft,num
 2008,Oklahoma,2008OKInhofe,56.67985082,894,-58,509,"SoonerPoll.com",1,0,-14.32757576,1
 2008,North Carolina,2008NCHagan,52.6527808,682,-4,341,"SurveyUSA",0,1,-5.002555677,1
 2008,New Hampshire,2008NHShaheen,51.58962387,500,-167,250,"Rasmussen Reports/Pulse Opinion Research",0,1,1.933575489,1
-2008,Georgia,2008GAMartin,42.56041752,615,-12,258,"Opinion Savvy/InsiderAdvantage",0,1,-7.112719708,1
+2008,Georgia,2008GAMartin,42.56041752,615,-40,258,"Opinion Savvy/InsiderAdvantage",0,1,-7.112719708,1
 2008,Oregon,2008ORSmith,45.55344712,500,-181,225,"Rasmussen Reports/Pulse Opinion Research",1,0,3.353242184,1
 2010,Pennsylvania,2010PAToomey,51.00849469,460,-9,220,"Muhlenberg College",1,0,1.540724783,1
 2010,Colorado,2010COBennet,48.07900013,1060,-172,477,"Public Policy Polling",0,1,0.857671526,1

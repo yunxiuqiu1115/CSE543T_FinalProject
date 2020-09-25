@@ -57,7 +57,7 @@ Democrat = [0 for i in range(data.shape[0])]
 #   - Democrat: binary indicator of whether candidate is demoratic
 for i in range(data.shape[0]):
     Candidateidentifier[i] = str(data.cycle.iloc[i]) + toabbr[data.state.iloc[i]] + data.name.iloc[i]
-    daysLeft[i] = -pd.date_range(data.end_date.iloc[i], data.election_date.iloc[i]).shape[0]
+    daysLeft[i] = -pd.date_range(data.start_date.iloc[i], data.election_date.iloc[i]).shape[0]
     nsup[i] = data.samplesize.iloc[i]*data.pct.iloc[i]//100
     if data.party.iloc[i] == "REP":
         Republican[i] = 1
