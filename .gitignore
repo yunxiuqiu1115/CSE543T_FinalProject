@@ -1,4 +1,5 @@
 .DS_Store
+logs/
 *.log
 .ipynb_checkpoints/
 nlZs/
