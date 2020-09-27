@@ -5,6 +5,7 @@
 input_str=$1
 cv_year=$2
 TYPE=$3
+IDX=$4
 
 module add R-4
 module add gcc-8.3.0
@@ -13,5 +14,5 @@ mkdir -p /export/cluster-tmp/chenyehu
 
 export TMPDIR=/export/cluster-tmp/chenyehu
 
-nlZs=$(Rscript --vanilla onejob.R $input_str $cv_year $TYPE)
+nlZs=$(Rscript --vanilla onejob.R $input_str $cv_year $TYPE $IDX)
 echo $nlZs

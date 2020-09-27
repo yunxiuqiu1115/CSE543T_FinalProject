@@ -23,6 +23,14 @@ one_job(){
     echo $(bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett -o /home/research/chenyehu/log/Log."${input_str}_${cv_year}_${TYPE}" -J "${input_str}_${cv_year}_${TYPE}" "./onerun $input_str $cv_year $TYPE")
 }
 
+
+for (( i=1; i<=$20; i++ )) do 
+    nlZs=$(one_job 56 2010 GP $i)
+    echo $nlZs
+done
+
+exit 0
+
 for TYPE in ${TYPES[@]}; do
     for input_str in ${input_strs[@]}; do
         # bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett "./matlabrun '$TYPE' $input_str"
