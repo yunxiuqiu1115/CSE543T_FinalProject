@@ -24,10 +24,11 @@ one_job(){
 }
 
 
-for (( i=1; i<=$20; i++ )) do 
+for (( i=1; i<=20; i++ )) do 
     nlZs=$(one_job 56 2010 GP $i)
-    echo $nlZs
+    echo $i
 done
+
 
 # for TYPE in ${TYPES[@]}; do
 #     for input_str in ${input_strs[@]}; do
