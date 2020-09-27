@@ -25,7 +25,7 @@ rstan_options(auto_write=TRUE)
 
 averaged_nlZs = c()
 
-for (b in ((IDX-1)*5+1):IDX*5){
+for (b in ((IDX-1)*5+1):(IDX*5)){
   # load the prior files
   input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', horizon, '_', b ,'.csv',sep='')
   output_file = paste('nlZs/', TYPE, '_' , cv_year, 'day', horizon, '_', b,'.csv',sep='')
