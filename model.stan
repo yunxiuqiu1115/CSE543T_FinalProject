@@ -63,7 +63,7 @@ data {
 parameters {
   real<lower=0> alpha;
   real<lower=0> beta;
-  real<upper=0> ppb; // party*pvi b
+  real<lower=0> ppb; // party*pvi b
   real<lower=0> eb; // experienced b
   real<lower=0> year_sig; // The SD for the year-level random effects
   vector[max_year_idx] year_re; // Year level random effects in the vote share equation

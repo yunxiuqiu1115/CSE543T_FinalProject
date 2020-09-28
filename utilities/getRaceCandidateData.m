@@ -56,7 +56,7 @@ function [xs, ys, candidateNames, vs, pvis, experienceds, parties]= getRaceCandi
         ps = ns./ss;                                                     % polling proportions
         vs(i) = allCandidatesData.(candidateNames{i}).Percentage_of_Vote_won_x(1); % actual vote shares
         % ds, rs is the same across one candidate
-        % indicators of candidate parties (1 if republican, -1 if democratic, 0 if third party)
+        % indicators of candidate parties (-1 if republican, 1 if democratic, 0 if third party)
         if ds(1)==1
             parties(i) = 1;
         elseif rs(1) == 1

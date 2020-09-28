@@ -5,7 +5,7 @@ args = commandArgs(trailingOnly=TRUE)
 
 # test if there is at least one argument: if not, use default 2020 with GP model
 if (length(args)==0) {
-  test_year = 2018
+  test_year = 2020
   # define model type: gp prior or lm prior
   TYPE = 'GP'
 }
@@ -34,21 +34,21 @@ rstan_options(auto_write=TRUE)
 horizons = c('0',
                '7',
                '14',
+               '21',
                '28',
                '42',
-               '90',
-               '120')
+               '56')
 
 # the optimal index of hyperparameters in the loyo process
 # optimal index can be obtained with loocv_nlZs.R
-best_cv_idx = c(32,32,94,46,46,36,36)
-# best_cv_idx = c(7, 79, 34,21, 95, 41, 93)
+best_cv_idx = read.csv("results/GP_opthyp.csv");
+best_cv_idx = best_cv_idx$opt_idx
 
 # store the stan_model fit objects
 fit_objs = c()
 
 # for (a in 1:length(horizons))
-for (a in 1:1) {
+for (a in 6:6) {
   
   # load the prior files
   input_file = paste('results/LOO', TYPE, '_' , test_year, 'day', horizons[a], '_', best_cv_idx[a] ,'.csv',sep='')
@@ -128,7 +128,13 @@ for (a in 1:1) {
     stan_mu[i,1:nc[i]] <- mu[[i]]
     stan_sigma[i,1:nc[i]] = sigma[[i]]
     stan_y[i,1:nc[i]] = y[[i]]
-    stan_y[i,] = stan_y[i,]/sum(stan_y[i,])
+    if(sum(stan_y[i,1:nc[i]])!=0){
+      stan_y[i,1:nc[i]] = stan_y[i,1:nc[i]]/sum(stan_y[i,1:nc[i]])
+    }
+    else{
+      stan_y[i,1:nc[i]] = 1/nc[i]
+    }
+    
     stan_pvi[i,1:nc[i]] = pvi[[i]]
     stan_party[i,1:nc[i]] = party[[i]]
     stan_experienced[i, 1:nc[i]] = experienced[[i]]
@@ -196,7 +202,12 @@ for (a in 1:1) {
     
     test_stan_sigma[i,1:test_nc[i]] = test_sigma[[i]]
     test_stan_y[i,1:test_nc[i]] = test_y[[i]]
-    test_stan_y[i,] = test_stan_y[i,]/sum(test_stan_y[i,])
+    if(sum(test_stan_y[i,1:test_nc[i]])!=0){
+      test_stan_y[i,1:test_nc[i]] = test_stan_y[i,1:test_nc[i]]/sum(test_stan_y[i,1:test_nc[i]])
+    }
+    else{
+      test_stan_y[i,1:test_nc[i]] = 1/test_nc[i]
+    }
     test_stan_pvi[i,1:test_nc[i]] = test_pvi[[i]]
     test_stan_party[i,1:test_nc[i]] = test_party[[i]]
     test_stan_experienced[i, 1:test_nc[i]] = test_experienced[[i]]
@@ -465,11 +476,9 @@ for (a in 1:1) {
     state = test_metadata[[test_idx2[i]]][2]
     pmu = data_test[data_test$state==state & data_test$cycle==cycle,c("posteriormean")]
     pstd = data_test[data_test$state==state & data_test$cycle==cycle,c("posteriorstd")]
-    vote = data_test[data_test$state==state & data_test$cycle==cycle,c("vote")]
-    vote = test_y[[test_idx2[i]]]*100/(sum(test_y[[test_idx2[i]]]))
+    vote = test_stan_y[test_idx2[i],1:test_nc[test_idx2[i]]]
     party = data_test[data_test$state==state & data_test$cycle==cycle,c("party")]
     candidates = data_test[data_test$state==state & data_test$cycle==cycle,c("candidate")]
-    # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
     preds= c()
     for(j in 1:2){
       tmp = paste('test_y2[',i,',',j,']',sep='')
@@ -485,7 +494,7 @@ for (a in 1:1) {
       
       one_posterior$Posterior_Vote = pred*100
       one_posterior$State = state.abb[match(state,state.name)]
-      if(party[j]==1){
+      if(party[j]==-1){
         one_posterior$Party = 'REP'
         RepWin = mean(one_posterior$Posterior_Vote>50)
       }
@@ -592,26 +601,26 @@ for (a in 1:1) {
   #   theme(plot.title = element_text(hjust=0.5),
   #         panel.background = element_rect(fill = 'white', colour = 'white'))
   
-  # ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
-  #   geom_density_ridges(alpha=0.6) +
-  #   scale_y_discrete(expand = c(0, 0), name = "") +
-  #   # facet_wrap(Type ~ ., scale ="free") +
-  #   scale_x_continuous(expand = c(0, 0), breaks = c(0,20,40,60,80,100),
-  #                      name = "Posterior Vote (%)") +
-  #   theme(panel.grid.minor = element_blank(),
-  #        panel.grid.major.x = element_line(color = "gray")) +
-  #   scale_fill_manual(values = c("blue", "red"), labels = c("DEM", "REP")) +
-  #   scale_color_manual(values = c(NA,NA), guide = "none") +
-  #   coord_cartesian(xlim = c(0, 100), clip='on') +
-  #   guides(fill = guide_legend(
-  #     override.aes = list(
-  #       fill = c("blue", "red"),
-  #       color = NA, point_color = NA)
-  #   )
-  #   ) +
-  #   ggtitle("Posterior predictive density of vote share for major party candidates") +
-  #   theme(plot.title = element_text(hjust=0.5),
-  #         panel.background = element_rect(fill = 'white', colour = 'white'))
+  ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
+    geom_density_ridges(alpha=0.6) +
+    scale_y_discrete(expand = c(0, 0), name = "") +
+    # facet_wrap(Type ~ ., scale ="free") +
+    scale_x_continuous(expand = c(0, 0), breaks = c(0,20,40,60,80,100),
+                       name = "Posterior Vote (%)") +
+    theme(panel.grid.minor = element_blank(),
+         panel.grid.major.x = element_line(color = "gray")) +
+    scale_fill_manual(values = c( "red","blue"), labels = c("REP","DEM")) +
+    scale_color_manual(values = c(NA,NA), guide = "none") +
+    coord_cartesian(xlim = c(0, 100), clip='on') +
+    guides(fill = guide_legend(
+      override.aes = list(
+        fill = c("red", "blue"),
+        color = NA, point_color = NA)
+    )
+    ) +
+    ggtitle("Posterior predictive density of vote share for major party candidates") +
+    theme(plot.title = element_text(hjust=0.5),
+          panel.background = element_rect(fill = 'white', colour = 'white'))
 
 
   if(length(test_idx3)){
@@ -620,8 +629,7 @@ for (a in 1:1) {
       state = test_metadata[[test_idx3[i]]][2]
       pmu = data_test[data_test$state==state & data_test$cycle==cycle,c("posteriormean")]
       pstd = data_test[data_test$state==state & data_test$cycle==cycle,c("posteriorstd")]
-      vote = data_test[data_test$state==state & data_test$cycle==cycle,c("vote")]
-      vote= test_y[[test_idx3[i]]]*100/(sum(test_y[[test_idx3[i]]]))
+      vote = test_stan_y[test_idx3[i],1:test_nc[test_idx3[i]]]
       party = data_test[data_test$state==state & data_test$cycle==cycle,c("party")]
       candidates = data_test[data_test$state==state & data_test$cycle==cycle,c("candidate")]
       # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
@@ -674,8 +682,7 @@ for (a in 1:1) {
       state = test_metadata[[test_idx4[i]]][2]
       pmu = data_test[data_test$state==state & data_test$cycle==cycle ,c("posteriormean")]
       pstd = data_test[data_test$state==state & data_test$cycle==cycle ,c("posteriorstd")]
-      vote = data_test[data_test$state==state & data_test$cycle==cycle,c("vote")]
-      vote= test_y[[test_idx4[i]]]*100/(sum(test_y[[test_idx4[i]]]))
+      vote = test_stan_y[test_idx4[i],1:test_nc[test_idx4[i]]]
       party = data_test[data_test$state==state & data_test$cycle==cycle,c("party")]
       candidates = data_test[data_test$state==state & data_test$cycle==cycle,c("candidate")]
       # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)

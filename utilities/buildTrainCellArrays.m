@@ -15,7 +15,7 @@ function [xs, ys, raceinfos] = buildTrainCellArrays(data, years, states)
 %   - ys: cell array of pollings. Each element contains polling proportion.
 %   - raceinfos: cell array of election race metadata. Each element
 %   contains year, state, candidate name, actual vote share, pvi,
-%   experience and party (1 if republican, -1 if democratic, 0 if third party)
+%   experience and party (-1 if republican, 1 if democratic, 0 if third party)
 
     % predefine cell array
     % assuming number of candidates does not exceed 1,000
