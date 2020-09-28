@@ -600,7 +600,7 @@ for (a in 6:6) {
   #   ggtitle("Posterior densities for vote shares for major-party candidates") +
   #   theme(plot.title = element_text(hjust=0.5),
   #         panel.background = element_rect(fill = 'white', colour = 'white'))
-  
+
   ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
     geom_density_ridges(alpha=0.6) +
     scale_y_discrete(expand = c(0, 0), name = "") +
@@ -609,12 +609,12 @@ for (a in 6:6) {
                        name = "Posterior Vote (%)") +
     theme(panel.grid.minor = element_blank(),
          panel.grid.major.x = element_line(color = "gray")) +
-    scale_fill_manual(values = c( "red","blue"), labels = c("REP","DEM")) +
+    scale_fill_manual(values = c("blue", "red"), labels = c("DEM","REP")) +
     scale_color_manual(values = c(NA,NA), guide = "none") +
     coord_cartesian(xlim = c(0, 100), clip='on') +
     guides(fill = guide_legend(
       override.aes = list(
-        fill = c("red", "blue"),
+        fill = c("blue","red"),
         color = NA, point_color = NA)
     )
     ) +
