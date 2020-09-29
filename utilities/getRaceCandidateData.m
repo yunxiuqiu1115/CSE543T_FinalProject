@@ -18,7 +18,7 @@ function [xs, ys, candidateNames, vs, pvis, experienceds, parties]= getRaceCandi
 %   - vs: actual vote shares
 %   - pvis: cook partisan voting indices
 %   - experience: whether candidates has served in office
-%   - parties: indicators of candidate parties (1 if republican, -1 if democratic, 0 if third party)
+%   - parties: indicators of candidate parties (-1 if republican, 1 if democratic, 0 if third party)
 
     % obtain data given year/state
     oneRaceData = data(data.cycle==year & strcmp(data.state, state), :);

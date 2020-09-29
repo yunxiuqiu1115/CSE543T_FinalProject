@@ -609,12 +609,12 @@ for (a in 6:6) {
                        name = "Posterior Vote (%)") +
     theme(panel.grid.minor = element_blank(),
          panel.grid.major.x = element_line(color = "gray")) +
-    scale_fill_manual(values = c("red","blue"), labels = c("REP","DEM")) +
+    scale_fill_manual(values = c("blue","red"), labels = c("DEM","REP")) +
     scale_color_manual(values = c(NA,NA), guide = "none") +
     coord_cartesian(xlim = c(0, 100), clip='on') +
     guides(fill = guide_legend(
       override.aes = list(
-        fill = c("red","blue"),
+        fill = c("blue","red"),
         color = NA, point_color = NA)
     )
     ) +
