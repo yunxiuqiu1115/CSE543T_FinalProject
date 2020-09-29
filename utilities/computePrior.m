@@ -4,8 +4,8 @@ function a = computePrior(pvi, experienced, party, parms)
 %
     x = ones(size(pvi,1), 6);
     x(:, 2) = pvi;
-    republican = (party==1);
-    democratic = (party==-1);
+    republican = (party==-1);
+    democratic = (party==1);
     x(:, 3) = experienced;
     x(:, 4) = democratic;
     x(:, 5) = republican;
