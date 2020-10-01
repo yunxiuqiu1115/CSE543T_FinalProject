@@ -1,6 +1,6 @@
 THIN = 10
 
-for(year in c(2000)){
+for(year in c(2010)){
   YS = c()
   YDOTS = c()
   YREPDOTS = c()
@@ -11,6 +11,9 @@ for(year in c(2000)){
     state = metadata[[idx2[i]]][2]
     if (year!=cycle){
       next
+    }
+    if(state=="West Virginia"){
+      print(i)
     }
     vote = data[data$state==state & data$cycle==cycle,c("vote")]
     vote = y[[idx2[i]]]/(sum(y[[idx2[i]]]))

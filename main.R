@@ -5,7 +5,7 @@ args = commandArgs(trailingOnly=TRUE)
 
 # test if there is at least one argument: if not, use default 2020 with GP model
 if (length(args)==0) {
-  test_year = 2020
+  test_year = 2018
   # define model type: gp prior or lm prior
   TYPE = 'GP'
 }
@@ -30,6 +30,8 @@ library(grid)
 
 rstan_options(auto_write=TRUE)
 
+PLOT = FALSE
+
 # define horizons
 horizons = c('0',
                '7',
@@ -48,7 +50,7 @@ best_cv_idx = best_cv_idx$opt_idx
 fit_objs = c()
 
 # for (a in 1:length(horizons))
-for (a in 6:6) {
+for (a in 1:1) {
   
   # load the prior files
   input_file = paste('results/LOO', TYPE, '_' , test_year, 'day', horizons[a], '_', best_cv_idx[a] ,'.csv',sep='')
@@ -277,7 +279,7 @@ for (a in 6:6) {
                     max_year_idx = max(c(year_idx, test_year_idx)))
   
   # define stan model
-  model <- stan_model("model.stan")
+  # model <- stan_model("model.stan")
   
   # train stan model
   fit <- stan(file = "model.stan",
@@ -601,27 +603,28 @@ for (a in 6:6) {
   #   theme(plot.title = element_text(hjust=0.5),
   #         panel.background = element_rect(fill = 'white', colour = 'white'))
 
-  ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
-    geom_density_ridges(alpha=0.6) +
-    scale_y_discrete(expand = c(0, 0), name = "") +
-    # facet_wrap(Type ~ ., scale ="free") +
-    scale_x_continuous(expand = c(0, 0), breaks = c(0,20,40,60,80,100),
-                       name = "Posterior Vote (%)") +
-    theme(panel.grid.minor = element_blank(),
-         panel.grid.major.x = element_line(color = "gray")) +
-    scale_fill_manual(values = c("blue","red"), labels = c("DEM","REP")) +
-    scale_color_manual(values = c(NA,NA), guide = "none") +
-    coord_cartesian(xlim = c(0, 100), clip='on') +
-    guides(fill = guide_legend(
-      override.aes = list(
-        fill = c("blue","red"),
-        color = NA, point_color = NA)
-    )
-    ) +
-    ggtitle("Posterior predictive density of vote share for major party candidates") +
-    theme(plot.title = element_text(hjust=0.5),
-          panel.background = element_rect(fill = 'white', colour = 'white'))
-
+  if(PLOT){
+    ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
+      geom_density_ridges(alpha=0.6) +
+      scale_y_discrete(expand = c(0, 0), name = "") +
+      # facet_wrap(Type ~ ., scale ="free") +
+      scale_x_continuous(expand = c(0, 0), breaks = c(0,20,40,60,80,100),
+                         name = "Posterior Vote (%)") +
+      theme(panel.grid.minor = element_blank(),
+           panel.grid.major.x = element_line(color = "gray")) +
+      scale_fill_manual(values = c("blue","red"), labels = c("DEM","REP")) +
+      scale_color_manual(values = c(NA,NA), guide = "none") +
+      coord_cartesian(xlim = c(0, 100), clip='on') +
+      guides(fill = guide_legend(
+        override.aes = list(
+          fill = c("blue","red"),
+          color = NA, point_color = NA)
+      )
+      ) +
+      ggtitle("Posterior predictive density of vote share for major party candidates") +
+      theme(plot.title = element_text(hjust=0.5),
+            panel.background = element_rect(fill = 'white', colour = 'white'))
+  }
 
   if(length(test_idx3)){
     for(i in 1:length(test_idx3)) {
