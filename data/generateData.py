@@ -72,6 +72,10 @@ data["Democrat"] = Democrat
 data["Republican"] = Republican
 data = data.drop(columns=["start_date", "end_date", "election_date", "pct", "name", "party"])
 
+# filter polls over one year
+data = data[data.daysLeft>=-365]
+data = data.reset_index(drop=True)
+
 # select 2018 data
 data2018 = data[data.cycle==2018]
 

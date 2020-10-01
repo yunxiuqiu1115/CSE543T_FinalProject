@@ -1162,28 +1162,6 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Massachusetts,MassINC Polling Group,503,Geoff Diehl,2018MADiehl,-363,160.0,0,1,36.2,10.77644895,1.0
 2018,Arizona,OH Predictive Insights,600,Kyrsten Sinema,2018AZSinema,-363,276.0,1,0,50.0,-4.106799945,1.0
 2018,Arizona,OH Predictive Insights,600,Martha McSally,2018AZMcSally,-363,270.0,0,1,47.6,-4.106799945,1.0
-2018,Missouri,Remington Research Group,965,Claire McCaskill,2018MOMcCaskill,-392,434.0,1,0,45.6,-6.881433406,1.0
-2018,Missouri,Remington Research Group,965,Josh Hawley,2018MOHawley,-392,463.0,0,1,51.4,-6.881433406,1.0
-2018,West Virginia,Zogby Interactive/JZ Analytics,320,"Joe Manchin, III",2018WVManchin,-406,144.0,1,0,49.6,-13.38955503,1.0
-2018,West Virginia,Zogby Interactive/JZ Analytics,320,Patrick Morrisey,2018WVMorrisey,-406,121.0,0,1,46.3,-13.38955503,1.0
-2018,Virginia,University of Mary Washington,562,Tim Kaine,2018VAKaine,-428,303.0,1,0,57.1,0.7271012379999999,1.0
-2018,Virginia,University of Mary Washington,562,Corey Stewart,2018VAStewart,-428,219.0,0,1,41.1,0.7271012379999999,1.0
-2018,Utah,Dan Jones & Associates,608,Jenny Wilson,2018UTWilson,-434,158.0,1,0,30.9,-16.22280025,1.0
-2018,Utah,Dan Jones & Associates,608,Mitt Romney,2018UTRomney,-434,389.0,0,1,62.6,-16.22280025,1.0
-2018,West Virginia,Research America Inc.,400,"Joe Manchin, III",2018WVManchin,-453,204.0,1,0,49.6,-13.38955503,1.0
-2018,West Virginia,Research America Inc.,400,Patrick Morrisey,2018WVMorrisey,-453,148.0,0,1,46.3,-13.38955503,1.0
-2018,Missouri,Remington Research Group,922,Claire McCaskill,2018MOMcCaskill,-448,414.0,1,0,45.6,-6.881433406,1.0
-2018,Missouri,Remington Research Group,922,Josh Hawley,2018MOHawley,-448,461.0,0,1,51.4,-6.881433406,1.0
-2018,Missouri,Remington Research Group,928,Claire McCaskill,2018MOMcCaskill,-488,408.0,1,0,45.6,-6.881433406,1.0
-2018,Missouri,Remington Research Group,928,Josh Hawley,2018MOHawley,-488,464.0,0,1,51.4,-6.881433406,1.0
-2018,Nevada,Public Policy Polling,648,Jacky Rosen,2018NVRosen,-502,272.0,1,0,50.4,0.039999588,1.0
-2018,Nevada,Public Policy Polling,648,Dean Heller,2018NVHeller,-502,265.0,0,1,45.4,0.039999588,1.0
-2018,Massachusetts,MassINC Polling Group,504,Elizabeth Warren,2018MAWarren,-506,302.0,1,0,60.4,10.77644895,1.0
-2018,Massachusetts,MassINC Polling Group,504,Geoff Diehl,2018MADiehl,-506,146.0,0,1,36.2,10.77644895,1.0
-2018,Texas,Texas Lyceum,1000,Beto O'Rourke,2018TXO'Rourke,-583,300.0,1,0,48.3,-7.023984994,1.0
-2018,Texas,Texas Lyceum,1000,Ted Cruz,2018TXCruz,-583,300.0,0,1,50.9,-7.023984994,1.0
-2018,West Virginia,Harper Polling,500,"Joe Manchin, III",2018WVManchin,-721,285.0,1,0,49.6,-13.38955503,1.0
-2018,West Virginia,Harper Polling,500,Patrick Morrisey,2018WVMorrisey,-721,175.0,0,1,46.3,-13.38955503,1.0
 2018,Hawaii,NA,1,Mazie Hirono,2018HIHirono,1,0.0,1,0,71.2,18.04,1.0
 2018,Hawaii,NA,1,Ron Curtis,2018HICurtis,1,0.0,0,1,28.8,18.04,0.0
 2018,Nebraska,NA,1,Deb Fischer,2018NEFischer,1,0.0,0,1,57.7,-14.06,1.0
