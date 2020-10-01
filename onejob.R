@@ -25,11 +25,12 @@ library(rstan)
 
 averaged_nlZs = c()
 
-for (b in (IDX*10+1):(IDX*10+10)){
+for (b in (IDX*10+1):(IDX*10+1)){
   # load the prior files
   input_file = paste('results/LOO', TYPE, '_' , cv_year, 'day', horizon, '_', b ,'.csv',sep='')
   output_file = paste('nlZs/', TYPE, '_' , cv_year, 'day', horizon, '_', b,'.csv',sep='')
   
+  print(input_file)
   # loading data
   data <- read.csv(input_file)
   
@@ -254,6 +255,8 @@ for (b in (IDX*10+1):(IDX*10+10)){
   )
   
   fit_params <- as.data.frame(fit)
+  
+  print("finish stan")
   
   # only care about nlz in the loyo process
   NLZ <- c()
