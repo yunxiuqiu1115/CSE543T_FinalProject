@@ -55,7 +55,7 @@ for TYPE in ${TYPES[@]}; do
             echo downloadresults/"LOO${TYPE}_${cy_year}day${input_str}_${best_cv_idx[i]}.csv"
             # cp results/"LOO${TYPE}_${cy_year}day${input_str}_${best_cv_idx[i]}.csv" downloadresults/"LOO${TYPE}_${cy_year}day${input_str}_${best_cv_idx[i]}.csv"
     	done
-        i=i+1
+        i=$((i+1))
     done
 done
 
