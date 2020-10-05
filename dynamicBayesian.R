@@ -11,13 +11,12 @@ df[df$Candidateidentifier=='2018AZMcSally' & df$pollster=='Marist College' & df$
 
 output_path = 'results/stan_dynamic18_'
 input_strs = c('0',
+               '7',
                '14',
+               '21',
                '28',
                '42',
-               '90',
-               '120')
-
-input_strs = c('7')
+               '56')
 
 for (i in 1:length(input_strs)) {
   input_str = input_strs[i]

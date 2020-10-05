@@ -1,4 +1,4 @@
-setwd('/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/')
+# setwd('/Users/yahoo/Documents/WashU/CSE515T/Code/Gaussian Process/')
 
 #!/usr/bin/env Rscript
 args = commandArgs(trailingOnly=TRUE)
@@ -22,13 +22,11 @@ if (length(args)==2){
 
 # load packages
 library(rstan)
-library(MCMCpack)
-library(dplyr)
-library(ggridges)
-library(ggplot2)
-library(grid)
-
-rstan_options(auto_write=TRUE)
+# library(MCMCpack)
+# library(dplyr)
+# library(ggridges)
+# library(ggplot2)
+# library(grid)
 
 PLOT = FALSE
 
@@ -43,14 +41,22 @@ horizons = c('0',
 
 # the optimal index of hyperparameters in the loyo process
 # optimal index can be obtained with loocv_nlZs.R
-best_cv_idx = read.csv("results/GP_opthyp.csv");
-best_cv_idx = best_cv_idx$opt_idx
+# best_cv_idx = read.csv(paste("results/", TYPE, "_opthyp.csv", sep=''));
+# best_cv_idx = best_cv_idx$opt_idx
+
+if(TYPE=='GP'){
+  best_cv_idx = c(37, 59, 19, 31, 55, 53, 99)
+}
+
+if(TYPE=='LM'){
+  best_cv_idx = c(13, 12, 12, 10, 12,  9,  9)
+}
 
 # store the stan_model fit objects
 fit_objs = c()
 
 # for (a in 1:length(horizons))
-for (a in 1:1) {
+for (a in 1:length(horizons)) {
   
   # load the prior files
   input_file = paste('results/LOO', TYPE, '_' , test_year, 'day', horizons[a], '_', best_cv_idx[a] ,'.csv',sep='')
@@ -293,7 +299,9 @@ for (a in 1:1) {
               seed = a,
               refresh=0
   )
+  saveRDS(fit, file = paste("models/",TYPE, "_", test_year, "day_", horizons[a] ,"_fit.rds",sep=''))
   
+  next;
   # print(summary(fit,c('alpha','beta','ppb','eb','year_sig'))$summary)
   fit_params <- as.data.frame(fit)
   
@@ -443,7 +451,7 @@ for (a in 1:1) {
 
   print(paste("Correlation: ",cor(PMEAN, VOTE)))
 
-  print(paste("RSME: ",sqrt(mean((PMEAN- VOTE/100)^2))))
+  print(paste("RSME: ",sqrt(mean((PMEAN- VOTE)^2))))
 
   print(paste("Ratio in 95% : ",1-Nout_train/length(PMEAN)))
 
@@ -459,9 +467,11 @@ for (a in 1:1) {
   PSTD <- c()
   VOTE <- c()
   NORM_VOTE <- c()
+  RMSE = c()
   LOWER95 <- c()
   UPPER95 <- c()
   WIN <- c()
+  WINNERS <- c()
   MEDIAN <- c()
   NLZ <- c()
   
@@ -538,6 +548,7 @@ for (a in 1:1) {
       POSTERIORSTD <- c(POSTERIORSTD,pstd[j])
       PMEAN <- c(PMEAN, m)
       PSTD <- c(PSTD, s)
+      RMSE = c(RMSE, sqrt(mean((pred - rep(vote[j],length(pred)))^2)))
       VOTE <- c(VOTE, vote[j])
       MEDIAN <- c(MEDIAN, median(pred))
       LOWER95 <- c(LOWER95, l)
@@ -553,6 +564,9 @@ for (a in 1:1) {
     win_rates = win_rates / sum(win_rates)
     
     WIN <- c(WIN, win_rates)
+    winners = rep(0, 2)
+    winners[which.max(vote)] = 1
+    WINNERS  <- c(WINNERS, winners)
     if (which.max(win_rates)==which.max(vote)){
       correct_predictions = correct_predictions + 1
     }
@@ -577,31 +591,6 @@ for (a in 1:1) {
   
   LIKENAMES = c('Safe R', 'Likely R','Lean R', 'Toss-up', 'Lean D','Likely D','Safe D')
   posteriors$Type <- factor(posteriors$Type, levels = LIKENAMES)
-
-  # ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
-  #   geom_density_ridges(alpha=0.8) +
-  #   scale_y_discrete(expand = c(0, 0), name = "") +
-  #   scale_x_continuous(expand = c(0, 0), breaks = c(0,10,20,30,40,45,50,55,60,70,80,90,100),
-  #                      labels = c('0','Safe D','20', 'Likely D','40', 'Lean D', '50', 'Lean R', '60', 'Likely R', '80', 'Safe R', '100'),
-  #                      name = "Posterior Vote (%)") +
-  #   theme(axis.text.x = element_text(angle=60),
-  #         axis.ticks.x = element_line(size = c(.5,0,.5,0,.5,0,.5,0,.5,0,.5,0,.5),
-  #                                     color = c("black", NA,"black", NA, "black", NA,"black", NA, "black", NA,"black", NA, "black")),
-  #         panel.grid.minor = element_blank(),
-  #         panel.grid.major.x = element_line(color = c("gray",
-  #                                                     NA,"gray", NA, "gray", NA,"gray", NA, "gray", NA,"gray", NA, "gray"))) +
-  #   scale_fill_manual(values = c("#34AAE0", "#E9141D"), labels = c("DEM", "REP")) +
-  #   scale_color_manual(values = c("#D3D3D3","#D3D3D3"), guide = "none") +
-  #   coord_cartesian(xlim = c(0, 100), clip='on') +
-  #   guides(fill = guide_legend(
-  #     override.aes = list(
-  #       fill = c("#34AAE0", "#E9141D"),
-  #       color = NA, point_color = NA)
-  #   )
-  #   ) +
-  #   ggtitle("Posterior densities for vote shares for major-party candidates") +
-  #   theme(plot.title = element_text(hjust=0.5),
-  #         panel.background = element_rect(fill = 'white', colour = 'white'))
 
   if(PLOT){
     ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
@@ -655,6 +644,7 @@ for (a in 1:1) {
         POSTERIORSTD <- c(POSTERIORSTD,pstd[j])
         PMEAN <- c(PMEAN, m)
         PSTD <- c(PSTD, s)
+        RMSE = c(RMSE, sqrt(mean((pred - rep(vote[j],length(pred)))^2)))
         VOTE <- c(VOTE, vote[j])
         MEDIAN <- c(MEDIAN, median(pred))
         LOWER95 <- c(LOWER95, l)
@@ -669,6 +659,9 @@ for (a in 1:1) {
       }
       win_rates = win_rates / sum(win_rates)
       WIN <- c(WIN, win_rates)
+      winners = rep(0, 3)
+      winners[which.max(vote)] = 1
+      WINNERS  <- c(WINNERS, winners)
       if (which.max(win_rates)==which.max(vote)){
         correct_predictions = correct_predictions + 1
       }
@@ -709,6 +702,7 @@ for (a in 1:1) {
         PMEAN <- c(PMEAN, m)
         PSTD <- c(PSTD, s)
         VOTE <- c(VOTE, vote[j])
+        RMSE = c(RMSE, sqrt(mean((pred - rep(vote[j],length(pred)))^2)))
         MEDIAN <- c(MEDIAN, median(pred))
         LOWER95 <- c(LOWER95, l)
         UPPER95 <- c(UPPER95, u)
@@ -722,6 +716,9 @@ for (a in 1:1) {
       }
       win_rates = win_rates / sum(win_rates)
       WIN <- c(WIN, win_rates)
+      winners = rep(0, 4)
+      winners[which.max(vote)] = 1
+      WINNERS  <- c(WINNERS, winners)
       if (which.max(win_rates)==which.max(vote)){
         correct_predictions = correct_predictions + 1
       }
@@ -741,11 +738,21 @@ for (a in 1:1) {
                        LOWER95,
                        UPPER95,
                        MEDIAN,
-                       WIN)
+                       WIN,
+                       VOTE,
+                       PMEAN)
   
   names(result) <- tolower(names(result))
   
-  write.csv(result,output_file)
+  # write.csv(result,output_file)
+  
+  output_file = paste('results/stan_NLZ', TYPE, '_' , test_year, 'day', horizons[a], '_', best_cv_idx[a] ,'.csv',sep='')
+  
+  result <- data.frame(NLZ)
+  
+  names(result) <- tolower(names(result))
+  
+  # write.csv(result,output_file)
   
   print("Test")
   
@@ -755,18 +762,20 @@ for (a in 1:1) {
 
   print(paste("Correlation: ",cor(PMEAN, VOTE)))
 
-  print(paste("RSME: ",sqrt(mean((PMEAN- VOTE/100)^2))))
+  print(paste("RSME: ",mean(RMSE)))
 
   print(paste("Ratio in 95% : ",1-Nout_test/length(PMEAN)))
 
   print(paste("Predictive averaged nlZ: ",mean(NLZ)))
 
-  print(paste("Mean of predictive std: ",mean(PSTD)))
-
-  print(paste("Median of predictive std: ",median(PSTD)))
-
-  print(paste("Std of predictive std: ",sd(PSTD)))
+  # print(paste("Mean of predictive std: ",mean(PSTD)))
+  # 
+  # print(paste("Median of predictive std: ",median(PSTD)))
+  # 
+  # print(paste("Std of predictive std: ",sd(PSTD)))
 }
 
 # save the r session
 # save.image(file = paste('models/LOOCV_',TYPE ,'.RData',sep=''))
+
+# saveRDS(fit_objs, file = paste("models/",TYPE, "_", test_year, "_fit_objs.rds",sep=''))

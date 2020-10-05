@@ -30,27 +30,35 @@ one_job(){
 # done
 
 
+# for TYPE in ${TYPES[@]}; do
+#     for input_str in ${input_strs[@]}; do
+#         # bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett "./matlabrun '$TYPE' $input_str"
+#         for cv_year in ${cv_years[@]}; do
+#             # if [ "$TYPE" = "GP" ]; then
+#             #     SEARCH_SIZE=100
+#             # else
+#             #     SEARCH_SIZE=20
+#             # fi
+#             # for (( i=1; i<=$SEARCH_SIZE; i++ )) do 
+#             #     nlZs=$(one_job $input_str $cv_year $TYPE $i)
+# 	        #     echo $nlZs
+#             # done
+#     	    nlZs=$(one_job $input_str $cv_year $TYPE)
+# 	        echo $nlZs
+#             # n=$(number_file $input_str $cv_year $TYPE)
+#             # if [ $n -lt 100 ]
+#             # then
+#             #     echo $TYPE $cv_year $input_str
+#             # fi
+#     	done
+#     done
+# done
+
 for TYPE in ${TYPES[@]}; do
-    for input_str in ${input_strs[@]}; do
-        # bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett "./matlabrun '$TYPE' $input_str"
-        for cv_year in ${cv_years[@]}; do
-            # if [ "$TYPE" = "GP" ]; then
-            #     SEARCH_SIZE=100
-            # else
-            #     SEARCH_SIZE=20
-            # fi
-            # for (( i=1; i<=$SEARCH_SIZE; i++ )) do 
-            #     nlZs=$(one_job $input_str $cv_year $TYPE $i)
-	        #     echo $nlZs
-            # done
-    	    nlZs=$(one_job $input_str $cv_year $TYPE)
-	        echo $nlZs
-            # n=$(number_file $input_str $cv_year $TYPE)
-            # if [ $n -lt 100 ]
-            # then
-            #     echo $TYPE $cv_year $input_str
-            # fi
-    	done
+    for cv_year in ${cv_years[@]}; do
+        bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett -J "${cv_year}_${TYPE}" "./onerun $cv_year $TYPE"
     done
 done
+
+
 

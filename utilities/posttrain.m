@@ -121,10 +121,10 @@ function posttrain(raceinfos, fts, s2s, allRaces, hyp, tau, parms)
     end
     
 %     fprintf('95 CI on training data: %0.4f\n',1-Nout_train/n_train);
-%     disp("Train Average nlZ: " + mean(train_nlZ));
+    disp("Train Average nlZ: " + mean(train_nlZ));
   
 %     fprintf('95 CI on test data: %0.6f\n',1-Nout_test/(N-n_train));
-%     disp("Test Average nlZ: " + mean(nlZ));
+    disp("Test Average nlZ: " + mean(nlZ));
     
     forecast = table(cycle, state, candidate, posteriormean, posteriorstd, vote, pvi, party, experienced);
     if ~exist('results', 'dir')
@@ -134,9 +134,9 @@ function posttrain(raceinfos, fts, s2s, allRaces, hyp, tau, parms)
     writetable(forecast,strcat('results/LOO',parms.type, '_',int2str(test_year),'day',num2str(tau), '_', num2str(j),'.csv'));
 
     disp(tau);
-    disp("Length Scale: " + exp(hyp.cov(1)));
-    disp("Output Scale: " + exp(hyp.cov(2)));
-    disp("Noise std: " + exp(hyp.lik));
+%     disp("Length Scale: " + exp(hyp.cov(1)));
+%     disp("Output Scale: " + exp(hyp.cov(2)));
+%     disp("Noise std: " + exp(hyp.lik));
     
 %     posteriorstd = cell2mat(posteriorstd);
 %     disp("Mean of predictive std: " + mean(posteriorstd));
