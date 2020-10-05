@@ -29,36 +29,34 @@ one_job(){
 #     echo $nlZs
 # done
 
-
-# for TYPE in ${TYPES[@]}; do
-#     for input_str in ${input_strs[@]}; do
-#         # bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett "./matlabrun '$TYPE' $input_str"
-#         for cv_year in ${cv_years[@]}; do
-#             # if [ "$TYPE" = "GP" ]; then
-#             #     SEARCH_SIZE=100
-#             # else
-#             #     SEARCH_SIZE=20
-#             # fi
-#             # for (( i=1; i<=$SEARCH_SIZE; i++ )) do 
-#             #     nlZs=$(one_job $input_str $cv_year $TYPE $i)
-# 	        #     echo $nlZs
-#             # done
-#     	    nlZs=$(one_job $input_str $cv_year $TYPE)
-# 	        echo $nlZs
-#             # n=$(number_file $input_str $cv_year $TYPE)
-#             # if [ $n -lt 100 ]
-#             # then
-#             #     echo $TYPE $cv_year $input_str
-#             # fi
-#     	done
-#     done
-# done
+mkdir -p downloadresults
 
 for TYPE in ${TYPES[@]}; do
-    for cv_year in ${cv_years[@]}; do
-        bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett -J "${cv_year}_${TYPE}" "./onerun $cv_year $TYPE"
+    if [ "$TYPE" = "GP" ]; then
+        declare -a best_cv_idx=(37 59 19 31 55 53 99)
+    else
+        declare -a best_cv_idx=(13 12 12 10 12 9 9)
+    fi
+    i=1
+    for input_str in ${input_strs[@]}; do
+        # bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett "./matlabrun '$TYPE' $input_str"
+        for cv_year in ${cv_years[@]}; do
+            # for (( i=1; i<=$SEARCH_SIZE; i++ )) do 
+            #     nlZs=$(one_job $input_str $cv_year $TYPE $i)
+	        #     echo $nlZs
+            # done
+    	    # nlZs=$(one_job $input_str $cv_year $TYPE)
+	        # echo $nlZs
+            # n=$(number_file $input_str $cv_year $TYPE)
+            # if [ $n -lt 100 ]
+            # then
+            #     echo $TYPE $cv_year $input_str
+            # fi
+            echo downloadresults/"LOO${TYPE}_${cy_year}day${input_str}_${best_cv_idx[i]}.csv"
+            # cp results/"LOO${TYPE}_${cy_year}day${input_str}_${best_cv_idx[i]}.csv" downloadresults/"LOO${TYPE}_${cy_year}day${input_str}_${best_cv_idx[i]}.csv"
+    	done
+        i=i+1
     done
 done
-
 
 

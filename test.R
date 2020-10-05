@@ -48,38 +48,42 @@ results <- data.frame(horizons, PVALUES)
 write.csv(results, "results/pvalues.csv")
 
 
-generate_results <- function(TYPE, best_idx, test_year, horizons){
+generate_results <- function(TYPE, best_idx, test_years, horizons){
   RMSE = c() 
   ACCURACY = c()
   ENTROPY = c()
   RATIO = c()
   NLZ = c()
-  for (a in length(horizons):1) {
-    # load result files
-    data = paste('results/stan_LOO', TYPE, '_' , test_year, 'day', horizons[a], '_', best_idx[a] ,'.csv',sep='')
-    data <- read.csv(data)
-    
-    RMSE = c(RMSE, mean(data$rmse))
-    
-    correct_prediction = 0
-    for(state in unique(data$state)){
-      tmp = data[data$state==state,c("win","vote")]
-      if( which(max(tmp$win)==tmp$win)== which(max(tmp$vote)==tmp$vote)){
-        correct_prediction = correct_prediction + 1
+  CORRELATION = c()
+  for(test_year in test_years){
+    for (a in length(horizons):1) {
+      # load result files
+      data = paste('results/stan_LOO', TYPE, '_' , test_year, 'day', horizons[a], '_', best_idx[a] ,'.csv',sep='')
+      data <- read.csv(data)
+      CORRELATION = c(CORRELATION, cor(data$vote, data$median))
+      RMSE = c(RMSE, mean(data$rmse))
+      
+      correct_prediction = 0
+      for(state in unique(data$state)){
+        tmp = data[data$state==state,c("win","vote")]
+        if( which(max(tmp$win)==tmp$win)== which(max(tmp$vote)==tmp$vote)){
+          correct_prediction = correct_prediction + 1
+        }
       }
+      
+      ACCURACY = c(ACCURACY, correct_prediction/length(unique(data$state)))
+      ENTROPY = c(ENTROPY, mean(log(data$win+1e-10)*data$winners))
+      RATIO = c(RATIO, sum((data$vote>data$lower95) & (data$vote<data$upper95))/nrow(data))
+      
+      nlz = paste('results/stan_NLZ', TYPE, '_' , test_year, 'day', horizons[a], '_', best_idx[a] ,'.csv',sep='')
+      nlz <- read.csv(nlz)
+      nlz = nlz$nlz
+      NLZ = c(NLZ, mean(nlz))
     }
-    
-    ACCURACY = c(ACCURACY, correct_prediction/length(unique(data$state)))
-    ENTROPY = c(ENTROPY, mean(log(data$win+1e-10)*data$winners))
-    RATIO = c(RATIO, sum((data$vote>data$lower95) & (data$vote<data$upper95))/nrow(data))
-    
-    nlz = paste('results/stan_NLZ', TYPE, '_' , test_year, 'day', horizons[a], '_', best_idx[a] ,'.csv',sep='')
-    nlz <- read.csv(nlz)
-    nlz = nlz$nlz
-    NLZ = c(NLZ, mean(nlz))
   }
   
-  results <- data.frame(RMSE,
+  results <- data.frame(CORRELATION,
+                        RMSE,
                         ACCURACY,
                         ENTROPY,
                         RATIO,
@@ -89,7 +93,7 @@ generate_results <- function(TYPE, best_idx, test_year, horizons){
   write.csv(t(results), paste("results/", TYPE,test_year,"results.csv",sep=""))
 }
 
-generate_results('GP',best_gp_idx, 2018, horizons)
+generate_results('GP',best_gp_idx, c(2018), horizons)
 
-generate_results('LM',best_lm_idx, 2018, horizons)
+generate_results('LM',best_lm_idx, c(2018), horizons)
 
