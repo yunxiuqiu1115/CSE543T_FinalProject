@@ -37,7 +37,7 @@ for TYPE in ${TYPES[@]}; do
     else
         declare -a best_cv_idx=(13 12 12 10 12 9 9)
     fi
-    i=1
+    i=0
     for input_str in ${input_strs[@]}; do
         # bsub -R '(!gpu) span[hosts=1]' -G SEAS-Lab-Garnett "./matlabrun '$TYPE' $input_str"
         for cv_year in ${cv_years[@]}; do
