@@ -53,8 +53,6 @@ df$polls <- df$numberSupport/df$samplesize
 priorModel = computeh(df, test_year)
 
 df <- df[df$cycle==test_year, ]
-df <- df[df$daysLeft<=as.numeric(input_str),]
-
 
 CYCLE <- c()
 STATE <- c()
@@ -87,38 +85,45 @@ for(state in unique(df$state)){
     democratic = data$Democrat[1]
     pvi = data$pvi[1]
     experienced = data$experienced[1]
-    n_poll = nrow(data)
-    days = as.array(ceiling(-data$daysLeft/W))
     ns = as.array(data$samplesize)
     ys = as.array(data$polls)
     h = predict(priorModel, data[1,])[[1]]
-    J = max(days)
-    stan_data <- list(N=n_poll,
-                      days=days,
-                      ns=ns,
-                      ys=ys,
-                      h=h,
-                      v=vote,
-                      J=J)
     
-    # define stan model
-    model <- stan_model("dynamicBayesian.stan")
-    
-    # train stan model
-    fit <- stan(file = "dynamicBayesian.stan",
-                data = stan_data, 
-                warmup = 2000, 
-                iter = 10000, 
-                chains = 1, 
-                cores = 1, 
-                thin = 4,
-                control=list(adapt_delta=.99, max_treedepth = 20),
-                seed = 1,
-                refresh=0
-    )
-    
-    fit_params <- as.data.frame(fit)
-    pred = fit_params$y
+    data = data[data$daysLeft<=as.numeric(input_str),]
+    n_poll = nrow(data)
+    if(n_poll){
+      days = as.array(ceiling(-data$daysLeft/W))
+      J = max(days)
+      stan_data <- list(N=n_poll,
+                        days=days,
+                        ns=ns,
+                        ys=ys,
+                        h=h,
+                        v=vote,
+                        J=J)
+      
+      # define stan model
+      model <- stan_model("dynamicBayesian.stan")
+      
+      # train stan model
+      fit <- stan(file = "dynamicBayesian.stan",
+                  data = stan_data, 
+                  warmup = 2000, 
+                  iter = 10000, 
+                  chains = 1, 
+                  cores = 1, 
+                  thin = 4,
+                  control=list(adapt_delta=.99, max_treedepth = 20),
+                  seed = 1,
+                  refresh=0
+      )
+      
+      fit_params <- as.data.frame(fit)
+      pred = fit_params$y
+    }
+    else{
+      pred = rnorm(10000, mean = h, sd = 0.1)
+    }
     preds = c(preds, pred)
     u = quantile(pred,probs=c(0.975),names = FALSE)
     l = quantile(pred,probs=c(0.025),names = FALSE)
@@ -133,7 +138,13 @@ for(state in unique(df$state)){
     MEDIAN <- c(MEDIAN, median(pred))
     LOWER95 <- c(LOWER95, l)
     UPPER95 <- c(UPPER95, u)
-    NLZ <- c(NLZ,  -log(mean(exp(fit_params$ll))))
+    if(n_poll){
+      NLZ <- c(NLZ,  -log(mean(exp(fit_params$ll))))
+    }
+    else{
+      NLZ <- c(NLZ,  -dnorm(v,h,0.1, log=TRUE))
+    }
+    
   }
   
   preds <- matrix(preds, nrow = length(cs), byrow = TRUE)
