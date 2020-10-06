@@ -1,8 +1,8 @@
 #!/bin/bash
 #BSUN -N
 
-cv_year=$1
-TYPE=$2
+input_str=$1
+cv_year=$2
 
 module add R-4
 module add gcc-8.3.0
@@ -11,4 +11,4 @@ mkdir -p /export/cluster-tmp/chenyehu
 
 export TMPDIR=/export/cluster-tmp/chenyehu
 
-Rscript --vanilla main.R $cv_year $TYPE
+Rscript --vanilla dynamicBayesian.R $input_str $cv_year
