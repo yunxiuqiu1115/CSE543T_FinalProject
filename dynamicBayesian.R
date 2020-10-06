@@ -55,7 +55,6 @@ priorModel = computeh(df, test_year)
 df <- df[df$cycle==test_year, ]
 df <- df[df$daysLeft<=as.numeric(input_str),]
 
-df = df[1:4,]
 
 CYCLE <- c()
 STATE <- c()
@@ -149,13 +148,6 @@ for(state in unique(df$state)){
   winners = rep(0, length(cs))
   winners[which.max(vote)] = 1
   WINNERS  <- c(WINNERS, winners)
-  if (which.max(win_rates)==which.max(votes)){
-    correct_predictions = correct_predictions + 1
-  }
-  else{
-    print("Wrong prediction:")
-    print(state)
-  }
 }
 
 # write results to csv
@@ -167,6 +159,9 @@ result <- data.frame(CYCLE,
                      LOWER95,
                      UPPER95,
                      MEDIAN,
+                     WIN,
+                     WINNERS,
+                     RMSE,
                      NLZ)
 
 names(result) <- tolower(names(result))
