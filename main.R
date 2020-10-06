@@ -5,7 +5,7 @@ args = commandArgs(trailingOnly=TRUE)
 
 # test if there is at least one argument: if not, use default 2020 with GP model
 if (length(args)==0) {
-  test_year = 2018
+  test_year = 2020
   # define model type: gp prior or lm prior
   TYPE = 'GP'
 }
@@ -22,11 +22,11 @@ if (length(args)==2){
 
 # load packages
 library(rstan)
-# library(MCMCpack)
-# library(dplyr)
-# library(ggridges)
-# library(ggplot2)
-# library(grid)
+library(MCMCpack)
+library(dplyr)
+library(ggridges)
+library(ggplot2)
+library(grid)
 
 PLOT = FALSE
 
@@ -41,22 +41,22 @@ horizons = c('0',
 
 # the optimal index of hyperparameters in the loyo process
 # optimal index can be obtained with loocv_nlZs.R
-# best_cv_idx = read.csv(paste("results/", TYPE, "_opthyp.csv", sep=''));
-# best_cv_idx = best_cv_idx$opt_idx
+best_cv_idx = read.csv(paste("results/", TYPE, "_opthyp.csv", sep=''));
+best_cv_idx = best_cv_idx$opt_idx
 
-if(TYPE=='GP'){
-  best_cv_idx = c(37, 59, 19, 31, 55, 53, 99)
-}
-
-if(TYPE=='LM'){
-  best_cv_idx = c(13, 12, 12, 10, 12,  9,  9)
-}
+# if(TYPE=='GP'){
+#   best_cv_idx = c(37, 59, 19, 31, 55, 53, 99)
+# }
+# 
+# if(TYPE=='LM'){
+#   best_cv_idx = c(13, 12, 12, 10, 12,  9,  9)
+# }
 
 # store the stan_model fit objects
 fit_objs = c()
 
 # for (a in 1:length(horizons))
-for (a in 1:length(horizons)) {
+for (a in 5:5) {
   
   # load the prior files
   input_file = paste('results/LOO', TYPE, '_' , test_year, 'day', horizons[a], '_', best_cv_idx[a] ,'.csv',sep='')
@@ -290,10 +290,10 @@ for (a in 1:length(horizons)) {
   # train stan model
   fit <- stan(file = "model.stan",
               data = stan_data, 
-              warmup = 1000, 
-              iter = 5000, 
-              chains = 1, 
-              cores = 1, 
+              warmup = 500, 
+              iter = 3000, 
+              chains = 3, 
+              cores = 3, 
               thin = 4,
               control=list(adapt_delta=.98, max_treedepth = 15),
               seed = a,
@@ -301,162 +301,10 @@ for (a in 1:length(horizons)) {
   )
   saveRDS(fit, file = paste("models/",TYPE, "_", test_year, "day_", horizons[a] ,"_fit.rds",sep=''))
   
-  next;
   # print(summary(fit,c('alpha','beta','ppb','eb','year_sig'))$summary)
   fit_params <- as.data.frame(fit)
   
   fit_objs = c(fit_objs, fit)
-  
-  Nout_train = 0
-  correct_predictions = 0
-  PMEAN <- c()
-  VOTE <- c()
-  NLZ = c()
-
-  for(i in 1:length(idx2)) {
-    cycle = metadata[[idx2[i]]][1]
-    state = metadata[[idx2[i]]][2]
-    pmu = data[data$state==state & data$cycle==cycle,c("posteriormean")]
-    pstd = data[data$state==state & data$cycle==cycle,c("posteriorstd")]
-    vote = data[data$state==state & data$cycle==cycle,c("vote")]
-    vote = y[[idx2[i]]]*100/(sum(y[[idx2[i]]]))
-    party = data[data$state==state & data$cycle==cycle,c("party")]
-    candidates = data[data$state==state & data$cycle==cycle,c("candidate")]
-    # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
-    preds= c()
-    for(j in 1:2){
-      tmp = paste('rep_y2[',i,',',j,']',sep='')
-      pred = fit_params[[tmp]]
-      preds = c(preds, pred)
-      u=quantile(pred,probs=c(0.975),names = FALSE)
-      l=quantile(pred,probs=c(0.025),names = FALSE)
-      m = mean(pred)
-      s = sd(pred)
-
-      if (stan_y[idx2[i],j]<=u & stan_y[idx2[i],j]>=l){
-        Nout_train = Nout_train
-      }
-      else{
-        Nout_train = Nout_train + 1
-      }
-      PMEAN <- c(PMEAN, m)
-      VOTE <- c(VOTE, vote[j])
-    }
-    NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('ll2[',i,']',sep='')]]))))
-    preds <- matrix(preds, nrow = 2, byrow = TRUE)
-    win_rates = rep(0, 2)
-    for(k in 1:ncol(preds)){
-      idx = which.max(preds[,k])
-      win_rates[idx] = win_rates[idx] + 1
-    }
-    win_rates = win_rates / sum(win_rates)
-
-    if (which.max(win_rates)==which.max(vote)){
-      correct_predictions = correct_predictions + 1
-    }
-  }
-
-  for(i in 1:length(idx3)) {
-    cycle = metadata[[idx3[i]]][1]
-    state = metadata[[idx3[i]]][2]
-    pmu = data[data$state==state & data$cycle==cycle,c("posteriormean")]
-    pstd = data[data$state==state & data$cycle==cycle,c("posteriorstd")]
-    vote = data[data$state==state & data$cycle==cycle,c("vote")]
-    vote = y[[idx3[i]]]*100/(sum(y[[idx3[i]]]))
-    party = data[data$state==state & data$cycle==cycle,c("party")]
-    candidates = data[data$state==state & data$cycle==cycle,c("candidate")]
-    # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
-    preds= c()
-    for(j in 1:3){
-      tmp = paste('rep_y3[',i,',',j,']',sep='')
-      pred = fit_params[[tmp]]
-      preds = c(preds, pred)
-      u=quantile(pred,probs=c(0.975),names = FALSE)
-      l=quantile(pred,probs=c(0.025),names = FALSE)
-      m = mean(pred)
-      s = sd(pred)
-
-      if (stan_y[idx3[i],j]<=u & stan_y[idx3[i],j]>=l){
-        Nout_train = Nout_train
-      }
-      else{
-        Nout_train = Nout_train + 1
-      }
-      PMEAN <- c(PMEAN, m)
-      VOTE <- c(VOTE, vote[j])
-    }
-    NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('ll3[',i,']',sep='')]]))))
-    preds <- matrix(preds, nrow = 3, byrow = TRUE)
-    win_rates = rep(0, 3)
-    for(k in 1:ncol(preds)){
-      idx = which.max(preds[,k])
-      win_rates[idx] = win_rates[idx] + 1
-    }
-    win_rates = win_rates / sum(win_rates)
-
-    if (which.max(win_rates)==which.max(vote)){
-      correct_predictions = correct_predictions + 1
-    }
-  }
-
-
-
-  for(i in 1:length(idx4)) {
-    cycle = metadata[[idx4[i]]][1]
-    state = metadata[[idx4[i]]][2]
-    pmu = data[data$state==state & data$cycle==cycle,c("posteriormean")]
-    pstd = data[data$state==state & data$cycle==cycle,c("posteriorstd")]
-    vote = data[data$state==state & data$cycle==cycle,c("vote")]
-    vote = y[[idx4[i]]]*100/(sum(y[[idx4[i]]]))
-    party = data[data$state==state & data$cycle==cycle,c("party")]
-    candidates = data[data$state==state & data$cycle==cycle,c("candidate")]
-    # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
-    preds= c()
-    for(j in 1:4){
-      tmp = paste('rep_y4[',i,',',j,']',sep='')
-      pred = fit_params[[tmp]]
-      preds = c(preds, pred)
-      u=quantile(pred,probs=c(0.975),names = FALSE)
-      l=quantile(pred,probs=c(0.025),names = FALSE)
-      m = mean(pred)
-      s = sd(pred)
-
-      if (stan_y[idx4[i],j]<=u & stan_y[idx4[i],j]>=l){
-        Nout_train = Nout_train
-      }
-      else{
-        Nout_train = Nout_train + 1
-      }
-      PMEAN <- c(PMEAN, m)
-      VOTE <- c(VOTE, vote[j])
-    }
-    NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('ll4[',i,']',sep='')]]))))
-    preds <- matrix(preds, nrow = 4, byrow = TRUE)
-    win_rates = rep(0, 4)
-    for(k in 1:ncol(preds)){
-      idx = which.max(preds[,k])
-      win_rates[idx] = win_rates[idx] + 1
-    }
-    win_rates = win_rates / sum(win_rates)
-
-    if (which.max(win_rates)==which.max(vote)){
-      correct_predictions = correct_predictions + 1
-    }
-  }
-
-  print("Train")
-  print(paste("Correct predictions: ",correct_predictions))
-
-  print(paste("Accuracy: ",correct_predictions/length(metadata)))
-
-  print(paste("Correlation: ",cor(PMEAN, VOTE)))
-
-  print(paste("RSME: ",sqrt(mean((PMEAN- VOTE)^2))))
-
-  print(paste("Ratio in 95% : ",1-Nout_train/length(PMEAN)))
-
-  print(paste("Predictive averaged nlZ: ",mean(NLZ)))
-  
   
   CYCLE <- c()
   STATE <- c()
@@ -754,19 +602,19 @@ for (a in 1:length(horizons)) {
   
   # write.csv(result,output_file)
   
-  print("Test")
-  
-  print(paste("Correct predictions: ",correct_predictions))
-
-  print(paste("Accuracy: ",correct_predictions/length(test_metadata)))
-
-  print(paste("Correlation: ",cor(PMEAN, VOTE)))
-
-  print(paste("RSME: ",mean(RMSE)))
-
-  print(paste("Ratio in 95% : ",1-Nout_test/length(PMEAN)))
-
-  print(paste("Predictive averaged nlZ: ",mean(NLZ)))
+  # print("Test")
+  # 
+  # print(paste("Correct predictions: ",correct_predictions))
+  # 
+  # print(paste("Accuracy: ",correct_predictions/length(test_metadata)))
+  # 
+  # print(paste("Correlation: ",cor(PMEAN, VOTE)))
+  # 
+  # print(paste("RSME: ",mean(RMSE)))
+  # 
+  # print(paste("Ratio in 95% : ",1-Nout_test/length(PMEAN)))
+  # 
+  # print(paste("Predictive averaged nlZ: ",mean(NLZ)))
 
   # print(paste("Mean of predictive std: ",mean(PSTD)))
   # 

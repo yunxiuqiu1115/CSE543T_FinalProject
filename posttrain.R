@@ -6,7 +6,7 @@ horizons = c('0',
              '42',
              '56')
 
-TYPE='GP'
+TYPE='LM'
 test_year = 2018
 
 best_cv_idx = read.csv(paste("results/", TYPE, "_opthyp.csv", sep=''));
@@ -103,6 +103,7 @@ for (a in 1:length(horizons)) {
         
         CYCLE <- c(CYCLE, cycle)
         STATE <- c(STATE,state)
+        CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
         RMSE = c(RMSE, sqrt(mean((pred - rep(vote[j],length(pred)))^2)))
         VOTE <- c(VOTE, vote[j])
         MEDIAN <- c(MEDIAN, median(pred))

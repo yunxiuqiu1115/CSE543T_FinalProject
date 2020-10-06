@@ -48,38 +48,51 @@ results <- data.frame(horizons, PVALUES)
 write.csv(results, "results/pvalues.csv")
 
 
-generate_results <- function(TYPE, best_idx, test_years, horizons){
+generate_DR_results <- function(TYPE, best_idx, test_years, horizons){
   RMSE = c() 
   ACCURACY = c()
   ENTROPY = c()
   RATIO = c()
-  NLZ = c()
+  LL = c()
   CORRELATION = c()
-  for(test_year in test_years){
-    for (a in length(horizons):1) {
+  
+  for (a in length(horizons):1) {
+    RMSE_Y = c() 
+    ACCURACY_Y = c()
+    ENTROPY_Y = c()
+    RATIO_Y = c()
+    NLZ_Y = c()
+    CORRELATION_Y = c()
+    for(test_year in test_years){
       # load result files
       data = paste('results/stan_LOO', TYPE, '_' , test_year, 'day', horizons[a], '_', best_idx[a] ,'.csv',sep='')
       data <- read.csv(data)
-      CORRELATION = c(CORRELATION, cor(data$vote, data$median))
-      RMSE = c(RMSE, mean(data$rmse))
+      CORRELATION_Y = c(CORRELATION_Y, cor(data$vote, data$median))
+      RMSE_Y = c(RMSE_Y, mean(data$rmse))
       
       correct_prediction = 0
       for(state in unique(data$state)){
-        tmp = data[data$state==state,c("win","vote")]
+        tmp = data[data$cycle==test_year & data$state==state,c("win","vote")]
         if( which(max(tmp$win)==tmp$win)== which(max(tmp$vote)==tmp$vote)){
           correct_prediction = correct_prediction + 1
         }
       }
       
-      ACCURACY = c(ACCURACY, correct_prediction/length(unique(data$state)))
-      ENTROPY = c(ENTROPY, mean(log(data$win+1e-10)*data$winners))
-      RATIO = c(RATIO, sum((data$vote>data$lower95) & (data$vote<data$upper95))/nrow(data))
+      ACCURACY_Y = c(ACCURACY_Y, correct_prediction/length(unique(data$state)))
+      ENTROPY_Y = c(ENTROPY_Y, mean(log(data$win+1e-10)*data$winners))
+      RATIO_Y = c(RATIO_Y, sum((data$vote>data$lower95) & (data$vote<data$upper95))/nrow(data))
       
       nlz = paste('results/stan_NLZ', TYPE, '_' , test_year, 'day', horizons[a], '_', best_idx[a] ,'.csv',sep='')
       nlz <- read.csv(nlz)
       nlz = nlz$nlz
-      NLZ = c(NLZ, mean(nlz))
+      NLZ_Y = c(NLZ_Y, mean(nlz))
     }
+    RMSE = c(RMSE, mean(RMSE_Y)) 
+    ACCURACY = c(ACCURACY, mean(ACCURACY_Y))
+    ENTROPY = c(ENTROPY, mean(ENTROPY_Y))
+    RATIO = c(RATIO, mean((RATIO_Y)))
+    LL = c(LL, -mean(NLZ_Y))
+    CORRELATION = c(CORRELATION, mean(CORRELATION_Y))
   }
   
   results <- data.frame(CORRELATION,
@@ -87,13 +100,125 @@ generate_results <- function(TYPE, best_idx, test_years, horizons){
                         ACCURACY,
                         ENTROPY,
                         RATIO,
-                        NLZ)
+                        LL)
   
   results = results %>% mutate_if(is.numeric, round, digits = 4)
-  write.csv(t(results), paste("results/", TYPE,test_year,"results.csv",sep=""))
+  if(length(test_years)==1){
+    test_year = test_years[1]
+  }
+  else{
+    test_year = "92-16"
+  }
+  results = t(results)
+  colnames(results) = rev(horizons)
+  write.csv((results), paste("results/DR_", TYPE,test_year,"results.csv",sep=""))
 }
 
-generate_results('GP',best_gp_idx, c(2018), horizons)
 
-generate_results('LM',best_lm_idx, c(2018), horizons)
 
+generate_Prior_results <- function(TYPE, best_idx, test_years, horizons){
+  RMSE = c() 
+  ACCURACY = c()
+  ENTROPY = c()
+  RATIO = c()
+  LL = c()
+  CORRELATION = c()
+  
+  for (a in length(horizons):1) {
+    RMSE_Y = c() 
+    ACCURACY_Y = c()
+    ENTROPY_Y = c()
+    RATIO_Y = c()
+    NLZ_Y = c()
+    CORRELATION_Y = c()
+    for(test_year in test_years){
+      # load result files
+      data = paste('results/LOO', TYPE, '_' , test_year, 'day', horizons[a], '_', best_idx[a] ,'.csv',sep='')
+      data <- read.csv(data)
+      data <- data[data$cycle==test_year,]
+      data$vote = data$vote / 100
+      CORRELATION_Y = c(CORRELATION_Y, cor(data$vote, data$posteriormean))
+      # prior is Gaussian, close form is available
+      RMSE_Y = c(RMSE_Y, sqrt(mean((data$posteriorstd)^2+(data$posteriormean-data$vote)^2)))
+      
+      winning_probs = c()
+      winners = c()
+      nlz = c()
+      correct_prediction = 0
+      for(state in unique(data$state)){
+        tmp = data[data$cycle==test_year & data$state==state,]
+        n = nrow(tmp)
+        m = 10000
+        samples = c()
+        for(k in 1:n){
+          samples = c(samples, (rnorm(m, mean=tmp$posteriormean[k],sd = tmp$posteriorstd[k])))
+          nlz = c(nlz, -log(dnorm(tmp$vote[k],mean=tmp$posteriormean[k],sd = tmp$posteriorstd[k])))
+        }
+        samples <- matrix(samples, nrow = n, byrow = TRUE)
+        win_rates = rep(0, n)
+        for(k in 1:ncol(samples)){
+          idx = which.max(samples[,k])
+          win_rates[idx] = win_rates[idx] + 1
+        }
+        win_rates = win_rates / sum(win_rates)
+        winning_probs = c(winning_probs, win_rates)
+        winner = rep(0, n)
+        winner[which(max(tmp$vote)==tmp$vote)] = 1
+        winners = c(winners, winner)
+        if( which(max(win_rates)==win_rates)== which(max(tmp$vote)==tmp$vote)){
+          correct_prediction = correct_prediction + 1
+        }
+      }
+      
+      ACCURACY_Y = c(ACCURACY_Y, correct_prediction/length(unique(data$state)))
+      ENTROPY_Y = c(ENTROPY_Y, mean(log(winning_probs+1e-10)*winners))
+      l = data$posteriormean - 1.96*data$posteriorstd
+      u = data$posteriormean + 1.96*data$posteriorstd
+      RATIO_Y = c(RATIO_Y, sum((data$vote>l) & (data$vote<u))/nrow(data))
+      NLZ_Y = c(NLZ_Y, mean(nlz))
+    }
+    RMSE = c(RMSE, mean(RMSE_Y)) 
+    ACCURACY = c(ACCURACY, mean(ACCURACY_Y))
+    ENTROPY = c(ENTROPY, mean(ENTROPY_Y))
+    RATIO = c(RATIO, mean((RATIO_Y)))
+    LL = c(LL, -mean(NLZ_Y))
+    CORRELATION = c(CORRELATION, mean(CORRELATION_Y))
+  }
+  
+  results <- data.frame(CORRELATION,
+                        RMSE,
+                        ACCURACY,
+                        ENTROPY,
+                        RATIO,
+                        LL)
+  
+  results = results %>% mutate_if(is.numeric, round, digits = 4)
+  if(length(test_years)==1){
+    test_year = test_years[1]
+  }
+  else{
+    test_year = "92-16"
+  }
+  results = t(results)
+  colnames(results) = rev(horizons)
+  write.csv((results), paste("results/Prior_", TYPE,test_year,"results.csv",sep=""))
+}
+
+generate_DR_results('GP',best_gp_idx, c(2018), horizons)
+
+generate_DR_results('LM',best_lm_idx, c(2018), horizons)
+
+test_years = c(1992,1994,1996,1998,2000,2002,2004,2006,2008,2010,2012,2014,2016)
+
+generate_DR_results('GP',best_gp_idx, test_years, horizons)
+
+generate_DR_results('LM',best_lm_idx, test_years, horizons)
+
+
+generate_Prior_results('GP',best_gp_idx, c(2018), horizons)
+
+generate_Prior_results('LM',best_lm_idx, c(2018), horizons)
+
+generate_Prior_results('GP',best_gp_idx, test_years, horizons)
+
+generate_Prior_results('LM',best_lm_idx, test_years, horizons)
