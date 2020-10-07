@@ -85,13 +85,13 @@ for(state in unique(df$state)){
     democratic = data$Democrat[1]
     pvi = data$pvi[1]
     experienced = data$experienced[1]
-    ns = as.array(data$samplesize)
-    ys = as.array(data$polls)
     h = predict(priorModel, data[1,])[[1]]
     
     data = data[data$daysLeft<=as.numeric(input_str),]
     n_poll = nrow(data)
-    if(n_poll & max(data$daysLeft)<0){
+    if(n_poll>0 & max(data$daysLeft)<0){
+      ns = as.array(data$samplesize)
+      ys = as.array(data$polls)
       days = as.array(ceiling(-data$daysLeft/W))
       J = max(days)
       stan_data <- list(N=n_poll,
