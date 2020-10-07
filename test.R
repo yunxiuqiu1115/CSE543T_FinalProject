@@ -36,7 +36,6 @@ for (a in 1:length(horizons)) {
   print(strtoi(horizons[a]))
   TEST = t.test(gp_data, lm_data, paired = TRUE)
   PVALUES = c(PVALUES, TEST$p.value)
-  print(TEST)
   
   gp_avg_nlz = c(gp_avg_nlz, (gp_data))
   lm_avg_nlz = c(lm_avg_nlz, (lm_data))
@@ -71,10 +70,15 @@ generate_DR_results <- function(TYPE, best_idx, test_years, horizons){
       RMSE_Y = c(RMSE_Y, mean(data$rmse))
       
       correct_prediction = 0
+      print(horizons[a])
       for(state in unique(data$state)){
         tmp = data[data$cycle==test_year & data$state==state,c("win","vote")]
         if( which(max(tmp$win)==tmp$win)== which(max(tmp$vote)==tmp$vote)){
           correct_prediction = correct_prediction + 1
+        }
+        else{
+          print(test_year)
+          print(state)
         }
       }
       
@@ -145,6 +149,7 @@ generate_Prior_results <- function(TYPE, best_idx, test_years, horizons){
       winners = c()
       nlz = c()
       correct_prediction = 0
+      
       for(state in unique(data$state)){
         tmp = data[data$cycle==test_year & data$state==state,]
         n = nrow(tmp)
@@ -168,6 +173,7 @@ generate_Prior_results <- function(TYPE, best_idx, test_years, horizons){
         if( which(max(win_rates)==win_rates)== which(max(tmp$vote)==tmp$vote)){
           correct_prediction = correct_prediction + 1
         }
+        
       }
       
       ACCURACY_Y = c(ACCURACY_Y, correct_prediction/length(unique(data$state)))
@@ -206,19 +212,19 @@ generate_Prior_results <- function(TYPE, best_idx, test_years, horizons){
 
 generate_DR_results('GP',best_gp_idx, c(2018), horizons)
 
-generate_DR_results('LM',best_lm_idx, c(2018), horizons)
+# generate_DR_results('LM',best_lm_idx, c(2018), horizons)
 
 test_years = c(1992,1994,1996,1998,2000,2002,2004,2006,2008,2010,2012,2014,2016)
 
-generate_DR_results('GP',best_gp_idx, test_years, horizons)
+generate_DR_results('GP',best_gp_idx, c(2016), horizons)
 
-generate_DR_results('LM',best_lm_idx, test_years, horizons)
+# generate_DR_results('LM',best_lm_idx, test_years, horizons)
 
 
-generate_Prior_results('GP',best_gp_idx, c(2018), horizons)
-
-generate_Prior_results('LM',best_lm_idx, c(2018), horizons)
-
-generate_Prior_results('GP',best_gp_idx, test_years, horizons)
-
-generate_Prior_results('LM',best_lm_idx, test_years, horizons)
+# generate_Prior_results('GP',best_gp_idx, c(2018), horizons)
+# 
+# generate_Prior_results('LM',best_lm_idx, c(2018), horizons)
+# 
+# generate_Prior_results('GP',best_gp_idx, test_years, horizons)
+# 
+# generate_Prior_results('LM',best_lm_idx, test_years, horizons)

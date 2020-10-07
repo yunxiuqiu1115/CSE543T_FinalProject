@@ -91,7 +91,7 @@ for(state in unique(df$state)){
     
     data = data[data$daysLeft<=as.numeric(input_str),]
     n_poll = nrow(data)
-    if(n_poll){
+    if(n_poll & max(data$daysLeft)<0){
       days = as.array(ceiling(-data$daysLeft/W))
       J = max(days)
       stan_data <- list(N=n_poll,
