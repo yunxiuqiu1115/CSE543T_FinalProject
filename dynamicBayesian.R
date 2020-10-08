@@ -5,7 +5,7 @@ args = commandArgs(trailingOnly=TRUE)
 
 # test if there is argument: if not, use default 2018
 if (length(args)==0) {
-  input_str = '0'
+  input_str = '21'
   test_year = 2018
 }
 if (length(args)==1){
@@ -58,6 +58,7 @@ CYCLE <- c()
 STATE <- c()
 CANDIDATE <- c()
 PMEAN <- c()
+PRIOR <- c()
 VOTE <- c()
 RMSE <- c()
 LOWER95 <- c()
@@ -86,8 +87,9 @@ for(state in unique(df$state)){
     pvi = data$pvi[1]
     experienced = data$experienced[1]
     h = predict(priorModel, data[1,])[[1]]
+    PRIOR = c(PRIOR, h)
     
-    data = data[data$daysLeft<=as.numeric(input_str),]
+    data = data[data$daysLeft<=-as.numeric(input_str),]
     n_poll = nrow(data)
     if(n_poll>0 & max(data$daysLeft)<0){
       ns = as.array(data$samplesize)
@@ -142,7 +144,7 @@ for(state in unique(df$state)){
       NLZ <- c(NLZ,  -log(mean(exp(fit_params$ll))))
     }
     else{
-      NLZ <- c(NLZ,  -dnorm(v,h,0.1, log=TRUE))
+      NLZ <- c(NLZ,  -dnorm(vote,h,0.1, log=TRUE))
     }
     
   }
@@ -157,7 +159,7 @@ for(state in unique(df$state)){
   
   WIN <- c(WIN, win_rates)
   winners = rep(0, length(cs))
-  winners[which.max(vote)] = 1
+  winners[which.max(votes)] = 1
   WINNERS  <- c(WINNERS, winners)
 }
 
@@ -165,6 +167,7 @@ for(state in unique(df$state)){
 result <- data.frame(CYCLE,
                      STATE,
                      CANDIDATE,
+                     PRIOR,
                      PMEAN,
                      VOTE,
                      LOWER95,

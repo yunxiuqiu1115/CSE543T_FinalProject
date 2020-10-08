@@ -38,7 +38,6 @@ for (i in 1:length(TYPES)) {
     MAX_AVE_NLZ = c(MAX_AVE_NLZ, max(averaged_LL))
     HORIZONS = c(HORIZONS, strtoi(horizons[a]))
     OPT_IDX = c(OPT_IDX, which(averaged_LL==max(averaged_LL)))
-    # OPT_IDX = c(OPT_IDX, which(averaged_LL==sort(averaged_LL,partial=search_size-1)[search_size-1]))
   }
   # write results to csv
   output_file = paste('results/', TYPE, '_opthyp.csv',sep='')
