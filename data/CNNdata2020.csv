@@ -1,14 +1,92 @@
 cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numberSupport,Democrat,Republican,pvi,experienced
+2020,Michigan,Siena College/The New York Times Upshot,614,Gary C. Peters,2020MIPeters,-29,264.0,1,0,1.31,1.0
+2020,Michigan,Siena College/The New York Times Upshot,614,John James,2020MIJames,-29,257.0,0,1,1.31,0.0
+2020,Montana,Public Policy Polling,798,Steve Bullock,2020MTBullock,-26,383.0,1,0,-10.61,1.0
+2020,Montana,Public Policy Polling,798,Steve Daines,2020MTDaines,-26,383.0,0,1,-10.61,1.0
+2020,Georgia,Public Policy Polling,528,Jon Ossoff,2020GAOssoff,-27,232.0,1,0,-5.23,0.0
+2020,Georgia,Public Policy Polling,528,David A. Perdue,2020GAPerdue,-27,227.0,0,1,-5.23,1.0
+2020,GeorgiaS,Public Policy Polling,528,Raphael Warnock,2020GAWarnock,-27,216.0,1,0,-5.23,0.0
+2020,GeorgiaS,Public Policy Polling,528,Kelly Loeffler,2020GALoeffler,-27,126.0,0,1,-5.23,0.0
+2020,GeorgiaS,Public Policy Polling,528,Doug Collins,2020GACollins,-27,116.0,0,1,-5.23,1.0
+2020,GeorgiaS,Public Policy Polling,528,Ed Tarver,2020GATarver,-27,0.0,1,0,-5.23,0.0
+2020,Michigan,YouGov,1181,Gary C. Peters,2020MIPeters,-29,555.0,1,0,1.31,1.0
+2020,Michigan,YouGov,1181,John James,2020MIJames,-29,519.0,0,1,1.31,0.0
+2020,Iowa,YouGov,1022,Theresa Greenfield,2020IAGreenfield,-29,480.0,1,0,-2.64,1.0
+2020,Iowa,YouGov,1022,Joni K. Ernst,2020IAErnst,-29,439.0,0,1,-2.64,1.0
+2020,Arizona,Trafalgar Group,1045,Mark Kelly,2020AZKelly,-29,494.0,1,0,-2.47,0.0
+2020,Arizona,Trafalgar Group,1045,Martha McSally,2020AZMcSally,-29,474.0,0,1,-2.47,1.0
+2020,Michigan,Baldwin Wallace University,1134,Gary C. Peters,2020MIPeters,-35,544.0,1,0,1.31,1.0
+2020,Michigan,Baldwin Wallace University,1134,John James,2020MIJames,-35,477.0,0,1,1.31,0.0
+2020,Georgia,Landmark Communications,600,Jon Ossoff,2020GAOssoff,-28,273.0,1,0,-5.23,0.0
+2020,Georgia,Landmark Communications,600,David A. Perdue,2020GAPerdue,-28,282.0,0,1,-5.23,1.0
+2020,GeorgiaS,Landmark Communications,600,Raphael Warnock,2020GAWarnock,-28,217.0,1,0,-5.23,0.0
+2020,GeorgiaS,Landmark Communications,600,Kelly Loeffler,2020GALoeffler,-28,154.0,0,1,-5.23,0.0
+2020,GeorgiaS,Landmark Communications,600,Ed Tarver,2020GATarver,-28,1.0,1,0,-5.23,0.0
+2020,GeorgiaS,Landmark Communications,600,Doug Collins,2020GACollins,-28,139.0,0,1,-5.23,1.0
+2020,Michigan,Emerson College,716,Gary C. Peters,2020MIPeters,-29,363.0,1,0,1.31,1.0
+2020,Michigan,Emerson College,716,John James,2020MIJames,-29,294.0,0,1,1.31,0.0
+2020,Montana,Emerson College,500,Steve Bullock,2020MTBullock,-30,213.0,1,0,-10.61,1.0
+2020,Montana,Emerson College,500,Steve Daines,2020MTDaines,-30,259.0,0,1,-10.61,1.0
+2020,Arizona,Ipsos,633,Mark Kelly,2020AZKelly,-36,322.0,1,0,-2.47,0.0
+2020,Arizona,Ipsos,633,Martha McSally,2020AZMcSally,-36,259.0,0,1,-2.47,1.0
+2020,Texas,Rasmussen Reports/Pulse Opinion Research,1000,Mary Jennings Hegar,2020TXHegar,-30,390.0,1,0,-5.55,0.0
+2020,Texas,Rasmussen Reports/Pulse Opinion Research,1000,John Cornyn,2020TXCornyn,-30,480.0,0,1,-5.55,1.0
+2020,Iowa,Civiqs,756,Theresa Greenfield,2020IAGreenfield,-32,370.0,1,0,-2.64,1.0
+2020,Iowa,Civiqs,756,Joni K. Ernst,2020IAErnst,-32,347.0,0,1,-2.64,1.0
+2020,Texas,Civiqs,895,Mary Jennings Hegar,2020TXHegar,-32,411.0,1,0,-5.55,0.0
+2020,Texas,Civiqs,895,John Cornyn,2020TXCornyn,-32,420.0,0,1,-5.55,1.0
+2020,Minnesota,SurveyUSA,929,Tina Smith,2020MNSmith,-34,408.0,1,0,0.64,1.0
+2020,Minnesota,SurveyUSA,929,Jason Lewis,2020MNLewis,-34,343.0,0,1,0.64,1.0
+2020,Colorado,SurveyUSA,1021,John Hickenlooper,2020COHickenlooper,-34,490.0,1,0,0.77,1.0
+2020,Colorado,SurveyUSA,1021,Cory Gardner,2020COGardner,-34,398.0,0,1,0.77,1.0
+2020,Michigan,Ipsos,709,Gary C. Peters,2020MIPeters,-36,354.0,1,0,1.31,1.0
+2020,Michigan,Ipsos,709,John James,2020MIJames,-36,304.0,0,1,1.31,0.0
+2020,North Carolina,Ipsos,601,Cal Cunningham,2020NCCunningham,-36,282.0,1,0,-3.32,1.0
+2020,North Carolina,Ipsos,601,Thom Tillis,2020NCTillis,-36,252.0,0,1,-3.32,1.0
+2020,Georgia,University of Georgia,1106,Jon Ossoff,2020GAOssoff,-38,457.0,1,0,-5.23,0.0
+2020,Georgia,University of Georgia,1106,David A. Perdue,2020GAPerdue,-38,540.0,0,1,-5.23,1.0
+2020,GeorgiaS,University of Georgia,1106,Raphael Warnock,2020GAWarnock,-38,306.0,1,0,-5.23,0.0
+2020,GeorgiaS,University of Georgia,1106,Kelly Loeffler,2020GALoeffler,-38,241.0,0,1,-5.23,0.0
+2020,GeorgiaS,University of Georgia,1106,Doug Collins,2020GACollins,-38,234.0,0,1,-5.23,1.0
+2020,GeorgiaS,University of Georgia,1106,Ed Tarver,2020GATarver,-38,39.0,1,0,-5.23,0.0
 2020,North Carolina,Public Policy Polling,911,Cal Cunningham,2020NCCunningham,-31,437.0,1,0,-3.32,1.0
 2020,North Carolina,Public Policy Polling,911,Thom Tillis,2020NCTillis,-31,382.0,0,1,-3.32,1.0
+2020,Arizona,Data Orbital,550,Mark Kelly,2020AZKelly,-32,270.0,1,0,-2.47,0.0
+2020,Arizona,Data Orbital,550,Martha McSally,2020AZMcSally,-32,240.0,0,1,-2.47,1.0
+2020,Iowa,Quinnipiac University,1205,Theresa Greenfield,2020IAGreenfield,-34,602.0,1,0,-2.64,1.0
+2020,Iowa,Quinnipiac University,1205,Joni K. Ernst,2020IAErnst,-34,542.0,0,1,-2.64,1.0
+2020,Arizona,HighGround Inc.,400,Mark Kelly,2020AZKelly,-37,200.0,1,0,-2.47,0.0
+2020,Arizona,HighGround Inc.,400,Martha McSally,2020AZMcSally,-37,174.0,0,1,-2.47,1.0
+2020,Arizona,Change Research,296,Mark Kelly,2020AZKelly,-33,150.0,1,0,-2.47,0.0
+2020,Arizona,Change Research,296,Martha McSally,2020AZMcSally,-33,127.0,0,1,-2.47,1.0
+2020,Michigan,Change Research,676,Gary C. Peters,2020MIPeters,-33,344.0,1,0,1.31,1.0
+2020,Michigan,Change Research,676,John James,2020MIJames,-33,290.0,0,1,1.31,0.0
+2020,North Carolina,Change Research,396,Cal Cunningham,2020NCCunningham,-33,198.0,1,0,-3.32,1.0
+2020,North Carolina,Change Research,396,Thom Tillis,2020NCTillis,-33,182.0,0,1,-3.32,1.0
+2020,North Carolina,East Carolina University,1232,Cal Cunningham,2020NCCunningham,-33,571.0,1,0,-3.32,1.0
+2020,North Carolina,East Carolina University,1232,Thom Tillis,2020NCTillis,-33,575.0,0,1,-3.32,1.0
+2020,New Hampshire,Saint Anselm College,1147,Jeanne Shaheen,2020NHShaheen,-34,607.0,1,0,-0.01,1.0
+2020,New Hampshire,Saint Anselm College,1147,Corky Messner,2020NHMessner,-34,447.0,0,1,-0.01,0.0
+2020,Maine,Critical Insights,466,Sara Gideon,2020MEGideon,-40,205.0,1,0,2.9,1.0
+2020,Maine,Critical Insights,466,Susan M. Collins,2020MECollins,-40,200.0,0,1,2.9,1.0
+2020,Alaska,Alaska Survey Research,676,Al Gross,2020AKGross,-40,297.0,1,0,-9.39,0.0
+2020,Alaska,Alaska Survey Research,676,Dan Sullivan,2020AKSullivan,-40,324.0,0,1,-9.39,1.0
+2020,Texas,YouGov,908,Mary Jennings Hegar,2020TXHegar,-40,381.0,1,0,-5.55,0.0
+2020,Texas,YouGov,908,John Cornyn,2020TXCornyn,-40,454.0,0,1,-5.55,1.0
 2020,Arizona,Siena College/The New York Times Upshot,655,Mark Kelly,2020AZKelly,-34,327.0,1,0,-2.47,0.0
 2020,Arizona,Siena College/The New York Times Upshot,655,Martha McSally,2020AZMcSally,-34,255.0,0,1,-2.47,1.0
-2020,Alabama,Auburn University at Montgomery,1072,Doug Jones,2020ALJones,-35,450.0,1,0,-14.47,1.0
+2020,Alabama,Auburn University at Montgomery,1072,Doug Jones,2020ALJones,-35,451.0,1,0,-14.47,1.0
 2020,Alabama,Auburn University at Montgomery,1072,Tommy Tuberville,2020ALTuberville,-35,578.0,0,1,-14.47,0.0
+2020,Michigan,Glengariff Group,600,Gary C. Peters,2020MIPeters,-35,269.0,1,0,1.31,1.0
+2020,Michigan,Glengariff Group,600,John James,2020MIJames,-35,237.0,0,1,1.31,0.0
 2020,New Hampshire,Emerson College,700,Jeanne Shaheen,2020NHShaheen,-35,386.0,1,0,-0.01,1.0
 2020,New Hampshire,Emerson College,700,Corky Messner,2020NHMessner,-35,280.0,0,1,-0.01,0.0
+2020,New Mexico,Public Policy Polling,886,Ben Ray Luján,2020NMLujan,-35,451.0,1,0,2.96,1.0
+2020,New Mexico,Public Policy Polling,886,Mark Ronchetti,2020NMRonchetti,-35,363.0,0,1,2.96,0.0
 2020,Arizona,Morning Consult,1048,Mark Kelly,2020AZKelly,-43,534.0,1,0,-2.47,0.0
 2020,Arizona,Morning Consult,1048,Martha McSally,2020AZMcSally,-43,398.0,0,1,-2.47,1.0
+2020,Kansas,VCreek/AMG,3104,Barbara Bollier,2020KSBollier,-36,1408.0,1,0,-13.31,1.0
+2020,Kansas,VCreek/AMG,3104,Roger Marshall,2020KSMarshall,-36,1299.0,0,1,-13.31,1.0
 2020,Arizona,Suffolk University,500,Mark Kelly,2020AZKelly,-39,245.0,1,0,-2.47,0.0
 2020,Arizona,Suffolk University,500,Martha McSally,2020AZMcSally,-39,200.0,0,1,-2.47,1.0
 2020,Georgia,Civiqs,969,Jon Ossoff,2020GAOssoff,-39,465.0,1,0,-5.23,0.0

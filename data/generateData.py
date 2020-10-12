@@ -93,31 +93,6 @@ data2018 = data[data.cycle==2018]
 #   3. if one polling id has multiple questions not including likely voters, remove adult voters.
 #
 
-# keep if flags == 0
-flags = (data2018.cycle!=2018)
-for pid in data2018.poll_id.unique():
-    tmp = data2018[data2018.poll_id==pid]
-    for qid in tmp.question_id.unique():
-        if tmp[tmp.question_id==qid].candidate_name.unique().shape[0]==1:
-            flags[(data2018.poll_id==pid) & (data2018.question_id==qid)] = 1
-
-    if tmp.population.unique().shape[0]>=2:
-        if 'a' in tmp.population.unique():
-            flags[(data2018.poll_id==pid) & (data2018.population=='a')] = 1
-        else:
-            flags[(data2018.poll_id==pid) & (data2018.population!='lv')] = 1
-
-data2018 = data2018[flags==0]
-
-# Select non-partisan polls and selection columns.
-# Partisan polls are sponsored by parties.
-data2018 = data2018[data2018.partisan.isnull()]
-data2018 = data2018[['cycle', 'state', 'pollster',
-        'samplesize', 'candidate_name','Candidateidentifier', 'daysLeft',
-       'numberSupport', 'Democrat', 'Republican']]
-data2018 = data2018.drop_duplicates()
-data2018 = data2018.reset_index(drop=True)
-
 # obtain 2018 actual vote shares
 results =  pd.read_csv("./2018results.csv", index_col=None)
 
@@ -130,6 +105,39 @@ for i in range(results.shape[0]):
 # remove candidates not participating elections
 c = list(votes.keys())
 data2018 = data2018[data2018.Candidateidentifier.isin(c)]
+data2018 = data2018.reset_index(drop=True)
+
+# keep if flags == 0
+flags = (data2018.cycle!=2018)
+for pid in data2018.poll_id.unique():
+    tmp = data2018[data2018.poll_id==pid]
+
+    for qid in tmp.question_id.unique():
+        if tmp[tmp.question_id==qid].candidate_name.unique().shape[0]==1:
+            flags[(data2018.poll_id==pid) & (data2018.question_id==qid)] = 1
+
+    if tmp.population.unique().shape[0]>=2:
+        flags[(data2018.poll_id==pid) & (data2018.population!='lv')] = 1
+        # if 'a' in tmp.population.unique():
+        #     flags[(data2018.poll_id==pid) & (data2018.population=='a')] = 1
+        # else:
+        #     flags[(data2018.poll_id==pid) & (data2018.population!='lv')] = 1
+
+data2018 = data2018[flags==0]
+
+for pid in data2018.poll_id.unique():
+    tmp = data2018[data2018.poll_id==pid]
+
+    for qid in tmp.question_id.unique():
+        data2018.loc[data2018.question_id==qid,"samplesize"] = sum(data2018[data2018.question_id==qid].numberSupport.values)
+
+# Select non-partisan polls and selection columns.
+# Partisan polls are sponsored by parties.
+data2018 = data2018[data2018.partisan.isnull()]
+data2018 = data2018[['cycle', 'state', 'pollster',
+        'samplesize', 'candidate_name','Candidateidentifier', 'daysLeft',
+       'numberSupport', 'Democrat', 'Republican']]
+data2018 = data2018.drop_duplicates()
 data2018 = data2018.reset_index(drop=True)
 
 # add vote share colum to 2018 data

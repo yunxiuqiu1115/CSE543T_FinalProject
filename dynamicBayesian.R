@@ -37,17 +37,51 @@ computeh = function(df, test_year){
 
 
 # read data
-df <- read.csv("data/CNNdata1992-2018.csv")
+df <- read.csv("data/CNNdata1992-2016.csv")
 colnames(df)[colnames(df) == "Percentage_of_Vote_won_x"] = 'vote'
 df$vote = df$vote/100
-# Candidateidentifier = c()
-# Vote = c()
-# for (c in unique(df$Candidateidentifier)){
-#   Candidateidentifier = c(Candidateidentifier, c)
-#   Vote = c(Vote, df[df$Candidateidentifier==c, c('vote')][1])
-# }
-# c2v = data.frame(Candidateidentifier, Vote)
-# c2v = df %>% group_by(Candidateidentifier) %>% summarise_at(vars(vote), list(mean = mean))
+
+polls = unique(df[,c("cycle", "state", "samplesize", "daysLeft","pollster")])
+for (i in 1:nrow(polls)) {
+  poll = polls[i,]
+  cycle = poll$cycle[1]
+  state = poll$state[1]
+  samplesize = poll$samplesize[1]
+  daysLeft = poll$daysLeft[1]
+  pollster = poll$pollster[1]
+  mask = df$cycle==cycle & df$state==state & df$samplesize==samplesize & df$daysLeft==daysLeft & df$pollster==pollster
+  if(daysLeft==1){
+    mask = df$cycle==cycle & df$state==state & df$samplesize==samplesize & df$daysLeft==daysLeft
+  }
+  if(length(unique(df[mask,c("Candidateidentifier")]))!=length(df[mask,c("samplesize")])){
+    print(df[mask,])
+  }
+  df[mask,c("samplesize")] = sum(df[mask,c("numberSupport")])
+  df[mask, c("vote")] = df[mask, c("vote")]/sum(df[mask, c("vote")])
+}
+
+df2018 <- read.csv("data/CNNdata2018.csv")
+colnames(df2018)[colnames(df2018) == "Percentage.of.Vote.won.x"] = 'vote'
+df2018$vote = df2018$vote/100
+df2018 = subset(df2018, select=-c(candidate_name))
+
+polls = unique(df2018[,c("cycle", "state", "samplesize", "daysLeft","pollster")])
+for (i in 1:nrow(polls)) {
+  poll = polls[i,]
+  cycle = poll$cycle[1]
+  state = poll$state[1]
+  samplesize = poll$samplesize[1]
+  daysLeft = poll$daysLeft[1]
+  pollster = poll$pollster[1]
+  mask = df2018$cycle==cycle & df2018$state==state & df2018$samplesize==samplesize & df2018$daysLeft==daysLeft & df2018$pollster==pollster
+  if(daysLeft==1){
+    mask = df2018$cycle==cycle & df2018$state==state & df2018$samplesize==samplesize & df2018$daysLeft==daysLeft
+  }
+  df2018[mask, c("vote")] = df2018[mask, c("vote")]/sum(df2018[mask, c("vote")])
+}
+
+df = rbind(df, df2018)
+
 df$polls <- df$numberSupport/df$samplesize
 
 priorModel = computeh(df, test_year)

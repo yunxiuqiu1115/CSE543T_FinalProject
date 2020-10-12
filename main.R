@@ -22,6 +22,7 @@ if (length(args)==2){
 
 # load packages
 library(rstan)
+library(bayesplot)
 library(MCMCpack)
 library(dplyr)
 library(ggridges)
@@ -627,3 +628,52 @@ for (a in 5:5) {
 # save.image(file = paste('models/LOOCV_',TYPE ,'.RData',sep=''))
 
 # saveRDS(fit_objs, file = paste("models/",TYPE, "_", test_year, "_fit_objs.rds",sep=''))
+
+# fit_objs = readRDS("models/GP_2018_fit_objs.rds")
+# fit = fitobjs[[1]]
+# mcmc_trace(fit, par=c("alpha","beta","ppb","eb"))
+
+fit_objs = readRDS("models/GP_2018_fit_objs.rds")
+HORIZON = c()
+MEAN = c()
+SE_MEAN = c()
+SD = c()
+L = c()
+U = c()
+N_EFF = c()
+RHAT = c()
+PARMS = c("alpha","beta","ppb","eb","year_sig")
+for (a in 1:length(horizons)) {
+  fit = fit_objs[[a]]
+  tmp = summary(fit, par=PARMS)
+  tmp = tmp$summary
+  for (p in PARMS) {
+    HORIZON = c(HORIZON, a)
+    MEAN = c(MEAN, tmp[p, 'mean'])
+    SE_MEAN = c(SE_MEAN, tmp[p, 'se_mean'])
+    SD = c(SD, tmp[p, 'sd'])
+    L = c(L, tmp[p, '2.5%'])
+    U = c(U, tmp[p, '97.5%'])
+    N_EFF = c(N_EFF, tmp[p, 'n_eff'])
+    RHAT = c(RHAT,tmp[p, 'Rhat'])
+  }
+}
+
+MEAN = round(MEAN, 2)
+SE_MEAN = round(SE_MEAN, 3)
+SD = round(SD,2)
+L = round(L,2)
+U = round(U,2)
+N_EFF = round(N_EFF,1)
+RHAT = round(RHAT, 3)
+
+results <- data.frame(HORIZON,
+                      MEAN,
+                      SE_MEAN,
+                      SD,
+                      L,
+                      U,
+                      N_EFF,
+                      RHAT)
+
+write.csv(results,"results/stan.csv")

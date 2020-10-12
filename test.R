@@ -8,7 +8,6 @@ horizons = c('0',
              '42',
              '56')
 
-
 # the optimal index of hyperparameters in the loyo process
 # optimal index can be obtained with loocv_nlZs.R
 best_gp_idx = read.csv(paste("results/", "GP", "_opthyp.csv", sep=''))
@@ -245,13 +244,15 @@ generate_BRW_results <- function(test_years, horizons){
         if( which(max(win_rates)==win_rates)== which(max(tmp$vote)==tmp$vote)){
           correct_prediction = correct_prediction + 1
         }
-        
       }
       
       ACCURACY_Y = c(ACCURACY_Y, correct_prediction/length(unique(data$state)))
       ENTROPY_Y = c(ENTROPY_Y, mean(log(winning_probs+1e-10)*winners))
       RATIO_Y = c(RATIO_Y, sum((data$vote>data$lower95) & (data$vote<data$upper95))/nrow(data))
-      NLZ_Y = c(NLZ_Y, mean(data$nlz))
+      nlz = data$nlz
+      nlz = nlz[nlz<=100]
+      # nlz = -dnorm(data$vote, data$pmean, (data$upper95-data$lower95)/4, log=TRUE)
+      NLZ_Y = c(NLZ_Y, mean(nlz))
     }
     RMSE = c(RMSE, mean(RMSE_Y)) 
     ACCURACY = c(ACCURACY, mean(ACCURACY_Y))

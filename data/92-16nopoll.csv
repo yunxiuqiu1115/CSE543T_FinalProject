@@ -35,8 +35,6 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2004,Hawaii,NA,1,Campbell Cavasso,2004HICavasso,1,0,0,1,21,8.7,1
 2004,Vermont,NA,1,Patrick Leahy,2004VTLeahy,1,0,1,0,70.6,11.545,1
 2004,Vermont,NA,1,Jack McMullen,2004VTMcMullen,1,0,0,1,24.5,11.545,0
-2004,Wisconsin,NA,1,Russ Feingold,2004WIFeingold,1,0,1,0,55.3,1.4343,1
-2004,Wisconsin,NA,1,Tim Michels,2004WIMichels,1,0,0,1,44.1,1.4343,0
 2006,Hawaii,NA,1,Daniel Akaka,2006HIAkaka,1,0,1,0,61.4,8.7,1
 2006,Hawaii,NA,1,Cynthia Thielen,2006HIThielen,1,0,0,1,36.8,8.7,1
 2006,North Dakota,NA,1,Kent Conrad,2006NDConrad,1,0,1,0,68.8,-8.6411,1
