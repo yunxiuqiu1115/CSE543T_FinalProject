@@ -5,8 +5,8 @@ args = commandArgs(trailingOnly=TRUE)
 
 # test if there is argument: if not, use default 2018
 if (length(args)==0) {
-  input_str = '21'
-  test_year = 2018
+  input_str = '0'
+  test_year = 2016
 }
 if (length(args)==1){
   # define the test year
@@ -106,7 +106,8 @@ NLZ <- c()
 W = 4
 
 # iterate over candidate
-for(state in unique(df$state)){
+# unique(df$state)
+for(state in df$state[1]){
   cs = unique(df[df$state==state,'Candidateidentifier'])
   votes = c()
   preds = c()
@@ -214,4 +215,19 @@ result <- data.frame(CYCLE,
 
 names(result) <- tolower(names(result))
 
-write.csv(result,output_file)
+# write.csv(result,output_file)
+
+
+tmp = c()
+upper = c()
+lower = c()
+for (i in n_poll:1){
+  pred = fit_params[[paste("ps[", as.character(i) , "]", sep="")]]
+  tmp = c(tmp, quantile(pred, 0.5, na.rm = TRUE))
+  upper = c(upper, quantile(pred, 0.975, na.rm = TRUE))
+  lower = c(lower, quantile(pred, 0.025, na.rm = TRUE))
+}
+
+plot(n_poll:1, tmp, type="l", ylim=c(0.2,0.8))
+lines(n_poll:1, upper,type="l")
+lines(n_poll:1, lower,type="l")

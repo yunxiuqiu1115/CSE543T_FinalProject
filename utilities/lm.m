@@ -94,7 +94,7 @@ function [allRaces,fts,s2s] = lm(hyperparameter, xs, ys, raceinfos, plot_path, p
                 parms.prior = [mu_b, simga_mc];
                 fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), parms);
                 plot_title = year + " " + state + " " + candidateName;
-                title(plot_title);
+%                 title(plot_title);
                 
                 % save plot to files
                 yearFolder = fullfile(plot_path, num2str(year));

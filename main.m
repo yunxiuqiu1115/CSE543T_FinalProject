@@ -1,4 +1,4 @@
-function [varout]=main(TYPE, mode, tau)
+function [varout]=main(TYPE, mode, tau, plot)
 
 %  main function of obtaining gp posteriors for each election race
 %  input:
@@ -8,6 +8,7 @@ function [varout]=main(TYPE, mode, tau)
 %      -: 2 for testing 2018 races
 %      -: 3 for forecasting 2020 races
 %    - tau: forecasting horizon
+%    - plot: whether to plot gp
 %
 
     % define output
@@ -38,18 +39,18 @@ function [varout]=main(TYPE, mode, tau)
         ts = readData("results/"+TYPE+"_opthyp.csv");
         ts = ts.opt_idx;
 
-        for i=1:numel(taus)
+        for i=6:6
             j = ts(i);
             if strcmp(TYPE, "GP")==1
                 ls = p(j,1)*(56-7)+7; % 7-56
                 os = p(j,2)/20; % 0%-5%
                 lik = p(j,3)/20; % 0%-5%
-                myrun(taus(i),TYPE, ls, os, lik, j, mode);
+                myrun(taus(i),TYPE, ls, os, lik, j, mode, plot);
             else 
                 % linear model does not have ls/os
                 ls = 0; os = 0;
                 lik = p(j); % 0%-10%
-                myrun(taus(i),TYPE, ls, os, lik, j, mode);
+                myrun(taus(i),TYPE, ls, os, lik, j, mode, plot);
             end
         end
     else
@@ -60,19 +61,19 @@ function [varout]=main(TYPE, mode, tau)
                     ls = p(j,1)*(56-7)+7; % 7-56
                     os = p(j,2)/20; % 0%-5%
                     lik = p(j,3)/20; % 0%-5%
-                    myrun(tau,TYPE, ls, os, lik, j, mode);
+                    myrun(tau,TYPE, ls, os, lik, j, mode, plot);
                 else 
                     % linear model does not have ls/os
                     ls = 0; os = 0;
                     lik = p(j); % 0%-10%
-                    myrun(tau,TYPE, ls, os, lik, j, mode);
+                    myrun(tau,TYPE, ls, os, lik, j, mode, plot);
                 end
             end
 %         end
     end
 end
 
-function myrun(tau,type, ls, os, lik, j, mode)
+function myrun(tau,type, ls, os, lik, j, mode, plot)
 %  load 1992-2016 data
 %  feature of data includes: 
 %       - cycle: election year
@@ -152,7 +153,10 @@ function myrun(tau,type, ls, os, lik, j, mode)
     parms.tau = tau;
     parms.j = j;
     parms.type = type;
-    parms.plot = 0;
+    parms.plot = plot;
+    
+    % plot days bin
+    parms.BIN = 30;
     
     if mode==2
         % tesing 2018 races

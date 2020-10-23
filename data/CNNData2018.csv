@@ -1,4 +1,8 @@
 cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numberSupport,Democrat,Republican,Percentage.of.Vote.won.x,pvi,experienced
+2018,MississippiS,Change Research,1174.0,Mike Espy,2018MSEspy,-3,557.0,1,0,46.4,-7.954178646,1.0
+2018,MississippiS,Change Research,1174.0,Cindy Hyde-Smith,2018MSSmith,-3,617.0,0,1,53.6,-7.954178646,1.0
+2018,MississippiS,JMC Analytics/Bold Blue Campaigns,669.0,Mike Espy,2018MSEspy,-9,300.0,1,0,46.4,-7.954178646,1.0
+2018,MississippiS,JMC Analytics/Bold Blue Campaigns,669.0,Cindy Hyde-Smith,2018MSSmith,-9,369.0,0,1,53.6,-7.954178646,1.0
 2018,Michigan,Mitchell Research & Communications,785.0,Debbie Stabenow,2018MIStabenow,-2,405.0,1,0,52.3,0.110617903,1.0
 2018,Michigan,Mitchell Research & Communications,785.0,John James,2018MIJames,-2,380.0,0,1,45.8,0.110617903,0.0
 2018,Florida,Trafalgar Group,1428.0,Bill Nelson,2018FLNelson,-3,701.0,1,0,49.9,-1.790610365,1.0
@@ -39,6 +43,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,California,Change Research,819.0,Kevin de León,2018CAde Leon,-5,354.0,1,0,45.8,10.76322564,1.0
 2018,Minnesota,Change Research,905.0,Amy Klobuchar,2018MNKlobuchar,-5,524.0,1,0,60.3,1.11430914,1.0
 2018,Minnesota,Change Research,905.0,Jim Newberger,2018MNNewberger,-5,381.0,0,1,36.2,1.11430914,1.0
+2018,MinnesotaS,Change Research,886.0,Tina Smith,2018MNSmith,-5,486.0,1,0,53.0,1.11430914,1.0
+2018,MinnesotaS,Change Research,886.0,Karin Housley,2018MNHousley,-5,400.0,0,1,42.4,1.11430914,1.0
 2018,Arizona,Harris Insights & Analytics,561.0,Kyrsten Sinema,2018AZSinema,-5,283.0,1,0,50.0,-4.106799945,1.0
 2018,Arizona,Harris Insights & Analytics,561.0,Martha McSally,2018AZMcSally,-5,278.0,0,1,47.6,-4.106799945,1.0
 2018,Florida,Harris Insights & Analytics,565.0,Bill Nelson,2018FLNelson,-5,271.0,1,0,49.9,-1.790610365,1.0
@@ -47,6 +53,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Nevada,Harris Insights & Analytics,551.0,Dean Heller,2018NVHeller,-5,277.0,0,1,45.4,0.039999588,1.0
 2018,Mississippi,Change Research,882.0,David Baria,2018MSBaria,-5,401.0,1,0,39.5,-7.954178646,1.0
 2018,Mississippi,Change Research,882.0,Roger F. Wicker,2018MSWicker,-5,481.0,0,1,58.5,-7.954178646,1.0
+2018,MississippiS,Change Research,671.0,Mike Espy,2018MSEspy,-5,401.0,1,0,46.4,-7.954178646,1.0
+2018,MississippiS,Change Research,671.0,Cindy Hyde-Smith,2018MSSmith,-5,270.0,0,1,53.6,-7.954178646,1.0
 2018,Indiana,Harris Insights & Analytics,502.0,Joe Donnelly,2018INDonnelly,-5,259.0,1,0,45.0,-8.112056678,1.0
 2018,Indiana,Harris Insights & Analytics,502.0,Mike Braun,2018INBraun,-5,243.0,0,1,50.9,-8.112056678,1.0
 2018,Missouri,Harris Insights & Analytics,546.0,Claire McCaskill,2018MOMcCaskill,-5,266.0,1,0,45.6,-6.881433406,1.0
@@ -73,6 +81,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Michigan,Research Co.,396.0,John James,2018MIJames,-6,162.0,0,1,45.8,0.110617903,0.0
 2018,Minnesota,Research Co.,386.0,Amy Klobuchar,2018MNKlobuchar,-6,238.0,1,0,60.3,1.11430914,1.0
 2018,Minnesota,Research Co.,386.0,Jim Newberger,2018MNNewberger,-6,148.0,0,1,36.2,1.11430914,1.0
+2018,MinnesotaS,Research Co.,395.0,Tina Smith,2018MNSmith,-6,220.0,1,0,53.0,1.11430914,1.0
+2018,MinnesotaS,Research Co.,395.0,Karin Housley,2018MNHousley,-6,175.0,0,1,42.4,1.11430914,1.0
 2018,New York,Research Co.,414.0,Kirsten E. Gillibrand,2018NYGillibrand,-6,270.0,1,0,67.0,9.796951795,1.0
 2018,New York,Research Co.,414.0,Chele Farley,2018NYFarley,-6,144.0,0,1,33.0,9.796951795,0.0
 2018,Pennsylvania,Research Co.,427.0,Robert P. Casey Jr.,2018PACasey,-6,252.0,1,0,55.7,0.390350973,1.0
@@ -176,6 +186,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Nevada,Harris Insights & Analytics,539.0,Dean Heller,2018NVHeller,-9,269.0,0,1,45.4,0.039999588,1.0
 2018,Minnesota,SurveyUSA,546.0,Amy Klobuchar,2018MNKlobuchar,-9,342.0,1,0,60.3,1.11430914,1.0
 2018,Minnesota,SurveyUSA,546.0,Jim Newberger,2018MNNewberger,-9,204.0,0,1,36.2,1.11430914,1.0
+2018,MinnesotaS,SurveyUSA,528.0,Tina Smith,2018MNSmith,-9,288.0,1,0,53.0,1.11430914,1.0
+2018,MinnesotaS,SurveyUSA,528.0,Karin Housley,2018MNHousley,-9,240.0,0,1,42.4,1.11430914,1.0
 2018,Indiana,Harris Insights & Analytics,495.0,Joe Donnelly,2018INDonnelly,-9,237.0,1,0,45.0,-8.112056678,1.0
 2018,Indiana,Harris Insights & Analytics,495.0,Mike Braun,2018INBraun,-9,258.0,0,1,50.9,-8.112056678,1.0
 2018,Missouri,Harris Insights & Analytics,531.0,Claire McCaskill,2018MOMcCaskill,-9,271.0,1,0,45.6,-6.881433406,1.0
@@ -236,6 +248,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,West Virginia,Research America Inc.,340.0,Patrick Morrisey,2018WVMorrisey,-19,160.0,0,1,46.3,-13.38955503,1.0
 2018,Minnesota,St. Cloud State University,343.0,Amy Klobuchar,2018MNKlobuchar,-23,226.0,1,0,60.3,1.11430914,1.0
 2018,Minnesota,St. Cloud State University,343.0,Jim Newberger,2018MNNewberger,-23,117.0,0,1,36.2,1.11430914,1.0
+2018,MinnesotaS,St. Cloud State University,305.0,Tina Smith,2018MNSmith,-23,184.0,1,0,53.0,1.11430914,1.0
+2018,MinnesotaS,St. Cloud State University,305.0,Karin Housley,2018MNHousley,-23,121.0,0,1,42.4,1.11430914,1.0
 2018,Tennessee,Vox Populi Polling,779.0,Phil Bredesen,2018TNBredesen,-11,366.0,1,0,43.9,-14.12184488,1.0
 2018,Tennessee,Vox Populi Polling,779.0,Marsha Blackburn,2018TNBlackburn,-11,413.0,0,1,54.7,-14.12184488,1.0
 2018,New Jersey,Vox Populi Polling,813.0,Robert Menendez,2018NJMenendez,-11,439.0,1,0,54.0,5.440680607000001,1.0
@@ -391,6 +405,10 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Missouri,Remington Research Group,1129.0,Josh Hawley,2018MOHawley,-21,571.0,0,1,51.4,-6.881433406,1.0
 2018,Michigan,Marketing Resource Group (MRG),540.0,Debbie Stabenow,2018MIStabenow,-24,318.0,1,0,52.3,0.110617903,1.0
 2018,Michigan,Marketing Resource Group (MRG),540.0,John James,2018MIJames,-24,222.0,0,1,45.8,0.110617903,0.0
+2018,MississippiS,Marist College,342.0,Mike Espy,2018MSEspy,-25,148.0,1,0,46.4,-7.954178646,1.0
+2018,MississippiS,Marist College,342.0,Cindy Hyde-Smith,2018MSSmith,-25,194.0,0,1,53.6,-7.954178646,1.0
+2018,MississippiS,Marist College,438.0,Mike Espy,2018MSEspy,-46,183.0,1,0,46.4,-7.954178646,1.0
+2018,MississippiS,Marist College,438.0,Cindy Hyde-Smith,2018MSSmith,-46,255.0,0,1,53.6,-7.954178646,1.0
 2018,Mississippi,Marist College,469.0,David Baria,2018MSBaria,-25,163.0,1,0,39.5,-7.954178646,1.0
 2018,Mississippi,Marist College,469.0,Roger F. Wicker,2018MSWicker,-25,306.0,0,1,58.5,-7.954178646,1.0
 2018,Mississippi,Marist College,449.0,David Baria,2018MSBaria,-25,158.0,1,0,39.5,-7.954178646,1.0
@@ -407,6 +425,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Arizona,Data Orbital,525.0,Martha McSally,2018AZMcSally,-22,238.0,0,1,47.6,-4.106799945,1.0
 2018,Minnesota,Mason-Dixon Polling & Strategy,712.0,Amy Klobuchar,2018MNKlobuchar,-23,448.0,1,0,60.3,1.11430914,1.0
 2018,Minnesota,Mason-Dixon Polling & Strategy,712.0,Jim Newberger,2018MNNewberger,-23,264.0,0,1,36.2,1.11430914,1.0
+2018,MinnesotaS,Mason-Dixon Polling & Strategy,704.0,Tina Smith,2018MNSmith,-23,376.0,1,0,53.0,1.11430914,1.0
+2018,MinnesotaS,Mason-Dixon Polling & Strategy,704.0,Karin Housley,2018MNHousley,-23,328.0,0,1,42.4,1.11430914,1.0
 2018,Florida,St. Pete Polls,1890.0,Bill Nelson,2018FLNelson,-23,931.0,1,0,49.9,-1.790610365,1.0
 2018,Florida,St. Pete Polls,1890.0,Rick Scott,2018FLScott,-23,959.0,0,1,50.1,-1.790610365,1.0
 2018,Indiana,Gravis Marketing,315.0,Joe Donnelly,2018INDonnelly,-26,165.0,1,0,45.0,-8.112056678,1.0
@@ -437,6 +457,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,California,USC Dornsife/Los Angeles Times,595.0,Kevin de León,2018CAde Leon,-51,246.0,1,0,45.8,10.76322564,1.0
 2018,Minnesota,Change Research,1285.0,Amy Klobuchar,2018MNKlobuchar,-26,706.0,1,0,60.3,1.11430914,1.0
 2018,Minnesota,Change Research,1285.0,Jim Newberger,2018MNNewberger,-26,579.0,0,1,36.2,1.11430914,1.0
+2018,MinnesotaS,Change Research,1256.0,Tina Smith,2018MNSmith,-26,649.0,1,0,53.0,1.11430914,1.0
+2018,MinnesotaS,Change Research,1256.0,Karin Housley,2018MNHousley,-26,607.0,0,1,42.4,1.11430914,1.0
 2018,Texas,SSRS,694.0,Beto O'Rourke,2018TXO'Rourke,-29,322.0,1,0,48.3,-7.023984994,1.0
 2018,Texas,SSRS,694.0,Ted Cruz,2018TXCruz,-29,372.0,0,1,50.9,-7.023984994,1.0
 2018,Tennessee,SSRS,696.0,Phil Bredesen,2018TNBredesen,-30,352.0,1,0,43.9,-14.12184488,1.0
@@ -498,6 +520,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Texas,Emerson College,447.0,Ted Cruz,2018TXCruz,-37,235.0,0,1,50.9,-7.023984994,1.0
 2018,Florida,Florida Southern College,429.0,Bill Nelson,2018FLNelson,-37,211.0,1,0,49.9,-1.790610365,1.0
 2018,Florida,Florida Southern College,429.0,Rick Scott,2018FLScott,-37,218.0,0,1,50.1,-1.790610365,1.0
+2018,MinnesotaS,Marist College,585.0,Tina Smith,2018MNSmith,-38,343.0,1,0,53.0,1.11430914,1.0
+2018,MinnesotaS,Marist College,585.0,Karin Housley,2018MNHousley,-38,242.0,0,1,42.4,1.11430914,1.0
 2018,Minnesota,Marist College,585.0,Amy Klobuchar,2018MNKlobuchar,-38,382.0,1,0,60.3,1.11430914,1.0
 2018,Minnesota,Marist College,585.0,Jim Newberger,2018MNNewberger,-38,203.0,0,1,36.2,1.11430914,1.0
 2018,Minnesota,Marist College,611.0,Amy Klobuchar,2018MNKlobuchar,-38,401.0,1,0,60.3,1.11430914,1.0
@@ -574,6 +598,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Tennessee,SurveyMonkey,1350.0,Marsha Blackburn,2018TNBlackburn,-59,675.0,0,1,54.7,-14.12184488,1.0
 2018,Mississippi,SurveyMonkey,708.0,David Baria,2018MSBaria,-59,285.0,1,0,39.5,-7.954178646,1.0
 2018,Mississippi,SurveyMonkey,708.0,Roger F. Wicker,2018MSWicker,-59,423.0,0,1,58.5,-7.954178646,1.0
+2018,MississippiS,SurveyMonkey,482.0,Mike Espy,2018MSEspy,-59,246.0,1,0,46.4,-7.954178646,1.0
+2018,MississippiS,SurveyMonkey,482.0,Cindy Hyde-Smith,2018MSSmith,-59,236.0,0,1,53.6,-7.954178646,1.0
 2018,Pennsylvania,Franklin & Marshall College,169.0,Robert P. Casey Jr.,2018PACasey,-51,102.0,1,0,55.7,0.390350973,1.0
 2018,Pennsylvania,Franklin & Marshall College,169.0,Lou Barletta,2018PABarletta,-51,67.0,0,1,42.6,0.390350973,1.0
 2018,Montana,Gravis Marketing,666.0,Jon Tester,2018MTTester,-49,347.0,1,0,50.3,-8.652566712,1.0
@@ -667,6 +693,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Nevada,Gravis Marketing,644.0,Dean Heller,2018NVHeller,-57,315.0,0,1,45.4,0.039999588,1.0
 2018,Minnesota,Mason-Dixon Polling & Strategy,720.0,Amy Klobuchar,2018MNKlobuchar,-58,480.0,1,0,60.3,1.11430914,1.0
 2018,Minnesota,Mason-Dixon Polling & Strategy,720.0,Jim Newberger,2018MNNewberger,-58,240.0,0,1,36.2,1.11430914,1.0
+2018,MinnesotaS,Mason-Dixon Polling & Strategy,648.0,Tina Smith,2018MNSmith,-58,352.0,1,0,53.0,1.11430914,1.0
+2018,MinnesotaS,Mason-Dixon Polling & Strategy,648.0,Karin Housley,2018MNHousley,-58,296.0,0,1,42.4,1.11430914,1.0
 2018,Tennessee,Triton Polling & Research,968.0,Phil Bredesen,2018TNBredesen,-58,467.0,1,0,43.9,-14.12184488,1.0
 2018,Tennessee,Triton Polling & Research,968.0,Marsha Blackburn,2018TNBlackburn,-58,501.0,0,1,54.7,-14.12184488,1.0
 2018,Florida,Ipsos,906.0,Bill Nelson,2018FLNelson,-63,446.0,1,0,49.9,-1.790610365,1.0
@@ -699,6 +727,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Virginia,SSRS,450.0,Corey Stewart,2018VAStewart,-64,184.0,0,1,41.1,0.7271012379999999,1.0
 2018,Minnesota,SurveyUSA,522.0,Amy Klobuchar,2018MNKlobuchar,-62,304.0,1,0,60.3,1.11430914,1.0
 2018,Minnesota,SurveyUSA,522.0,Jim Newberger,2018MNNewberger,-62,218.0,0,1,36.2,1.11430914,1.0
+2018,MinnesotaS,SurveyUSA,498.0,Tina Smith,2018MNSmith,-62,275.0,1,0,53.0,1.11430914,1.0
+2018,MinnesotaS,SurveyUSA,498.0,Karin Housley,2018MNHousley,-62,223.0,0,1,42.4,1.11430914,1.0
 2018,Texas,Dixie Strategies,454.0,Beto O'Rourke,2018TXO'Rourke,-62,216.0,1,0,48.3,-7.023984994,1.0
 2018,Texas,Dixie Strategies,454.0,Ted Cruz,2018TXCruz,-62,238.0,0,1,50.9,-7.023984994,1.0
 2018,Arizona,Gravis Marketing,855.0,Kyrsten Sinema,2018AZSinema,-63,423.0,1,0,50.0,-4.106799945,1.0
@@ -753,6 +783,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Connecticut,Quinnipiac University,925.0,Matthew Corey,2018CTCorey,-83,318.0,0,1,39.4,4.933092737,0.0
 2018,Minnesota,Suffolk University,436.0,Amy Klobuchar,2018MNKlobuchar,-82,268.0,1,0,60.3,1.11430914,1.0
 2018,Minnesota,Suffolk University,436.0,Jim Newberger,2018MNNewberger,-82,168.0,0,1,36.2,1.11430914,1.0
+2018,MinnesotaS,Suffolk University,402.0,Tina Smith,2018MNSmith,-82,219.0,1,0,53.0,1.11430914,1.0
+2018,MinnesotaS,Suffolk University,402.0,Karin Housley,2018MNHousley,-82,183.0,0,1,42.4,1.11430914,1.0
 2018,Florida,Florida Atlantic University,672.0,Bill Nelson,2018FLNelson,-83,312.0,1,0,49.9,-1.790610365,1.0
 2018,Florida,Florida Atlantic University,672.0,Rick Scott,2018FLScott,-83,360.0,0,1,50.1,-1.790610365,1.0
 2018,New Jersey,Quinnipiac University,725.0,Robert Menendez,2018NJMenendez,-84,390.0,1,0,54.0,5.440680607000001,1.0
@@ -778,6 +810,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Tennessee,Gravis Marketing,569.0,Marsha Blackburn,2018TNBlackburn,-90,297.0,0,1,54.7,-14.12184488,1.0
 2018,Minnesota,Emerson College,380.0,Amy Klobuchar,2018MNKlobuchar,-91,251.0,1,0,60.3,1.11430914,1.0
 2018,Minnesota,Emerson College,380.0,Jim Newberger,2018MNNewberger,-91,129.0,0,1,36.2,1.11430914,1.0
+2018,MinnesotaS,Emerson College,294.0,Tina Smith,2018MNSmith,-91,157.0,1,0,53.0,1.11430914,1.0
+2018,MinnesotaS,Emerson College,294.0,Karin Housley,2018MNHousley,-91,137.0,0,1,42.4,1.11430914,1.0
 2018,Missouri,Remington Research Group,1676.0,Claire McCaskill,2018MOMcCaskill,-91,838.0,1,0,45.6,-6.881433406,1.0
 2018,Missouri,Remington Research Group,1676.0,Josh Hawley,2018MOHawley,-91,838.0,0,1,51.4,-6.881433406,1.0
 2018,Indiana,Trafalgar Group,1267.0,Joe Donnelly,2018INDonnelly,-99,719.0,1,0,45.0,-8.112056678,1.0
@@ -787,6 +821,10 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Maine,Suffolk University,427.0,Angus S. King Jr.,2018MEKing,-97,258.0,1,0,54.3,1.414830868,1.0
 2018,Mississippi,Triumph Campaigns,1799.0,David Baria,2018MSBaria,-100,681.0,1,0,39.5,-7.954178646,1.0
 2018,Mississippi,Triumph Campaigns,1799.0,Roger F. Wicker,2018MSWicker,-100,1118.0,0,1,58.5,-7.954178646,1.0
+2018,MississippiS,Triumph Campaigns,1425.0,Mike Espy,2018MSEspy,-100,563.0,1,0,46.4,-7.954178646,1.0
+2018,MississippiS,Triumph Campaigns,1425.0,Cindy Hyde-Smith,2018MSSmith,-100,862.0,0,1,53.6,-7.954178646,1.0
+2018,MississippiS,Triumph Campaigns,1723.0,Mike Espy,2018MSEspy,-121,705.0,1,0,46.4,-7.954178646,1.0
+2018,MississippiS,Triumph Campaigns,1723.0,Cindy Hyde-Smith,2018MSSmith,-121,1018.0,0,1,53.6,-7.954178646,1.0
 2018,Texas,Quinnipiac University,1027.0,Beto O'Rourke,2018TXO'Rourke,-104,480.0,1,0,48.3,-7.023984994,1.0
 2018,Texas,Quinnipiac University,1027.0,Ted Cruz,2018TXCruz,-104,547.0,0,1,50.9,-7.023984994,1.0
 2018,Virginia,Virginia Commonwealth University,560.0,Tim Kaine,2018VAKaine,-120,366.0,1,0,57.1,0.7271012379999999,1.0
@@ -811,6 +849,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Michigan,Marist College,814.0,John James,2018MIJames,-115,327.0,0,1,45.8,0.110617903,0.0
 2018,Wisconsin,Marist College,842.0,Tammy Baldwin,2018WIBaldwin,-115,498.0,1,0,55.4,-1.482069759,1.0
 2018,Wisconsin,Marist College,842.0,Leah Vukmir,2018WIVukmir,-115,344.0,0,1,44.6,-1.482069759,1.0
+2018,MinnesotaS,Marist College,735.0,Tina Smith,2018MNSmith,-115,429.0,1,0,53.0,1.11430914,1.0
+2018,MinnesotaS,Marist College,735.0,Karin Housley,2018MNHousley,-115,306.0,0,1,42.4,1.11430914,1.0
 2018,California,Public Policy Institute of California,713.0,Dianne Feinstein,2018CAFeinstein,-122,469.0,1,0,54.2,10.76322564,1.0
 2018,California,Public Policy Institute of California,713.0,Kevin de León,2018CAde Leon,-122,244.0,1,0,45.8,10.76322564,1.0
 2018,West Virginia,Trafalgar Group,1034.0,"Joe Manchin, III",2018WVManchin,-117,577.0,1,0,49.6,-13.38955503,1.0
@@ -1063,12 +1103,18 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,California,Probolsky Research,582.0,Kevin de León,2018CAde Leon,-205,242.0,1,0,45.8,10.76322564,1.0
 2018,Texas,Quinnipiac University,935.0,Beto O'Rourke,2018TXO'Rourke,-209,452.0,1,0,48.3,-7.023984994,1.0
 2018,Texas,Quinnipiac University,935.0,Ted Cruz,2018TXCruz,-209,483.0,0,1,50.9,-7.023984994,1.0
+2018,MississippiS,Mason-Dixon Polling & Strategy,499.0,Mike Espy,2018MSEspy,-230,212.0,1,0,46.4,-7.954178646,1.0
+2018,MississippiS,Mason-Dixon Polling & Strategy,499.0,Cindy Hyde-Smith,2018MSSmith,-230,287.0,0,1,53.6,-7.954178646,1.0
 2018,New York,Siena College,587.0,Kirsten E. Gillibrand,2018NYGillibrand,-213,401.0,1,0,67.0,9.796951795,1.0
 2018,New York,Siena College,587.0,Chele Farley,2018NYFarley,-213,186.0,0,1,33.0,9.796951795,0.0
 2018,Pennsylvania,Muhlenberg College,330.0,Robert P. Casey Jr.,2018PACasey,-217,198.0,1,0,55.7,0.390350973,1.0
 2018,Pennsylvania,Muhlenberg College,330.0,Lou Barletta,2018PABarletta,-217,132.0,0,1,42.6,0.390350973,1.0
 2018,Mississippi,Triumph Campaigns,794.0,David Baria,2018MSBaria,-211,313.0,1,0,39.5,-7.954178646,1.0
 2018,Mississippi,Triumph Campaigns,794.0,Roger F. Wicker,2018MSWicker,-211,481.0,0,1,58.5,-7.954178646,1.0
+2018,MississippiS,Triumph Campaigns,661.0,Mike Espy,2018MSEspy,-211,331.0,1,0,46.4,-7.954178646,1.0
+2018,MississippiS,Triumph Campaigns,661.0,Cindy Hyde-Smith,2018MSSmith,-211,330.0,0,1,53.6,-7.954178646,1.0
+2018,MississippiS,Triumph Campaigns,774.0,Mike Espy,2018MSEspy,-232,358.0,1,0,46.4,-7.954178646,1.0
+2018,MississippiS,Triumph Campaigns,774.0,Cindy Hyde-Smith,2018MSSmith,-232,416.0,0,1,53.6,-7.954178646,1.0
 2018,Arizona,OH Predictive Insights,540.0,Kyrsten Sinema,2018AZSinema,-211,288.0,1,0,50.0,-4.106799945,1.0
 2018,Arizona,OH Predictive Insights,540.0,Martha McSally,2018AZMcSally,-211,252.0,0,1,47.6,-4.106799945,1.0
 2018,Florida,Public Policy Polling,620.0,Bill Nelson,2018FLNelson,-211,330.0,1,0,49.9,-1.790610365,1.0
@@ -1079,6 +1125,8 @@ cycle,state,pollster,samplesize,candidate_name,Candidateidentifier,daysLeft,numb
 2018,Missouri,Mason-Dixon Polling & Strategy,556.0,Josh Hawley,2018MOHawley,-217,275.0,0,1,51.4,-6.881433406,1.0
 2018,Tennessee,Middle Tennessee State University,480.0,Phil Bredesen,2018TNBredesen,-230,270.0,1,0,43.9,-14.12184488,1.0
 2018,Tennessee,Middle Tennessee State University,480.0,Marsha Blackburn,2018TNBlackburn,-230,210.0,0,1,54.7,-14.12184488,1.0
+2018,MississippiS,Chism Strategies,367.0,Mike Espy,2018MSEspy,-225,205.0,1,0,46.4,-7.954178646,1.0
+2018,MississippiS,Chism Strategies,367.0,Cindy Hyde-Smith,2018MSSmith,-225,162.0,0,1,53.6,-7.954178646,1.0
 2018,Pennsylvania,Franklin & Marshall College,286.0,Robert P. Casey Jr.,2018PACasey,-233,181.0,1,0,55.7,0.390350973,1.0
 2018,Pennsylvania,Franklin & Marshall College,286.0,Lou Barletta,2018PABarletta,-233,105.0,0,1,42.6,0.390350973,1.0
 2018,Ohio,SurveyUSA,1267.0,Sherrod Brown,2018OHBrown,-236,732.0,1,0,53.4,-4.171365879,1.0

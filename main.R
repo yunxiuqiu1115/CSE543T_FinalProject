@@ -5,7 +5,7 @@ args = commandArgs(trailingOnly=TRUE)
 
 # test if there is at least one argument: if not, use default 2020 with GP model
 if (length(args)==0) {
-  test_year = 2020
+  test_year = 2018
   # define model type: gp prior or lm prior
   TYPE = 'GP'
 }
@@ -53,11 +53,9 @@ best_cv_idx = best_cv_idx$opt_idx
 #   best_cv_idx = c(13, 12, 12, 10, 12,  9,  9)
 # }
 
-# store the stan_model fit objects
-fit_objs = c()
 
-# for (a in 1:length(horizons))
-for (a in 5:5) {
+# 1:length(horizons)
+for (a in 2:2) {
   
   # load the prior files
   input_file = paste('results/LOO', TYPE, '_' , test_year, 'day', horizons[a], '_', best_cv_idx[a] ,'.csv',sep='')
@@ -296,7 +294,7 @@ for (a in 5:5) {
               chains = 3, 
               cores = 3, 
               thin = 4,
-              control=list(adapt_delta=.98, max_treedepth = 15),
+              control=list(adapt_delta=.99, max_treedepth = 15),
               seed = a,
               refresh=0
   )
@@ -304,8 +302,6 @@ for (a in 5:5) {
   
   # print(summary(fit,c('alpha','beta','ppb','eb','year_sig'))$summary)
   fit_params <- as.data.frame(fit)
-  
-  fit_objs = c(fit_objs, fit)
   
   CYCLE <- c()
   STATE <- c()
@@ -323,12 +319,13 @@ for (a in 5:5) {
   WINNERS <- c()
   MEDIAN <- c()
   NLZ <- c()
+  PARTY <- c()
   
   correct_predictions <- 0
   Nout_test <- 0
   Nout <- 0
   
-  COLNAMES = c('Posterior_Vote','Party','State','Type')
+  COLNAMES = c('Posterior_Vote','Party','State','Type','VOTE')
   posteriors = data.frame(matrix(ncol = length(COLNAMES), nrow = 0))
   colnames(posteriors) = COLNAMES
 
@@ -354,7 +351,16 @@ for (a in 5:5) {
       colnames(one_posterior) = COLNAMES
       
       one_posterior$Posterior_Vote = pred*100
-      one_posterior$State = state.abb[match(state,state.name)]
+      one_posterior$VOTE = vote[j]*100
+      if (state=='MinnesotaS'){
+        one_posterior$State='MNS'
+      }
+      else if(state=='MississippiS'){
+        one_posterior$State='MSS'
+      }
+      else{
+        one_posterior$State = state.abb[match(state,state.name)]
+      }
       if(party[j]==-1){
         one_posterior$Party = 'REP'
         RepWin = mean(one_posterior$Posterior_Vote>50)
@@ -363,6 +369,12 @@ for (a in 5:5) {
         one_posterior$Party = 'DEM'
         RepWin = mean(one_posterior$Posterior_Vote<50)
       }
+      
+      # if(state=="California" & j==2){
+      #   one_posterior$Party = 'REP'
+      #   RepWin = mean(one_posterior$Posterior_Vote>50)
+      # }
+      
       if(RepWin>0.95){
         one_posterior$Type = "Safe R"
       }
@@ -384,6 +396,7 @@ for (a in 5:5) {
       else {
         one_posterior$Type = "Safe D"
       }
+
       posteriors = rbind(posteriors, one_posterior)
       
       if (test_stan_y[test_idx2[i],j]>u | test_stan_y[test_idx2[i],j]<l){
@@ -402,6 +415,7 @@ for (a in 5:5) {
       MEDIAN <- c(MEDIAN, median(pred))
       LOWER95 <- c(LOWER95, l)
       UPPER95 <- c(UPPER95, u)
+      PARTY <- c(PARTY, party[j])
     }
     NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('test_ll2[',i,']',sep='')]]))))
     preds <- matrix(preds, nrow = 2, byrow = TRUE)
@@ -424,45 +438,6 @@ for (a in 5:5) {
       print(test_metadata[[test_idx2[i]]])
     }
   }
-  
-  
-  LEVELS = posteriors[posteriors$Party=='REP',] %>% 
-    group_by(State) %>% 
-    mutate(tmp = mean(Posterior_Vote)) %>% 
-    select(State, tmp) %>%
-    distinct(State, tmp) %>%
-    arrange(desc(tmp)) %>%
-    select(State)
-  
-  LEVELS = LEVELS$State
-  
-  posteriors$State <- factor(posteriors$State, levels = LEVELS)
-  
-  LIKENAMES = c('Safe R', 'Likely R','Lean R', 'Toss-up', 'Lean D','Likely D','Safe D')
-  posteriors$Type <- factor(posteriors$Type, levels = LIKENAMES)
-
-  if(PLOT){
-    ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
-      geom_density_ridges(alpha=0.6) +
-      scale_y_discrete(expand = c(0, 0), name = "") +
-      # facet_wrap(Type ~ ., scale ="free") +
-      scale_x_continuous(expand = c(0, 0), breaks = c(0,20,40,60,80,100),
-                         name = "Posterior Vote (%)") +
-      theme(panel.grid.minor = element_blank(),
-           panel.grid.major.x = element_line(color = "gray")) +
-      scale_fill_manual(values = c("blue","red"), labels = c("DEM","REP")) +
-      scale_color_manual(values = c(NA,NA), guide = "none") +
-      coord_cartesian(xlim = c(0, 100), clip='on') +
-      guides(fill = guide_legend(
-        override.aes = list(
-          fill = c("blue","red"),
-          color = NA, point_color = NA)
-      )
-      ) +
-      ggtitle("Posterior predictive density of vote share for major party candidates") +
-      theme(plot.title = element_text(hjust=0.5),
-            panel.background = element_rect(fill = 'white', colour = 'white'))
-  }
 
   if(length(test_idx3)){
     for(i in 1:length(test_idx3)) {
@@ -483,6 +458,59 @@ for (a in 5:5) {
         l=quantile(pred,probs=c(0.025),names = FALSE)
         m = mean(pred)
         s = sd(pred)
+        
+        # if (state=='Maine' & j==3){
+        #   next
+        # }
+        
+        if(party[j]!=0){
+          one_posterior = data.frame(matrix(ncol = length(COLNAMES), nrow = length(pred)))
+          colnames(one_posterior) = COLNAMES
+          
+          one_posterior$Posterior_Vote = pred*100
+          one_posterior$VOTE = vote[j]*100
+          if (state=='MinnesotaS'){
+            one_posterior$State='MNS'
+          }
+          else if(state=='MississippiS'){
+            one_posterior$State='MSS'
+          }
+          else{
+            one_posterior$State = state.abb[match(state,state.name)]
+          }
+          if(party[j]==-1){
+            one_posterior$Party = 'REP'
+            RepWin = mean(one_posterior$Posterior_Vote>50)
+          }
+          else{
+            one_posterior$Party = 'DEM'
+            RepWin = mean(one_posterior$Posterior_Vote<50)
+          }
+          if(RepWin>0.95){
+            one_posterior$Type = "Safe R"
+          }
+          else if (RepWin>0.7) {
+            one_posterior$Type = "Likely R"
+          }
+          else if (RepWin>0.55) {
+            one_posterior$Type = "Lean R"
+          }
+          else if (RepWin>0.45) {
+            one_posterior$Type = "Toss-up"
+          }
+          else if (RepWin>0.3) {
+            one_posterior$Type = "Lean D"
+          }
+          else if (RepWin>0.05) {
+            one_posterior$Type = "Likely D"
+          }
+          else {
+            one_posterior$Type = "Safe D"
+          }
+          posteriors = rbind(posteriors, one_posterior)
+        }
+        
+        
         if (test_stan_y[test_idx3[i],j]>u | test_stan_y[test_idx3[i],j]<l){
           Nout_test = Nout_test + 1
         }
@@ -498,6 +526,7 @@ for (a in 5:5) {
         MEDIAN <- c(MEDIAN, median(pred))
         LOWER95 <- c(LOWER95, l)
         UPPER95 <- c(UPPER95, u)
+        PARTY <- c(PARTY, party[j])
       }
       NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('test_ll3[',i,']',sep='')]]))))
       preds <- matrix(preds, nrow = 3, byrow = TRUE)
@@ -521,61 +550,210 @@ for (a in 5:5) {
     }
   }
 
-  if (length(test_idx4)){
-    for(i in 1:length(test_idx4)) {
-      cycle = test_metadata[[test_idx4[i]]][1]
-      state = test_metadata[[test_idx4[i]]][2]
-      pmu = data_test[data_test$state==state & data_test$cycle==cycle ,c("posteriormean")]
-      pstd = data_test[data_test$state==state & data_test$cycle==cycle ,c("posteriorstd")]
-      vote = test_stan_y[test_idx4[i],1:test_nc[test_idx4[i]]]
-      party = data_test[data_test$state==state & data_test$cycle==cycle,c("party")]
-      candidates = data_test[data_test$state==state & data_test$cycle==cycle,c("candidate")]
-      # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
-      preds= c()
-      for(j in 1:4){
-        tmp = paste('test_y4[',i,',',j,']',sep='')
-        pred = fit_params[[tmp]]
-        preds = c(preds, pred)
-        u=quantile(pred,probs=c(0.975),names = FALSE)
-        l=quantile(pred,probs=c(0.025),names = FALSE)
-        m = mean(pred)
-        s = sd(pred)
-        if (test_stan_y[test_idx4[i],j]>u | test_stan_y[test_idx4[i],j]<l){
-          Nout_test = Nout_test + 1
-        }
-        CYCLE <- c(CYCLE, cycle)
-        STATE <- c(STATE, state)
-        CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
-        POSTERIORMEAN <- c(POSTERIORMEAN,pmu[j])
-        POSTERIORSTD <- c(POSTERIORSTD,pstd[j])
-        PMEAN <- c(PMEAN, m)
-        PSTD <- c(PSTD, s)
-        VOTE <- c(VOTE, vote[j])
-        RMSE = c(RMSE, sqrt(mean((pred - rep(vote[j],length(pred)))^2)))
-        MEDIAN <- c(MEDIAN, median(pred))
-        LOWER95 <- c(LOWER95, l)
-        UPPER95 <- c(UPPER95, u)
-      }
-      NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('test_ll4[',i,']',sep='')]]))))
-      preds <- matrix(preds, nrow = 4, byrow = TRUE)
-      win_rates = rep(0, 4)
-      for(k in 1:ncol(preds)){
-        idx = which.max(preds[,k])
-        win_rates[idx] = win_rates[idx] + 1
-      }
-      win_rates = win_rates / sum(win_rates)
-      WIN <- c(WIN, win_rates)
-      winners = rep(0, 4)
-      winners[which.max(vote)] = 1
-      WINNERS  <- c(WINNERS, winners)
-      if (which.max(win_rates)==which.max(vote)){
-        correct_predictions = correct_predictions + 1
-      }
-      else{
-        print("Wrong prediction:")
-        print(test_metadata[[test_idx4[i]]])
-      }
+  # if (length(test_idx4)){
+  #   for(i in 1:length(test_idx4)) {
+  #     cycle = test_metadata[[test_idx4[i]]][1]
+  #     state = test_metadata[[test_idx4[i]]][2]
+  #     pmu = data_test[data_test$state==state & data_test$cycle==cycle ,c("posteriormean")]
+  #     pstd = data_test[data_test$state==state & data_test$cycle==cycle ,c("posteriorstd")]
+  #     vote = test_stan_y[test_idx4[i],1:test_nc[test_idx4[i]]]
+  #     party = data_test[data_test$state==state & data_test$cycle==cycle,c("party")]
+  #     candidates = data_test[data_test$state==state & data_test$cycle==cycle,c("candidate")]
+  #     # preds <- sample_posterior(stan_mu[i,], stan_sigma[i,], nc[i], gs=10, ds=1000, fit_params=fit_params)
+  #     preds= c()
+  #     for(j in 1:4){
+  #       tmp = paste('test_y4[',i,',',j,']',sep='')
+  #       pred = fit_params[[tmp]]
+  #       preds = c(preds, pred)
+  #       u=quantile(pred,probs=c(0.975),names = FALSE)
+  #       l=quantile(pred,probs=c(0.025),names = FALSE)
+  #       m = mean(pred)
+  #       s = sd(pred)
+  #       if (test_stan_y[test_idx4[i],j]>u | test_stan_y[test_idx4[i],j]<l){
+  #         Nout_test = Nout_test + 1
+  #       }
+  #       CYCLE <- c(CYCLE, cycle)
+  #       STATE <- c(STATE, state)
+  #       CANDIDATE <- c(CANDIDATE,as.character(candidates[j]))
+  #       POSTERIORMEAN <- c(POSTERIORMEAN,pmu[j])
+  #       POSTERIORSTD <- c(POSTERIORSTD,pstd[j])
+  #       PMEAN <- c(PMEAN, m)
+  #       PSTD <- c(PSTD, s)
+  #       VOTE <- c(VOTE, vote[j])
+  #       RMSE = c(RMSE, sqrt(mean((pred - rep(vote[j],length(pred)))^2)))
+  #       MEDIAN <- c(MEDIAN, median(pred))
+  #       LOWER95 <- c(LOWER95, l)
+  #       UPPER95 <- c(UPPER95, u)
+  #     }
+  #     NLZ <- c(NLZ, -log(mean(exp(fit_params[[paste('test_ll4[',i,']',sep='')]]))))
+  #     preds <- matrix(preds, nrow = 4, byrow = TRUE)
+  #     win_rates = rep(0, 4)
+  #     for(k in 1:ncol(preds)){
+  #       idx = which.max(preds[,k])
+  #       win_rates[idx] = win_rates[idx] + 1
+  #     }
+  #     win_rates = win_rates / sum(win_rates)
+  #     WIN <- c(WIN, win_rates)
+  #     winners = rep(0, 4)
+  #     winners[which.max(vote)] = 1
+  #     WINNERS  <- c(WINNERS, winners)
+  #     if (which.max(win_rates)==which.max(vote)){
+  #       correct_predictions = correct_predictions + 1
+  #     }
+  #     else{
+  #       print("Wrong prediction:")
+  #       print(test_metadata[[test_idx4[i]]])
+  #     }
+  #   }
+  # }
+  
+  LEVELS = posteriors[posteriors$Party=='DEM',] %>% 
+    dplyr::group_by(State) %>% 
+    dplyr::mutate(tmp = mean(Posterior_Vote)) %>% 
+    dplyr::select(State, tmp) %>%
+    dplyr::distinct(State, tmp) %>%
+    dplyr::arrange((tmp)) %>%
+    dplyr::select(State)
+  
+  LEVELS = LEVELS$State
+  
+  DEMVOTE2018 = c()
+  REPVOTE2018 = c()
+  DEMUPPER = c()
+  DEMLOWER = c()
+  DEMMEDIAN = c()
+  REPUPPER = c()
+  REPLOWER = c()
+  REPMEDIAN = c()
+  for (i in length(LEVELS):1){
+    DEMVOTE2018 = c(DEMVOTE2018,posteriors[(posteriors$State)==LEVELS[i] & posteriors$Party=='DEM','VOTE'][1])
+    REPVOTE2018 = c(REPVOTE2018,posteriors[(posteriors$State)==LEVELS[i] & posteriors$Party=='REP','VOTE'][1])
+    pred = posteriors[(posteriors$State)==LEVELS[i] & posteriors$Party=='DEM','Posterior_Vote']
+    u=quantile(pred,probs=c(0.975),names = FALSE)
+    m=quantile(pred,probs=c(0.5),names = FALSE)
+    l=quantile(pred,probs=c(0.025),names = FALSE)
+    DEMUPPER = c(DEMUPPER, u)
+    DEMLOWER = c(DEMLOWER, l)
+    DEMMEDIAN = c(DEMMEDIAN, m)
+    pred = posteriors[(posteriors$State)==LEVELS[i] & posteriors$Party=='REP','Posterior_Vote']
+    u=quantile(pred,probs=c(0.975),names = FALSE)
+    m=quantile(pred,probs=c(0.5),names = FALSE)
+    l=quantile(pred,probs=c(0.025),names = FALSE)
+    REPUPPER = c(REPUPPER, u)
+    REPLOWER = c(REPLOWER, l)
+    REPMEDIAN = c(REPMEDIAN, m)  
+  }
+  VOTE2018 = data.frame(c(rev(as.character(LEVELS)),rev(as.character(LEVELS))),
+                        c(DEMVOTE2018, REPVOTE2018),
+                        c(rep('DEM',length(DEMVOTE2018)),rep('REP',length(REPVOTE2018))),
+                        c(DEMUPPER, REPUPPER),
+                        c(DEMLOWER, REPLOWER),
+                        c(DEMMEDIAN, REPMEDIAN)
+                        )
+  colnames(VOTE2018) = c("state","vote","party", 'upper','lower','m')
+  if(PLOT){
+    ggplot(VOTE2018, aes(fill=party, x=state, y=vote)) + 
+      geom_bar(position="stack", stat="identity") +
+      scale_x_discrete(limits = rev(LEVELS)) + 
+      coord_flip() + 
+      scale_fill_manual("Party", values = c("REP" = "red", "DEM" = "blue")) +
+      ggtitle("Actual vote share for major party candidates") +
+      theme(plot.title = element_text(hjust=0.5),
+            panel.background = element_rect(fill = 'white', colour = 'white'))
+  }
+  
+  posteriors$State <- factor(posteriors$State, levels = LEVELS)
+  
+  LIKENAMES = c('Safe R', 'Likely R','Lean R', 'Toss-up', 'Lean D','Likely D','Safe D')
+  posteriors$Type <- factor(posteriors$Type, levels = LIKENAMES)
+  
+  LEVELS = posteriors[posteriors$Party=='DEM',] %>% 
+    dplyr::group_by(State) %>% 
+    dplyr::mutate(tmp = mean(Posterior_Vote)) %>% 
+    dplyr::select(State, tmp) %>%
+    dplyr::distinct(State, tmp) %>%
+    dplyr::arrange((tmp))
+  
+  STATE_COLORS = c()
+  incumbents = read.csv("data/incumbent2018.csv")
+  for (i in nrow(LEVELS):1) {
+    if(incumbents[as.character(incumbents$State)==LEVELS$State[i],'Incumbent']=='REP'){
+      STATE_COLORS = c(STATE_COLORS, 'red')
     }
+    else{
+      STATE_COLORS = c(STATE_COLORS, 'blue')
+    }
+  }
+  
+  if(PLOT){
+    p = ggplot(posteriors, aes(x = Posterior_Vote, y = reorder(State, desc(State)), color = Party, fill = Party)) +
+      geom_density_ridges(alpha=0.6) +
+      scale_y_discrete(expand = c(0, 0), name = "") +
+      scale_x_continuous(expand = c(0, 0), breaks = c(0,20,40,60,80,100),
+                         name = "Posterior Vote (%)") +
+      theme(panel.grid.major.x = element_line(color = "gray"),
+            # explicitly set the horizontal lines (or they will disappear too)
+            panel.grid.major.y = element_line(size=.2, color="grey" ) ,
+            axis.text.y = element_text(colour =STATE_COLORS)) +
+      # geom_hline(yintercept=0:length(STATE_COLORS), linetype="solid", color = "grey", size=0.2) + 
+      scale_fill_manual(values = c("blue","red"), labels = c("DEM","REP")) +
+      scale_color_manual(values = c(NA,NA), guide = "none") +
+      coord_cartesian(xlim = c(0, 100), clip='on') +
+      guides(fill = guide_legend(
+        override.aes = list(
+          fill = c("blue","red"),
+          color = NA, point_color = NA)
+      )
+      ) +
+      geom_hline(yintercept=sum(LEVELS$tmp>=50), linetype="dashed", color = "black") + 
+      ggtitle("Posterior predictive density of vote share for major party candidates") +
+      theme(plot.title = element_text(hjust=0.5),
+            panel.background = element_rect(fill = 'white', colour = 'white'))
+    
+  }
+  
+  LEVELS = posteriors[posteriors$Party=='DEM',] %>% 
+    dplyr::group_by(State) %>% 
+    dplyr::mutate(tmp = mean(Posterior_Vote)) %>% 
+    dplyr::select(State, tmp) %>%
+    dplyr::distinct(State, tmp) %>%
+    dplyr::arrange((tmp))
+  LEVELS = LEVELS$State
+  
+  STATE_COLORS = c()
+  for (s in rev(sort(as.character(LEVELS)))) {
+    if(s=="AZ" | s=="NV"){
+      STATE_COLORS = c(STATE_COLORS, 'red')
+    }
+    else{
+      STATE_COLORS = c(STATE_COLORS, 'black')
+    }
+  }
+  
+  LeonLine = data.frame(y1=VOTE2018[VOTE2018$state=="CA" & VOTE2018$party=='REP',"lower"],
+                        y2=VOTE2018[VOTE2018$state=="CA" & VOTE2018$party=='REP',"upper"],
+                        x1=length(STATE_COLORS)-1,
+                        x2=length(STATE_COLORS)-1,
+                        party="DEM")
+  if(PLOT){
+    ggplot(VOTE2018, aes(y = m, x = reorder(state, desc(state)), fill = party)) + 
+      geom_errorbar(size = 0.75, aes(ymin=lower, ymax=upper, color=party), width=0.1, position=position_dodge(width=0.5)) +
+      geom_segment(data = LeonLine, aes(x = x1, y = y1, xend = x2, yend = y2, colour = "blue"),position=position_dodge(width=0.5)) +
+      scale_color_manual(name="party", values = alpha(c("blue","blue","red"), 0.5),
+                         labels=c("DEM","DEM","REP"))+
+      geom_point(size=1, mapping = aes(x = state, y = m, fill=party, color=party),position=position_dodge(width=0.5)) + 
+      scale_x_discrete(expand = c(0, 0), name = "") +
+      scale_y_continuous(expand = c(0, 0),
+                         name = "Posterior Vote (%)") +
+      coord_flip() + 
+      theme(panel.grid.major.x = element_line(color = "gray"),
+            panel.grid.major.y = element_line(size=.2, color="grey" ) ,
+            axis.text.y = element_text(colour =STATE_COLORS)) +
+      geom_point(data = VOTE2018, mapping = aes(x = state, y = vote, fill=party, color=party),
+                 size=4,shape='x', position=position_dodge(width=0.5)) + 
+      ggtitle("Posterior credible intervals of vote share for major party candidates") +
+      theme(plot.title = element_text(hjust=0.5),
+            panel.background = element_rect(fill = 'white', colour = 'white'))
   }
   
   # write results to csv
@@ -589,11 +767,12 @@ for (a in 5:5) {
                        MEDIAN,
                        WIN,
                        VOTE,
-                       PMEAN)
+                       PMEAN,
+                       PARTY)
   
   names(result) <- tolower(names(result))
   
-  # write.csv(result,output_file)
+  write.csv(result,output_file)
   
   output_file = paste('results/stan_NLZ', TYPE, '_' , test_year, 'day', horizons[a], '_', best_cv_idx[a] ,'.csv',sep='')
   
@@ -601,7 +780,7 @@ for (a in 5:5) {
   
   names(result) <- tolower(names(result))
   
-  # write.csv(result,output_file)
+  write.csv(result,output_file)
   
   # print("Test")
   # 
@@ -633,47 +812,47 @@ for (a in 5:5) {
 # fit = fitobjs[[1]]
 # mcmc_trace(fit, par=c("alpha","beta","ppb","eb"))
 
-fit_objs = readRDS("models/GP_2018_fit_objs.rds")
-HORIZON = c()
-MEAN = c()
-SE_MEAN = c()
-SD = c()
-L = c()
-U = c()
-N_EFF = c()
-RHAT = c()
-PARMS = c("alpha","beta","ppb","eb","year_sig")
-for (a in 1:length(horizons)) {
-  fit = fit_objs[[a]]
-  tmp = summary(fit, par=PARMS)
-  tmp = tmp$summary
-  for (p in PARMS) {
-    HORIZON = c(HORIZON, a)
-    MEAN = c(MEAN, tmp[p, 'mean'])
-    SE_MEAN = c(SE_MEAN, tmp[p, 'se_mean'])
-    SD = c(SD, tmp[p, 'sd'])
-    L = c(L, tmp[p, '2.5%'])
-    U = c(U, tmp[p, '97.5%'])
-    N_EFF = c(N_EFF, tmp[p, 'n_eff'])
-    RHAT = c(RHAT,tmp[p, 'Rhat'])
-  }
-}
+# fit_objs = readRDS("models/GP_2018_fit_objs.rds")
+# HORIZON = c()
+# MEAN = c()
+# SE_MEAN = c()
+# SD = c()
+# L = c()
+# U = c()
+# N_EFF = c()
+# RHAT = c()
+# PARMS = c("alpha","beta","ppb","eb","year_sig")
+# for (a in 1:length(horizons)) {
+#   fit = fit_objs[[a]]
+#   tmp = summary(fit, par=PARMS)
+#   tmp = tmp$summary
+#   for (p in PARMS) {
+#     HORIZON = c(HORIZON, a)
+#     MEAN = c(MEAN, tmp[p, 'mean'])
+#     SE_MEAN = c(SE_MEAN, tmp[p, 'se_mean'])
+#     SD = c(SD, tmp[p, 'sd'])
+#     L = c(L, tmp[p, '2.5%'])
+#     U = c(U, tmp[p, '97.5%'])
+#     N_EFF = c(N_EFF, tmp[p, 'n_eff'])
+#     RHAT = c(RHAT,tmp[p, 'Rhat'])
+#   }
+# }
 
-MEAN = round(MEAN, 2)
-SE_MEAN = round(SE_MEAN, 3)
-SD = round(SD,2)
-L = round(L,2)
-U = round(U,2)
-N_EFF = round(N_EFF,1)
-RHAT = round(RHAT, 3)
-
-results <- data.frame(HORIZON,
-                      MEAN,
-                      SE_MEAN,
-                      SD,
-                      L,
-                      U,
-                      N_EFF,
-                      RHAT)
-
-write.csv(results,"results/stan.csv")
+# MEAN = round(MEAN, 2)
+# SE_MEAN = round(SE_MEAN, 3)
+# SD = round(SD,2)
+# L = round(L,2)
+# U = round(U,2)
+# N_EFF = round(N_EFF,1)
+# RHAT = round(RHAT, 3)
+# 
+# results <- data.frame(HORIZON,
+#                       MEAN,
+#                       SE_MEAN,
+#                       SD,
+#                       L,
+#                       U,
+#                       N_EFF,
+#                       RHAT)
+# 
+# write.csv(results,"results/stan.csv")

@@ -131,7 +131,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, hyp, tau, parms)
         mkdir('results');
     end
 
-%     writetable(forecast,strcat('results/LOO',parms.type, '_',int2str(test_year),'day',num2str(tau), '_', num2str(j),'.csv'));
+    writetable(forecast,strcat('results/LOO',parms.type, '_',int2str(test_year),'day',num2str(tau), '_', num2str(j),'.csv'));
 
     disp(tau);
     disp("Length Scale: " + exp(hyp.cov(1)));

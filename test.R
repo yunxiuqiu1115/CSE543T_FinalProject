@@ -241,7 +241,7 @@ generate_BRW_results <- function(test_years, horizons){
         winner = rep(0, n)
         winner[which(max(tmp$vote)==tmp$vote)] = 1
         winners = c(winners, winner)
-        if( which(max(win_rates)==win_rates)== which(max(tmp$vote)==tmp$vote)){
+        if( which(max(tmp$win)==tmp$win)==which(max(tmp$vote)==tmp$vote)){
           correct_prediction = correct_prediction + 1
         }
       }
@@ -288,16 +288,16 @@ test_years = c(1992,1994,1996,1998,2000,2002,2004,2006,2008,2010,2012,2014,2016)
 
 # generate_DR_results('LM',best_lm_idx, c(2018), horizons)
 
-# generate_DR_results('GP',best_gp_idx, c(2016), horizons)
+# generate_DR_results('GP',best_gp_idx, test_years , horizons)
 
 # generate_DR_results('LM',best_lm_idx, test_years, horizons)
 
 # generate_Prior_results('GP',best_gp_idx, c(2018), horizons)
-# 
+
 # generate_Prior_results('LM',best_lm_idx, c(2018), horizons)
-# 
+
 # generate_Prior_results('GP',best_gp_idx, test_years, horizons)
-# 
+ 
 # generate_Prior_results('LM',best_lm_idx, test_years, horizons)
 
 generate_BRW_results(test_years, horizons)

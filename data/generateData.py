@@ -76,8 +76,11 @@ data = data.drop(columns=["start_date", "end_date", "election_date", "pct", "nam
 data = data[data.daysLeft>=-365]
 data = data.reset_index(drop=True)
 
+
 # select 2018 data
 data2018 = data[data.cycle==2018]
+
+data2018.loc[data2018.Candidateidentifier=="2018MSHyde-Smith", "Candidateidentifier"] = "2018MSSmith"
 
 # Remove duplicate polls with different types
 # One polling id may have multiple question ids, corresponding to different types.
@@ -93,8 +96,10 @@ data2018 = data[data.cycle==2018]
 #   3. if one polling id has multiple questions not including likely voters, remove adult voters.
 #
 
+
 # obtain 2018 actual vote shares
 results =  pd.read_csv("./2018results.csv", index_col=None)
+
 
 # build vote share dict
 votes = {}
@@ -106,6 +111,8 @@ for i in range(results.shape[0]):
 c = list(votes.keys())
 data2018 = data2018[data2018.Candidateidentifier.isin(c)]
 data2018 = data2018.reset_index(drop=True)
+
+
 
 # keep if flags == 0
 flags = (data2018.cycle!=2018)
@@ -123,6 +130,8 @@ for pid in data2018.poll_id.unique():
         # else:
         #     flags[(data2018.poll_id==pid) & (data2018.population!='lv')] = 1
 
+# flags[data2018.Candidateidentifier.isin(['2018MSSmith', '2018MSEspy'])] = 0
+
 data2018 = data2018[flags==0]
 
 for pid in data2018.poll_id.unique():
@@ -133,12 +142,15 @@ for pid in data2018.poll_id.unique():
 
 # Select non-partisan polls and selection columns.
 # Partisan polls are sponsored by parties.
+
+
 data2018 = data2018[data2018.partisan.isnull()]
 data2018 = data2018[['cycle', 'state', 'pollster',
         'samplesize', 'candidate_name','Candidateidentifier', 'daysLeft',
        'numberSupport', 'Democrat', 'Republican']]
 data2018 = data2018.drop_duplicates()
 data2018 = data2018.reset_index(drop=True)
+
 
 # add vote share colum to 2018 data
 percentage = [0 for i in range(data2018.shape[0])]
@@ -191,6 +203,10 @@ data.drop(data[data.population.isnull()].index, inplace=True)
 # select 2020 subset
 data2020 = data[data.cycle==2020]
 
+# print(data2020[data2020.state=='Arkansas'][['partisan',
+#         'samplesize', 'candidate_name','daysLeft',
+#        'numberSupport']])
+
 # filter 2020 data with 2020 primary results
 primaries = pd.read_csv("./primary.csv", index_col=None)
 nominees = primaries.nominee.unique()
@@ -212,8 +228,19 @@ for pid in data2020.poll_id.unique():
 data2020 = data2020[flags==0]
 
 # Filter out party-sponsored polls
+data2020 = data2020[~data2020.partisan.isin(['REP','DEM'])]
+
+# Add Linn to Savage in Maine 2020
+
+for pid in data2020.poll_id.loc[data2020.candidate_name=="Max Linn"]:
+    data2020.loc[((data2020.candidate_name=="Lisa Savage") & (data2020.poll_id==pid)),"numberSupport"] = data2020.numberSupport.loc[((data2020.candidate_name=="Lisa Savage") & (data2020.poll_id==pid))].values[0] + data2020.numberSupport.loc[(data2020.candidate_name=="Max Linn") & (data2020.poll_id==pid)].values[0]
+
+data2020 = data2020[data2020.candidate_name!="Max Linn"]
+
+# drop third party
+data2020 = data2020[(data2020.Democrat==1) | (data2020.Republican==1)]
+
 # Select feature columns
-data2020 = data2020[data2020.partisan.isnull()]
 data2020 = data2020[['cycle', 'state', 'pollster',
         'samplesize', 'candidate_name','Candidateidentifier', 'daysLeft',
        'numberSupport', 'Democrat', 'Republican']]

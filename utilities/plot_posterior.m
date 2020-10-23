@@ -30,12 +30,36 @@ function fig = plot_posterior(fmu, fs2, x, y, xs, parms)
      b = parms.prior(1); s = parms.prior(2);
      y = linspace(b-2*s,b+2*s, 100);
      x = -normpdf(y, b,s);
-     fill(x,y, [31, 120, 180] / 255,...
+     fill(5*x,y, [31, 120, 180] / 255,...
      'facealpha', 0.7, ...
      'edgecolor', 'none');
      
     % scale range of polls to [0,1]
-    ylim([0,1]);
-    legend('95% CI pre-forecasting', '95% CI forecasting', 'mean p*','polling data','intercept prior' ,'Location', 'Best');
-    xlabel("Horizon"); ylabel("Voter Preference");
+    % ylim([0,1]);
+    BIN = parms.BIN;
+    Nx = (abs(min(xs))/BIN);
+    XTICK = -BIN*[Nx:-1:0];
+    XTICKLABELS = cell(numel(XTICK),1);
+    for i=1:numel(XTICK)
+        XTICKLABELS{i} = num2str(-XTICK(i));
+    end
+    
+    YT = yticks;
+    YTLABELS = cell(numel(YT),1);
+    for i=1:numel(YT)
+        YTLABELS{i} = num2str(100*YT(i))+"%";
+    end
+    
+    xlim([min(XTICK) ,0]);
+    
+    set(gca, 'box', 'off', ...
+     'tickdir', 'out', ...
+     'xtick', XTICK, ...
+     'xticklabels', XTICKLABELS, ...
+     'ytick', YT, ...
+     'yticklabels', YTLABELS);
+ 
+    
+ legend('95% CI pre-forecasting', '95% CI forecasting', 'posterior mean','polling data','intercept prior' ,'Location', 'Best');
+    xlabel("Days to election"); ylabel("Latent voter preference");
 end

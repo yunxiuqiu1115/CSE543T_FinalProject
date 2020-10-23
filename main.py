@@ -195,10 +195,114 @@ def plot_vote_percentage(gp_path, stan_path):
     plt.close()
 
 
+def utility(data, party):
+    to_abbr = us.states.mapping('name', 'abbr')
+    abbrs = []
+    for state in data.state.unique():
+        if state == "MinnesotaS":
+            abbrs.append('MNS')
+        elif state == "MississippiS":
+            abbrs.append('MSS')
+        else:
+            abbrs.append(to_abbr[state])
+
+    abbrs = np.sort(abbrs)
+
+    abbrs  = abbrs[::-1][:len(abbrs )]
+    
+    s2x = {state:i for i,state in enumerate(abbrs)}
+
+    data = data[data.party==party]
+    y = data.m*100
+    l = data.lower95*100
+    u = data.upper95*100
+    v = data.vote*100
+    
+    x = []
+    for state in data.state:
+        if state == "MinnesotaS":
+            x.append(s2x['MNS'])
+        elif state == "MississippiS":
+            x.append(s2x['MSS'])
+        else:
+            x.append(s2x[to_abbr[state]])
+
+    s = []
+    for state in data.state:
+        if state == "MinnesotaS":
+            s.append('MNS')
+        elif state == "MississippiS":
+            s.append('MSS')
+        else:
+            s.append(to_abbr[state])
+
+
+    idx = np.argsort(s)[::-1][:len(s)]
+    s = np.array(s)[idx]
+    x = np.array(x)[idx]
+    y = np.array(y)[idx]
+    l = np.array(l)[idx]
+    u = np.array(u)[idx]
+    v = np.array(v)[idx]
+
+    lower_error = y - l
+    upper_error = u - y
+    asymmetric_error = [lower_error, upper_error]
+
+    return x, y, asymmetric_error, v, s
+
+
+def plot_2018():
+    stan_path = "results/stan_LOOGP_2018day7_59.csv"
+    data = pd.read_csv(stan_path)
+    data = data.rename(columns={"median":"m"})
+    x1, y1, asymmetric_error1, v1, s1 = utility(data, party=1)
+    x2, y2, asymmetric_error2, v2, s2 = utility(data, party=-1)
+   
+    fig= plt.figure(figsize=(11,11))
+    shift1 = np.array([0.1 for _ in range(len(x1))])
+    shift1[-3] = -0.1
+    p1 = plt.errorbar(y1, x1-shift1, xerr=asymmetric_error1, fmt='.', elinewidth=2,  label="DEM", color="blue", alpha=0.5)
+    p2 = plt.errorbar(y2, x2+0.1, xerr=asymmetric_error2, fmt='.', elinewidth=2, label="REP", color="red", alpha=0.5)
+    p3 = plt.scatter(v1, x1-shift1, marker='*',label="DEM VOTE", color="blue")
+    p4 = plt.scatter(v2, x2+0.1, marker='*',label="REP VOTE", color="red")
+
+    plt.axvline(x=50, color='grey', linestyle='--')
+    plt.axvline(x=25, color='grey', linestyle='--')
+    plt.axvline(x=75, color='grey', linestyle='--')
+
+    s1 = np.unique(s1)
+    s1 = np.sort(s1)
+    s1 = s1[::-1][:len(s1)]
+
+    for i in range(len(s1)):
+        plt.axhline(y=i, color='grey', linestyle='-', alpha=0.1)
+
+    plt.yticks(range(len(s1)), s1)
+    plt.xticks([0,25,50,75,100])
+
+
+    STATE_COLORS = []
+    for s in s1:
+        if s in ['AZ', 'NV']:
+            STATE_COLORS.append('red')
+        else:
+            STATE_COLORS.append('black')
+
+    for ticklabel, tickcolor in zip(plt.gca().get_yticklabels(), STATE_COLORS):
+        ticklabel.set_color(tickcolor)
+
+    plt.xlabel('Posterior Vote (%)')
+    plt.title('Posterior credible intervals of vote share for major party candidates')
+    plt.legend((p1, p2, p3, p4), ('DEM 95% CI', 'REP 95% CI',"DEM VOTE","REP VOTE"), loc='best')
+    plt.savefig('plots/2018day7.pdf', dpi=300)
+    plt.show()
+
 def main():
-    gp_path = "results/LOOGP_2020day42_12.csv"
-    stan_path = "results/stan_LOOGP_2020day42_12.csv"
-    plot_win(gp_path, stan_path)
+    gp_path = "results/LOOGP_2018day7_59.csv"
+    stan_path = "results/stan_LOOGP_2018day7_59.csv"
+    # plot_win(gp_path, stan_path)
+    plot_2018()
     # plot_win(gp_path, stan_path)
 
 if __name__ == "__main__":

@@ -36,7 +36,7 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
     s2s = zeros(n,1);
     
     % iterate every race
-    for i = n:-1:1
+    for i = n:-1:800
         % obtain metadata
         year = raceinfos{i}{1};
         state = raceinfos{i}{2}{1};
@@ -83,14 +83,16 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
                 % define 200 test location from the earliest poll day to
                 % election day
                 nz = 200;
-                xstar = [linspace(xs{i}(1,1),0,nz).',zeros(1,nz)',ones(1,nz)'];
+                
+                XMIN = floor(xs{i}(1,1)/parms.BIN)*parms.BIN;
+                xstar = [linspace(XMIN,0,nz).',zeros(1,nz)',ones(1,nz)'];
                 [~, ~, fmu, fs2] = gp(hyp, inffunc, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
                 fts(i) = fmu(end);
                 s2s(i) = s2s(end);
                 parms.prior = [mu_b, sigma_mc];
                 fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), parms);
                 plot_title = year + " " + state + " " + candidateName;
-                title(plot_title);
+%                 title(plot_title);
                 
                 % save plot to files
                 yearFolder = fullfile(plot_path, num2str(year));
@@ -104,8 +106,10 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
                 if ~exist(stateFolder, 'dir')
                     mkdir(stateFolder);
                 end
-                filename = fullfile(stateFolder, plot_title + num2str(parms.j)+ ".jpg");
-                saveas(fig, filename);
+                filename = fullfile(stateFolder, plot_title + num2str(parms.j)+".pdf");
+                set(fig, 'PaperPosition', [0 0 5 5]); %Position plot at left hand corner with width 5 and height 5.
+                set(fig, 'PaperSize', [5 5]); %Set the paper to have width 5 and height 5.
+                print(fig, filename, '-dpdf','-r300');
                 close;
             end   
              
