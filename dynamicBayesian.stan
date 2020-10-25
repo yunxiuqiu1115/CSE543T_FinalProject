@@ -6,12 +6,12 @@ data {
   real h;
   real v;
   int J;
-  
+  real sigma_J;
 }
 
 parameters {
   real betas[J];
-  real<lower=0> sigma_J;
+//  real<lower=0> sigma_J;
   real<lower=0> sigma_beta;
   
 }
@@ -28,7 +28,7 @@ transformed parameters{
 
 model {
   sigma_beta ~ normal(0,10);
-  sigma_J ~ normal(0,10);
+//  sigma_J ~ normal(0,10);
   betas[1] ~ normal(logit(h), sigma_J);
   for(i in 2:J){
     betas[i] ~ normal(betas[i-1], sigma_beta);
@@ -42,6 +42,5 @@ generated quantities{
   real ll;
   y = inv_logit(betas[1]);
   ll = lognormal_lpdf(v|betas[1], sigma_beta);
-  
 }
 

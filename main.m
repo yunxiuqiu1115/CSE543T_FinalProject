@@ -39,7 +39,7 @@ function [varout]=main(TYPE, mode, tau, plot)
         ts = readData("results/"+TYPE+"_opthyp.csv");
         ts = ts.opt_idx;
 
-        for i=6:6
+        for i=7:7
             j = ts(i);
             if strcmp(TYPE, "GP")==1
                 ls = p(j,1)*(56-7)+7; % 7-56
