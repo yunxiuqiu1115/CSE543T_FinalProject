@@ -5,7 +5,7 @@ args = commandArgs(trailingOnly=TRUE)
 
 # test if there is argument: if not, use default 2018
 if (length(args)==0) {
-  input_str = '56'
+  input_str = '0'
   test_year = 2016
 }
 if (length(args)==1){
@@ -101,104 +101,119 @@ WIN <- c()
 WINNERS <- c()
 MEDIAN <- c()
 NLZ <- c()
+PRECISION <- c()
 
 # slicing parameter
 W = 4
-sigma_J = 0.1
+precision = 1/0.1^2
 
 # iterate over candidate
 # unique(df$state)
-for(state in df$state[1]){
+states = unique(df$state)
+I = 0
+NS <- c()
+YS <- c()
+STATES <- c()
+DAYS <- c()
+K = 0
+for(state in states){
   cs = unique(df[df$state==state,'Candidateidentifier'])
-  votes = c()
-  preds = c()
+  I = I + 1
   for (c in cs) {
     data = df[as.character(df$Candidateidentifier)==c,]
     cycle = data$cycle[1]
     state = as.character(data$state[1])
     vote = data$vote[1]
-    votes = c(votes, vote)
     republican = data$Republican[1]
     democratic = data$Democrat[1]
+    if(democratic==0){
+      next
+    }
+    if(c=="2016CASanchez"){
+      next
+    }
+    
     pvi = data$pvi[1]
     experienced = data$experienced[1]
     h = predict(priorModel, data[1,])[[1]]
-    PRIOR = c(PRIOR, h)
-    
+
     data = data[data$daysLeft<=-as.numeric(input_str),]
     n_poll = nrow(data)
+    
     if(n_poll>0 & max(data$daysLeft)<0){
       ns = as.array(data$samplesize)
-      ys = as.array(data$polls)
+      ys = as.array(data$numberSupport)
       days = as.array(ceiling(-data$daysLeft/W))
+      k = length(ns)
+      NS <- c(NS, ns)
+      YS <- c(YS, ys)
+      DAYS <- c(DAYS, days)
+      K = K + k
+      STATES <- c(STATES, rep(I, k))
       J = max(days)
-      stan_data <- list(N=n_poll,
-                        days=days,
-                        ns=ns,
-                        ys=ys,
-                        h=h,
-                        v=vote,
-                        J=J,
-                        sigma_J=sigma_J)
-      
-      # define stan model
-      model <- stan_model("dynamicBayesian.stan")
-      
-      # train stan model
-      fit <- stan(file = "dynamicBayesian.stan",
-                  data = stan_data, 
-                  warmup = 2000, 
-                  iter = 10000, 
-                  chains = 1, 
-                  cores = 1, 
-                  thin = 4,
-                  control=list(adapt_delta=.99, max_treedepth = 20),
-                  seed = 1,
-                  refresh=0
-      )
-      
-      fit_params <- as.data.frame(fit)
-      pred = fit_params$y
+      PRIOR = c(PRIOR, h)
+      PRECISION = c(PRECISION, precision)
+      VOTE <- c(VOTE, vote)
     }
-    else{
-      pred = rnorm(10000, mean = h, sd = 0.1)
-    }
-    preds = c(preds, pred)
-    u = quantile(pred,probs=c(0.975),names = FALSE)
-    l = quantile(pred,probs=c(0.025),names = FALSE)
-    m = mean(pred)
-    s = sd(pred)
-    CYCLE <- c(CYCLE, cycle)
-    STATE <- c(STATE, state)
-    CANDIDATE <- c(CANDIDATE,substring(c, 7))
-    PMEAN <- c(PMEAN, m)
-    RMSE = c(RMSE, sqrt(mean((pred - rep(vote,length(pred)))^2)))
-    VOTE <- c(VOTE, vote)
-    MEDIAN <- c(MEDIAN, median(pred))
-    LOWER95 <- c(LOWER95, l)
-    UPPER95 <- c(UPPER95, u)
-    if(n_poll){
-      NLZ <- c(NLZ,  -log(mean(exp(fit_params$ll))))
-    }
-    else{
-      NLZ <- c(NLZ,  -dnorm(vote,h,0.1, log=TRUE))
-    }
-    
+   
+    # else{
+    #   pred = rnorm(10000, mean = h, sd = 0.1)
+    # }
+    # preds = c(preds, pred)
+    # u = quantile(pred,probs=c(0.975),names = FALSE)
+    # l = quantile(pred,probs=c(0.025),names = FALSE)
+    # m = mean(pred)
+    # s = sd(pred)
+    # CYCLE <- c(CYCLE, cycle)
+    # STATE <- c(STATE, state)
+    # CANDIDATE <- c(CANDIDATE,substring(c, 7))
+    # PMEAN <- c(PMEAN, m)
+    # RMSE = c(RMSE, sqrt(mean((pred - rep(vote,length(pred)))^2)))
+    # MEDIAN <- c(MEDIAN, median(pred))
+    # LOWER95 <- c(LOWER95, l)
+    # UPPER95 <- c(UPPER95, u)
+    # if(n_poll){
+    #   NLZ <- c(NLZ,  -log(mean(exp(fit_params$ll))))
+    # }
+    # else{
+    #   NLZ <- c(NLZ,  -dnorm(vote,h,0.1, log=TRUE))
+    # }
+    # 
   }
-  
-  preds <- matrix(preds, nrow = length(cs), byrow = TRUE)
-  win_rates = rep(0, length(cs))
-  for(k in 1:ncol(preds)){
-    idx = which.max(preds[,k])
-    win_rates[idx] = win_rates[idx] + 1
-  }
-  win_rates = win_rates / sum(win_rates)
-  
-  WIN <- c(WIN, win_rates)
-  winners = rep(0, length(cs))
-  winners[which.max(votes)] = 1
-  WINNERS  <- c(WINNERS, winners)
 }
+
+J = max(DAYS)
+DAYS = J + 1 - DAYS
+
+stan_data <- list(I=I,
+                  J=J,
+                  K=K,
+                  n=NS,
+                  y=YS,
+                  state=STATES,
+                  day=DAYS,
+                  h=PRIOR,
+                  tau=PRECISION,
+                  v=VOTE)
+
+# define stan model
+# model <- stan_model("dynamicBayesian.stan")
+
+# train stan model
+fit <- stan(file = "dynamicBayesian.stan",
+            data = stan_data, 
+            warmup = 2000, 
+            iter = 10000, 
+            chains = 1, 
+            cores = 1, 
+            thin = 4,
+            control=list(adapt_delta=.99, max_treedepth = 20),
+            seed = 1,
+            refresh=0
+)
+
+fit_params <- as.data.frame(fit)
+
 
 # write results to csv
 result <- data.frame(CYCLE,
@@ -234,5 +249,24 @@ names(result) <- tolower(names(result))
 # lines(sort(-W*days), tmp, type="l", ylim=c(0.2,0.8))
 # lines(sort(-W*days), upper,type="l")
 # lines(sort(-W*days), lower,type="l")
+
+for (i in 1:I){
+  tmp = c()
+  upper = c()
+  lower = c()
+  for (j in 1:J){
+    pred = fit_params[[paste("beta[",as.character(i) ,",", as.character(j) , "]", sep="")]]
+    tmp = c(tmp, quantile(pred, 0.5, na.rm = TRUE))
+    upper = c(upper, quantile(pred, 0.975, na.rm = TRUE))
+    lower = c(lower, quantile(pred, 0.025, na.rm = TRUE))
+  }
+  jpeg(paste("plots/brw/",as.character(i), ".jpg", sep=""), width = 1000, height = 1000)
+  plot(-(J:1),1/(1+exp(-tmp)), type="l",ylim=c(0,1))
+  lines(-(J:1),1/(1+exp(-upper)),type="l")
+  lines(-(J:1),1/(1+exp(-lower)),type="l")
+  points(-(J+1-DAYS[STATES==i]), rev(YS[STATES==i]/NS[STATES==i]))
+  points(0, VOTE[i], col="blue",pch=20, cex=2)
+  dev.off()
+}
 
 
