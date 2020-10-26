@@ -142,7 +142,6 @@ for(state in states){
       VS<- c(VS, vote)
       DAYS <- c(DAYS, days)
       K = K + k
-      STATES <- c(STATES, rep(I, k))
       J = max(days)
     }
   }
@@ -168,8 +167,8 @@ stan_data <- list(I=I,
 # train stan model
 fit <- stan(file = "dynamicBayesian.stan",
             data = stan_data, 
-            warmup = 20, 
-            iter = 100, 
+            warmup = 500, 
+            iter = 5000, 
             chains = 1, 
             cores = 1, 
             thin = 4,
