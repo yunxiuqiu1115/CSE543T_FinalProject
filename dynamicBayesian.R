@@ -180,6 +180,8 @@ fit <- stan(file = "dynamicBayesian.stan",
 
 fit_params <- as.data.frame(fit)
 
+saveRDS(fit, file = paste("models/brw_", test_year, "day_", input_str , "_fit.rds",sep=''))
+
 CYCLE <- c()
 STATE <- c()
 CANDIDATE <- c()
