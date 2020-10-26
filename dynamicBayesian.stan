@@ -1,18 +1,18 @@
 data{
-	int<lower=0> I;  // number of states
+	int<lower=0> I;  // number of candidate
 	int<lower=0> J;  // number of days
 	int<lower=0> K;  // number of polls
 	int<lower=1> n[K]; // # of two-party voters in poll k
 	int<lower=0> y[K]; // Democratic voters in poll k
-	int<lower=1,upper=I> state[K]; // state of poll k
+	int<lower=1,upper=I> candidate[K]; // candidate of poll k
 	int<lower=1,upper=J> day[K]; // day of poll k
-	vector[I] h; // prior for each state
-	vector[I] tau; // prior precision for each state
-	vector[I] v; // vote share for each state
+	vector[I] h; // prior for each candidate
+	vector[I] tau; // prior precision for each candidate
+	vector[I] v; // vote share for each candidate
 }
 
 transformed data{
-	vector[I] s; // prior standard deviation for each state
+	vector[I] s; // prior standard deviation for each candidate
 	for (i in 1:I){
 	   s[i] = 1/sqrt(tau[i]);
 	}
@@ -26,7 +26,7 @@ parameters{
 model{	
 	sigma_beta ~ normal(0, 1);
 	for (k in 1:K)
-		y[k] ~ binomial_logit(n[k], beta[state[k], day[k]]);
+		y[k] ~ binomial_logit(n[k], beta[candidate[k], day[k]]);
 		
 	for (i in 1:I){
 		beta[i,J] ~ normal(logit(h[i]), s[i]);
@@ -37,12 +37,14 @@ model{
 	
 }
 
-generated quantities{
-  vector[I] ll;
-  for (i in 1:I){
-    ll[i] = lognormal_lpdf(v[i]| beta[i,J], sigma_beta);
-	}
-
-}
-
+// generated quantities{
+//   // vector[I] f;
+//   vector[I] ll;
+//   for (i in 1:I){
+//     // f[i] = inv_logit(beta[i,J]);
+//     ll[i] = lognormal_lpdf(v[i]| beta[i,J], sigma_beta);
+// 	}
+// 
+// }
+// 
 

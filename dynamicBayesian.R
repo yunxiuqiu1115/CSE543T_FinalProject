@@ -53,6 +53,10 @@ for (i in 1:nrow(polls)) {
   if(daysLeft==1){
     mask = df$cycle==cycle & df$state==state & df$samplesize==samplesize & df$daysLeft==daysLeft
   }
+  if(sum(mask)==1){
+    df = df[!mask,]
+    next
+  }
   if(length(unique(df[mask,c("Candidateidentifier")]))!=length(df[mask,c("samplesize")])){
     print(df[mask,])
   }
@@ -88,50 +92,33 @@ priorModel = computeh(df, test_year)
 
 df <- df[df$cycle==test_year, ]
 
-CYCLE <- c()
-STATE <- c()
-CANDIDATE <- c()
-PMEAN <- c()
-PRIOR <- c()
-VOTE <- c()
-RMSE <- c()
-LOWER95 <- c()
-UPPER95 <- c()
-WIN <- c()
-WINNERS <- c()
-MEDIAN <- c()
-NLZ <- c()
-PRECISION <- c()
-
 # slicing parameter
 W = 4
 precision = 1/0.1^2
 
 # iterate over candidate
-# unique(df$state)
 states = unique(df$state)
 I = 0
 NS <- c()
 YS <- c()
-STATES <- c()
+CANDIDATES <- c()
 DAYS <- c()
+HS <- c()
+TAUS <- c()
+VS<- c()
 K = 0
 for(state in states){
-  cs = unique(df[df$state==state,'Candidateidentifier'])
-  I = I + 1
-  for (c in cs) {
+  tmp = unique(df[df$state==state, c('Candidateidentifier','Democrat','Republican')])
+  cs = tmp$Candidateidentifier
+  rs = tmp$Republican
+  ds = tmp$Democrat
+  
+  for (c in cs[1:(length(cs)-1)]) {
+    # only iterate first C-1 candidates 
     data = df[as.character(df$Candidateidentifier)==c,]
-    cycle = data$cycle[1]
-    state = as.character(data$state[1])
     vote = data$vote[1]
     republican = data$Republican[1]
     democratic = data$Democrat[1]
-    if(democratic==0){
-      next
-    }
-    if(c=="2016CASanchez"){
-      next
-    }
     
     pvi = data$pvi[1]
     experienced = data$experienced[1]
@@ -141,44 +128,23 @@ for(state in states){
     n_poll = nrow(data)
     
     if(n_poll>0 & max(data$daysLeft)<0){
+      # when there is available polls
+      I = I + 1
       ns = as.array(data$samplesize)
       ys = as.array(data$numberSupport)
       days = as.array(ceiling(-data$daysLeft/W))
       k = length(ns)
       NS <- c(NS, ns)
       YS <- c(YS, ys)
+      CANDIDATES <- c(CANDIDATES, rep(I, k))
+      HS <- c(HS, h)
+      TAUS <- c(TAUS, precision)
+      VS<- c(VS, vote)
       DAYS <- c(DAYS, days)
       K = K + k
       STATES <- c(STATES, rep(I, k))
       J = max(days)
-      PRIOR = c(PRIOR, h)
-      PRECISION = c(PRECISION, precision)
-      VOTE <- c(VOTE, vote)
     }
-   
-    # else{
-    #   pred = rnorm(10000, mean = h, sd = 0.1)
-    # }
-    # preds = c(preds, pred)
-    # u = quantile(pred,probs=c(0.975),names = FALSE)
-    # l = quantile(pred,probs=c(0.025),names = FALSE)
-    # m = mean(pred)
-    # s = sd(pred)
-    # CYCLE <- c(CYCLE, cycle)
-    # STATE <- c(STATE, state)
-    # CANDIDATE <- c(CANDIDATE,substring(c, 7))
-    # PMEAN <- c(PMEAN, m)
-    # RMSE = c(RMSE, sqrt(mean((pred - rep(vote,length(pred)))^2)))
-    # MEDIAN <- c(MEDIAN, median(pred))
-    # LOWER95 <- c(LOWER95, l)
-    # UPPER95 <- c(UPPER95, u)
-    # if(n_poll){
-    #   NLZ <- c(NLZ,  -log(mean(exp(fit_params$ll))))
-    # }
-    # else{
-    #   NLZ <- c(NLZ,  -dnorm(vote,h,0.1, log=TRUE))
-    # }
-    # 
   }
 }
 
@@ -190,11 +156,11 @@ stan_data <- list(I=I,
                   K=K,
                   n=NS,
                   y=YS,
-                  state=STATES,
+                  candidate=CANDIDATES,
                   day=DAYS,
-                  h=PRIOR,
-                  tau=PRECISION,
-                  v=VOTE)
+                  h=HS,
+                  tau=TAUS,
+                  v=VS)
 
 # define stan model
 # model <- stan_model("dynamicBayesian.stan")
@@ -202,8 +168,8 @@ stan_data <- list(I=I,
 # train stan model
 fit <- stan(file = "dynamicBayesian.stan",
             data = stan_data, 
-            warmup = 2000, 
-            iter = 10000, 
+            warmup = 20, 
+            iter = 100, 
             chains = 1, 
             cores = 1, 
             thin = 4,
@@ -213,6 +179,136 @@ fit <- stan(file = "dynamicBayesian.stan",
 )
 
 fit_params <- as.data.frame(fit)
+
+CYCLE <- c()
+STATE <- c()
+CANDIDATE <- c()
+
+PRIOR <- c()
+VOTE <- c()
+RMSE <- c()
+
+WIN <- c()
+WINNERS <- c()
+MEDIAN <- c()
+NLZ <- c()
+
+PMEAN <- c()
+LOWER95 <- c()
+UPPER95 <- c()
+
+i = 0
+
+for(state in states){
+  tmp = unique(df[df$state==state, c('Candidateidentifier','vote')])
+  cs = tmp$Candidateidentifier
+  preds = 0
+  PREDS = c()
+  
+  for (c_idx in 1:length(cs)) {
+    c = as.character(cs[c_idx])
+    data = df[as.character(df$Candidateidentifier)==c,]
+    vote = data$vote[1]
+    republican = data$Republican[1]
+    democratic = data$Democrat[1]
+    
+    pvi = data$pvi[1]
+    experienced = data$experienced[1]
+    h = predict(priorModel, data[1,])[[1]]
+    
+    CYCLE <- c(CYCLE, test_year)
+    STATE <- c(STATE, state)
+    CANDIDATE <- c(CANDIDATE, substr(c,7,100))
+    PRIOR <- c(PRIOR, h)
+    VOTE <- c(VOTE, vote)
+    
+    COMPUTE_LL = TRUE
+    if(c_idx==length(cs)){
+      # for the final candidate
+      # apply the sum to 1 contraints
+      pred = 1 - preds
+      PREDS = c(PREDS, pred)
+    }
+    else{
+      data = data[data$daysLeft<=-as.numeric(input_str),]
+      n_poll = nrow(data)
+
+      if(n_poll>0 & max(data$daysLeft)<0){
+        # when there is available poll
+        # use stan posteriors
+        i = i + 1
+        pred = fit_params[[paste("beta[",as.character(i) ,",", J, "]", sep="")]]
+        pred = 1/(1+exp(-pred))
+      }
+      else{
+        # otherwise use prior
+        pred = rnorm(10000, mean = h, sd = 1/sqrt(precision))
+        COMPUTE_LL = FALSE
+      }
+      preds = preds + pred
+      PREDS = c(PREDS, pred)
+    }
+    
+    m = as.numeric(quantile(pred, 0.5, na.rm = TRUE))
+    u = as.numeric(quantile(pred, 0.975, na.rm = TRUE))
+    l = as.numeric(quantile(pred, 0.025, na.rm = TRUE))
+    PMEAN = c(PMEAN, mean(pred))
+    LOWER95 = c(LOWER95, l)
+    UPPER95 = c(UPPER95, u)
+    MEDIAN <- c(MEDIAN, m)
+    RMSE <- c(RMSE, sqrt(mean((pred - rep(vote,length(pred)))^2)))
+    
+    if(COMPUTE_LL){
+      ll = c()
+      for(t in 1:length(pred)){
+        # logit normal pdf
+        ll = c(ll, log(dnorm(log(vote/(1-vote)), pred[t] ,fit_params$sigma_beta[t])/vote/(1-vote)))
+      }
+      NLZ <- c(NLZ, -log(mean(exp(ll))))
+    }
+    else{
+      NLZ <- c(NLZ,  -dnorm(vote,h, 1/sqrt(precision), log=TRUE))
+    }
+  }
+  
+  PREDS  <- matrix(PREDS , nrow = length(cs), byrow = TRUE)
+  win_rates = rep(0, length(cs))
+  for(k in 1:ncol(PREDS)){
+    idx = which.max(PREDS [,k])
+    win_rates[idx] = win_rates[idx] + 1
+  }
+  win_rates = win_rates / sum(win_rates)
+  WIN <- c(WIN, win_rates)
+  winners = rep(0, length(cs))
+  winners[which.max(tmp$vote)] = 1
+  WINNERS  <- c(WINNERS, winners)
+}
+
+
+# for (i in 1:I){
+#   ms = c()
+#   upper = c()
+#   lower = c()
+#   for (j in 1:J){
+#     pred = fit_params[[paste("beta[",as.character(i) ,",", as.character(j) , "]", sep="")]]
+#     m = as.numeric(quantile(pred, 0.5, na.rm = TRUE))
+#     ms = c(ms, m)
+#     u = as.numeric(quantile(pred, 0.975, na.rm = TRUE))
+#     upper = c(upper, u)
+#     l = as.numeric(quantile(pred, 0.025, na.rm = TRUE))
+#     lower = c(lower, l)
+#   }
+#   PMEAN = c(PMEAN, 1/(1+exp(-m)))
+#   LOWER95 = c(LOWER95, 1/(1+exp(-l)))
+#   UPPER95 = c(UPPER95, 1/(1+exp(-u)))
+#   jpeg(paste("plots/brw/",as.character(i), ".jpg", sep=""), width = 1000, height = 1000)
+#   plot(-(J:1),1/(1+exp(-ms)), type="l",ylim=c(0,1))
+#   lines(-(J:1),1/(1+exp(-upper)),type="l")
+#   lines(-(J:1),1/(1+exp(-lower)),type="l")
+#   points(-(J+1-DAYS[STATES==i]), (YS[STATES==i]/NS[STATES==i]))
+#   points(0, VOTE[i], col="blue",pch=20, cex=2)
+#   dev.off()
+# }
 
 
 # write results to csv
@@ -232,41 +328,4 @@ result <- data.frame(CYCLE,
 
 names(result) <- tolower(names(result))
 
-# write.csv(result,output_file)
-
-
-# tmp = c()
-# upper = c()
-# lower = c()
-# for (i in n_poll:1){
-#   pred = fit_params[[paste("ps[", as.character(i) , "]", sep="")]]
-#   tmp = c(tmp, quantile(pred, 0.5, na.rm = TRUE))
-#   upper = c(upper, quantile(pred, 0.975, na.rm = TRUE))
-#   lower = c(lower, quantile(pred, 0.025, na.rm = TRUE))
-# }
-# 
-# plot(sort(-W*days), ys, pch=19)
-# lines(sort(-W*days), tmp, type="l", ylim=c(0.2,0.8))
-# lines(sort(-W*days), upper,type="l")
-# lines(sort(-W*days), lower,type="l")
-
-for (i in 1:I){
-  tmp = c()
-  upper = c()
-  lower = c()
-  for (j in 1:J){
-    pred = fit_params[[paste("beta[",as.character(i) ,",", as.character(j) , "]", sep="")]]
-    tmp = c(tmp, quantile(pred, 0.5, na.rm = TRUE))
-    upper = c(upper, quantile(pred, 0.975, na.rm = TRUE))
-    lower = c(lower, quantile(pred, 0.025, na.rm = TRUE))
-  }
-  jpeg(paste("plots/brw/",as.character(i), ".jpg", sep=""), width = 1000, height = 1000)
-  plot(-(J:1),1/(1+exp(-tmp)), type="l",ylim=c(0,1))
-  lines(-(J:1),1/(1+exp(-upper)),type="l")
-  lines(-(J:1),1/(1+exp(-lower)),type="l")
-  points(-(J+1-DAYS[STATES==i]), rev(YS[STATES==i]/NS[STATES==i]))
-  points(0, VOTE[i], col="blue",pch=20, cex=2)
-  dev.off()
-}
-
-
+write.csv(result,output_file)
