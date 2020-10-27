@@ -6,7 +6,7 @@ args = commandArgs(trailingOnly=TRUE)
 # test if there is argument: if not, use default 2018
 if (length(args)==0) {
   input_str = '0'
-  test_year = 2016
+  test_year = 2010
 }
 if (length(args)==1){
   # define the test year
@@ -125,10 +125,7 @@ for (input_str in horizons) {
   VS<- c()
   K = 0
   for(state in states){
-    tmp = unique(df[df$state==state, c('Candidateidentifier','Democrat','Republican')])
-    cs = tmp$Candidateidentifier
-    rs = tmp$Republican
-    ds = tmp$Democrat
+    cs = unique(df[df$state==state, c('Candidateidentifier')])
     
     for (c in cs[1:(length(cs)-1)]) {
       # only iterate first C-1 candidates 
@@ -217,10 +214,11 @@ for (input_str in horizons) {
   i = 0
   
   for(state in states){
-    tmp = unique(df[df$state==state, c('Candidateidentifier','vote')])
-    cs = tmp$Candidateidentifier
+    cs = unique(df[df$state==state, c('Candidateidentifier')])
     preds = 0
     PREDS = c()
+    votes = c()
+    
     
     for (c_idx in 1:length(cs)) {
       c = as.character(cs[c_idx])
@@ -238,6 +236,7 @@ for (input_str in horizons) {
       CANDIDATE <- c(CANDIDATE, substr(c,7,100))
       PRIOR <- c(PRIOR, h)
       VOTE <- c(VOTE, vote)
+      votes = c(votes,vote)
       
       COMPUTE_LL = TRUE
       if(c_idx==length(cs)){
@@ -297,7 +296,7 @@ for (input_str in horizons) {
     win_rates = win_rates / sum(win_rates)
     WIN <- c(WIN, win_rates)
     winners = rep(0, length(cs))
-    winners[which.max(tmp$vote)] = 1
+    winners[which.max(votes)] = 1
     WINNERS  <- c(WINNERS, winners)
   }
   
