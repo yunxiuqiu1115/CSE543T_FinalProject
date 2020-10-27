@@ -7,6 +7,7 @@ horizons = c('0',
              '56')
 
 test_years = c(1992,1994,1996,1998,2000,2002,2004,2006,2008,2010,2012,2014,2016)
+library(rstan)
 
 computeh = function(df, test_year){
   if(test_year==2018){
