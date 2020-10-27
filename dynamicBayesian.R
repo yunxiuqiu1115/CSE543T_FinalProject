@@ -107,6 +107,8 @@ priorModel = computeh(df, test_year)
 df <- df[df$cycle==test_year, ]
 
 
+horizons = c(input_str)
+
 for (input_str in horizons) {
   output_file <- paste(output_path, test_year, "day_", input_str,'.csv',sep='')
   # slicing parameter
