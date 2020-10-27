@@ -36,7 +36,7 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
     s2s = zeros(n,1);
     
     % iterate every race
-    for i = n:-1:800
+    for i = n:-1:1
         % obtain metadata
         year = raceinfos{i}{1};
         state = raceinfos{i}{2}{1};

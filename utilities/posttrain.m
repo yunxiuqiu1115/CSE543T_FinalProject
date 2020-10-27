@@ -131,8 +131,10 @@ function posttrain(raceinfos, fts, s2s, allRaces, hyp, tau, parms)
         mkdir('results');
     end
 
-    writetable(forecast,strcat('results/LOO',parms.type, '_',int2str(test_year),'day',num2str(tau), '_', num2str(j),'.csv'));
-
+    if(~parms.plot)
+        writetable(forecast,strcat('results/LOO',parms.type, '_',int2str(test_year),'day',num2str(tau), '_', num2str(j),'.csv'));
+    end
+    
     disp(tau);
     disp("Length Scale: " + exp(hyp.cov(1)));
     disp("Output Scale: " + exp(hyp.cov(2)));

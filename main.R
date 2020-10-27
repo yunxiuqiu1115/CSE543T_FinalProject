@@ -5,7 +5,7 @@ args = commandArgs(trailingOnly=TRUE)
 
 # test if there is at least one argument: if not, use default 2020 with GP model
 if (length(args)==0) {
-  test_year = 2018
+  test_year = 2020
   # define model type: gp prior or lm prior
   TYPE = 'GP'
 }
@@ -675,7 +675,7 @@ for (a in 2:2) {
     dplyr::arrange((tmp))
   
   STATE_COLORS = c()
-  incumbents = read.csv("data/incumbent2018.csv")
+  incumbents = read.csv("data/incumbent2020.csv")
   for (i in nrow(LEVELS):1) {
     if(incumbents[as.character(incumbents$State)==LEVELS$State[i],'Incumbent']=='REP'){
       STATE_COLORS = c(STATE_COLORS, 'red')
