@@ -1,0 +1,11 @@
+#!/bin/bash
+#BSUN -N
+
+module add R-4
+module add gcc-8.3.0
+
+mkdir -p /export/cluster-tmp/chenyehu
+
+export TMPDIR=/export/cluster-tmp/chenyehu
+
+Rscript --vanilla tmp.R
