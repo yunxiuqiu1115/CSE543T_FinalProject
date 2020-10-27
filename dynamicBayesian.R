@@ -144,7 +144,7 @@ for (input_str in horizons) {
       data = data[data$daysLeft<=-as.numeric(input_str),]
       n_poll = nrow(data)
       
-      if(n_poll>0 & max(data$daysLeft)<0){
+      if(n_poll>0 && max(data$daysLeft)<0){
         # when there is available polls
         I = I + 1
         ns = as.array(data$samplesize)
@@ -159,7 +159,6 @@ for (input_str in horizons) {
         VS<- c(VS, vote)
         DAYS <- c(DAYS, days)
         K = K + k
-        J = max(days)
       }
     }
   }
@@ -251,7 +250,7 @@ for (input_str in horizons) {
         data = data[data$daysLeft<=-as.numeric(input_str),]
         n_poll = nrow(data)
   
-        if(n_poll>0 & max(data$daysLeft)<0){
+        if(n_poll>0 && max(data$daysLeft)<0){
           # when there is available poll
           # use stan posteriors
           i = i + 1
