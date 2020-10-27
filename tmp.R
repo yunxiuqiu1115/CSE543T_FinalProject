@@ -37,7 +37,7 @@ for (i in 1:nrow(polls)) {
   if(daysLeft==1){
     mask = df$cycle==cycle & df$state==state & df$samplesize==samplesize & df$daysLeft==daysLeft
   }
-  if(sum(mask)==1){
+  if(sum(mask)==1 || sum(mask)!=length(unique(df[df$state==state&df$cycle==cycle,"Candidateidentifier"]))){
     df = df[!mask,]
     next
   }
@@ -65,14 +65,17 @@ for (i in 1:nrow(polls)) {
   if(daysLeft==1){
     mask = df2018$cycle==cycle & df2018$state==state & df2018$samplesize==samplesize & df2018$daysLeft==daysLeft
   }
+  if(sum(mask)==1 || sum(mask)!=length(unique(df2018[df2018$state==state&df2018$cycle==cycle,"Candidateidentifier"]))){
+    df2018 = df2018[!mask,]
+    next
+  }
   df2018[mask, c("vote")] = df2018[mask, c("vote")]/sum(df2018[mask, c("vote")])
+  df2018[mask,c("samplesize")] = sum(df2018[mask,c("numberSupport")])
 }
 
-df = rbind(df, df2018)
+alldata = rbind(df, df2018)
 
-df$polls <- df$numberSupport/df$samplesize
-
-data = df
+alldata$polls <- alldata$numberSupport/alldata$samplesize
 
 for (input_str in horizons) {
   for (test_year in test_years) {
@@ -81,7 +84,7 @@ for (input_str in horizons) {
     
     priorModel = computeh(data, test_year)
     
-    df <- data[data$cycle==test_year, ]
+    df <- alldata[alldata$cycle==test_year, ]
     
     # slicing parameter
     W = 4
@@ -118,7 +121,7 @@ for (input_str in horizons) {
         data = data[data$daysLeft<=-as.numeric(input_str),]
         n_poll = nrow(data)
         
-        if(n_poll>0 & max(data$daysLeft)<0){
+        if(n_poll>0 && max(data$daysLeft)<0){
           # when there is available polls
           I = I + 1
           ns = as.array(data$samplesize)
@@ -206,14 +209,14 @@ for (input_str in horizons) {
         if(c_idx==length(cs)){
           # for the final candidate
           # apply the sum to 1 contraints
-          pred = rep(1,length(preds)) - preds
+          pred = 1 - preds
           PREDS = c(PREDS, pred)
         }
         else{
           data = data[data$daysLeft<=-as.numeric(input_str),]
           n_poll = nrow(data)
           
-          if(n_poll>0 & max(data$daysLeft)<0){
+          if(n_poll>0 && max(data$daysLeft)<0){
             # when there is available poll
             # use stan posteriors
             i = i + 1

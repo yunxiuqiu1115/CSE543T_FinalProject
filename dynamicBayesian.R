@@ -53,7 +53,7 @@ for (i in 1:nrow(polls)) {
   if(daysLeft==1){
     mask = df$cycle==cycle & df$state==state & df$samplesize==samplesize & df$daysLeft==daysLeft
   }
-  if(sum(mask)==1){
+  if(sum(mask)==1 || sum(mask)!=length(unique(df[df$state==state&df$cycle==cycle,"Candidateidentifier"]))){
     df = df[!mask,]
     next
   }
@@ -81,7 +81,12 @@ for (i in 1:nrow(polls)) {
   if(daysLeft==1){
     mask = df2018$cycle==cycle & df2018$state==state & df2018$samplesize==samplesize & df2018$daysLeft==daysLeft
   }
+  if(sum(mask)==1 || sum(mask)!=length(unique(df2018[df2018$state==state&df2018$cycle==cycle,"Candidateidentifier"]))){
+    df2018 = df2018[!mask,]
+    next
+  }
   df2018[mask, c("vote")] = df2018[mask, c("vote")]/sum(df2018[mask, c("vote")])
+  df2018[mask,c("samplesize")] = sum(df2018[mask,c("numberSupport")])
 }
 
 df = rbind(df, df2018)
@@ -172,7 +177,7 @@ fit <- stan(file = "dynamicBayesian.stan",
             chains = 1, 
             cores = 1, 
             thin = 4,
-            control=list(adapt_delta=.99, max_treedepth = 20),
+            control=list(adapt_delta=.98, max_treedepth = 15),
             seed = 1,
             refresh=0
 )
