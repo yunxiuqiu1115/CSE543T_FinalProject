@@ -5,7 +5,7 @@ args = commandArgs(trailingOnly=TRUE)
 
 # test if there is at least one argument: if not, use default 2020 with GP model
 if (length(args)==0) {
-  test_year = 2020
+  test_year = 2016
   # define model type: gp prior or lm prior
   TYPE = 'GP'
 }
@@ -693,7 +693,7 @@ for (a in 2:2) {
                          name = "Posterior Vote (%)") +
       theme(panel.grid.major.x = element_line(color = "gray"),
             # explicitly set the horizontal lines (or they will disappear too)
-            panel.grid.major.y = element_line(size=.2, color="grey" ) ,
+            panel.grid.major.y = element_line(size=.4, color="grey" ) ,
             axis.text.y = element_text(colour =STATE_COLORS)) +
       # geom_hline(yintercept=0:length(STATE_COLORS), linetype="solid", color = "grey", size=0.2) + 
       scale_fill_manual(values = c("blue","red"), labels = c("DEM","REP")) +
@@ -747,7 +747,7 @@ for (a in 2:2) {
                          name = "Posterior Vote (%)") +
       coord_flip() + 
       theme(panel.grid.major.x = element_line(color = "gray"),
-            panel.grid.major.y = element_line(size=.2, color="grey" ) ,
+            panel.grid.major.y = element_line(size=.4, color="grey" ) ,
             axis.text.y = element_text(colour =STATE_COLORS)) +
       geom_point(data = VOTE2018, mapping = aes(x = state, y = vote, fill=party, color=party),
                  size=4,shape='x', position=position_dodge(width=0.5)) + 
