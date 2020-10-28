@@ -47,7 +47,7 @@ one_job(){
 
 declare -a input_strs=(42)
 # (1992 1994 1996 1998 2000 2002 2004 2006 2008 2010 2012 2014 2016 2018)
-declare -a cv_years=(1992 1994 1998 2000 2002 2004 2006 2008 2010 2012 2014 2016 2018)
+declare -a cv_years=(1992 1994 1996 1998 2000 2002 2004 2008 2010 2014 2016 2018)
 
 for input_str in ${input_strs[@]}; do
     for cv_year in ${cv_years[@]}; do
