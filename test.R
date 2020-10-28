@@ -250,9 +250,9 @@ generate_BRW_results <- function(test_years, horizons){
       ENTROPY_Y = c(ENTROPY_Y, mean(log(winning_probs+1e-10)*winners))
       RATIO_Y = c(RATIO_Y, sum((data$vote>data$lower95) & (data$vote<data$upper95))/nrow(data))
       nlz = data$nlz
-      nlz = nlz[nlz<=100]
+      nlz = nlz[nlz<=1000]
       # nlz = -dnorm(data$vote, data$pmean, (data$upper95-data$lower95)/4, log=TRUE)
-      NLZ_Y = c(NLZ_Y, mean(nlz))
+      NLZ_Y = c(NLZ_Y, mean(nlz, na.rm = TRUE))
     }
     RMSE = c(RMSE, mean(RMSE_Y)) 
     ACCURACY = c(ACCURACY, mean(ACCURACY_Y))
@@ -269,7 +269,7 @@ generate_BRW_results <- function(test_years, horizons){
                         RATIO,
                         LL)
   
-  results = results %>% mutate_if(is.numeric, round, digits = 4)
+  results = results %>% mutate_if(is.numeric, round, digits = 3)
   if(length(test_years)==1){
     test_year = test_years[1]
   }
@@ -302,4 +302,4 @@ test_years = c(1992,1994,1996,1998,2000,2002,2004,2006,2008,2010,2012,2014,2016)
 
 generate_BRW_results(test_years, horizons)
 
-generate_BRW_results(c(2018), horizons)
+# generate_BRW_results(c(2018), horizons)

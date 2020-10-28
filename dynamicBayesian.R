@@ -280,7 +280,7 @@ for (input_str in horizons) {
         ll = c()
         for(t in 1:length(pred)){
           # logit normal pdf
-          ll = c(ll, log(dnorm(log(vote/(1-vote)), pred[t] ,fit_params$sigma_beta[t])/vote/(1-vote)))
+          ll = c(ll, log(dnorm(log(vote/(1-vote)), log(pred[t]/(1-pred[t])) ,fit_params$sigma_beta[t])/vote/(1-vote)))
         }
         NLZ <- c(NLZ, -log(mean(exp(ll))))
       }
@@ -303,30 +303,30 @@ for (input_str in horizons) {
   }
   
   
-  # for (i in 1:I){
-  #   ms = c()
-  #   upper = c()
-  #   lower = c()
-  #   for (j in 1:J){
-  #     pred = fit_params[[paste("beta[",as.character(i) ,",", as.character(j) , "]", sep="")]]
-  #     m = as.numeric(quantile(pred, 0.5, na.rm = TRUE))
-  #     ms = c(ms, m)
-  #     u = as.numeric(quantile(pred, 0.975, na.rm = TRUE))
-  #     upper = c(upper, u)
-  #     l = as.numeric(quantile(pred, 0.025, na.rm = TRUE))
-  #     lower = c(lower, l)
-  #   }
-  #   PMEAN = c(PMEAN, 1/(1+exp(-m)))
-  #   LOWER95 = c(LOWER95, 1/(1+exp(-l)))
-  #   UPPER95 = c(UPPER95, 1/(1+exp(-u)))
-  #   jpeg(paste("plots/brw/",as.character(i), ".jpg", sep=""), width = 1000, height = 1000)
-  #   plot(-(J:1),1/(1+exp(-ms)), type="l",ylim=c(0,1))
-  #   lines(-(J:1),1/(1+exp(-upper)),type="l")
-  #   lines(-(J:1),1/(1+exp(-lower)),type="l")
-  #   points(-(J+1-DAYS[STATES==i]), (YS[STATES==i]/NS[STATES==i]))
-  #   points(0, VOTE[i], col="blue",pch=20, cex=2)
-  #   dev.off()
-  # }
+  for (i in 1:I){
+    ms = c()
+    upper = c()
+    lower = c()
+    for (j in 1:J){
+      pred = fit_params[[paste("beta[",as.character(i) ,",", as.character(j) , "]", sep="")]]
+      m = as.numeric(quantile(pred, 0.5, na.rm = TRUE))
+      ms = c(ms, m)
+      u = as.numeric(quantile(pred, 0.975, na.rm = TRUE))
+      upper = c(upper, u)
+      l = as.numeric(quantile(pred, 0.025, na.rm = TRUE))
+      lower = c(lower, l)
+    }
+    PMEAN = c(PMEAN, 1/(1+exp(-m)))
+    LOWER95 = c(LOWER95, 1/(1+exp(-l)))
+    UPPER95 = c(UPPER95, 1/(1+exp(-u)))
+    jpeg(paste("plots/brw/",as.character(i), ".jpg", sep=""), width = 1000, height = 1000)
+    plot(-(J:1),1/(1+exp(-ms)), type="l",ylim=c(0,1))
+    lines(-(J:1),1/(1+exp(-upper)),type="l")
+    lines(-(J:1),1/(1+exp(-lower)),type="l")
+    points(-(J+1-DAYS[CANDIDATES==i]), (YS[CANDIDATES==i]/NS[CANDIDATES==i]))
+    points(0, VS[i], col="blue",pch=20, cex=2)
+    dev.off()
+  }
   
   
   # write results to csv
