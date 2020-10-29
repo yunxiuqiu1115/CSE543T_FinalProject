@@ -12,7 +12,7 @@ args = commandArgs(trailingOnly=TRUE)
 # test if there is argument: if not, use default 2018
 if (length(args)==0) {
   input_str = '0'
-  test_year = 2010
+  test_year = 2018
 }
 if (length(args)==1){
   # define the test year
@@ -99,6 +99,8 @@ alldata$polls <- alldata$numberSupport/alldata$samplesize
 
 df <- alldata[alldata$cycle==test_year, ]
 
+horizons = c('7', '56')
+
 for (input_str in horizons) {
   output_path = 'results/brw_'
   output_file <- paste(output_path, test_year, "day_", input_str,'.csv',sep='')
@@ -122,7 +124,7 @@ for (input_str in horizons) {
   K = 0
   for(state in states){
     cs = unique(df[df$state==state, c('Candidateidentifier')])
-    
+  
     for (c in cs[1:(length(cs)-1)]) {
       # only iterate first C-1 candidates 
       data = df[as.character(df$Candidateidentifier)==c,]
