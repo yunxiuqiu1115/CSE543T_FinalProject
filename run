@@ -45,8 +45,7 @@ one_job(){
 #     done
 # done
 
-declare -a input_strs=(0 7 14 21 28 42 56)
-declare -a cv_years=(2018)
+declare -a input_strs=(0)
 
 for input_str in ${input_strs[@]}; do
     for cv_year in ${cv_years[@]}; do

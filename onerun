@@ -11,4 +11,4 @@ mkdir -p /export/cluster-tmp/chenyehu
 
 export TMPDIR=/export/cluster-tmp/chenyehu
 
-Rscript --vanilla dynamicBayesian.R $input_str $cv_year
+Rscript --vanilla tmp.R $input_str $cv_year
