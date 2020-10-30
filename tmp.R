@@ -99,7 +99,6 @@ alldata$polls <- alldata$numberSupport/alldata$samplesize
 
 df <- alldata[alldata$cycle==test_year, ]
 
-horizons = c('7', '56')
 
 for (input_str in horizons) {
   output_path = 'results/brw_'
