@@ -70,7 +70,7 @@ function [varout] = mainfunc(TYPE, mode, tau, plot)
     end
 end
 
-function myrun(tau,type, ls, os, lik, j, mode, plot)
+function myrun(tau,type, ls, os, lik, j, mode, plotting)
 %  load 1992-2016 data
 %  feature of data includes: 
 %       - cycle: election year
@@ -149,7 +149,7 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
 %         [mu s2] = gphelper(hyp, @infGaussLik, meanfunc, covfunc, likfunc, xs, ys, xp);
         f = [mu+2*sqrt(s2); flipdim(mu-2*sqrt(s2),1)];
         fill([xp; flipdim(xp,1)], f, [7 7 7]/8)
-        hold on; plot(xp, mu);
+        hold on; plot(xp, mu);plot(xs{1}(:,1), ys{1}, '+');
     else
         hyp.cov(1) = log(ls);
         hyp.cov(2) = log(os);
@@ -175,7 +175,7 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
     parms.tau = tau;
     parms.j = j;
     parms.type = type;
-    parms.plot = plot;
+    parms.plot = plotting;
     
     % plot days bin
     parms.BIN = 30;
