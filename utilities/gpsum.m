@@ -6,7 +6,7 @@ function [nlZsum, dnlZsum] = gpsum(hyp, inf, mean, cov, lik, xarray, yarray)
         if numel(xarray{i}(:,1)) == 0
             continue;
         end
-        [nlZ, dnlZ] = gp(hyp, @infGaussLik, mean, cov, lik, xarray{i}(:,1), yarray{i});
+        [nlZ, dnlZ] = gp(hyp, @infExact, mean, cov, lik, xarray{i}(:,1), yarray{i});
 %         count = count + 1;
         nlZsum = nlZsum + nlZ;
         dnlZsumvec = dnlZsumvec + unwrap(dnlZ);

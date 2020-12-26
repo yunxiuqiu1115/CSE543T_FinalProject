@@ -144,12 +144,12 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
         likfunc = @likGauss;
         hyp = struct('mean', [], 'cov', [0 0], 'lik', -1);
         xp = [0];
-        hyp = minimize(hyp, @gpsum, -100, @infGaussLik, meanfunc, covfunc, likfunc, xs, ys);
+        hyp = minimize(hyp, @gpsum, -100, @infExact, meanfunc, covfunc, likfunc, xs, ys);
         [mu s2] = gp(hyp, @infExact, meanfunc, covfunc, likfunc, xs{1}(:,1), ys{1}, xp);
 %         [mu s2] = gphelper(hyp, @infGaussLik, meanfunc, covfunc, likfunc, xs, ys, xp);
-%         f = [mu+2*sqrt(s2); flipdim(mu-2*sqrt(s2),1)];
-%         fill([xp{1}(:,1); flipdim(xp{1}(:,1),1)], f, [7 7 7]/8)
-%         hold on; plot(xp{1}(:,1), mu); plot(xs{1}(:,1), ys{1}, '+');
+        f = [mu+2*sqrt(s2); flipdim(mu-2*sqrt(s2),1)];
+        fill([xp; flipdim(xp,1)], f, [7 7 7]/8)
+        hold on; plot(xp, mu);
     else
         hyp.cov(1) = log(ls);
         hyp.cov(2) = log(os);
