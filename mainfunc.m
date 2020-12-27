@@ -139,49 +139,84 @@ function myrun(tau,type, ls, os, lik, j, mode, plotting)
     %       - log of prior std of the linear trend intercept
     %   - hyp.lik: log of observation noise std
     if mode == 1
+        parms.tau = tau;
+        parms.j = j;
+        parms.type = type;
+        parms.plot = plotting;
+
+        % plot days bin
+        parms.BIN = 30;
+        parms.test_year = 2018;
+        parms.coefs = priorModel(CNNdata2018, parms.test_year);
+        plot_path = "plots/" + type + "MargLinTre" + num2str(parms.test_year)+"_"+num2str(tau);
         meanfunc = [];
         covfunc = @covSEiso;
         likfunc = @likGauss;
         hyp = struct('mean', [], 'cov', [0 0], 'lik', -1);
-        xp = [0];
-        hyp = minimize(hyp, @gpsum, -100, @infExact, meanfunc, covfunc, likfunc, xs, ys);
-        [mu s2] = gp(hyp, @infExact, meanfunc, covfunc, likfunc, xs{1}(:,1), ys{1}, xp);
-%         [mu s2] = gphelper(hyp, @infGaussLik, meanfunc, covfunc, likfunc, xs, ys, xp);
-        f = [mu+2*sqrt(s2); flipdim(mu-2*sqrt(s2),1)];
-        fill([xp; flipdim(xp,1)], f, [7 7 7]/8)
-        hold on; plot(xp, mu);plot(xs{1}(:,1), ys{1}, '+');
-    else
-        hyp.cov(1) = log(ls);
-        hyp.cov(2) = log(os);
-
-        % model() defines prior distribution of linear trends
-        [~,~,~,~, prior] = model();
-        sigma_ml = prior.slope(2);
+        [~, ~, ~, ~, prior] = model();
+        mu_ml = prior.slope(1);
         sigma_mc = prior.intercept(2);
-        hyp.cov(3) = log(1/sigma_ml);
-        hyp.cov(4) = log(sigma_mc);
-        hyp.lik = log(lik);
-    end
+        xp = [0 0 0];
+        hyp = minimize(hyp, @gpsum, -100, @infExact, meanfunc, covfunc, likfunc, xs, ys);
+        nz = 200;
+        parms.BIN = 30;
+        n = numel(xs);
+        fts = zeros(n,1);
+        s2s = zeros(n,1);
+        for i = n:-1:1
+            if numel(xs{i}) == 0
+                fts(i) = mu_b;
+                s2s(i) = sigma_mc^2 + exp(2*hyp.cov(2));
+                continue
+            end
+            year = raceinfos{i}{1};
+            state = raceinfos{i}{2}{1};
+            candidateName = raceinfos{i}{3};
+            trueVote = raceinfos{i}{4};
+            pvi = raceinfos{i}{5};
+            experienced = raceinfos{i}{6};
+            party = raceinfos{i}{7};
+            parms.coefs = priorModel(CNNdata, parms.test_year);
+            mu_b = computePrior(pvi, experienced, party, parms);
+            if numel(xs{i}) > 1
+                XMIN = floor(xs{i}(1,1)/parms.BIN)*parms.BIN;
+            else
+                XMIN = floor(xs{i}(1)/parms.BIN)*parms.BIN;
+            end
+            xstar = [linspace(XMIN,0,nz).',zeros(1,nz)',ones(1,nz)'];
+            [~, ~, fmu, fs2] = gp(hyp, @infExact, meanfunc, covfunc, likfunc, xs{i}, ys{i}, xstar);
+            fts(i) = fmu(end);
+            s2s(i) = s2s(end);
+            parms.prior = [mu_b, sigma_mc];
+            fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), parms);
+            plot_title = year + " " + state + " " + candidateName;
+%                 title(plot_title);
 
-    % parms struct specifies keyword arguments
-    %   - tau: forecasting horizon
-    %   - j: current index of searching sequence
-    %   - type: prior model, 'GP' or 'LM'
-    %   - plot:
-    %       - 1: generate plots of underlying voter preference for each election race
-    %       - 0: just obtain posterior belief of voter preference on election day
-    %   - test_year: validation year in LOYO process or test year in testing process
-    %   - coefs: the coefs of prior linear model for the linear trend intercept
-    parms.tau = tau;
-    parms.j = j;
-    parms.type = type;
-    parms.plot = plotting;
-    
-    % plot days bin
-    parms.BIN = 30;
-    parms.test_year = 2018;
-    parms.coefs = priorModel(CNNdata2018, parms.test_year);
-    plot_path = "plots/" + type + "MargLinTre" + num2str(parms.test_year)+"_"+num2str(tau);
+            % save plot to files
+            yearFolder = fullfile(plot_path, num2str(year));
+            stateFolder = fullfile(yearFolder, state);
+            if ~exist(plot_path, 'dir')
+                mkdir(plot_path);
+            end
+            if ~exist(yearFolder, 'dir')
+                mkdir(yearFolder);
+            end
+            if ~exist(stateFolder, 'dir')
+                mkdir(stateFolder);
+            end
+            filename = fullfile(stateFolder, plot_title + num2str(parms.j)+".pdf");
+            set(fig, 'PaperPosition', [0 0 5 5]); %Position plot at left hand corner with width 5 and height 5.
+            set(fig, 'PaperSize', [5 5]); %Set the paper to have width 5 and height 5.
+            print(fig, filename, '-dpdf','-r300');
+            close;
+        end
+
+%         [mu s2] = gp(hyp, @infExact, meanfunc, covfunc, likfunc, xs, ys, xp);
+% %         [mu s2] = gphelper(hyp, @infGaussLik, meanfunc, covfunc, likfunc, xs, ys, xp);
+%         f = [mu+2*sqrt(s2); flipdim(mu-2*sqrt(s2),1)];
+%         
+%         fill([xp; flipdim(xp,1)], f, [7 7 7]/8)
+%         hold on; plot(xp, mu);plot(xs{1}(:,1), ys{1}, '+');
+    end
 %     [allRaces, fts, s2s] = gpm(hyp, xs, ys, raceinfos, plot_path, parms);
-    % Do the forecasting
 end
