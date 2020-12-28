@@ -21,7 +21,11 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
 %
 
     % define model
-    [meanfunc, covfunc, likfunc, inffunc, prior] = model();
+    [~, ~, ~, ~, prior] = model();
+    meanfunc = [];
+    covfunc = @covSEiso;
+    inffunc = @infExact;
+    likfunc = @likGauss;
     mu_ml = prior.slope(1);
     sigma_mc = prior.intercept(2);
     
@@ -68,7 +72,7 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
             % define hyp for one specific race
             % hyp is exactly the same of hyperparameter except potentially
             % different prior mean of linear trend intercept
-            hyp.mean = [mu_b];
+            hyp.mean = [];
             hyp.cov = hyperparameter.cov;
             hyp.lik = hyperparameter.lik;
             

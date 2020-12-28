@@ -1,4 +1,4 @@
-function [varout]=mainfunc2(TYPE, mode, tau, plot)
+function [varout] = mainFunction(TYPE, mode, tau, plot)
 
 %  main function of obtaining gp posteriors for each election race
 %  input:
@@ -36,6 +36,26 @@ function [varout]=mainfunc2(TYPE, mode, tau, plot)
     if mode>=2
         % no search needed
         % forecasting year 2018 or 2020
+        ts = readData("results/"+TYPE+"_opthyp.csv");
+        ts = ts.opt_idx;
+
+        for i=3:6
+            j = ts(i);
+            if strcmp(TYPE, "GP")==1
+                ls = p(j,1)*(56-7)+7; % 7-56
+                os = p(j,2)/20; % 0%-5%
+                lik = p(j,3)/20; % 0%-5%
+                myrun(taus(i),TYPE, ls, os, lik, j, mode, plot);
+            else 
+                % linear model does not have ls/os
+                ls = 0; os = 0;
+                lik = p(j); % 0%-10%
+                myrun(taus(i),TYPE, ls, os, lik, j, mode, plot);
+            end
+        end
+    else
+        % performing a sobel sequence search
+%         for i=1:numel(taus)
             for j=1:search_size
                 if strcmp(TYPE, "GP")==1
                     ls = p(j,1)*(56-7)+7; % 7-56
@@ -70,8 +90,6 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
 %       - experienced: 1 if the candidate has served in any political office, 0 otherwise
 
     CNNdata = readData("data/CNNdata1992-2016.csv");
-    CNNdata2018 = readData("data/CNNData2018.csv");
-    CNNdata2018(:, ["candidate_name"]) = [];
     
     if mode==2
         % test on 2018 data
@@ -92,9 +110,6 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
     years = unique(CNNdata.cycle);
     states = unique(CNNdata.state);
     [xs, ys, raceinfos] = buildTrainCellArrays(CNNdata, years, states);
-    years2 = unique(CNNdata2018.cycle);
-    states2 = unique(CNNdata2018.state);
-    [xp, yp, raceinfos2] = buildTrainCellArrays(CNNdata2018, years2, states2);
 
     % shrink data according to the forecasting horizons
     counter = size(xs,1);
@@ -103,14 +118,6 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
         xs{i} = xs{i}(idx,:);
         ys{i} = ys{i}(idx);
     end
-    
-    counter = size(xp,1);
-    for i=1:counter
-        idx = xp{i}(:,1) <= -tau;
-        xp{i} = xp{i}(idx,:);
-        yp{i} = yp{i}(idx);
-    end
-
     % define hyp (hyperparameter) struct
     %   - hyp.mean:
     %       - prior mean of the linear trend slope
@@ -121,28 +128,22 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
     %       - 1 / log of prior std of the linear trend slope
     %       - log of prior std of the linear trend intercept
     %   - hyp.lik: log of observation noise std
-    if mode == 1
-        meanfunc = [];
-        covfunc = @covSEiso;
-        likfunc = @likGauss;
-        hyp = struct('mean', [], 'cov', [0;0], 'lik', -1);
-        hyp = minimize(hyp, @gpsum, -100, @infGaussLik, meanfunc, covfunc, likfunc, xs, ys);
-        [mu s2] = gp(hyp, @infGaussLik, meanfunc, covfunc, likfunc, xs, ys, xp);
-        f = [mu+2*sqrt(s2); flipdim(mu-2*sqrt(s2),1)];
-        fill([xp; flipdim(xp,1)], f, [7 7 7]/8)
-        hold on; plot(xp, mu); plot(xs, ys, '+');
-    else
-        hyp.cov(1) = log(ls);
-        hyp.cov(2) = log(os);
+    
+    parms.tau = tau;
+    parms.j = j;
+    parms.type = type;
+    parms.plot = plot;
 
-        % model() defines prior distribution of linear trends
-        [~,~,~,~, prior] = model();
-        sigma_ml = prior.slope(2);
-        sigma_mc = prior.intercept(2);
-        hyp.cov(3) = log(1/sigma_ml);
-        hyp.cov(4) = log(sigma_mc);
-        hyp.lik = log(lik);
-    end
+    % plot days bin
+    parms.BIN = 30;
+    meanfunc = [];
+    covfunc = {'covNNone'};sf = 1; ell = 0.7;
+    likfunc = @likGauss;sn = 0.2;
+    hyp = struct('mean', [], 'cov', log([ell sf]), 'lik', log(sn));
+    hyp = minimize(hyp, @gpsum, -100, @infExact, meanfunc, covfunc, likfunc, xs, ys);
+    
+    % model() defines prior distribution of linear trends
+
 
     % parms struct specifies keyword arguments
     %   - tau: forecasting horizon
@@ -161,5 +162,54 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
     % plot days bin
     parms.BIN = 30;
     
-    % Do the forecasting
+    if mode==2
+        % tesing 2018 races
+        parms.test_year = 2018;
+        % precompute coefs of prior linear model of the linear trend intercept
+        parms.coefs = priorModel(CNNdata, parms.test_year);
+        plot_path = "plots/" + type + "MargLinTre"+num2str(parms.test_year)+"_"+num2str(tau);
+        if strcmp(type, "GP")==1
+            [allRaces, fts, s2s] = gpm(hyp, xs, ys, raceinfos, plot_path, parms);
+        else
+            [allRaces, fts, s2s] = lm(hyp, xs, ys, raceinfos, plot_path, parms);
+        end
+        % post train process
+        % compute corr, rmse, accuracy, coverage rate and nlz
+        % write results to csv files
+        posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, parms);   
+    elseif mode==3
+        % forecasting 2018 races
+        parms.test_year = 2020;
+        % precompute coefs of prior linear model of the linear trend intercept
+        parms.coefs = priorModel(CNNdata, parms.test_year);
+        plot_path = "plots/" + type + "MargLinTre"+num2str(parms.test_year)+"_"+num2str(tau);
+        if strcmp(type, "GP")==1
+            [allRaces, fts, s2s] = gpm(hyp, xs, ys, raceinfos, plot_path, parms);
+        else
+            [allRaces, fts, s2s] = lm(hyp, xs, ys, raceinfos, plot_path, parms);
+        end
+        % post train process
+        % compute corr, rmse, accuracy, coverage rate and nlz
+        % write results to csv files
+        posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, parms);   
+    else
+        % Leave-one-year-out process
+        % iterate over 1992-2016
+        for y=1:numel(years)
+            parms.test_year = years(y);
+            disp(parms.test_year);
+            % precompute coefs of prior linear model of the linear trend intercept
+            parms.coefs = priorModel(CNNdata, parms.test_year);
+            plot_path = "plots/" + type + "MargLinTre"+num2str(parms.test_year)+"_"+num2str(tau);
+            if strcmp(type, "GP")==1
+                [allRaces, fts, s2s] = gpm(hyp, xs, ys, raceinfos, plot_path, parms);
+            else
+                [allRaces,fts,s2s] = lm(hyp, xs, ys, raceinfos, plot_path, parms);
+            end        
+            % post train process
+            % compute corr, rmse, accuracy, coverage rate and nlz
+            % write results to csv files
+            posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, parms);
+        end
+    end
 end
