@@ -54,8 +54,8 @@ function [varout] = mainfunc(tau)
     sf = 1; ell = 0.7;
     likfunc = @likGauss;
     sn = 0.2;
-    hyp = struct('mean', [], 'cov', log([ell ell ell sf]), 'lik', log(sn));
-    hyp = minimize(hyp, @gpsum, -100, @infExact, meanfunc, covfunc, likfunc, xs(1:142,:), ys(1:142,:));
+    hyp = struct('mean', [], 'cov', [3.44998754583159 -3.68887945411394 6.21460809842219 -2.30258509299405], 'lik', -3.68887945411394);
+    hyp = minimize(hyp, @gpsum, -100, @infExact, meanfunc, covfunc, likfunc, xs(1:873,:), ys(1:873,:));
     disp(hyp);
     % plotting parameters
     parms.tau = tau;
