@@ -29,7 +29,7 @@ function [meanfunc, covfunc, likfunc, inffunc, prior] = model()
     cmm = {@covMask, {meanmask, cm}};
     cs = {@covLINiso};
     ci = {@covConst};
-    cms = {@covMask, {meanmask, cs}};
+    cms = {@covMask, {meanmask, cs}};     
     covfunc = {@covSum, {cmm, cmd, cms, ci}};
     
     % define Gaussian likelihood and inference function

@@ -90,7 +90,9 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
 %       - experienced: 1 if the candidate has served in any political office, 0 otherwise
 
     CNNdata = readData("data/CNNdata1992-2016.csv");
-    
+    CNNdata2018 = readData("data/CNNData2018.csv");
+    CNNdata2018(:, ["candidate_name"]) = [];
+    CNNdata = vertcat(CNNdata, CNNdata2018);
     if mode==2
         % test on 2018 data
         % load 2018 data
@@ -136,12 +138,13 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
 
     % plot days bin
     parms.BIN = 30;
+    % meanfunc = {@meanSum, {@meanLinear, @meanConst}};
     meanfunc = [];
-    covfunc = {'covNNone'};sf = 1; ell = 0.7;
-    likfunc = @likGauss;sn = 0.2;
-    hyp = struct('mean', [], 'cov', log([ell sf]), 'lik', log(sn));
-    hyp = minimize(hyp, @gpsum, -100, @infExact, meanfunc, covfunc, likfunc, xs, ys);
-    
+    covfunc = {'covMaterniso', 3};
+    likfunc = @likGauss;
+    hyp = struct('mean', [], 'cov', [0 0], 'lik', -1);
+    hyp = minimize(hyp, @gpsum, -100, @infExact, meanfunc, covfunc, likfunc, xs(1:124,:), ys(1:124,:));
+    disp(hyp);
     % model() defines prior distribution of linear trends
 
 
