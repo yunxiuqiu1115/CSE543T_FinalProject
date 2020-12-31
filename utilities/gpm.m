@@ -39,7 +39,7 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
     for i = n:-1:1
         % obtain metadata
         year = raceinfos{i}{1};
-        if year < 2020
+        if year < 2018
             continue;
         end;
         state = raceinfos{i}{2}{1};

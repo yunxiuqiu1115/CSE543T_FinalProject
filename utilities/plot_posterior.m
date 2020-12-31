@@ -61,7 +61,7 @@ function fig = plot_posterior(fmu, fs2, x, y, xs, parms)
      'xticklabels', XTICKLABELS, ...
      'ytick', YT, ...
      'yticklabels', YTLABELS);
-plot(0, parms.trueVote, 'rd');
+plot(0, parms.trueVote / 100, 'rd');
 legend('Intercept prior', '95% CI pre-forecasting', '95% CI forecasting', 'Posterior mean','Polling data', "Actual Vote Share");
     xlabel("Days to election"); ylabel("Latent voter preference");
 end
