@@ -35,10 +35,10 @@ function fig = plot_posterior(fmu, fs2, x, y, xs, parms)
     fill([xs(future); flip(xs(future),1)], f, [200, 200, 200] / 255, ...
      'facealpha', 0.7, ...
      'edgecolor', 'none');
-     plot(xs, fmu, "color", [31, 120, 180] / 255); plot(x, y, 'k.'); 
+    plot(xs, fmu, "color", [31, 120, 180] / 255); plot(x, y, 'k.'); 
      
     % scale range of polls to [0,1]
-    % ylim([0,1]);
+    ylim([0,1]);
     BIN = parms.BIN;
     Nx = (abs(min(xs))/BIN);
     XTICK = -BIN*[Nx:-1:0];
@@ -61,8 +61,7 @@ function fig = plot_posterior(fmu, fs2, x, y, xs, parms)
      'xticklabels', XTICKLABELS, ...
      'ytick', YT, ...
      'yticklabels', YTLABELS);
- 
-    
-legend('Intercept prior', '95% CI pre-forecasting', '95% CI forecasting', 'Posterior mean','Polling data' ,'Location', 'Best');
+plot(0, parms.trueVote, 'rd');
+legend('Intercept prior', '95% CI pre-forecasting', '95% CI forecasting', 'Posterior mean','Polling data', "Actual Vote Share");
     xlabel("Days to election"); ylabel("Latent voter preference");
 end

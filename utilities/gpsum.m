@@ -13,6 +13,7 @@ function [nlZsum, dnlZsum] = gpsum(hyp, inf, mean, cov, lik, xarray, yarray)
         nlZsum = nlZsum + nlZ;
         dnlZsumvec = dnlZsumvec + unwrap(dnlZ);
     end
+    disp("nlZsum");disp(nlZsum);
     dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1);dnlZsumvec(2);dnlZsumvec(3);dnlZsumvec(4)], 'lik', dnlZsumvec(5));
 %      dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1)], 'lik', dnlZsumvec(2));
 %     dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1); dnlZsumvec(2)], 'lik', dnlZsumvec(3));

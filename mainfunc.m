@@ -1,4 +1,5 @@
 function [varout] = mainfunc(tau)
+    warning off;
     % import packages
     addpath("gpml-matlab-v3.6-2015-07-07");
     addpath("utilities");
