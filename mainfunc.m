@@ -13,7 +13,8 @@ function [varout] = mainfunc(tau)
     CNNdata = vertcat(CNNdata, CNNdata2018);
     CNNdata2020 = readData("data/CNNData2020.csv");
     CNNdata2020(:, ["candidate_name"]) = [];
-    CNNdata2020.Percentage_of_Vote_won_x = zeros(size(CNNdata2020,1),1);
+    % TX, Mich, NC
+    %CNNdata2020.Percentage_of_Vote_won_x = zeros(size(CNNdata2020,1),1);
     CNNdata = vertcat(CNNdata, CNNdata2020);
     
     % preprocess the data
@@ -42,6 +43,8 @@ function [varout] = mainfunc(tau)
     meanfunc = [];
     meanmask = [true, false, false];
     % mask of polling porportion and sample size
+    
+    
     covmask = [false, true, true];
     cm = {@covMaterniso, 3};
     mb = {@logsqrtbinom};
@@ -57,6 +60,10 @@ function [varout] = mainfunc(tau)
     sn = 0.2;
     hyp = struct('mean', [], 'cov', [3.44998754583159 -3.68887945411394 6.21460809842219 -2.30258509299405], 'lik', -3.68887945411394);
     hyp = minimize(hyp, @gpsum, -100, @infExact, meanfunc, covfunc, likfunc, xs(1:873,:), ys(1:873,:));
+    
+    
+    
+    
     disp(hyp);
     % plotting parameters
     parms.tau = tau;
@@ -72,4 +79,5 @@ function [varout] = mainfunc(tau)
     parms.coefs = priorModel(CNNdata, parms.test_year);
     plot_path = "plots/" + parms.type + "MargLinTre"+num2str(parms.test_year)+"_"+num2str(tau);
     [allRaces, fts, s2s] = gpm(hyp, xs, ys, raceinfos, plot_path, parms);
+    posttrain(raceinfos,fts,s2s,allRaces,hyp, tau, parms)
 end

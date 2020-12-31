@@ -31,7 +31,6 @@ function [meanfunc, covfunc, likfunc, inffunc, prior] = model()
     ci = {@covConst};
     cms = {@covMask, {meanmask, cs}};     
     covfunc = {@covSum, {cmm, cmd, cms, ci}};
-    
     % define Gaussian likelihood and inference function
     likfunc = @likGauss;
     inffunc = @infExact;
