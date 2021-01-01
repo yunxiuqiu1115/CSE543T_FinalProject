@@ -27,7 +27,7 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
     
     
     covmask = [false, true, true];
-    cm = {@covMaterniso, 3};
+    cm = {@covMaterniso, 1};
     mb = {@logsqrtbinom};
     cdb = {@covDiag, mb};
     cmd = {@covMask, {covmask, cdb}};

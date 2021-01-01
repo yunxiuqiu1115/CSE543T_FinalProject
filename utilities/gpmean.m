@@ -15,7 +15,7 @@ function [nlZsum, dnlZsum] = gpmean(hyp, inf, mean, cov, lik, xarray, yarray)
     end
     disp("nlZsum");disp(nlZsum);
     dnlZsumvec = dnlZsumvec / counter;
-     dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1);dnlZsumvec(2);dnlZsumvec(3)], 'lik', dnlZsumvec(4));
-%      dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1)], 'lik', dnlZsumvec(2));
-%      dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1); dnlZsumvec(2)], 'lik', dnlZsumvec(3));
+%      dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1);dnlZsumvec(2)], 'lik', dnlZsumvec(3));
+%       dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1)], 'lik', dnlZsumvec(2));
+      dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1); dnlZsumvec(2); dnlZsumvec(3)], 'lik', dnlZsumvec(4));
 end

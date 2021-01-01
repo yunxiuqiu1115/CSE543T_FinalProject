@@ -54,7 +54,7 @@ function [varout] = mainfunc(tau)
     
     
     covmask = [false, true, true];
-    cm = {@covMaterniso, 3};
+    cm = {@covMaterniso, 1};
     mb = {@logsqrtbinom};
     cdb = {@covDiag, mb};
     cmd = {@covMask, {covmask, cdb}};
