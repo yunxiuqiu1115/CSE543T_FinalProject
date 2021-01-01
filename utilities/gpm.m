@@ -22,6 +22,20 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
 
     % define model
     [meanfunc, covfunc, likfunc, inffunc, prior] = model();
+    meanmask = [true, false, false];
+    % mask of polling porportion and sample size
+    
+    
+    covmask = [false, true, true];
+    cm = {@covMaterniso, 3};
+    mb = {@logsqrtbinom};
+    cdb = {@covDiag, mb};
+    cmd = {@covMask, {covmask, cdb}};
+    cmm = {@covMask, {meanmask, cm}};
+    cs = {@covLINiso};
+    ci = {@covConst};
+    cms = {@covMask, {meanmask, cs}};     
+    covfunc = {@covSum, {cmm, cms}};
     mu_ml = prior.slope(1);
     sigma_mc = prior.intercept(2);
     

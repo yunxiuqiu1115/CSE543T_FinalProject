@@ -40,6 +40,14 @@ function [varout] = mainfunc(tau)
     %       - 1 / log of prior std of the linear trend slope
     %       - log of prior std of the linear trend intercept
     %   - hyp.lik: log of observation noise std
+    
+%     meanfunc = [];
+%     covfunc = {@covSEiso};
+     mu = 1.0; s2 = 0.01^2;
+     prior.mean = {{@priorGauss, mu, s2}; {'priorLaplace', mu, s2}};
+     prior.lik = {{@priorDelta}};
+    inffunc = {@infPrior, @infGaussLik, prior};
+%     hyp = struct('mean', [], 'cov', [0 0], 'lik', -1);
     meanfunc = [];
     meanmask = [true, false, false];
     % mask of polling porportion and sample size
@@ -54,16 +62,12 @@ function [varout] = mainfunc(tau)
     cs = {@covLINiso};
     ci = {@covConst};
     cms = {@covMask, {meanmask, cs}};     
-    covfunc = {@covSum, {cmm, cmd, cms, ci}};
+    covfunc = {@covSum, {cmm, cms}};
     sf = 1; ell = 0.7;
     likfunc = @likGauss;
     sn = 0.2;
-    hyp = struct('mean', [], 'cov', [3.44998754583159 -3.68887945411394 6.21460809842219 -2.30258509299405], 'lik', -3.68887945411394);
-    hyp = minimize(hyp, @gpsum, -100, @infExact, meanfunc, covfunc, likfunc, xs(1:873,:), ys(1:873,:));
-    
-    
-    
-    
+    hyp = struct('mean', [], 'cov', [0 0 0], 'lik', -1);
+    hyp = minimize(hyp, @gpmean, -100, inffunc, meanfunc, covfunc, likfunc, xs(1:200,:), ys(1:200,:));
     disp(hyp);
     % plotting parameters
     parms.tau = tau;
