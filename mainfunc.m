@@ -1,4 +1,8 @@
 function [varout] = mainfunc(tau)
+    global xList nlZsumList iter;
+    xList=[];
+    nlZsumList=[];
+    iter=0;
     warning off;
     % import packages
     addpath("gpml-matlab-v3.6-2015-07-07");
@@ -67,9 +71,15 @@ function [varout] = mainfunc(tau)
     likfunc = @likGauss;
     sn = 0.2;
     hyp = struct('mean', [], 'cov', [0 0 0], 'lik', -1);
-    hyp = minimize(hyp, @gpmean, -100, inffunc, meanfunc, covfunc, likfunc, xs(1:200,:), ys(1:200,:));
+    hyp = minimize(hyp, @gpmean, -100, inffunc, meanfunc, covfunc, likfunc, xs(1:800,:), ys(1:800,:));
     disp(hyp);
+    figure
+    plot(xList,nlZsumList);
+    xlabel('iteration');
+    ylabel('sum of negative log marginal likelihood');
+    saveas(gcf,'nlZSum.png');
     % plotting parameters
+    
     parms.tau = tau;
     parms.j = 1;
     parms.type = "GP";
