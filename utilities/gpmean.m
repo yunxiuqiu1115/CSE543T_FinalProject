@@ -1,7 +1,8 @@
 function [nlZsum, dnlZsum] = gpmean(hyp, inf, mean, cov, lik, xarray, yarray)
+    global xList nlZsumList iter;
     nlZsum = 0.0;
     nlZvec = [];
-    dnlZsumvec = [0;0;0;0];     
+    dnlZsumvec = [0;0;0;0];
     counter = 1;
     for i=1:numel(xarray)
         if numel(xarray{i}(:,1)) == 0
@@ -13,9 +14,16 @@ function [nlZsum, dnlZsum] = gpmean(hyp, inf, mean, cov, lik, xarray, yarray)
         nlZsum = nlZsum + nlZ;
         dnlZsumvec = dnlZsumvec + unwrap(dnlZ);
     end
-    disp("nlZsum");disp(nlZsum);
+    disp("nlZsum");
+    disp(nlZsum);
+    nlZsumList(end+1)=nlZsum;
+    xList(end+1)=iter;
+    iter=iter+1;
     dnlZsumvec = dnlZsumvec / counter;
 %      dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1);dnlZsumvec(2)], 'lik', dnlZsumvec(3));
 %       dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1)], 'lik', dnlZsumvec(2));
-      dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1); dnlZsumvec(2); dnlZsumvec(3)], 'lik', dnlZsumvec(4));
+    dnlZsum = struct('mean', [], 'cov', [dnlZsumvec(1); dnlZsumvec(2); dnlZsumvec(3)], 'lik', dnlZsumvec(4));
+    
+    
+      
 end
