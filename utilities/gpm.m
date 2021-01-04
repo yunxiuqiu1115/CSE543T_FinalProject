@@ -22,6 +22,20 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
 
     % define model
     [meanfunc, covfunc, likfunc, inffunc, prior] = model();
+    meanmask = [true, false, false];
+    % mask of polling porportion and sample size
+    
+    
+    covmask = [false, true, true];
+    cm = {@covMaterniso, 1};
+    mb = {@logsqrtbinom};
+    cdb = {@covDiag, mb};
+    cmd = {@covMask, {covmask, cdb}};
+    cmm = {@covMask, {meanmask, cm}};
+    cs = {@covLINiso};
+    ci = {@covConst};
+    cms = {@covMask, {meanmask, cs}};     
+    covfunc = {@covSum, {cmm, cms}};
     mu_ml = prior.slope(1);
     sigma_mc = prior.intercept(2);
     
@@ -39,6 +53,9 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
     for i = n:-1:1
         % obtain metadata
         year = raceinfos{i}{1};
+        if year < 2020
+            continue;
+        end;
         state = raceinfos{i}{2}{1};
         candidateName = raceinfos{i}{3};
         trueVote = raceinfos{i}{4};
@@ -90,6 +107,7 @@ function [allRaces,fts,s2s] = gpm(hyperparameter, xs, ys, raceinfos, plot_path, 
                 fts(i) = fmu(end);
                 s2s(i) = s2s(end);
                 parms.prior = [mu_b, sigma_mc];
+                parms.trueVote = trueVote;
                 fig = plot_posterior(fmu, fs2, xs{i}(:,1), ys{i}, xstar(:,1), parms);
                 plot_title = year + " " + state + " " + candidateName;
 %                 title(plot_title);
