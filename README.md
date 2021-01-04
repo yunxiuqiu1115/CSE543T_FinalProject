@@ -80,7 +80,7 @@ Yunxiu Qiu - yunxiuqiu@wustl.edu
 
 Yanpeng Yuan - yanpeng@wustl.edu
 
-Project Link: [https://github.com/yunxiuqiu1115/CSE543T_FinalProject/tree/dev](https://github.com/yunxiuqiu1115/CSE543T_FinalProject/tree/dev)
+Project Link: [https://github.com/yunxiuqiu1115/CSE543T_FinalProject](https://github.com/yunxiuqiu1115/CSE543T_FinalProject)
 
 
 <!-- ACKNOWLEDGEMENTS -->
