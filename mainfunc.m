@@ -15,7 +15,7 @@ function [varout] = mainfunc(tau)
     CNNdata2018 = readData("data/CNNData2018.csv");
     CNNdata2018(:, ["candidate_name"]) = [];
     CNNdata = vertcat(CNNdata, CNNdata2018);
-    CNNdata2020 = readData("data/CNNData2020.csv");
+    CNNdata2020 = readData("data/CNNdata2020.csv");
     CNNdata2020(:, ["candidate_name"]) = [];
     % TX, Mich, NC
     %CNNdata2020.Percentage_of_Vote_won_x = zeros(size(CNNdata2020,1),1);
@@ -71,7 +71,7 @@ function [varout] = mainfunc(tau)
     likfunc = @likGauss;
     sn = 0.2;
     hyp = struct('mean', [], 'cov', [0 0 0], 'lik', -1);
-    hyp = minimize(hyp, @gpmean, -100, inffunc, meanfunc, covfunc, likfunc, xs(1:800,:), ys(1:800,:));
+    hyp = minimize(hyp, @gpmean, -100, inffunc, meanfunc, covfunc, likfunc, xs(1:200,:), ys(1:200,:));
     disp(hyp);
     figure
     plot(xList,nlZsumList);
