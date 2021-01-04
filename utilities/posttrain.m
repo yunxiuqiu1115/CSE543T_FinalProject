@@ -131,7 +131,7 @@ function posttrain(raceinfos, fts, s2s, allRaces, hyp, tau, parms)
         mkdir('results');
     end
 
-    if(~parms.plot)
+    if(parms.plot)
         writetable(forecast,strcat('results/LOO',parms.type, '_',int2str(test_year),'day',num2str(tau), '_', num2str(j),'.csv'));
     end
     

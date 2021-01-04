@@ -1,4 +1,4 @@
-function [varout]=main(TYPE, mode, tau, plot)
+function [varout] = mainFunction(TYPE, mode, tau, plot)
 
 %  main function of obtaining gp posteriors for each election race
 %  input:
@@ -90,7 +90,9 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
 %       - experienced: 1 if the candidate has served in any political office, 0 otherwise
 
     CNNdata = readData("data/CNNdata1992-2016.csv");
-    
+    CNNdata2018 = readData("data/CNNData2018.csv");
+    CNNdata2018(:, ["candidate_name"]) = [];
+    CNNdata = vertcat(CNNdata, CNNdata2018);
     if mode==2
         % test on 2018 data
         % load 2018 data
@@ -118,7 +120,6 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
         xs{i} = xs{i}(idx,:);
         ys{i} = ys{i}(idx);
     end
-
     % define hyp (hyperparameter) struct
     %   - hyp.mean:
     %       - prior mean of the linear trend slope
@@ -130,16 +131,22 @@ function myrun(tau,type, ls, os, lik, j, mode, plot)
     %       - log of prior std of the linear trend intercept
     %   - hyp.lik: log of observation noise std
     
-    hyp.cov(1) = log(ls);
-    hyp.cov(2) = log(os);
-    
+    parms.tau = tau;
+    parms.j = j;
+    parms.type = type;
+    parms.plot = plot;
+
+    % plot days bin
+    parms.BIN = 30;
+    % meanfunc = {@meanSum, {@meanLinear, @meanConst}};
+    meanfunc = [];
+    covfunc = {'covMaterniso', 3};
+    likfunc = @likGauss;
+    hyp = struct('mean', [], 'cov', [0 0], 'lik', -1);
+    hyp = minimize(hyp, @gpsum, -100, @infExact, meanfunc, covfunc, likfunc, xs(1:124,:), ys(1:124,:));
+    disp(hyp);
     % model() defines prior distribution of linear trends
-    [~,~,~,~, prior] = model();
-    sigma_ml = prior.slope(2);
-    sigma_mc = prior.intercept(2);
-    hyp.cov(3) = log(1/sigma_ml);
-    hyp.cov(4) = log(sigma_mc);
-    hyp.lik = log(lik);
+
 
     % parms struct specifies keyword arguments
     %   - tau: forecasting horizon
