@@ -88,8 +88,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 
 Yehu Chen - chenyehu@wustl.edu
+
 Yunxiu Qiu - yunxiuqiu@wustl.edu
-Yanpeng Yuan - yanpengyuan@wustl.edu
+
+Yanpeng Yuan - yanpeng@wustl.edu
 
 Project Link: [https://github.com/yunxiuqiu1115/CSE543T_FinalProject/tree/dev](https://github.com/yunxiuqiu1115/CSE543T_FinalProject/tree/dev)
 
