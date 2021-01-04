@@ -57,7 +57,7 @@ library(grid)
 
 1. Clone the repo
 ```sh
-git clone https://github.com/yahoochen97/CNNForecasting.git
+git clone https://github.com/yunxiuqiu1115/CSE543T_FinalProject.git
 ```
 2. Install R packages
 ```R
@@ -72,25 +72,9 @@ install.packages('grid')
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-We exploit Leave-one-year-out (LOYO) validation procedure to determine optimal hyperparameters to our gp model for different forecasting horizons. To train the model at predefined horizons, run matlab code
+To forecast 2020 races at predefined horizons, run matlab code
 ```sh
-matlab -nodisplay -nodesktop -r "main('GP', 1); exit"
-```
-
-This will generate files containing gp posteriors of 1992-2016 races for different forecasting horizons and gp hyperparameters. Then for each LOYO year/horizon, run R code
-```sh
-Rscript ./onejob horizon year 'GP'
-```
-
-Average negative log likelihood (nlZ) for validation races for each hyperparameters will be stored to directory './nlZs'. To get the index of optimal hyperparameter in search sequence, run R code
-```sh
-Rscript loocv_nlZs.R
-```
-
-To forecast 2020 races at predefined horizons, run matlab and R code
-```sh
-matlab -nodisplay -nodesktop -r "main('GP', 3); exit"
-Rscript main.R 2020 'GP'
+mainfunc(0);
 ```
 
 
@@ -104,8 +88,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 
 Yehu Chen - chenyehu@wustl.edu
+Yunxiu Qiu - yunxiuqiu@wustl.edu
+Yanpeng Yuan - yanpengyuan@wustl.edu
 
-Project Link: [https://github.com/yahoochen97/CNNForecasting](https://github.com/yahoochen97/CNNForecasting)
+Project Link: [https://github.com/yunxiuqiu1115/CSE543T_FinalProject/tree/dev](https://github.com/yunxiuqiu1115/CSE543T_FinalProject/tree/dev)
 
 
 <!-- ACKNOWLEDGEMENTS -->
