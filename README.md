@@ -53,11 +53,7 @@ git clone https://github.com/yunxiuqiu1115/CSE543T_FinalProject.git
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-To forecast 2020 races at predefined horizons, run code
-```sh
-matlab -nodisplay -nodesktop -r "mainfunc(0); exit"
-```
-or run command below in matlab.
+To forecast 2020 races at predefined horizons, run command below in matlab.
 ```sh
 mainfunc(0)
 ```
